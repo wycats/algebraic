@@ -13,7 +13,7 @@ export default tseslint.config(
     },
     rules: {
       "@typescript-eslint/explicit-function-return-type": [
-        "warn",
+        "error",
         {
           allowExpressions: true,
           allowTypedFunctionExpressions: true,
@@ -32,7 +32,7 @@ export default tseslint.config(
           allowNumber: true,
         },
       ],
-      "@typescript-eslint/no-unnecessary-condition": "warn",
+      "@typescript-eslint/no-unnecessary-condition": "error",
     },
   },
   {

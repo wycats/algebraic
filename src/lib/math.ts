@@ -1,20 +1,15 @@
 import { APCAcontrast, sRGBtoY } from "apca-w3";
 import { converter } from "culori";
-import type { Mode, ModeSpec, Polarity } from "./types.ts";
+import type { Context, ModeSpec } from "./types.ts";
 
 const toRgb = converter("rgb");
 
 // Original toRgbTriplet implementation (no memoization)
 export function toRgbTriplet(lightness: number): [number, number, number] {
-  const ok = { mode: "oklch", l: clamp01(lightness), c: 0, h: 0 } as const;
-  const rgb = toRgb(ok) as { mode: "rgb"; r: number; g: number; b: number };
+  const rgb = toRgb({ mode: "oklch", l: clamp01(lightness), c: 0, h: 0 });
 
-  if (!rgb || rgb.mode !== "rgb") {
-    throw new Error("Failed to convert OKLCH lightness to RGB.");
-  }
-
-  const clampChannel = (value: number) => {
-    const clamped = clamp01(value ?? 0);
+  const clampChannel = (value: number): number => {
+    const clamped = clamp01(value);
     return Math.round(clamped * 255);
   };
 
@@ -53,12 +48,10 @@ const STEP = (STRONG_CONTRAST - SUBTLEST_CONTRAST) / 3;
 // --- UTILS ---
 
 export function clamp01(value: number): number {
-  if (value < 0) return 0;
-  if (value > 1) return 1;
-  return value;
+  return clampTo(value, 0, 1);
 }
 
-export function clampToRange(value: number, min: number, max: number): number {
+export function clampTo(value: number, min: number, max: number): number {
   if (value < min) return min;
   if (value > max) return max;
   return value;
@@ -121,7 +114,8 @@ export function binarySearch(
 
 // --- CONTRAST ---
 
-export function textLightness(polarity: Polarity, mode: Mode): number {
+export function textLightness(context: Context): number {
+  const { polarity, mode } = context;
   if (polarity === "page") {
     return mode === "light" ? 0 : 1;
   }
@@ -129,24 +123,19 @@ export function textLightness(polarity: Polarity, mode: Mode): number {
 }
 
 export function contrastForBackground(
-  polarity: Polarity,
-  mode: Mode,
+  context: Context,
   background: number
 ): number {
-  return contrastForPair(textLightness(polarity, mode), background);
+  return contrastForPair(textLightness(context), background);
 }
 
 export function backgroundBounds(start: number, end: number): [number, number] {
   return [Math.min(start, end), Math.max(start, end)];
 }
 
-export function clampContrast(
-  polarity: Polarity,
-  mode: Mode,
-  target: number
-): number {
-  const contrastAtZero = contrastForBackground(polarity, mode, 0);
-  const contrastAtOne = contrastForBackground(polarity, mode, 1);
+export function clampContrast(context: Context, target: number): number {
+  const contrastAtZero = contrastForBackground(context, 0);
+  const contrastAtOne = contrastForBackground(context, 1);
   const max = Math.max(contrastAtZero, contrastAtOne);
   const min = Math.min(contrastAtZero, contrastAtOne);
   if (target > max) return max;
@@ -155,19 +144,18 @@ export function clampContrast(
 }
 
 export function solveBackgroundForContrast(
-  polarity: Polarity,
-  mode: Mode,
+  context: Context,
   targetContrast: number,
   lowerBound: number,
   upperBound: number
 ): number {
   const [minBg, maxBg] = backgroundBounds(lowerBound, upperBound);
-  const clampedTarget = clampContrast(polarity, mode, targetContrast);
+  const clampedTarget = clampContrast(context, targetContrast);
 
   const result = binarySearch(
     minBg,
     maxBg,
-    (bg) => contrastForBackground(polarity, mode, bg),
+    (bg) => contrastForBackground(context, bg),
     clampedTarget,
     CONTRAST_EPSILON
   );
@@ -238,7 +226,7 @@ export function calculateHueShift(
 }
 
 export function solveForegroundSpec(background: number): ModeSpec {
-  const solver = (target: number) =>
+  const solver = (target: number): number =>
     solveForegroundLightness(background, target);
 
   return {

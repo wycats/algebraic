@@ -1,15 +1,7 @@
 import { useState } from "preact/hooks";
+import { SURFACES } from "./shared";
 
 export function SolverLab() {
-  const surfaces = [
-    "page",
-    "workspace",
-    "card",
-    "action",
-    "tinted",
-    "soft-spotlight",
-    "spotlight",
-  ];
   const hues = [
     { name: "Monochrome", class: "hue-monochrome" },
     { name: "Brand", class: "hue-brand" },
@@ -75,7 +67,7 @@ export function SolverLab() {
               gap: "2rem",
             }}
           >
-            {surfaces.map((surface) => (
+            {SURFACES.map((surface) => (
               <div key={surface}>
                 <h3
                   class="text-strong"

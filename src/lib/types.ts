@@ -1,6 +1,11 @@
 export type Mode = "light" | "dark";
 export type Polarity = "page" | "inverted";
 
+export interface Context {
+  polarity: Polarity;
+  mode: Mode;
+}
+
 export type Mutable<T> = {
   -readonly [P in keyof T]: T[P];
 };

@@ -1,14 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { Showcase } from "./Showcase";
 import { SolverLab } from "./components/SolverLab";
+import { ExperienceLab } from "./components/ExperienceLab";
 import "./app.css";
-
-/**
- * ARCHITECTURAL NOTE:
- * This component avoids hardcoded colors (hex, rgb, etc.).
- * All color features are powered by the color system's surfaces and utilities
- * to ensure theming, accessibility, and consistency.
- */
 
 // --- STYLE CONSTANTS ---
 const styles = {
@@ -99,6 +93,16 @@ const styles = {
 
 export function App() {
   const [view, setView] = useState("showcase");
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+  // Handle Theme Application & Resolution
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "system") {
+      root.style.removeProperty("color-scheme");
+    } else {
+      root.style.setProperty("color-scheme", theme);
+    }
+  }, [theme]);
 
   return (
     <>
@@ -126,31 +130,40 @@ export function App() {
           >
             Solver Lab
           </button>
+          <button
+            onClick={() => setView("experience")}
+            style={styles.viewButton}
+            class={
+              view === "experience"
+                ? "surface-action text-strong"
+                : "text-subtle"
+            }
+          >
+            Experience Lab
+          </button>
         </div>
 
         {/* Theme Switcher */}
-        <ThemeSwitcher />
+        <ThemeSwitcher theme={theme} setTheme={setTheme} />
       </div>
 
-      {view === "showcase" ? <Showcase /> : <SolverLab />}
+      {view === "showcase" ? (
+        <Showcase />
+      ) : view === "lab" ? (
+        <SolverLab />
+      ) : (
+        <ExperienceLab />
+      )}
     </>
   );
 }
 
-// Placeholder for Showcase component is removed as it is imported
+interface ThemeSwitcherProps {
+  theme: "light" | "dark" | "system";
+  setTheme: (theme: "light" | "dark" | "system") => void;
+}
 
-function ThemeSwitcher() {
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "system") {
-      root.style.removeProperty("color-scheme");
-    } else {
-      root.style.setProperty("color-scheme", theme);
-    }
-  }, [theme]);
-
+function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
   const themeSwitcherStyles = {
     container: {
       display: "flex",

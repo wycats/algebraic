@@ -1,15 +1,15 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-  binarySearch,
-  contrastForPair,
-  calculateHueShift,
-  solveForegroundSpec,
-  clamp01,
-  roundLightness,
   backgroundBounds,
+  binarySearch,
+  calculateHueShift,
+  clamp01,
   clampContrast,
+  contrastForPair,
+  roundLightness,
   solveBackgroundForContrast,
   solveBorderAlpha,
+  solveForegroundSpec,
 } from "../math.ts";
 
 describe("Math Utilities", () => {
@@ -54,18 +54,21 @@ describe("Math Utilities", () => {
 
   describe("clampContrast", () => {
     it("clamps target above maximum contrast", () => {
-      const clamped = clampContrast("page", "light", 999);
+      const clamped = clampContrast({ polarity: "page", mode: "light" }, 999);
       expect(clamped).toBeLessThan(120); // Max APCA is ~108-110
     });
 
     it("clamps target below minimum contrast", () => {
-      const clamped = clampContrast("page", "light", -999);
+      const clamped = clampContrast({ polarity: "page", mode: "light" }, -999);
       expect(clamped).toBeGreaterThanOrEqual(0); // Can be 0
     });
 
     it("preserves achievable values", () => {
       const target = 75;
-      const clamped = clampContrast("page", "light", target);
+      const clamped = clampContrast(
+        { polarity: "page", mode: "light" },
+        target
+      );
       expect(clamped).toBeCloseTo(target, 0);
     });
   });
@@ -128,19 +131,34 @@ describe("Math Utilities", () => {
 
   describe("solveBackgroundForContrast", () => {
     it("finds lightness for target contrast in light mode", () => {
-      const result = solveBackgroundForContrast("page", "light", 90, 0.8, 1);
+      const result = solveBackgroundForContrast(
+        { polarity: "page", mode: "light" },
+        90,
+        0.8,
+        1
+      );
       expect(result).toBeGreaterThan(0.8);
       expect(result).toBeLessThanOrEqual(1);
     });
 
     it("finds lightness for target contrast in dark mode", () => {
-      const result = solveBackgroundForContrast("page", "dark", 90, 0, 0.3);
+      const result = solveBackgroundForContrast(
+        { polarity: "page", mode: "dark" },
+        90,
+        0,
+        0.3
+      );
       expect(result).toBeGreaterThanOrEqual(0);
       expect(result).toBeLessThanOrEqual(0.3); // Can equal bound
     });
 
     it("respects bounds", () => {
-      const result = solveBackgroundForContrast("page", "light", 75, 0.5, 0.7);
+      const result = solveBackgroundForContrast(
+        { polarity: "page", mode: "light" },
+        75,
+        0.5,
+        0.7
+      );
       expect(result).toBeGreaterThanOrEqual(0.5);
       expect(result).toBeLessThanOrEqual(0.7);
     });

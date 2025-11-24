@@ -15,5 +15,5 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
-  "include": ["scripts/**/*", "scripts/types.d.ts"]
+  "include": ["scripts/**/*", "scripts/types.d.ts", "src/**/*"]
 }

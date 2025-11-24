@@ -1,26 +1,27 @@
 import { converter } from "culori";
-import type {
-  Anchors,
-  Mode,
-  ModeAnchors,
-  ModeSpec,
-  Mutable,
-  Polarity,
-  PolarityAnchors,
-  SolverConfig,
-  SurfaceConfig,
-  SurfaceGroup,
-} from "./types.ts";
 import {
   avg,
   backgroundBounds,
   clamp01,
-  clampToRange,
+  clampTo,
   contrastForBackground,
   roundLightness,
   solveBackgroundForContrast,
   solveForegroundSpec,
 } from "./math.ts";
+import type {
+  Anchors,
+  Context,
+  Mode,
+  ModeAnchors,
+  ModeSpec,
+  Mutable,
+  PolarityAnchors,
+  SolverConfig,
+  SurfaceConfig,
+  SurfaceGroup,
+} from "./types.ts";
+export * from "./constants.ts";
 
 const toOklch = converter("oklch");
 
@@ -57,10 +58,6 @@ function alignInvertedAnchors(
   if (keyColorLightness !== undefined) {
     const invertedAnchors = anchors.inverted;
 
-    if (!invertedAnchors) {
-      throw new Error("Missing inverted anchors for key color alignment.");
-    }
-
     const updateEnd = (
       modeAnchors: ModeAnchors,
       lightness: number
@@ -81,15 +78,20 @@ function alignInvertedAnchors(
 }
 
 function computeDeltaInfo(
-  polarity: Polarity,
-  mode: Mode,
+  context: Context,
   anchors: ModeAnchors,
   count: number
-) {
+): {
+  startBackground: number;
+  endBackground: number;
+  startContrast: number;
+  endContrast: number;
+  delta: number;
+} {
   const startBackground = anchors.start.background;
   const endBackground = anchors.end.background;
-  const startContrast = contrastForBackground(polarity, mode, startBackground);
-  const endContrast = contrastForBackground(polarity, mode, endBackground);
+  const startContrast = contrastForBackground(context, startBackground);
+  const endContrast = contrastForBackground(context, endBackground);
   const delta = count <= 1 ? 0 : (endContrast - startContrast) / (count - 1);
 
   return {
@@ -102,17 +104,17 @@ function computeDeltaInfo(
 }
 
 function solveBackgroundSequence(
-  polarity: Polarity,
-  mode: Mode,
+  context: Context,
   anchors: ModeAnchors,
   groups: SurfaceGroup[]
 ): Map<string, number> {
   const backgrounds = new Map<string, number>();
+  const { mode } = context;
 
   if (groups.length === 0) return backgrounds;
 
   const totalGroups = groups.length;
-  const deltaInfo = computeDeltaInfo(polarity, mode, anchors, totalGroups);
+  const deltaInfo = computeDeltaInfo(context, anchors, totalGroups);
 
   const [minBg, maxBg] = backgroundBounds(
     anchors.start.background,
@@ -135,15 +137,10 @@ function solveBackgroundSequence(
       const offset = surface.contrastOffset?.[mode] ?? 0;
       const targetContrast = groupBaseContrast + stagger + offset;
 
-      const clampedContrast = clampToRange(
-        targetContrast,
-        minContrast,
-        maxContrast
-      );
+      const clampedContrast = clampTo(targetContrast, minContrast, maxContrast);
 
       const solvedL = solveBackgroundForContrast(
-        polarity,
-        mode,
+        context,
         clampedContrast,
         minBg,
         maxBg
@@ -156,8 +153,7 @@ function solveBackgroundSequence(
           const stateTarget = clampedContrast + state.offset;
 
           const stateL = solveBackgroundForContrast(
-            polarity,
-            mode,
+            context,
             stateTarget,
             minBg,
             maxBg
@@ -185,10 +181,6 @@ export function solve(config: SolverConfig): {
   const backgrounds = new Map<string, { light: number; dark: number }>();
 
   for (const polarity of ["page", "inverted"] as const) {
-    if (!anchors[polarity]) {
-      throw new Error(`Missing anchors for polarity ${polarity}.`);
-    }
-
     for (const mode of ["light", "dark"] as const) {
       const relevantGroups = groups.filter((g) =>
         g.surfaces.some((s) => s.polarity === polarity)
@@ -202,8 +194,7 @@ export function solve(config: SolverConfig): {
         .filter((g) => g.surfaces.length > 0);
 
       const sequence = solveBackgroundSequence(
-        polarity,
-        mode,
+        { polarity, mode },
         anchors[polarity][mode],
         filteredGroups
       );

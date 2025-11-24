@@ -18,7 +18,7 @@ describe("End-to-End Build", () => {
     // We use 'node scripts/generate-tokens.ts' directly to avoid pnpm overhead in test
     // but simulating the 'pnpm solve' script behavior
     try {
-      execSync("node scripts/generate-tokens.ts", {
+      execSync("node src/cli/index.ts", {
         cwd: projectRoot,
         stdio: "pipe", // Capture output so we don't spam test logs
       });
