@@ -4,8 +4,10 @@ import type {
   SurfaceGroup,
 } from "color-system/types";
 import { createContext } from "preact";
-import { useContext, useState } from "preact/hooks";
-import { DEFAULT_CONFIG } from "../../../src/cli/default-config";
+import { useContext, useState, useEffect } from "preact/hooks";
+import { DEFAULT_CONFIG, PRESETS } from "color-system";
+
+const STORAGE_KEY = "color-system-config";
 
 interface ConfigContextType {
   config: SolverConfig;
@@ -31,12 +33,31 @@ interface ConfigContextType {
     surface: Partial<SurfaceConfig>
   ) => void;
   resetConfig: () => void;
+  loadPreset: (presetId: string) => void;
 }
 
 const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 
 export function ConfigProvider({ children }: { children: any }) {
-  const [config, setConfig] = useState<SolverConfig>(DEFAULT_CONFIG);
+  const [config, setConfig] = useState<SolverConfig>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (e) {
+      console.error("Failed to load config from localStorage", e);
+    }
+    return DEFAULT_CONFIG;
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    } catch (e) {
+      console.error("Failed to save config to localStorage", e);
+    }
+  }, [config]);
 
   const resetConfig = () => {
     if (
@@ -45,6 +66,19 @@ export function ConfigProvider({ children }: { children: any }) {
       )
     ) {
       setConfig(DEFAULT_CONFIG);
+    }
+  };
+
+  const loadPreset = (presetId: string) => {
+    const preset = PRESETS.find((p) => p.id === presetId);
+    if (preset) {
+      if (
+        confirm(
+          `Are you sure you want to load the "${preset.name}" preset? All unsaved changes will be lost.`
+        )
+      ) {
+        setConfig(preset.config);
+      }
     }
   };
 
@@ -200,6 +234,7 @@ export function ConfigProvider({ children }: { children: any }) {
         removeSurface,
         updateSurface,
         resetConfig,
+        loadPreset,
       }}
     >
       {children}

@@ -9,3 +9,9 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Context**: What was the problem or situation?
 - **Decision**: What did we decide to do?
 - **Rationale**: Why did we choose this path? What alternatives were considered?
+
+### [2025-11-25] Defer Framework Integration
+
+- **Context**: We planned to add React/Vue hooks in Epoch 3.
+- **Decision**: Defer this work.
+- **Rationale**: The core library should remain framework-agnostic. The hooks are trivial to implement by consumers (`useMemo(() => solve(config), [config])`). Adding them now would complicate the build/test setup without significant value.

@@ -38,3 +38,22 @@
   - **Live Preview**: Instant feedback via `FearlessInjector`.
 - **UX Refinements**: Mode-aware controls and dynamic surface preview.
 - **Export**: Added JSON download and CSS copy functionality.
+
+## Epoch 3: Polish & Persistence
+
+**Focus:** Refining the Theme Builder into a production-grade tool.
+
+### Key Changes
+
+- **Persistence**:
+  - Implemented `localStorage` saving for `SolverConfig`.
+  - Added "Reset to Default" functionality.
+- **Templates & Presets**:
+  - Introduced a Preset system with "Default", "High Contrast", and "Soft" themes.
+  - Added a `PresetSelector` to the Theme Builder UI.
+- **Contrast Validation**:
+  - Integrated APCA contrast calculation.
+  - Added real-time contrast badges (Lc scores) to the Surface Manager.
+  - Badges provide visual feedback (Red/Orange/Green) based on accessibility guidelines.
+- **Deferred**:
+  - Framework Integration (React/Vue hooks) was deferred to keep the core library lightweight.

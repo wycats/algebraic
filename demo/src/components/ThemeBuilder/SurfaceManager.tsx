@@ -1,6 +1,8 @@
 import type { SurfaceConfig } from "color-system/types";
 import { useState } from "preact/hooks";
 import { useConfig } from "../../context/ConfigContext";
+import { useTheme } from "../../context/ThemeContext";
+import { ContrastBadge } from "./ContrastBadge";
 
 export function SurfaceManager() {
   const {
@@ -210,6 +212,7 @@ function SurfaceRow({
   onRemove: () => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   return (
     <div
@@ -237,6 +240,7 @@ function SurfaceRow({
         <span class="text-strong" style={{ flex: 1 }}>
           {surface.label}
         </span>
+        <ContrastBadge slug={surface.slug} mode={resolvedTheme} />
         <span class="text-subtle" style={{ fontSize: "0.8rem" }}>
           {surface.slug}
         </span>

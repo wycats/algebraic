@@ -22,6 +22,8 @@ import type {
   SurfaceGroup,
 } from "./types.ts";
 export * from "./constants.ts";
+export * from "./defaults.ts";
+export * from "./presets.ts";
 
 const toOklch = converter("oklch");
 

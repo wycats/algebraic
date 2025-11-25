@@ -4,6 +4,7 @@ import { ExportPanel } from "./ExportPanel";
 import { HueShiftEditor } from "./HueShiftEditor";
 import { KeyColorsEditor } from "./KeyColorsEditor";
 import { LiveThemeInjector } from "./LiveThemeInjector";
+import { PresetSelector } from "./PresetSelector";
 import { SurfaceManager } from "./SurfaceManager";
 
 export function ThemeBuilder() {
@@ -34,6 +35,8 @@ export function ThemeBuilder() {
             Customize global system parameters.
           </p>
         </div>
+
+        <PresetSelector />
 
         <KeyColorsEditor />
         <AnchorsEditor />

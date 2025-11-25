@@ -1,13 +1,12 @@
 # Current Task: Epoch 3 - Polish & Persistence
 
-**Focus:** Phase 1: Persistence
+**Focus:** Phase 3: Contrast Validation
 
 ## Context
 
-We are starting Epoch 3. The goal is to refine the Theme Builder.
-The first step is to ensure the user's work is saved to `localStorage`.
+We have completed persistence and presets. Now we are adding contrast validation to ensure accessibility.
 
 ## Todo List
 
-- [ ] **Local Storage**: Save `SolverConfig` to `localStorage` on change.
-- [ ] **Load/Reset**: Load from storage on boot.
+- [x] **Contrast Calculation**: Compute APCA or WCAG contrast ratios for surfaces against text.
+- [x] **Visual Feedback**: Warn users if contrast is too low.

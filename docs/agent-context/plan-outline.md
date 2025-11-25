@@ -14,14 +14,14 @@
   - Surface Management (CRUD).
   - Export (JSON/CSS).
 
-## Epoch 3: Polish & Persistence (Planned)
+## Epoch 3: Polish & Persistence (Completed)
 
 - **Goal**: Refine the Theme Builder into a production-grade tool.
 - **Key Deliverables**:
   - Persistence (localStorage).
   - Templates / Presets.
   - Contrast Validation.
-  - Framework Integration (Optional).
+  - Framework Integration (Deferred).
 
 ## Epoch 4: System Completeness (Planned)
 
