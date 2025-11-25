@@ -1,0 +1,5 @@
+[book]
+authors = ["Yehuda Katz"]
+language = "en"
+src = "src"
+title = "Color System Documentation"
