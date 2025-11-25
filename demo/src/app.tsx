@@ -1,8 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { Showcase } from "./Showcase";
-import { SolverLab } from "./components/SolverLab";
-import { ExperienceLab } from "./components/ExperienceLab";
 import "./app.css";
+import { ExperienceLab } from "./components/ExperienceLab";
+import { SystemVerifier } from "./components/SystemVerifier";
 
 // --- STYLE CONSTANTS ---
 const styles = {
@@ -128,7 +128,7 @@ export function App() {
               view === "lab" ? "surface-action text-strong" : "text-subtle"
             }
           >
-            Solver Lab
+            System Verifier
           </button>
           <button
             onClick={() => setView("experience")}
@@ -150,7 +150,7 @@ export function App() {
       {view === "showcase" ? (
         <Showcase />
       ) : view === "lab" ? (
-        <SolverLab />
+        <SystemVerifier />
       ) : (
         <ExperienceLab />
       )}

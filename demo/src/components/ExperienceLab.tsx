@@ -1,5 +1,6 @@
-import { IntentPlayground } from "./IntentPlayground";
 import { FearlessInjector } from "./FearlessInjector";
+import { IntentPlayground } from "./IntentPlayground";
+import { SolverPlayground } from "./SolverPlayground";
 
 export function ExperienceLab() {
   return (
@@ -18,8 +19,8 @@ export function ExperienceLab() {
           className="text-subtle"
           style={{ fontSize: "1.2rem", maxWidth: "600px", margin: "0 auto" }}
         >
-          Exploring the emotional side of the color system: Intuition and
-          Safety.
+          Exploring the emotional side of the color system: Intuition, Safety,
+          and Math.
         </p>
       </header>
 
@@ -34,6 +35,7 @@ export function ExperienceLab() {
       >
         <IntentPlayground />
         <FearlessInjector />
+        <SolverPlayground />
       </div>
     </div>
   );

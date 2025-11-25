@@ -1,6 +1,4 @@
 import { useState } from "preact/hooks";
-import { ContrastTrap } from "./components/ContrastTrap";
-import { Playground } from "./components/Playground";
 
 /**
  * ARCHITECTURAL NOTE:
@@ -265,19 +263,6 @@ export function Showcase() {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Live Demo & Education Section */}
-        <div style={{ marginTop: "4rem" }}>
-          <h2 className="text-strong" style={{ marginBottom: "2rem" }}>
-            Live Demo & Education
-          </h2>
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "3rem" }}
-          >
-            <ContrastTrap />
-            <Playground />
           </div>
         </div>
       </main>

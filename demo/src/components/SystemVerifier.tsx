@@ -1,7 +1,7 @@
 import { SURFACES } from "color-system/constants";
 import { useState } from "preact/hooks";
 
-export function SolverLab() {
+export function SystemVerifier() {
   const hues = [
     { name: "Monochrome", class: "hue-monochrome" },
     { name: "Brand", class: "hue-brand" },
@@ -21,7 +21,7 @@ export function SolverLab() {
           class="text-strong"
           style={{ fontSize: "2rem", marginBottom: "0.5rem" }}
         >
-          Solver Lab
+          System Verifier
         </h1>
         <p class="text-subtle">
           Test grid for verifying solver output and color system behavior

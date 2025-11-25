@@ -1,11 +1,54 @@
-import { useState, useEffect, useRef } from "preact/hooks";
 import { calculateHueShift, solveForegroundLightness } from "color-system/math";
+import { useEffect, useRef, useState } from "preact/hooks";
 
-export function Playground() {
+export function SolverPlayground() {
   // Configuration State
   const [baseHue, setBaseHue] = useState(250); // Blueish
   const [contrastTarget, setContrastTarget] = useState(105); // Standard Strong
-  const [hueShiftAmount, setHueShiftAmount] = useState(180); // Max rotation
+  const [hueShiftAmount, setHueShiftAmount] = useState(5); // System Default
+
+  // Theme State
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const updateTheme = () => {
+      const rootScheme = document.documentElement.style.colorScheme;
+      if (rootScheme === "dark") {
+        setIsDark(true);
+      } else if (rootScheme === "light") {
+        setIsDark(false);
+      } else {
+        setIsDark(query.matches);
+      }
+    };
+
+    // Initial check
+    updateTheme();
+
+    // Listen for system changes
+    const mediaHandler = () => updateTheme();
+    query.addEventListener("change", mediaHandler);
+
+    // Listen for manual overrides (attribute changes on html)
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["style"],
+    });
+
+    return () => {
+      query.removeEventListener("change", mediaHandler);
+      observer.disconnect();
+    };
+  }, [isDark]);
+
+  // Constants
+  const cardLight = 0.92;
+  const cardDark = 0.2;
+  const currentBg = isDark ? cardDark : cardLight;
+  const currentFg = solveForegroundLightness(currentBg, contrastTarget);
 
   // Ref to the preview container to apply CSS variables
   const previewRef = useRef<HTMLDivElement>(null);
@@ -15,10 +58,6 @@ export function Playground() {
     if (!previewRef.current) return;
 
     const container = previewRef.current;
-
-    // We'll simulate a "Card" surface on top of a "Page" surface
-    const cardLight = 1.0;
-    const cardDark = 0.2;
 
     // 1. Solve Foreground Text
     // Light Mode
@@ -161,26 +200,51 @@ export function Playground() {
               </div>
 
               <div>
-                <label
-                  className="text-subtle"
-                  style={{
-                    display: "block",
-                    marginBottom: "0.5rem",
-                    fontSize: "0.9rem",
-                  }}
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  Hue Shift Intensity ({hueShiftAmount})
-                </label>
+                  <label
+                    className="text-subtle"
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Hue Shift Intensity ({hueShiftAmount}°)
+                  </label>
+                  <button
+                    onClick={() => setHueShiftAmount(5)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "var(--text-token)",
+                      fontSize: "0.75rem",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      padding: 0,
+                    }}
+                  >
+                    Reset to Default (5°)
+                  </button>
+                </div>
                 <input
                   type="range"
-                  min="0"
-                  max="360"
+                  min="-60"
+                  max="60"
                   value={hueShiftAmount}
                   onInput={(e) =>
                     setHueShiftAmount(Number(e.currentTarget.value))
                   }
                   style={{ width: "100%" }}
                 />
+                <p
+                  className="text-subtle"
+                  style={{ fontSize: "0.8rem", marginTop: "0.25rem" }}
+                >
+                  The system defaults to a subtle 5° shift to add natural warmth
+                  or coolness without changing the perceived color.
+                </p>
               </div>
             </div>
           </div>
@@ -222,83 +286,149 @@ export function Playground() {
             </p>
           </div>
 
+          {/* Hue Shift Visualization */}
+          <div>
+            <h4
+              className="text-strong"
+              style={{
+                margin: "0 0 1rem 0",
+                fontSize: "0.9rem",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}
+            >
+              Hue Shift Curve Visualization
+            </h4>
+            <div
+              style={{
+                display: "flex",
+                height: "60px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: "1px solid var(--border-dec-token)",
+              }}
+            >
+              {Array.from({ length: 21 }, (_, i) => i / 20).map((l) => {
+                const shift = calculateHueShift(l, {
+                  curve: { p1: [0.5, 0], p2: [0.5, 1] },
+                  maxRotation: hueShiftAmount,
+                });
+                // Use higher chroma (0.15) to make the hue obvious
+                const color = `oklch(${l} 0.15 ${baseHue + shift})`;
+                return (
+                  <div
+                    key={l}
+                    style={{ flex: 1, background: color }}
+                    title={`L: ${l}, Shift: ${Math.round(shift)}°`}
+                  />
+                );
+              })}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "0.5rem",
+                fontSize: "0.8rem",
+                color: "var(--text-subtle)",
+              }}
+            >
+              <span>L=0</span>
+              <span>L=1</span>
+            </div>
+            <p
+              className="text-subtle"
+              style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}
+            >
+              The hue shift rotates the base hue as lightness increases,
+              creating dynamic color relationships across the lightness
+              spectrum.
+            </p>
+          </div>
+
           {/* The Programming Model (Code Inspector) */}
           <div
             className="surface-subtle bordered"
             style={{
-              padding: "1.5rem",
+              padding: "2rem",
               borderRadius: "8px",
               fontFamily: "monospace",
-              fontSize: "0.85rem",
-              overflowX: "auto",
+              fontSize: "0.9rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <div
-              style={{ color: "var(--text-subtle)", marginBottom: "0.5rem" }}
-            >
-              // The Solver Loop
-            </div>
-
-            <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "auto 1fr",
-                gap: "0.5rem 1rem",
-                alignItems: "center",
+                gridTemplateColumns: "1fr auto",
+                gap: "0.5rem 2rem",
+                width: "100%",
+                maxWidth: "280px",
               }}
             >
-              <span style={{ color: "#a855f7" }}>const</span>
-              <span>
-                bgLightness = <span style={{ color: "#3b82f6" }}>1.0</span>;{" "}
-                <span style={{ color: "var(--text-subtler)" }}>
-                  // Card Surface
-                </span>
-              </span>
+              <div style={{ color: "var(--text-subtle)" }}>Background L</div>
+              <div style={{ textAlign: "right", color: "#3b82f6" }}>
+                {currentBg}
+              </div>
 
-              <span style={{ color: "#a855f7" }}>const</span>
-              <span>
-                target ={" "}
-                <span style={{ color: "#3b82f6" }}>{contrastTarget}</span>;
-              </span>
+              <div style={{ color: "var(--text-subtle)" }}>Target APCA</div>
+              <div style={{ textAlign: "right", color: "#3b82f6" }}>
+                {contrastTarget}
+              </div>
 
-              <span style={{ color: "#a855f7" }}>const</span>
-              <span>
-                textLightness ={" "}
-                <span style={{ color: "#eab308" }}>
-                  solveForegroundLightness
-                </span>
-                (bgLightness, target);
-              </span>
+              {/* Arithmetic Line */}
+              <div
+                style={{
+                  gridColumn: "1 / -1",
+                  height: "2px",
+                  background: "var(--text-subtlest)",
+                  marginTop: "0.25rem",
+                }}
+              />
 
-              <span style={{ color: "var(--text-subtler)" }}>&rarr;</span>
-              <span style={{ color: "#22c55e", fontWeight: "bold" }}>
-                {solveForegroundLightness(1.0, contrastTarget)}{" "}
-                <span
-                  style={{ color: "var(--text-subtler)", fontWeight: "normal" }}
-                >
-                  (Solved Value)
-                </span>
-              </span>
+              <div style={{ color: "var(--text-token)", fontWeight: "bold" }}>
+                Foreground L
+              </div>
+              <div
+                style={{
+                  textAlign: "right",
+                  color: "#22c55e",
+                  fontWeight: "bold",
+                }}
+              >
+                {currentFg.toFixed(4)}
+              </div>
             </div>
 
+            {/* CSS Output */}
             <div
               style={{
-                marginTop: "1rem",
+                marginTop: "2rem",
                 paddingTop: "1rem",
-                borderTop: "1px solid var(--border-dec-token)",
+                borderTop: "1px dashed var(--border-dec-token)",
+                width: "100%",
+                textAlign: "center",
               }}
             >
               <div
-                style={{ color: "var(--text-subtle)", marginBottom: "0.5rem" }}
+                style={{
+                  color: "var(--text-subtle)",
+                  fontSize: "0.75rem",
+                  marginBottom: "0.5rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                }}
               >
-                // CSS Generation
+                Generated CSS
               </div>
               <div>
                 <span style={{ color: "#ec4899" }}>--text-token</span>: oklch(
-                <span style={{ color: "#22c55e" }}>
-                  {solveForegroundLightness(1.0, contrastTarget)}
+                <span style={{ color: "#22c55e", fontWeight: "bold" }}>
+                  {currentFg.toFixed(4)}
                 </span>{" "}
-                0.01 <span style={{ color: "#3b82f6" }}>{baseHue}</span>);
+                0.01 <span style={{ color: "#3b82f6" }}>{baseHue}</span>)
               </div>
             </div>
           </div>
