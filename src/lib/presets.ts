@@ -1,5 +1,5 @@
-import type { SolverConfig } from "./types.ts";
 import { DEFAULT_CONFIG } from "./defaults.ts";
+import type { SolverConfig } from "./types.ts";
 
 export interface Preset {
   id: string;

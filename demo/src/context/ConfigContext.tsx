@@ -1,11 +1,11 @@
+import { DEFAULT_CONFIG, PRESETS } from "color-system";
 import type {
   SolverConfig,
   SurfaceConfig,
   SurfaceGroup,
 } from "color-system/types";
 import { createContext } from "preact";
-import { useContext, useState, useEffect } from "preact/hooks";
-import { DEFAULT_CONFIG, PRESETS } from "color-system";
+import { useContext, useEffect, useState } from "preact/hooks";
 
 const STORAGE_KEY = "color-system-config";
 

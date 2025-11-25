@@ -1,9 +1,27 @@
+import { contrastForPair, textLightness } from "color-system/math";
 import { useConfig } from "../../context/ConfigContext";
 import { useTheme } from "../../context/ThemeContext";
+import { useSolvedTheme } from "../../hooks/useSolvedTheme";
 
 export function AnchorsEditor() {
   const { config, updateAnchor } = useConfig();
   const { resolvedTheme } = useTheme();
+  const solved = useSolvedTheme();
+
+  const getFailingSurfaces = (
+    polarity: "page" | "inverted",
+    mode: "light" | "dark"
+  ) => {
+    if (!solved) return 0;
+    return solved.surfaces.filter((s) => {
+      if (s.polarity !== polarity) return false;
+      const bg = s.computed?.[mode].background;
+      if (bg === undefined) return false;
+      const textL = textLightness({ polarity, mode });
+      const contrast = contrastForPair(textL, bg);
+      return contrast < 45;
+    }).length;
+  };
 
   const renderSlider = (
     polarity: "page" | "inverted",
@@ -12,6 +30,7 @@ export function AnchorsEditor() {
   ) => {
     const value = config.anchors[polarity][mode][position].background;
     const isActive = mode === resolvedTheme;
+    const failingCount = getFailingSurfaces(polarity, mode);
 
     return (
       <label
@@ -27,6 +46,14 @@ export function AnchorsEditor() {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ textTransform: "capitalize" }}>
             {mode} {position}
+            {failingCount > 0 && (
+              <span
+                title={`${failingCount} surfaces have insufficient contrast`}
+                style={{ marginLeft: "0.5rem", cursor: "help" }}
+              >
+                ⚠️
+              </span>
+            )}
           </span>
           <span>{value.toFixed(2)}</span>
         </div>

@@ -57,3 +57,29 @@
   - Badges provide visual feedback (Red/Orange/Green) based on accessibility guidelines.
 - **Deferred**:
   - Framework Integration (React/Vue hooks) was deferred to keep the core library lightweight.
+
+## Epoch 4: Documentation & Education
+
+**Focus:** Creating comprehensive, accessible documentation and enhancing the learning experience.
+
+### Key Changes
+
+- **mdbook Setup**: Initialized a standalone documentation site using `mdbook`.
+- **Content Migration**:
+  - Migrated core concepts (`Surfaces`, `Anchors`, `Context`) into dedicated chapters.
+  - Created new guides for `CLI`, `Runtime`, and `Frameworks`.
+  - Documented the `Hue Shifting` algorithm.
+- **Visual Learning**:
+  - Added Mermaid diagrams for Surface Hierarchy, Anchor Ranges, and Context Flow.
+  - **Vendored Mermaid**: Implemented a lightweight, dependency-free Mermaid integration for `mdbook`.
+- **Interactive Elements**:
+  - Added "Try the Theme Builder" links.
+  - Implemented **Invalid Lc Indicator** in the Theme Builder to warn when anchor settings break accessibility.
+  - **Live Demos**: Integrated system CSS into the docs to render live surface/context examples.
+- **Refinement**:
+  - Restructured content into "Concepts" (Usage) and "Deep Dive" (Internals) to improve learning curve.
+
+### Deployment
+
+- **GitHub Pages**: Configured automated deployment via GitHub Actions.
+- **Site URL**: Updated `book.toml` to serve from `/algebraic/`.

@@ -19,7 +19,7 @@ graph TD
     Card --> Action[surface-action]
     Card --> Tinted[surface-tinted]
     Page --> Spotlight[surface-spotlight]
-    
+
     style Page fill:#f9f9f9,stroke:#333,stroke-width:2px
     style Card fill:#ffffff,stroke:#333,stroke-width:2px
     style Action fill:#333,stroke:#333,stroke-width:2px,color:#fff

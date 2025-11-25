@@ -19,13 +19,7 @@ export function ContrastBadge({ slug, mode }: ContrastBadgeProps) {
 
   // Logic from math.ts textLightness
   const textL =
-    polarity === "page"
-      ? mode === "light"
-        ? 0
-        : 1
-      : mode === "light"
-      ? 1
-      : 0;
+    polarity === "page" ? (mode === "light" ? 0 : 1) : mode === "light" ? 1 : 0;
 
   const contrast = contrastForPair(textL, bg);
   const score = Math.round(contrast);

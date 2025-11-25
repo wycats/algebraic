@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'docs/guide/**'
+      - "docs/guide/**"
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
       - name: Install mdbook
         uses: peaceiris/actions-mdbook@v2
         with:
-          mdbook-version: 'latest'
+          mdbook-version: "latest"
 
       - name: Build Book
         run: mdbook build docs/guide

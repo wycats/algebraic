@@ -23,7 +23,31 @@
   - Contrast Validation.
   - Framework Integration (Deferred).
 
-## Epoch 4: System Completeness (Planned)
+## Epoch 4: Documentation & Education (Completed)
+
+- **Goal**: Create comprehensive, accessible documentation for the system.
+- **Phases**:
+  - **Phase 1: Setup & Structure (Completed)**
+    - Initialize `mdbook`.
+    - Define Table of Contents (`SUMMARY.md`).
+    - Scaffold initial chapters.
+  - **Phase 2: Content Migration (Completed)**
+    - Migrate `concepts.md`, `intuition.md`, `implementation.md`.
+    - Refine content for clarity and flow.
+  - **Phase 3: Interactive Elements (Completed)**
+    - Embed live demos or link to the Theme Builder.
+    - Add visual diagrams for concepts (Anchors, Surfaces).
+  - **Phase 4: Deployment (Completed)**
+    - Set up GitHub Pages deployment.
+  - **Phase 5: Review & Refine (Completed)**
+    - Address user feedback.
+    - Fix Mermaid rendering (Vendor JS).
+    - Restructure "Deep Dive" content.
+    - Add live CSS demos.
+  - **Phase 6: Iterative Refinement (Planned)**
+    - Small improvements based on further feedback.
+
+## Epoch 5: System Completeness (Planned)
 
 - **Goal**: Ensure the system behaves correctly in all browser environments and modes.
 - **Key Deliverables**:
@@ -31,12 +55,12 @@
     - `meta theme-color` sync (Address bar).
     - `color-scheme` & `scrollbar-color`.
     - **Dynamic Favicons**: Real-time generation based on system state.
-  - **Forced Colors**: Windows High Contrast support (Taxonomy Alignment).
+  - **Forced Colors**: Verify and refine existing Windows High Contrast support.
   - **P3 Gamut**: Support for `color(display-p3 ...)` output.
   - **Print Styles**: Graceful degradation for printing.
   - **Accessibility Preferences**: `prefers-contrast`, `prefers-reduced-motion`.
 
-## Epoch 5: Design System Primitives (Planned)
+## Epoch 6: Design System Primitives (Planned)
 
 - **Goal**: Complete the "System" aspect by adding missing UI primitives.
 - **Key Deliverables**:

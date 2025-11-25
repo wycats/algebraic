@@ -16,11 +16,11 @@ graph LR
     subgraph Light Mode
     L_Start[Start: 0.98] --- L_Range[Dynamic Range] --- L_End[End: 0.90]
     end
-    
+
     subgraph Dark Mode
     D_Start[Start: 0.10] --- D_Range[Dynamic Range] --- D_End[End: 0.25]
     end
-    
+
     style L_Start fill:#f9f9f9,stroke:#333
     style L_End fill:#e0e0e0,stroke:#333
     style D_Start fill:#1a1a1a,stroke:#fff,color:#fff

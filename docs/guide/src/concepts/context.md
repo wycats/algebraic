@@ -55,11 +55,25 @@ When you use a utility class like `.text-strong`, it doesn't have a color of its
 sequenceDiagram
     participant Parent as .surface-card
     participant Child as .text-strong
-    
+
     Parent->>Parent: Sets --context-text-strong: #000
     Child->>Parent: Reads var(--context-text-strong)
     Child->>Child: Applies color: #000
 ```
+
+## Live Demo
+
+The following example is rendered using the actual Color System CSS. Notice how the text color automatically adapts when nested inside the dark `surface-spotlight`.
+
+<div class="surface-page bordered" style="padding: 20px; border-radius: 8px;">
+  <p class="text-strong" style="margin: 0 0 10px 0;">I am on the Page Surface.</p>
+  <div class="surface-card bordered" style="padding: 20px; border-radius: 8px;">
+    <p class="text-strong" style="margin: 0 0 10px 0;">I am on a Card Surface (Page Polarity).</p>
+    <div class="surface-spotlight bordered" style="padding: 20px; border-radius: 8px;">
+      <p class="text-strong" style="margin: 0;">I am on a Spotlight Surface (Inverted Polarity).</p>
+    </div>
+  </div>
+</div>
 
 ## Why is this useful?
 
