@@ -62,7 +62,7 @@
   - **P3 Gamut (Phase 3) (Completed)**:
     - Support for `oklch` output with chroma.
     - "Baseline Newly Available" policy.
-  - **Demo & Documentation Alignment (Phase 4) (Planned)**:
+  - **Demo & Documentation Alignment (Phase 4) (Completed)**:
     - Update Demo App to use `ThemeManager`.
     - Expose `targetChroma` in Theme Builder.
     - **Educational Components**: `ContextVisualizer`, `GamutComparator`, `LightnessScale`.
