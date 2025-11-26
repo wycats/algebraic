@@ -2,7 +2,7 @@
 
 # 1. Update Mermaid
 # Directory to store the mermaid script
-DEST_DIR="docs/guide/src/js"
+DEST_DIR="docs/guide/js"
 mkdir -p "$DEST_DIR"
 
 # URL for the latest mermaid.min.js (using jsdelivr to get the latest version)
@@ -22,16 +22,16 @@ fi
 echo "Updating Color System CSS..."
 
 # Ensure the output directory exists
-mkdir -p docs/guide/src/css
+mkdir -p docs/guide/css
 
 # Run the solver to ensure theme.css is up to date
 pnpm solve
 
 # Concatenate the CSS files
-cat css/tokens.css css/engine.css css/utilities.css css/theme.css > docs/guide/src/css/color-system.css
+cat css/tokens.css css/engine.css css/utilities.css css/theme.css > docs/guide/css/color-system.css
 
 if [ $? -eq 0 ]; then
-  echo "Successfully updated docs/guide/src/css/color-system.css"
+  echo "Successfully updated docs/guide/css/color-system.css"
 else
   echo "Failed to update color-system.css"
   exit 1

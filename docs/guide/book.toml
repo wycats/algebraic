@@ -6,6 +6,6 @@ title = "Color System Documentation"
 
 [output.html]
 site-url = "/algebraic/"
-additional-js = ["src/js/mermaid.min.js", "src/js/mermaid-init.js"]
-additional-css = ["src/css/color-system.css", "src/css/docs.css"]
+additional-js = ["js/mermaid.min.js", "js/mermaid-init.js"]
+additional-css = ["css/color-system.css", "css/docs.css"]
 
