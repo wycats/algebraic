@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "color-system/math": resolve(__dirname, "../src/lib/math.ts"),
+      "color-system/browser": resolve(__dirname, "../src/lib/browser.ts"),
       "color-system/generator": resolve(__dirname, "../src/lib/generator.ts"),
       "color-system/runtime": resolve(__dirname, "../src/lib/runtime.ts"),
       "color-system/types": resolve(__dirname, "../src/lib/types.ts"),

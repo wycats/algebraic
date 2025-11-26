@@ -15,6 +15,8 @@
 - [Usage](./usage/index.md)
   - [CLI](./usage/cli.md)
   - [CSS Architecture](./usage/css-architecture.md)
+  - [UI Primitives](./usage/primitives.md)
+  - [Data Visualization](./usage/data-viz.md)
   - [Frameworks](./usage/frameworks.md)
 - [API Reference](./api/index.md)
   - [Generator API](./api/generator.md)

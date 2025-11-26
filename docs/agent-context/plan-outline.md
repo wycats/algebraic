@@ -47,7 +47,7 @@
     - **Phase 6: Iterative Refinement (Completed)**
     - Small improvements based on further feedback.
 
-## Epoch 5: System Completeness (Planned)
+## Epoch 5: System Completeness (Completed)
 
 - **Goal**: Ensure the system behaves correctly in all browser environments and modes.
 - **Key Deliverables**:
@@ -68,15 +68,35 @@
     - **Educational Components**: `ContextVisualizer`, `GamutComparator`, `LightnessScale`.
     - Simulate High Contrast in Demo.
 
-## Epoch 6: Design System Primitives (Planned)
+## Epoch 6: Design System Primitives (In Progress)
 
 - **Goal**: Complete the "System" aspect by adding missing UI primitives.
-- **Key Deliverables**:
-  - **Shadows/Elevation**: An elevation system derived from contrast/lightness.
-  - **Focus Rings**: Accessibility-critical indicators that adapt to the surface.
-  - **Data Visualization**: Distinct palettes for charts that harmonize with the theme.
+- **Phases**:
+  - **Phase 1: UI Primitives (Completed)**
+    - **Shadows/Elevation**: Semantic shadow scale (`sm` to `xl`) with "White Glow" for Dark Mode.
+    - **Focus Rings**: Universal focus indicators (`.focus-ring`).
+  - **Phase 2: Data Visualization Palettes (Completed)**
+    - **Goal**: Generate categorical color palettes for charts/graphs.
+    - **Strategy**: Harmonized Fixed Hues (curated list solved against theme constraints).
+    - **Deliverables**: `--chart-*` tokens, Demo visualization.
+  - **Phase 3: Theme Builder UX/UI Polish (Completed)**
+    - **Goal**: Refine the Theme Builder into a professional, ergonomic tool.
+    - **Key Deliverables**:
+      - **Layout**: Sticky Toolbar/Sidebar split.
+      - **Navigation**: Fix nested scrolling.
+      - **Presets**: Better persistence and selection UX.
+      - **Visuals**: Lucide icons, shadow polish, compact controls.
+      - **Features**: Expose Palette Config in UI.
 
-## Epoch 7: Ecosystem & Interoperability (Planned)
+## Epoch 7: Deployment & Infrastructure (Planned)
+
+- **Goal**: Unify the Demo and Documentation into a single deployable site and automate the process.
+- **Key Deliverables**:
+  - **Unified Build**: Single command to build both Demo and Docs.
+  - **Routing**: Seamless linking between Docs and Demo.
+  - **CI/CD**: GitHub Actions workflow for automated deployment to GitHub Pages.
+
+## Epoch 8: Ecosystem & Interoperability (Planned)
 
 - **Goal**: Connect the Color System with the broader design tool ecosystem.
 - **Key Deliverables**:

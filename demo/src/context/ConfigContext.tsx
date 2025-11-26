@@ -8,9 +8,12 @@ import { createContext } from "preact";
 import { useContext, useEffect, useState } from "preact/hooks";
 
 const STORAGE_KEY = "color-system-config";
+const CUSTOM_STORAGE_KEY = "color-system-custom-config";
+const PRESET_ID_KEY = "color-system-preset-id";
 
 interface ConfigContextType {
   config: SolverConfig;
+  presetId: string;
   setConfig: (config: SolverConfig) => void;
   updateAnchor: (
     polarity: "page" | "inverted",
@@ -34,11 +37,20 @@ interface ConfigContextType {
   ) => void;
   resetConfig: () => void;
   loadPreset: (presetId: string) => void;
+  loadConfigFromFile: (file: File) => Promise<void>;
 }
 
 const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 
 export function ConfigProvider({ children }: { children: any }) {
+  const [presetId, setPresetId] = useState<string>(() => {
+    try {
+      return localStorage.getItem(PRESET_ID_KEY) || "";
+    } catch {
+      return "";
+    }
+  });
+
   const [config, setConfig] = useState<SolverConfig>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -59,6 +71,21 @@ export function ConfigProvider({ children }: { children: any }) {
     }
   }, [config]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(PRESET_ID_KEY, presetId);
+    } catch (e) {
+      console.error("Failed to save presetId to localStorage", e);
+    }
+  }, [presetId]);
+
+  // Helper to mark as custom when modified
+  const markAsCustom = () => {
+    if (presetId !== "") {
+      setPresetId("");
+    }
+  };
+
   const resetConfig = () => {
     if (
       confirm(
@@ -66,19 +93,57 @@ export function ConfigProvider({ children }: { children: any }) {
       )
     ) {
       setConfig(DEFAULT_CONFIG);
+      setPresetId("");
     }
   };
 
-  const loadPreset = (presetId: string) => {
-    const preset = PRESETS.find((p) => p.id === presetId);
-    if (preset) {
-      if (
-        confirm(
-          `Are you sure you want to load the "${preset.name}" preset? All unsaved changes will be lost.`
-        )
-      ) {
+  const loadPreset = (newPresetId: string) => {
+    // 1. If currently Custom, save to Custom Storage
+    if (presetId === "") {
+      try {
+        localStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(config));
+      } catch (e) {
+        console.error("Failed to save custom config", e);
+      }
+    }
+
+    // 2. Load new config
+    if (newPresetId === "") {
+      // Loading Custom
+      try {
+        const stored = localStorage.getItem(CUSTOM_STORAGE_KEY);
+        if (stored) {
+          setConfig(JSON.parse(stored));
+        } else {
+          // Fallback if no custom config saved yet
+          setConfig(DEFAULT_CONFIG);
+        }
+      } catch (e) {
+        console.error("Failed to load custom config", e);
+        setConfig(DEFAULT_CONFIG);
+      }
+    } else {
+      // Loading a Preset
+      const preset = PRESETS.find((p) => p.id === newPresetId);
+      if (preset) {
         setConfig(preset.config);
       }
+    }
+
+    // 3. Update State
+    setPresetId(newPresetId);
+  };
+
+  const loadConfigFromFile = async (file: File) => {
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      // TODO: Validate schema?
+      setConfig(parsed);
+      setPresetId(""); // Treat as custom
+    } catch (e) {
+      console.error("Failed to load config file", e);
+      alert("Failed to load configuration file. Please check the format.");
     }
   };
 
@@ -88,6 +153,7 @@ export function ConfigProvider({ children }: { children: any }) {
     position: "start" | "end",
     value: number
   ) => {
+    markAsCustom();
     setConfig((prev) => ({
       ...prev,
       anchors: {
@@ -107,6 +173,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const updateKeyColor = (key: string, value: string) => {
+    markAsCustom();
     setConfig((prev) => ({
       ...prev,
       anchors: {
@@ -120,6 +187,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const updateHueShiftRotation = (degrees: number) => {
+    markAsCustom();
     setConfig((prev) => ({
       ...prev,
       hueShift: {
@@ -132,6 +200,7 @@ export function ConfigProvider({ children }: { children: any }) {
   // --- Surface Management ---
 
   const addGroup = (name: string) => {
+    markAsCustom();
     if (config.groups.some((g) => g.name === name)) {
       throw new Error(`Group "${name}" already exists.`);
     }
@@ -142,6 +211,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const removeGroup = (index: number) => {
+    markAsCustom();
     setConfig((prev) => ({
       ...prev,
       groups: prev.groups.filter((_, i) => i !== index),
@@ -149,6 +219,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const updateGroup = (index: number, group: Partial<SurfaceGroup>) => {
+    markAsCustom();
     if (
       group.name &&
       config.groups.some((g, i) => i !== index && g.name === group.name)
@@ -162,6 +233,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const addSurface = (groupIndex: number, surface: SurfaceConfig) => {
+    markAsCustom();
     const allSurfaces = config.groups.flatMap((g) => g.surfaces);
     if (allSurfaces.some((s) => s.slug === surface.slug)) {
       throw new Error(`Surface slug "${surface.slug}" already exists.`);
@@ -175,6 +247,7 @@ export function ConfigProvider({ children }: { children: any }) {
   };
 
   const removeSurface = (groupIndex: number, surfaceIndex: number) => {
+    markAsCustom();
     setConfig((prev) => ({
       ...prev,
       groups: prev.groups.map((g, i) =>
@@ -190,6 +263,7 @@ export function ConfigProvider({ children }: { children: any }) {
     surfaceIndex: number,
     surface: Partial<SurfaceConfig>
   ) => {
+    markAsCustom();
     if (surface.slug) {
       // Check for duplicate slug, excluding the current surface being edited
       const isDuplicate = config.groups.some((g, gIdx) =>
@@ -223,6 +297,7 @@ export function ConfigProvider({ children }: { children: any }) {
     <ConfigContext.Provider
       value={{
         config,
+        presetId,
         setConfig,
         updateAnchor,
         updateKeyColor,
@@ -235,6 +310,7 @@ export function ConfigProvider({ children }: { children: any }) {
         updateSurface,
         resetConfig,
         loadPreset,
+        loadConfigFromFile,
       }}
     >
       {children}

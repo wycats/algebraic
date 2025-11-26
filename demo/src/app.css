@@ -99,3 +99,9 @@
   cursor: not-allowed;
   border-color: var(--border-subtle-token);
 }
+
+@media (max-width: 1100px) {
+  .nav-label {
+    display: none;
+  }
+}

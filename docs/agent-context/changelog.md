@@ -166,3 +166,55 @@
   - Updated `accessibility.md` to reflect the new high contrast implementation.
   - Ensured all documentation is up-to-date with the latest changes.
 - **Build Fixes**: Resolved issues with the demo build to ensure a smooth development experience.
+
+## Epoch 6: Phase 1 - UI Primitives (2025-11-25)
+
+**Goal**: Implement essential UI primitives (Elevation and Focus) to support rich application interfaces.
+
+**Completed Work**:
+
+- **Elevation System (Shadows)**:
+  - Designed a semantic shadow scale (`sm`, `md`, `lg`, `xl`).
+  - Implemented `light-dark()` support for shadows in `generator.ts`.
+  - **Dark Mode Strategy**: Adopted a "White Glow" approach (`oklch(1 0 0 / 0.15)`) to ensure shadows are visible against dark backgrounds.
+- **Focus Indicators**:
+  - Implemented a universal focus ring system using `--focus-ring-color`.
+  - Added `.focus-ring` utility class for consistent accessibility.
+- **Demo & Docs**:
+  - Added `PrimitivesShowcase` to the demo app.
+  - Created `docs/guide/src/usage/primitives.md` to document the new features.
+
+## Epoch 6: Phase 2 - Data Visualization Palettes (2025-11-26)
+
+**Goal**: Generate categorical color palettes for charts and graphs that harmonize with the theme.
+
+**Completed Work**:
+
+- **Strategy**: Adopted "Harmonized Fixed Hues" (curated hues solved for lightness against the page background).
+- **Configuration**: Added `palette` object to `SolverConfig` with `hues` and `targetChroma`.
+- **Generator**: Updated `generateTokensCss` to output `--chart-1` through `--chart-10` tokens.
+- **Refinement**:
+  - **Shuffled Hues**: Reordered the default hue list to maximize distinctiveness between adjacent colors.
+  - **Contrast Tuning**: Lowered default target contrast to 60 (from 105) to prevent "muddy" colors in Light Mode.
+- **Demo**: Added a "Data Visualization" showcase with interactive chroma controls and sample charts.
+- **Documentation**: Added `docs/guide/src/usage/data-viz.md`.
+
+## Epoch 6: Phase 3 - UX Polish & Preset Management (2025-11-26)
+
+**Goal**: Improve the usability of the Theme Builder by fixing layout issues, consolidating navigation, and streamlining the preset workflow.
+
+**Completed Work**:
+
+- **Toolbar Navigation**:
+  - Created a sticky top `Toolbar` component to house all navigation and global actions.
+  - Moved Theme Toggle, Export, and Reset actions to the toolbar for better discoverability.
+- **Preset Persistence**:
+  - Implemented auto-saving for "Custom" themes in `localStorage`.
+  - Added `presetId` tracking to allow frictionless switching between Presets and Custom drafts without data loss.
+- **Settings Panel**:
+  - Implemented a dropdown panel for global settings (Anchors, Key Colors) using the native **Popover API** and **CSS Anchor Positioning**.
+- **File Management**:
+  - Added an "Upload JSON" feature to load saved configs back into the editor.
+- **Layout Fixes**:
+  - Resolved nested scrollbar issues by refactoring the main app layout.
+  - Implemented responsive behavior for the Toolbar (hiding labels on small screens).

@@ -1,8 +1,9 @@
-import { SolverConfig, SurfaceConfig, Mode } from './types.js';
+import { SolverConfig, SurfaceConfig, Mode, ColorSpec } from './types.js';
+export { ThemeManager, ThemeManagerOptions, ThemeMode, updateFavicon, updateThemeColor } from './browser.js';
 export { SURFACES } from './constants.js';
 export { DEFAULT_CONFIG } from './defaults.js';
+export { toHighContrast } from './generator.js';
 export { PRESETS, Preset } from './presets.js';
-export { ThemeManager, ThemeManagerOptions, ThemeMode, updateFavicon, updateThemeColor } from './browser.js';
 
 declare function getKeyColorStats(keyColors?: Record<string, string>): {
     lightness?: number;
@@ -11,7 +12,7 @@ declare function getKeyColorStats(keyColors?: Record<string, string>): {
 };
 declare function solve(config: SolverConfig): {
     surfaces: SurfaceConfig[];
-    backgrounds: Map<string, Record<Mode, number>>;
+    backgrounds: Map<string, Record<Mode, ColorSpec>>;
 };
 
 export { getKeyColorStats, solve };

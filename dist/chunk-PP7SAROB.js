@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG } from './chunk-OJJVGUDU.js';
+import { DEFAULT_CONFIG } from './chunk-XL23LTBT.js';
 
 // src/lib/presets.ts
 var PRESETS = [
@@ -53,5 +53,5 @@ var PRESETS = [
 ];
 
 export { PRESETS };
-//# sourceMappingURL=chunk-XVS54W7J.js.map
-//# sourceMappingURL=chunk-XVS54W7J.js.map
+//# sourceMappingURL=chunk-PP7SAROB.js.map
+//# sourceMappingURL=chunk-PP7SAROB.js.map

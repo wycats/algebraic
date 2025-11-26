@@ -22,7 +22,8 @@ export function generateTheme(config: SolverConfig, selector?: string): string {
     config.groups,
     backgrounds,
     config.borderTargets,
-    selector
+    selector,
+    config.palette
   );
 
   // Prepend variables if key colors exist

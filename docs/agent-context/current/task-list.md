@@ -1,0 +1,20 @@
+- [x] **Setup**
+  - [x] Install `lucide-preact` and `wouter`.
+- [x] **Layout Refactor**
+  - [x] Create `Toolbar` component.
+  - [x] Move Global Actions to Toolbar.
+  - [x] Move Anchors/Key Colors to Toolbar (or a "Settings" panel).
+  - [x] Fix scrolling (remove nested scrollbars).
+- [x] **Routing**
+  - [x] Implement `wouter` in `App.tsx`.
+  - [x] Update navigation to use `Link` or `useLocation`.
+- [x] **Preset UX**
+  - [x] Update `ConfigContext` to track/persist `presetId`.
+  - [x] Update `PresetSelector` UI.
+- [x] **Palette UI**
+  - [x] Add `PaletteConfigurator` to the Sidebar or Toolbar.
+- [x] **Visuals**
+  - [x] Replace text buttons with Icon Buttons (Lucide).
+  - [x] Add shadows/polish to UI elements.
+  - [x] Fix Toolbar font (system-ui) and remove duplicate settings panel.
+  - [x] Fix Toolbar layout crowding (responsive labels).

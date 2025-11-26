@@ -1,3 +1,3 @@
-export { DEFAULT_CONFIG } from '../chunk-OJJVGUDU.js';
+export { DEFAULT_CONFIG } from '../chunk-XL23LTBT.js';
 //# sourceMappingURL=defaults.js.map
 //# sourceMappingURL=defaults.js.map

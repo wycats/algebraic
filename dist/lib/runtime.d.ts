@@ -1,4 +1,5 @@
 import { SolverConfig } from './types.js';
+export { toHighContrast } from './generator.js';
 
 /**
  * Generates a CSS theme string from a SolverConfig.

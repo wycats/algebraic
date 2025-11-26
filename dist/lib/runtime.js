@@ -1,10 +1,11 @@
-import { generateTokensCss } from '../chunk-EB6GU2YN.js';
-import { solve, getKeyColorStats } from '../chunk-KW6VFTAP.js';
-import '../chunk-VZHHTPIW.js';
+import { solve, getKeyColorStats } from '../chunk-4O54K6CL.js';
+import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
+import { generateTokensCss } from '../chunk-BHESPRR4.js';
+export { toHighContrast } from '../chunk-BHESPRR4.js';
 import '../chunk-7LUK7J7M.js';
-import '../chunk-XVS54W7J.js';
-import '../chunk-OJJVGUDU.js';
+import '../chunk-PP7SAROB.js';
+import '../chunk-XL23LTBT.js';
 
 // src/lib/runtime.ts
 function generateTheme(config, selector) {
@@ -13,9 +14,9 @@ function generateTheme(config, selector) {
   let css = generateTokensCss(
     config.groups,
     backgrounds,
-    config.hueShift,
     config.borderTargets,
-    selector
+    selector,
+    config.palette
   );
   if (stats.chroma !== void 0 || stats.hue !== void 0) {
     const vars = [];

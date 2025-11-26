@@ -69,4 +69,32 @@ describe("generateTokensCss", () => {
     const css = generateTokensCss(groups, backgrounds);
     expect(css).toMatchSnapshot();
   });
+
+  it("generates palette tokens when configured", () => {
+    const groups: SurfaceGroup[] = [];
+    const backgrounds = new Map<string, Record<Mode, ColorSpec>>();
+    backgrounds.set("page", {
+      light: { l: 1, c: 0, h: 0 },
+      dark: { l: 0, c: 0, h: 0 },
+    });
+
+    const palette = {
+      targetChroma: 0.15,
+      hues: [0, 120, 240],
+    };
+
+    const css = generateTokensCss(
+      groups,
+      backgrounds,
+      undefined,
+      undefined,
+      palette
+    );
+
+    expect(css).toContain("--chart-1");
+    expect(css).toContain("--chart-2");
+    expect(css).toContain("--chart-3");
+    expect(css).toContain("oklch(");
+    expect(css).toMatchSnapshot();
+  });
 });

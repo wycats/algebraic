@@ -34,6 +34,12 @@ var DEFAULT_CONFIG = {
     interactive: 30,
     critical: 80
   },
+  palette: {
+    targetChroma: 0.12,
+    // Standard categorical hues (approximate D3/Tableau)
+    // Red, Orange, Yellow, Lime, Green, Cyan, Blue, Indigo, Purple, Pink
+    hues: [25, 45, 85, 125, 150, 190, 250, 280, 320, 360]
+  },
   groups: [
     {
       name: "Base",
@@ -94,5 +100,5 @@ var DEFAULT_CONFIG = {
 };
 
 export { DEFAULT_CONFIG };
-//# sourceMappingURL=chunk-OJJVGUDU.js.map
-//# sourceMappingURL=chunk-OJJVGUDU.js.map
+//# sourceMappingURL=chunk-XL23LTBT.js.map
+//# sourceMappingURL=chunk-XL23LTBT.js.map

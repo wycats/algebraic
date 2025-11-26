@@ -49,6 +49,26 @@
 
 /* --- MODIFIERS --- */
 
+/* Elevation */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Focus */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
 /* Hue Adjustments */
 .hue-brand {
   --base-hue: var(--hue-brand);

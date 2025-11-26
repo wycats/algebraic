@@ -86,11 +86,30 @@ type BorderTargets = {
     interactive: number;
     critical: number;
 };
+interface PaletteConfig {
+    /**
+     * Target chroma for chart colors.
+     * Defaults to ~0.12 (vibrant but not neon).
+     * Can be set to 'auto' to match the Action color.
+     */
+    targetChroma?: number;
+    /**
+     * List of hues to use for the palette.
+     * Defaults to a standard 10-color categorical scale.
+     */
+    hues?: number[];
+}
+interface ColorSpec {
+    l: number;
+    c: number;
+    h: number;
+}
 type SolverConfig = {
     anchors: PolarityAnchors;
     groups: SurfaceGroup[];
     hueShift?: HueShiftConfig;
     borderTargets?: BorderTargets;
+    palette?: PaletteConfig;
 };
 type SurfaceDefinition = {
     slug: string;
@@ -98,4 +117,4 @@ type SurfaceDefinition = {
     lightness: Record<Mode, number>;
 };
 
-export type { AnchorValue, Anchors, BezierCurve, BorderTargets, Context, ContrastOffsets, HueShiftConfig, Mode, ModeAnchors, ModeSpec, Mutable, Polarity, PolarityAnchors, SolverConfig, StateDefinition, SurfaceConfig, SurfaceDefinition, SurfaceGroup };
+export type { AnchorValue, Anchors, BezierCurve, BorderTargets, ColorSpec, Context, ContrastOffsets, HueShiftConfig, Mode, ModeAnchors, ModeSpec, Mutable, PaletteConfig, Polarity, PolarityAnchors, SolverConfig, StateDefinition, SurfaceConfig, SurfaceDefinition, SurfaceGroup };

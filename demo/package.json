@@ -12,7 +12,9 @@
     "apca-w3": "^0.1.9",
     "color-system": "workspace:*",
     "culori": "^4.0.2",
-    "preact": "^10.27.2"
+    "lucide-preact": "^0.555.0",
+    "preact": "^10.27.2",
+    "wouter": "^3.8.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",

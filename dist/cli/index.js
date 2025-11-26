@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import { generateTokensCss } from '../chunk-EB6GU2YN.js';
-import { solve, getKeyColorStats } from '../chunk-KW6VFTAP.js';
-import '../chunk-VZHHTPIW.js';
+import { solve, getKeyColorStats } from '../chunk-4O54K6CL.js';
+import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
+import { generateTokensCss, toHighContrast } from '../chunk-BHESPRR4.js';
 import '../chunk-7LUK7J7M.js';
-import '../chunk-XVS54W7J.js';
-import { DEFAULT_CONFIG } from '../chunk-OJJVGUDU.js';
+import '../chunk-PP7SAROB.js';
+import { DEFAULT_CONFIG } from '../chunk-XL23LTBT.js';
 import { existsSync, writeFileSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 
@@ -45,8 +45,9 @@ if (import.meta.main) {
   let css = generateTokensCss(
     config.groups,
     backgrounds,
-    config.hueShift,
-    config.borderTargets
+    config.borderTargets,
+    void 0,
+    config.palette
   );
   const stats = getKeyColorStats(config.anchors.keyColors);
   if (stats.chroma !== void 0 || stats.hue !== void 0) {
@@ -62,6 +63,29 @@ ${vars.join("\n")}
 ` + css;
     }
   }
+  console.log("Generating High Contrast variant...");
+  const hcConfig = toHighContrast(config);
+  const { backgrounds: hcBackgrounds } = solve(hcConfig);
+  const hcCss = generateTokensCss(
+    hcConfig.groups,
+    hcBackgrounds,
+    hcConfig.borderTargets,
+    void 0,
+    hcConfig.palette
+  );
+  const hcBlock = `
+@media (prefers-contrast: more) {
+  :root {
+    --base-chroma: 0;
+    --surface-chroma-adjust: 0;
+    --hue-adjust: 0;
+    --chroma-brand: 0;
+  }
+
+${hcCss}
+}
+`;
+  css += hcBlock;
   console.log("Writing CSS to:", BASE_CSS_PATH);
   writeFileSync(BASE_CSS_PATH, css);
   console.log("Done!");

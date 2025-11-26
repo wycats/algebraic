@@ -1,5 +1,6 @@
-import { SurfaceGroup, Mode, HueShiftConfig, BorderTargets } from './types.js';
+import { SolverConfig, SurfaceGroup, Mode, ColorSpec, BorderTargets, PaletteConfig } from './types.js';
 
-declare function generateTokensCss(groups: SurfaceGroup[], backgrounds: Map<string, Record<Mode, number>>, hueShiftConfig?: HueShiftConfig, borderTargets?: BorderTargets, selector?: string): string;
+declare function toHighContrast(config: SolverConfig): SolverConfig;
+declare function generateTokensCss(groups: SurfaceGroup[], backgrounds: Map<string, Record<Mode, ColorSpec>>, borderTargets?: BorderTargets, selector?: string, palette?: PaletteConfig): string;
 
-export { generateTokensCss };
+export { generateTokensCss, toHighContrast };

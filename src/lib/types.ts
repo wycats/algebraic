@@ -107,6 +107,27 @@ export type BorderTargets = {
   critical: number;
 };
 
+export interface PaletteConfig {
+  /**
+   * Target chroma for chart colors.
+   * Defaults to ~0.12 (vibrant but not neon).
+   * Can be set to 'auto' to match the Action color.
+   */
+  targetChroma?: number;
+  /**
+   * Target contrast against the page background (APCA).
+   * Lower values (e.g. 45-60) result in lighter colors in light mode (more pastel/vibrant)
+   * and darker colors in dark mode.
+   * Defaults to 60.
+   */
+  targetContrast?: number;
+  /**
+   * List of hues to use for the palette.
+   * Defaults to a standard 10-color categorical scale.
+   */
+  hues?: number[];
+}
+
 export interface ColorSpec {
   l: number;
   c: number;
@@ -118,6 +139,7 @@ export type SolverConfig = {
   groups: SurfaceGroup[];
   hueShift?: HueShiftConfig;
   borderTargets?: BorderTargets;
+  palette?: PaletteConfig;
 };
 
 export type SurfaceDefinition = {

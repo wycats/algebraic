@@ -105,5 +105,5 @@ var ThemeManager = class {
 };
 
 export { ThemeManager, updateFavicon, updateThemeColor };
-//# sourceMappingURL=chunk-VZHHTPIW.js.map
-//# sourceMappingURL=chunk-VZHHTPIW.js.map
+//# sourceMappingURL=chunk-JY54TZUI.js.map
+//# sourceMappingURL=chunk-JY54TZUI.js.map

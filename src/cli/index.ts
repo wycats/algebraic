@@ -51,7 +51,13 @@ if (import.meta.main) {
   const { backgrounds } = solve(config);
 
   console.log("Generating CSS...");
-  let css = generateTokensCss(config.groups, backgrounds, config.borderTargets);
+  let css = generateTokensCss(
+    config.groups,
+    backgrounds,
+    config.borderTargets,
+    undefined,
+    config.palette
+  );
 
   const stats = getKeyColorStats(config.anchors.keyColors);
   if (stats.chroma !== undefined || stats.hue !== undefined) {
@@ -72,7 +78,9 @@ if (import.meta.main) {
   const hcCss = generateTokensCss(
     hcConfig.groups,
     hcBackgrounds,
-    hcConfig.borderTargets
+    hcConfig.borderTargets,
+    undefined,
+    hcConfig.palette
   );
 
   // Wrap in media query and add overrides

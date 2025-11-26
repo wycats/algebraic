@@ -1,4 +1,4 @@
-import { roundLightness, avg, solveForegroundSpec, clamp01, backgroundBounds, clampTo, solveBackgroundForContrast, contrastForBackground } from './chunk-7LUK7J7M.js';
+import { roundLightness, avg, calculateHueShift, solveForegroundSpec, clamp01, backgroundBounds, clampTo, solveBackgroundForContrast, contrastForBackground } from './chunk-7LUK7J7M.js';
 import { converter } from 'culori';
 
 var toOklch = converter("oklch");
@@ -124,6 +124,9 @@ function solve(config) {
   const groups = config.groups;
   const allSurfaces = groups.flatMap((g) => g.surfaces);
   alignInvertedAnchors(anchors, anchors.keyColors);
+  const keyColorStats = getKeyColorStats(anchors.keyColors);
+  const defaultHue = keyColorStats.hue ?? 0;
+  const defaultChroma = 0;
   const backgrounds = /* @__PURE__ */ new Map();
   for (const polarity of ["page", "inverted"]) {
     for (const mode of ["light", "dark"]) {
@@ -139,9 +142,24 @@ function solve(config) {
         anchors[polarity][mode],
         filteredGroups
       );
-      for (const [slug, value] of sequence.entries()) {
-        const entry = backgrounds.get(slug) ?? { light: 0, dark: 0 };
-        entry[mode] = value;
+      for (const [slug, lightness] of sequence.entries()) {
+        const entry = backgrounds.get(slug) ?? {
+          light: { l: 0, c: 0, h: 0 },
+          dark: { l: 0, c: 0, h: 0 }
+        };
+        const surface = allSurfaces.find(
+          (s) => s.slug === slug || slug.startsWith(`${s.slug}-`)
+        );
+        let chroma = defaultChroma;
+        let hue = defaultHue;
+        if (surface) {
+          if (surface.targetChroma !== void 0) {
+            chroma = surface.targetChroma;
+          }
+        }
+        const shift = calculateHueShift(lightness, config.hueShift);
+        hue += shift;
+        entry[mode] = { l: lightness, c: chroma, h: hue };
         backgrounds.set(slug, entry);
       }
     }
@@ -152,8 +170,8 @@ function solve(config) {
       throw new Error(`Missing solved backgrounds for ${surface.slug}.`);
     }
     const computed = {
-      light: solveForegroundSpec(background.light),
-      dark: solveForegroundSpec(background.dark)
+      light: solveForegroundSpec(background.light.l),
+      dark: solveForegroundSpec(background.dark.l)
     };
     return { ...surface, computed };
   });
@@ -164,5 +182,5 @@ function solve(config) {
 }
 
 export { getKeyColorStats, solve };
-//# sourceMappingURL=chunk-KW6VFTAP.js.map
-//# sourceMappingURL=chunk-KW6VFTAP.js.map
+//# sourceMappingURL=chunk-4O54K6CL.js.map
+//# sourceMappingURL=chunk-4O54K6CL.js.map

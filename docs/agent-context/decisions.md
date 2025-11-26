@@ -99,3 +99,56 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Consistency**: Guarantees that the "Live Preview" in the Theme Builder is pixel-perfectly identical to the final generated CSS.
   - **Maintainability**: A single codebase for the math engine reduces bugs and duplication.
   - **Flexibility**: Allows for future use cases like "Server-Side Rendering" of themes or "Edge Computing" generation.
+
+### [2025-11-25] White Glow for Dark Mode Shadows
+
+- **Context**: Standard black shadows (`oklch(0 0 0)`) are often invisible in Dark Mode because the background surfaces are already very dark.
+- **Decision**: Use a diffuse "White Glow" (`oklch(1 0 0 / 0.15)`) for shadows in Dark Mode.
+- **Rationale**:
+  - **Visibility**: White light creates contrast against dark backgrounds, effectively simulating "elevation" or "backlighting".
+  - **Aesthetics**: Creates a modern, neon-like effect that fits well with dark interfaces.
+  - **Simplicity**: Avoids complex "elevation overlay" systems (lightening the background color) which can interfere with the color system's strict contrast guarantees.
+
+### [2025-11-25] Harmonized Fixed Hues for Data Viz
+
+- **Context**: We need to generate categorical palettes for charts. We considered "Auto-Rotation" (math-based) vs. "Fixed Hues" (curated).
+- **Decision**: Use **Harmonized Fixed Hues**.
+- **Rationale**:
+  - **Quality**: Pure rotation often hits "muddy" or unappealing colors (e.g., dark yellow). Fixed hues ensure every color is distinct and nameable.
+  - **Harmony**: By forcing these fixed hues to match the system's Lightness/Chroma constraints, we ensure they fit the theme even if the hues themselves are standard.
+  - **Flexibility**: Users can override the specific hue list if they have brand requirements, but the default list provides a robust starting point (Tableau 10 style).
+
+### [2025-11-26] Toolbar-Based Navigation
+
+- **Context**: Navigation and global actions were scattered or missing in the demo app.
+- **Decision**: Consolidate all navigation and global actions (Theme Toggle, Export, Reset) into a sticky top `Toolbar`.
+- **Rationale**:
+  - **Consistency**: Provides a stable anchor for the user across all views.
+  - **Space Efficiency**: Frees up the sidebar for context-specific tools (like the Theme Builder controls).
+  - **Discoverability**: Makes global actions like "Export" or "Theme Switch" always available.
+
+### [2025-11-26] Preset Persistence Strategy
+
+- **Context**: Switching between Presets and Custom themes was destructive and required confirmation dialogs.
+- **Decision**: Implement auto-saving for the "Custom" slot in `localStorage` and track `presetId` explicitly.
+- **Rationale**:
+  - **Frictionless**: Users can explore presets without fear of losing their custom work.
+  - **Stateful**: The app remembers exactly where you left off, even after a refresh.
+  - **Simplicity**: Avoids complex "Save As" flows for temporary experimentation.
+
+### [2025-11-26] Native Popover & Anchor Positioning
+
+- **Context**: We needed a dropdown menu for the "Settings" panel in the Toolbar.
+- **Decision**: Use the native HTML Popover API (`popover`) and CSS Anchor Positioning (`anchor-name`, `position-anchor`).
+- **Rationale**:
+  - **Modern Standards**: Aligns with our "Baseline Newly Available" philosophy.
+  - **Performance**: Zero JavaScript overhead for positioning or focus management.
+  - **Accessibility**: Native browser support for light-dismiss and focus trapping.
+
+### [2025-11-26] Responsive Toolbar Labels
+
+- **Context**: The Toolbar became crowded on smaller screens, causing layout breakage.
+- **Decision**: Hide text labels on navigation buttons below `1100px`, showing only icons.
+- **Rationale**:
+  - **Density**: Preserves the layout structure without wrapping or overlapping.
+  - **Usability**: Icons are standard enough (Home, Palette, Settings) to be understood without labels in constrained spaces.

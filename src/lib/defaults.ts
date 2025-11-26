@@ -35,6 +35,13 @@ export const DEFAULT_CONFIG: SolverConfig = {
     interactive: 30,
     critical: 80,
   },
+  palette: {
+    targetChroma: 0.14,
+    targetContrast: 60,
+    // Standard categorical hues (approximate D3/Tableau)
+    // Shuffled to maximize distinctiveness between adjacent colors
+    hues: [25, 190, 45, 250, 85, 280, 125, 320, 150, 360],
+  },
   groups: [
     {
       name: "Base",
