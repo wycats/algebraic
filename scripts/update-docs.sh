@@ -27,8 +27,8 @@ mkdir -p docs/guide/css
 # Run the solver to ensure theme.css is up to date
 pnpm solve
 
-# Concatenate the CSS files
-cat css/tokens.css css/engine.css css/utilities.css css/theme.css > docs/guide/css/color-system.css
+# Concatenate the CSS files and remove @import statements
+cat css/tokens.css css/engine.css css/utilities.css css/theme.css | sed '/^@import/d' > docs/guide/css/color-system.css
 
 if [ $? -eq 0 ]; then
   echo "Successfully updated docs/guide/css/color-system.css"
