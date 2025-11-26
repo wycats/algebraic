@@ -6,6 +6,7 @@
 - [Core Concepts](./concepts/index.md)
   - [Surfaces](./concepts/surfaces.md)
   - [Context](./concepts/context.md)
+  - [Accessibility](./concepts/accessibility.md)
   - [The Solver](./concepts/solver.md)
 - [Deep Dive](./internals/index.md)
   - [Understanding APCA](./internals/apca.md)

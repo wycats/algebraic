@@ -86,6 +86,7 @@ The library provides a `ThemeManager` class to manage the theme mode and sync it
 ### `ThemeManager`
 
 The `ThemeManager` handles:
+
 1.  **Mode Switching**: Toggling between `light`, `dark`, and `system` modes.
 2.  **DOM Updates**: Applying the correct classes or `color-scheme` styles to the root element.
 3.  **Browser Sync**: Automatically updating the address bar color and favicon.
@@ -96,21 +97,21 @@ import { ThemeManager } from "color-system/browser";
 // Initialize the manager
 const themeManager = new ThemeManager({
   // Optional: Custom classes for light/dark modes
-  lightClass: 'light-theme',
-  darkClass: 'dark-theme',
-  
+  lightClass: "light-theme",
+  darkClass: "dark-theme",
+
   // Optional: Generator for dynamic favicons
   faviconGenerator: (color) => `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
       <circle cx="16" cy="16" r="14" fill="${color}" />
     </svg>
-  `
+  `,
 });
 
 // Set the mode
-themeManager.setMode('dark');   // Force dark mode
-themeManager.setMode('light');  // Force light mode
-themeManager.setMode('system'); // Follow system preference
+themeManager.setMode("dark"); // Force dark mode
+themeManager.setMode("light"); // Force light mode
+themeManager.setMode("system"); // Follow system preference
 
 // Get the current resolved mode ('light' or 'dark')
 console.log(themeManager.resolvedMode);
@@ -122,6 +123,7 @@ themeManager.dispose();
 ### Automatic Syncing
 
 When you call `setMode()`, the `ThemeManager` automatically:
+
 1.  Updates the root element (e.g. `document.documentElement`).
 2.  Waits for styles to compute.
 3.  Updates `<meta name="theme-color">` to match the body background.

@@ -1,33 +1,37 @@
-# Walkthrough - Epoch 5: Phase 1 (Browser Integration)
+# Walkthrough - Epoch 5: Phase 2 - Accessibility & High Contrast
 
-## Native UI Integration
+## Goal
+The goal of this phase was to ensure the Color System is robust and accessible in various challenging environments: Windows High Contrast (Forced Colors), user-preferred High Contrast (`prefers-contrast: more`), and Print.
 
-We have updated the core engine to better integrate with the browser's native UI.
+## Key Changes
 
-### CSS Updates (`css/engine.css`)
-- **`color-scheme: light dark`**: Added to `:root`. This tells the browser that the page supports both light and dark modes, which allows it to render native form controls (checkboxes, inputs) and scrollbars in the correct mode.
-- **`scrollbar-color`**: Added to the surface engine (`:where([class^="surface-"])`). This applies theme-aware styling to scrollbars on any surface.
-  - Thumb: `var(--text-subtle-token)`
-  - Track: `var(--surface-token)`
-  - This ensures that if you have a scrollable card or sidebar, the scrollbar blends in perfectly with that specific surface.
+### 1. Forced Colors Support (Windows High Contrast)
+We audited and refined the `forced-colors` support in `css/engine.css`.
+- **System Color Mapping**: Verified that surfaces map to standard system colors (`Canvas`, `ButtonFace`, `Highlight`).
+- **Interactive States**: Added overrides for `::selection` and `:focus-visible` to ensure they use the `Highlight` system color, which is critical for visibility in this mode.
+- **Borders**: Confirmed that all surfaces enforce a border in forced colors mode (since backgrounds often disappear).
 
-## Runtime Utilities
+### 2. High Contrast Preference (`prefers-contrast: more`)
+We implemented a **Build-time Algorithmic Enhancement** strategy.
+- **No Runtime Cost**: Instead of using JavaScript to detect the preference and re-solve, we generate a high-contrast variant of the theme during the build process.
+- **`toHighContrast` Utility**: Created a new utility in `src/lib/generator.ts` that:
+  - **Widens Anchors**: Pushes background and foreground anchors to 0% (Black) and 100% (White) to maximize dynamic range.
+  - **Desaturates**: The generated CSS block forces `--base-chroma: 0`, ensuring text and surfaces are grayscale for maximum sharpness.
+- **CLI Update**: The `color-system` CLI now automatically generates this variant and appends it to `theme.css` inside a `@media (prefers-contrast: more)` block.
 
-We created a new module `src/lib/browser.ts` containing a centralized `ThemeManager` class for managing theme modes and syncing with browser metadata.
+### 3. Print Styles
+We added a `@media print` block to `css/engine.css`.
+- **Ink Saving**: Forces `color-scheme: light` and removes background colors from main surfaces (`.surface-card`, etc.).
+- **Legibility**: Ensures text is black.
+- **Cleanup**: Hides interactive elements like `.surface-action` to produce a clean document.
 
-### `ThemeManager`
-- **Purpose**: A unified controller for managing the application's theme mode (`light`, `dark`, `system`) and its side effects.
-- **Features**:
-  - **Mode Management**: Handles switching between explicit modes and system preference.
-  - **DOM Updates**: Applies the correct classes or `color-scheme` styles to the root element.
-  - **Browser Sync**: Automatically updates the `<meta name="theme-color">` and favicon when the theme changes.
-  - **Event-Driven**: Uses `requestAnimationFrame` to ensure styles are computed before syncing, avoiding the need for polling or `MutationObserver`.
+### 4. Documentation
+- Created a new **Accessibility** guide (`docs/guide/src/usage/accessibility.md`) detailing these features and how to test them.
+- Added the guide to the `SUMMARY.md`.
 
-### `syncThemeColor` & `syncFavicon` (Internal)
-- The `ThemeManager` uses these internal utilities to perform the actual updates.
-- **`updateThemeColor`**: Updates the `<meta name="theme-color">` tag to match the document body's background color.
-- **`updateFavicon`**: Updates the favicon using a dynamic SVG generator that receives the current brand color.
-
-## Demo Integration
-- Updated `demo/src/context/ThemeContext.tsx` to use `ThemeManager` instead of manual DOM manipulation.
-- Removed `MutationObserver` from `demo/src/app.tsx` as the `ThemeManager` now handles synchronization imperatively when the mode changes.
+## Verification
+- **Tests**: All unit tests passed.
+- **Lint**: Codebase is lint-free.
+- **Manual Verification**:
+  - `theme.css` contains the `@media (prefers-contrast: more)` block with widened anchors (White/Black tokens).
+  - `engine.css` contains the `@media print` and `@media (forced-colors: active)` blocks.

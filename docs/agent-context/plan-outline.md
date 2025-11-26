@@ -55,11 +55,11 @@
     - `meta theme-color` sync (Address bar).
     - `color-scheme` & `scrollbar-color`.
     - **Dynamic Favicons**: Real-time generation based on system state.
-  - **Forced Colors**: Verify and refine existing Windows High Contrast support.
+  - **Accessibility & High Contrast (Phase 2) (Completed)**:
+    - **Forced Colors**: Verify and refine existing Windows High Contrast support.
+    - **Prefers Contrast**: Support for `prefers-contrast: more`.
+    - **Print Styles**: Graceful degradation for printing.
   - **P3 Gamut**: Support for `color(display-p3 ...)` output.
-  - **Print Styles**: Graceful degradation for printing.
-  - **Accessibility Preferences**: `prefers-reduced-motion`.
-  - **Support for prefers-contrast**: Automate the generation of high-contrast variants.
 
 ## Epoch 6: Design System Primitives (Planned)
 

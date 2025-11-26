@@ -58,6 +58,24 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Separation**: Distinguishes the calculation phase (`solve`) from the output generation phase (`generateTokensCss`).
   - **Clarity**: Avoids naming conflicts with the `ThemeBuilder` UI component in the demo.
 
+### [2025-11-25] Build-time High Contrast Generation
+
+- **Context**: We needed to support `prefers-contrast: more`. We considered a runtime solution (detecting the media query in JS and re-solving with a high-contrast config) vs. a build-time solution.
+- **Decision**: Generate a high-contrast variant at build time and append it to the CSS inside a `@media` block.
+- **Rationale**:
+  - **Zero Runtime Cost**: No JavaScript is required to switch modes; the browser handles it instantly via the media query.
+  - **Robustness**: Works even if JS is disabled or fails to load.
+  - **Simplicity**: The "High Contrast" logic (widening anchors, zero chroma) is deterministic and doesn't require user configuration at runtime.
+
+### [2025-11-25] "Ink & Paper" Print Strategy
+
+- **Context**: We needed to support printing. The default dark/light modes often waste ink or look bad on paper.
+- **Decision**: Force a "Light Mode" context and remove background colors from surfaces in `@media print`.
+- **Rationale**:
+  - **Economy**: Saves ink by treating the paper as the background.
+  - **Legibility**: Ensures high contrast (black text on white paper).
+  - **Simplicity**: Avoids complex "print stylesheets" by leveraging the existing semantic structure and just stripping the "paint".
+
 ### Browser Integration (Epoch 5: Phase 1)
 
 - **Unified Theme Manager**: We decided to centralize all theme-related side effects (DOM classes, meta tags, favicons) into a single `ThemeManager` class rather than having disparate utilities. This ensures a single source of truth for the current mode.

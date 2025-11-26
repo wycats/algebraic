@@ -7,8 +7,44 @@ import type {
   BorderTargets,
   HueShiftConfig,
   Mode,
+  SolverConfig,
   SurfaceGroup,
 } from "./types.ts";
+
+export function toHighContrast(config: SolverConfig): SolverConfig {
+  return {
+    ...config,
+    anchors: {
+      ...config.anchors,
+      page: {
+        ...config.anchors.page,
+        light: {
+          ...config.anchors.page.light,
+          start: { background: 1.0, adjustable: false },
+          end: { background: 0.0, adjustable: false },
+        },
+        dark: {
+          ...config.anchors.page.dark,
+          start: { background: 0.0, adjustable: false },
+          end: { background: 1.0, adjustable: false },
+        },
+      },
+      inverted: {
+        ...config.anchors.inverted,
+        light: {
+          ...config.anchors.inverted.light,
+          start: { background: 0.0, adjustable: false },
+          end: { background: 1.0, adjustable: false },
+        },
+        dark: {
+          ...config.anchors.inverted.dark,
+          start: { background: 1.0, adjustable: false },
+          end: { background: 0.0, adjustable: false },
+        },
+      },
+    },
+  };
+}
 
 export function generateTokensCss(
   groups: SurfaceGroup[],

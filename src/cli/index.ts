@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { generateTokensCss } from "../lib/generator.ts";
+import { generateTokensCss, toHighContrast } from "../lib/generator.ts";
 import { getKeyColorStats, solve } from "../lib/index.ts";
 import type { SolverConfig } from "../lib/types.ts";
 import { DEFAULT_CONFIG } from "./default-config.ts";
@@ -69,6 +69,33 @@ if (import.meta.main) {
       css = `:root {\n${vars.join("\n")}\n}\n\n` + css;
     }
   }
+
+  // --- High Contrast Generation ---
+  console.log("Generating High Contrast variant...");
+  const hcConfig = toHighContrast(config);
+  const { backgrounds: hcBackgrounds } = solve(hcConfig);
+  const hcCss = generateTokensCss(
+    hcConfig.groups,
+    hcBackgrounds,
+    hcConfig.hueShift,
+    hcConfig.borderTargets
+  );
+
+  // Wrap in media query and add overrides
+  const hcBlock = `
+@media (prefers-contrast: more) {
+  :root {
+    --base-chroma: 0;
+    --surface-chroma-adjust: 0;
+    --hue-adjust: 0;
+    --chroma-brand: 0;
+  }
+
+${hcCss}
+}
+`;
+
+  css += hcBlock;
 
   console.log("Writing CSS to:", BASE_CSS_PATH);
   writeFileSync(BASE_CSS_PATH, css);

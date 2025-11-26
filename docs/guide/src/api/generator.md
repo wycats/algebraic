@@ -10,11 +10,11 @@ Generates the CSS variables for all surfaces and their states.
 import { generateTokensCss } from "color-system/generator";
 
 const css = generateTokensCss(
-  groups,          // SurfaceGroup[]
-  backgrounds,     // Map<string, Record<Mode, number>> (from solver)
-  hueShiftConfig,  // Optional: HueShiftConfig
-  borderTargets,   // Optional: BorderTargets
-  selector         // Optional: Prefix selector (e.g. ".theme-dark")
+  groups, // SurfaceGroup[]
+  backgrounds, // Map<string, Record<Mode, number>> (from solver)
+  hueShiftConfig, // Optional: HueShiftConfig
+  borderTargets, // Optional: BorderTargets
+  selector // Optional: Prefix selector (e.g. ".theme-dark")
 );
 ```
 

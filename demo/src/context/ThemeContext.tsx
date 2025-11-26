@@ -1,6 +1,6 @@
-import { createContext } from "preact";
-import { useContext, useEffect, useState, useMemo } from "preact/hooks";
 import { ThemeManager, ThemeMode } from "color-system/browser";
+import { createContext } from "preact";
+import { useContext, useEffect, useMemo, useState } from "preact/hooks";
 
 type Theme = ThemeMode;
 type ResolvedTheme = "light" | "dark";
@@ -23,9 +23,13 @@ export function ThemeProvider({ children }: { children: any }) {
   const [theme, setTheme] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
 
-  const themeManager = useMemo(() => new ThemeManager({
-    faviconGenerator: getFaviconSvg
-  }), []);
+  const themeManager = useMemo(
+    () =>
+      new ThemeManager({
+        faviconGenerator: getFaviconSvg,
+      }),
+    []
+  );
 
   useEffect(() => {
     themeManager.setMode(theme);

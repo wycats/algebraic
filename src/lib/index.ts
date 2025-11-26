@@ -21,10 +21,10 @@ import type {
   SurfaceConfig,
   SurfaceGroup,
 } from "./types.ts";
+export * from "./browser.ts";
 export * from "./constants.ts";
 export * from "./defaults.ts";
 export * from "./presets.ts";
-export * from "./browser.ts";
 
 const toOklch = converter("oklch");
 

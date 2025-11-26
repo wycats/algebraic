@@ -356,4 +356,59 @@
   .border-interactive {
     --computed-border-color: Highlight;
   }
+
+  /* 4. Global Overrides */
+
+  /* Selection */
+  ::selection {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Focus Rings */
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* --- PRINT STYLES --- */
+
+@media print {
+  :root {
+    /* Force Light Mode to save ink */
+    color-scheme: light;
+
+    /* Remove Chroma to save color ink */
+    --base-chroma: 0;
+    --surface-chroma-adjust: 0;
+    --hue-adjust: 0;
+    --chroma-brand: 0;
+  }
+
+  /* Force white backgrounds for main surfaces */
+  .surface-card,
+  .surface-workspace,
+  .surface-tinted {
+    /*
+       We use white to simulate the paper color and ensure no background ink is used.
+       We do not use 'transparent' to ensure we cover any underlying elements if stacking occurs.
+       We do not use !important because the :where() block in the engine has 0 specificity.
+    */
+    background-color: white;
+    --computed-surface: white;
+
+    /* Add a subtle border to define the surface since the background is gone */
+    border: 1px solid var(--text-subtlest-token);
+  }
+
+  /* Ensure text is dark (Black ink) */
+  body {
+    color: black;
+  }
+
+  /* Hide purely interactive elements */
+  /* We assume .surface-action is a button/control */
+  .surface-action {
+    display: none;
+  }
 }

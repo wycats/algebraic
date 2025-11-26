@@ -110,8 +110,28 @@
 **Goal**: Make the Color System feel "native" to the browser environment.
 
 **Completed Work**:
+
 - **Native UI Integration**: Added `color-scheme: light dark` and `scrollbar-color` to the CSS engine, ensuring native controls and scrollbars match the theme.
 - **Runtime Utilities**: Created `src/lib/browser.ts` with a `ThemeManager` class to handle mode switching and side effects.
 - **Meta Theme Color**: Implemented automatic syncing of `<meta name="theme-color">` with the document background.
 - **Dynamic Favicons**: Added support for generating and updating SVG favicons based on the current theme color.
 - **Demo Update**: Refactored the demo app to use `ThemeManager`, removing manual DOM manipulation and observers.
+
+## Epoch 5: Phase 2 - Accessibility & High Contrast (2025-11-25)
+
+**Goal**: Ensure the Color System is robust and accessible in challenging environments (High Contrast, Print).
+
+**Completed Work**:
+
+- **Forced Colors (Windows High Contrast)**:
+  - Audited and refined `engine.css` to map semantic surfaces to System Colors (`Canvas`, `Highlight`, etc.).
+  - Ensured interactive states and borders remain visible when backgrounds are stripped.
+- **High Contrast Preference (`prefers-contrast: more`)**:
+  - Implemented a **Build-time Generation** strategy.
+  - Created `toHighContrast` utility in `generator.ts` that widens anchors to 0-100% and forces zero chroma.
+  - Updated CLI to automatically generate and append this variant inside a `@media` block.
+- **Print Styles**:
+  - Added `@media print` support ("Ink & Paper" strategy).
+  - Forces light mode, removes backgrounds to save ink, and hides interactive elements.
+- **Documentation**:
+  - Added a comprehensive **Accessibility** guide covering APCA (WCAG 3), Forced Colors, and Print.

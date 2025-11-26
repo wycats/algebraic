@@ -4,6 +4,7 @@ This section details the fundamental building blocks of the color system.
 
 - **[Surfaces](./surfaces.md)**: The containers that create context.
 - **[Context](./context.md)**: How polarity and mode affect color calculation.
+- **[Accessibility](./accessibility.md)**: How the system handles high contrast and print.
 
 ## Surfaces & Context
 

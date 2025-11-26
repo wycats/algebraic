@@ -10,6 +10,7 @@ In the real world, objects rarely stay the same hue as they get lighter or darke
 If you create a color palette by simply changing lightness (e.g., `oklch(0.5 0.2 260)` → `oklch(0.9 0.2 260)`), the result can feel "synthetic" or "flat". The shadows might look muddy, or the highlights might look washed out.
 
 **Hue Shifting** mimics natural light physics by rotating the hue as lightness changes. This creates palettes that feel:
+
 1.  **More Dynamic**: Colors feel alive rather than static.
 2.  **More Natural**: Mimics the way light interacts with surfaces in the real world.
 3.  **More Distinct**: Helps differentiate surfaces that are close in lightness.
