@@ -1,5 +1,6 @@
 import { SURFACES } from "color-system/constants";
 import { useState } from "preact/hooks";
+import { GamutComparator } from "./GamutComparator";
 
 export function SystemVerifier() {
   const hues = [
@@ -47,6 +48,8 @@ export function SystemVerifier() {
             <span class="text-strong">Show Borders</span>
           </label>
         </section>
+
+        <GamutComparator />
 
         {/* All Surfaces Grid */}
         <section>

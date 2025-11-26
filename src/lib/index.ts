@@ -2,6 +2,7 @@ import { converter } from "culori";
 import {
   avg,
   backgroundBounds,
+  calculateHueShift,
   clamp01,
   clampTo,
   contrastForBackground,
@@ -11,6 +12,7 @@ import {
 } from "./math.ts";
 import type {
   Anchors,
+  ColorSpec,
   Context,
   Mode,
   ModeAnchors,
@@ -24,6 +26,7 @@ import type {
 export * from "./browser.ts";
 export * from "./constants.ts";
 export * from "./defaults.ts";
+export { toHighContrast } from "./generator.ts";
 export * from "./presets.ts";
 
 const toOklch = converter("oklch");
@@ -211,7 +214,7 @@ function solveBackgroundSequence(
 
 export function solve(config: SolverConfig): {
   surfaces: SurfaceConfig[];
-  backgrounds: Map<string, Record<Mode, number>>;
+  backgrounds: Map<string, Record<Mode, ColorSpec>>;
 } {
   const anchors = config.anchors;
   const groups = config.groups;
@@ -219,7 +222,12 @@ export function solve(config: SolverConfig): {
 
   alignInvertedAnchors(anchors, anchors.keyColors);
 
-  const backgrounds = new Map<string, { light: number; dark: number }>();
+  // Calculate global key color stats (for default hue/chroma)
+  const keyColorStats = getKeyColorStats(anchors.keyColors);
+  const defaultHue = keyColorStats.hue ?? 0;
+  const defaultChroma = 0; // Default to neutral if no specific target
+
+  const backgrounds = new Map<string, { light: ColorSpec; dark: ColorSpec }>();
 
   for (const polarity of ["page", "inverted"] as const) {
     for (const mode of ["light", "dark"] as const) {
@@ -240,9 +248,35 @@ export function solve(config: SolverConfig): {
         filteredGroups
       );
 
-      for (const [slug, value] of sequence.entries()) {
-        const entry = backgrounds.get(slug) ?? { light: 0, dark: 0 };
-        entry[mode] = value;
+      for (const [slug, lightness] of sequence.entries()) {
+        const entry = backgrounds.get(slug) ?? {
+          light: { l: 0, c: 0, h: 0 },
+          dark: { l: 0, c: 0, h: 0 },
+        };
+
+        // Determine Chroma and Hue
+        // 1. Find the surface config
+        const surface = allSurfaces.find(
+          (s) => s.slug === slug || slug.startsWith(`${s.slug}-`)
+        );
+
+        let chroma = defaultChroma;
+        let hue = defaultHue;
+
+        if (surface) {
+          // Use targetChroma if specified
+          if (surface.targetChroma !== undefined) {
+            chroma = surface.targetChroma;
+          }
+          // If it's a state (e.g. hover), we might want to adjust chroma?
+          // For now, keep it simple.
+        }
+
+        // Apply Hue Shift based on lightness
+        const shift = calculateHueShift(lightness, config.hueShift);
+        hue += shift;
+
+        entry[mode] = { l: lightness, c: chroma, h: hue };
         backgrounds.set(slug, entry);
       }
     }
@@ -256,8 +290,8 @@ export function solve(config: SolverConfig): {
     }
 
     const computed: Record<Mode, ModeSpec> = {
-      light: solveForegroundSpec(background.light),
-      dark: solveForegroundSpec(background.dark),
+      light: solveForegroundSpec(background.light.l),
+      dark: solveForegroundSpec(background.dark.l),
     };
 
     return { ...surface, computed };

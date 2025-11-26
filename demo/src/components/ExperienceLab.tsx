@@ -1,6 +1,7 @@
+import { ContextVisualizer } from "./ContextVisualizer";
 import { FearlessInjector } from "./FearlessInjector";
+import { HueShiftVisualizer } from "./HueShiftVisualizer";
 import { IntentPlayground } from "./IntentPlayground";
-import { SolverPlayground } from "./SolverPlayground";
 
 export function ExperienceLab() {
   return (
@@ -33,9 +34,10 @@ export function ExperienceLab() {
           gap: "6rem",
         }}
       >
+        <ContextVisualizer />
         <IntentPlayground />
         <FearlessInjector />
-        <SolverPlayground />
+        <HueShiftVisualizer />
       </div>
     </div>
   );

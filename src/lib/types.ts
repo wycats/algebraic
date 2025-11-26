@@ -107,6 +107,12 @@ export type BorderTargets = {
   critical: number;
 };
 
+export interface ColorSpec {
+  l: number;
+  c: number;
+  h: number;
+}
+
 export type SolverConfig = {
   anchors: PolarityAnchors;
   groups: SurfaceGroup[];

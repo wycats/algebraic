@@ -128,6 +128,12 @@
             },
             "additionalProperties": false
           },
+          "targetChroma": {
+            "type": "number",
+            "description": "Optional target chroma for this surface. If specified, the surface will use this chroma value instead of the default (0).",
+            "minimum": 0,
+            "maximum": 0.4
+          },
           "states": {
             "type": "array",
             "description": "Interactive states for this surface (hover, active, etc.)",

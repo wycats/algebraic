@@ -1,7 +1,7 @@
 import { calculateHueShift, solveForegroundLightness } from "color-system/math";
 import { useEffect, useRef, useState } from "preact/hooks";
 
-export function SolverPlayground() {
+export function HueShiftVisualizer() {
   // Configuration State
   const [baseHue, setBaseHue] = useState(250); // Blueish
   const [contrastTarget, setContrastTarget] = useState(105); // Standard Strong
@@ -109,7 +109,7 @@ export function SolverPlayground() {
     >
       <header style={{ marginBottom: "2rem" }}>
         <h2 className="text-strong" style={{ fontSize: "1.5rem", margin: 0 }}>
-          Solver Playground
+          Hue Shift Visualizer
         </h2>
         <p className="text-subtle" style={{ marginTop: "0.5rem" }}>
           See how the solver derives token values from your configuration.

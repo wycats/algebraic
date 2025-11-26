@@ -51,12 +51,7 @@ if (import.meta.main) {
   const { backgrounds } = solve(config);
 
   console.log("Generating CSS...");
-  let css = generateTokensCss(
-    config.groups,
-    backgrounds,
-    config.hueShift,
-    config.borderTargets
-  );
+  let css = generateTokensCss(config.groups, backgrounds, config.borderTargets);
 
   const stats = getKeyColorStats(config.anchors.keyColors);
   if (stats.chroma !== undefined || stats.hue !== undefined) {
@@ -77,7 +72,6 @@ if (import.meta.main) {
   const hcCss = generateTokensCss(
     hcConfig.groups,
     hcBackgrounds,
-    hcConfig.hueShift,
     hcConfig.borderTargets
   );
 

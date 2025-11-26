@@ -2,6 +2,8 @@ import { generateTokensCss } from "./generator.ts";
 import { getKeyColorStats, solve } from "./index.ts";
 import type { SolverConfig } from "./types.ts";
 
+export { toHighContrast } from "./generator.ts";
+
 /**
  * Generates a CSS theme string from a SolverConfig.
  * This runs the full solver engine and token generator.
@@ -19,7 +21,6 @@ export function generateTheme(config: SolverConfig, selector?: string): string {
   let css = generateTokensCss(
     config.groups,
     backgrounds,
-    config.hueShift,
     config.borderTargets,
     selector
   );

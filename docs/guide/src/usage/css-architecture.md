@@ -134,6 +134,7 @@ For most users, the standard theme is sufficient.
 Some users explicitly request even higher contrast via their OS settings (`prefers-contrast: more`). This is supported on macOS and Windows.
 
 The system automatically handles this by generating a **High Contrast Variant** during the build process. This variant:
+
 1.  **Widens Anchors**: Pushes background and foreground anchors to pure Black (0%) and White (100%).
 2.  **Desaturates**: Removes chroma from text and surfaces to reduce visual noise.
 

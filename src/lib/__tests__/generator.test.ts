@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { generateTokensCss } from "../generator.ts";
-import type { SurfaceGroup, Mode } from "../types.ts";
+import type { ColorSpec, Mode, SurfaceGroup } from "../types.ts";
 
 describe("generateTokensCss", () => {
   it("generates correct CSS for a standard surface group", () => {
@@ -10,11 +10,13 @@ describe("generateTokensCss", () => {
         surfaces: [
           {
             slug: "page",
+            label: "Page",
             polarity: "page",
-            states: [{ name: "hover" }],
+            states: [{ name: "hover", offset: 0 }],
           },
           {
             slug: "card",
+            label: "Card",
             polarity: "page",
             states: [],
           },
@@ -22,30 +24,27 @@ describe("generateTokensCss", () => {
       },
     ];
 
-    const backgrounds = new Map<string, Record<Mode, number>>();
-    backgrounds.set("page", { light: 0.98, dark: 0.1 });
-    backgrounds.set("page-hover", { light: 0.95, dark: 0.15 });
-    backgrounds.set("card", { light: 1.0, dark: 0.2 });
-
-    const hueShiftConfig = {
-      curve: {
-        p1: [0.5, 0] as [number, number],
-        p2: [0.5, 1] as [number, number],
-      },
-      maxRotation: 180,
-    };
+    const backgrounds = new Map<string, Record<Mode, ColorSpec>>();
+    backgrounds.set("page", {
+      light: { l: 0.98, c: 0, h: 0 },
+      dark: { l: 0.1, c: 0, h: 0 },
+    });
+    backgrounds.set("page-hover", {
+      light: { l: 0.95, c: 0, h: 0 },
+      dark: { l: 0.15, c: 0, h: 0 },
+    });
+    backgrounds.set("card", {
+      light: { l: 1.0, c: 0, h: 0 },
+      dark: { l: 0.2, c: 0, h: 0 },
+    });
 
     const borderTargets = {
       decorative: 0.2,
       interactive: 0.5,
+      critical: 0.8,
     };
 
-    const css = generateTokensCss(
-      groups,
-      backgrounds,
-      hueShiftConfig,
-      borderTargets
-    );
+    const css = generateTokensCss(groups, backgrounds, borderTargets);
 
     expect(css).toMatchSnapshot();
   });
@@ -57,13 +56,14 @@ describe("generateTokensCss", () => {
         surfaces: [
           {
             slug: "unknown",
+            label: "Unknown",
             polarity: "page",
           },
         ],
       },
     ];
 
-    const backgrounds = new Map<string, Record<Mode, number>>();
+    const backgrounds = new Map<string, Record<Mode, ColorSpec>>();
     // "unknown" is missing
 
     const css = generateTokensCss(groups, backgrounds);

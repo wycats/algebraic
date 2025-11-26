@@ -1,11 +1,7 @@
-import {
-  calculateHueShift,
-  solveBorderAlpha,
-  solveForegroundSpec,
-} from "./math.ts";
+import { solveBorderAlpha, solveForegroundSpec } from "./math.ts";
 import type {
   BorderTargets,
-  HueShiftConfig,
+  ColorSpec,
   Mode,
   SolverConfig,
   SurfaceGroup,
@@ -16,6 +12,7 @@ export function toHighContrast(config: SolverConfig): SolverConfig {
     ...config,
     anchors: {
       ...config.anchors,
+      keyColors: {}, // Force grayscale
       page: {
         ...config.anchors.page,
         light: {
@@ -48,8 +45,7 @@ export function toHighContrast(config: SolverConfig): SolverConfig {
 
 export function generateTokensCss(
   groups: SurfaceGroup[],
-  backgrounds: Map<string, Record<Mode, number>>,
-  hueShiftConfig?: HueShiftConfig,
+  backgrounds: Map<string, Record<Mode, ColorSpec>>,
   borderTargets?: BorderTargets,
   selector?: string
 ): string {
@@ -66,14 +62,21 @@ export function generateTokensCss(
 
   for (const group of groups) {
     for (const surface of group.surfaces) {
-      const bgLight = backgrounds.get(surface.slug)?.light ?? 0;
-      const bgDark = backgrounds.get(surface.slug)?.dark ?? 0;
+      const bgLight = backgrounds.get(surface.slug)?.light ?? {
+        l: 0,
+        c: 0,
+        h: 0,
+      };
+      const bgDark = backgrounds.get(surface.slug)?.dark ?? {
+        l: 0,
+        c: 0,
+        h: 0,
+      };
 
-      const lightSpec = solveForegroundSpec(bgLight);
-      const darkSpec = solveForegroundSpec(bgDark);
+      const lightSpec = solveForegroundSpec(bgLight.l);
+      const darkSpec = solveForegroundSpec(bgDark.l);
 
-      const lightShift = calculateHueShift(bgLight, hueShiftConfig);
-      const darkShift = calculateHueShift(bgDark, hueShiftConfig);
+      // Hue shift is already applied in solve()
 
       // Generate the Class Definition
       const prefix = selector ? `${selector} ` : "";
@@ -82,8 +85,8 @@ export function generateTokensCss(
       // 1. Surface Token
       rootLines.push(
         `  --surface-token: light-dark(
-    oklch(${toNumber(bgLight)} 0 ${toNumber(lightShift)}),
-    oklch(${toNumber(bgDark)} 0 ${toNumber(darkShift)})
+    oklch(${toNumber(bgLight.l)} ${toNumber(bgLight.c)} ${toNumber(bgLight.h)}),
+    oklch(${toNumber(bgDark.l)} ${toNumber(bgDark.c)} ${toNumber(bgDark.h)})
   );`
       );
 
@@ -118,22 +121,22 @@ export function generateTokensCss(
         ): number => solveBorderAlpha(bgL, textL, target);
 
         const lightDec = solveBorder(
-          bgLight,
+          bgLight.l,
           lightSpec["fg-strong"],
           borderTargets.decorative
         );
         const darkDec = solveBorder(
-          bgDark,
+          bgDark.l,
           darkSpec["fg-strong"],
           borderTargets.decorative
         );
         const lightInt = solveBorder(
-          bgLight,
+          bgLight.l,
           lightSpec["fg-strong"],
           borderTargets.interactive
         );
         const darkInt = solveBorder(
-          bgDark,
+          bgDark.l,
           darkSpec["fg-strong"],
           borderTargets.interactive
         );
@@ -181,20 +184,15 @@ export function generateTokensCss(
                 ? `.surface-${surface.slug}:${state.name}`
                 : `.surface-${surface.slug}-${state.name}`; // e.g. .surface-card-selected
 
-            const lightStateShift = calculateHueShift(
-              bgState.light,
-              hueShiftConfig
-            );
-            const darkStateShift = calculateHueShift(
-              bgState.dark,
-              hueShiftConfig
-            );
-
             rootLines.push(`${prefix}${stateSelector} {`);
             rootLines.push(
               `  --surface-token: light-dark(
-    oklch(${toNumber(bgState.light)} 0 ${toNumber(lightStateShift)}),
-    oklch(${toNumber(bgState.dark)} 0 ${toNumber(darkStateShift)})
+    oklch(${toNumber(bgState.light.l)} ${toNumber(bgState.light.c)} ${toNumber(
+                bgState.light.h
+              )}),
+    oklch(${toNumber(bgState.dark.l)} ${toNumber(bgState.dark.c)} ${toNumber(
+                bgState.dark.h
+              )})
   );`
             );
             rootLines.push(`}`);

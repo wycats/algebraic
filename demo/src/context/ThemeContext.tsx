@@ -1,4 +1,4 @@
-import { ThemeManager, ThemeMode } from "color-system/browser";
+import { ThemeManager, type ThemeMode } from "color-system/browser";
 import { createContext } from "preact";
 import { useContext, useEffect, useMemo, useState } from "preact/hooks";
 

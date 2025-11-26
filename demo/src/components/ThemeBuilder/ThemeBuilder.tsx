@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import { useConfig } from "../../context/ConfigContext";
 import { AnchorsEditor } from "./AnchorsEditor";
 import { ExportPanel } from "./ExportPanel";
@@ -9,10 +10,11 @@ import { SurfaceManager } from "./SurfaceManager";
 
 export function ThemeBuilder() {
   const { config } = useConfig();
+  const [simulateHighContrast, setSimulateHighContrast] = useState(false);
 
   return (
     <div style={{ display: "flex", height: "100vh", paddingTop: "4rem" }}>
-      <LiveThemeInjector />
+      <LiveThemeInjector simulateHighContrast={simulateHighContrast} />
 
       {/* Sidebar */}
       <aside
@@ -34,6 +36,24 @@ export function ThemeBuilder() {
           <p class="text-subtle" style={{ margin: 0, fontSize: "0.9rem" }}>
             Customize global system parameters.
           </p>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              marginTop: "1rem",
+              cursor: "pointer",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={simulateHighContrast}
+              onChange={(e) => setSimulateHighContrast(e.currentTarget.checked)}
+            />
+            <span class="text-strong" style={{ fontSize: "0.9rem" }}>
+              Simulate High Contrast
+            </span>
+          </label>
         </div>
 
         <PresetSelector />

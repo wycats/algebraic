@@ -315,6 +315,24 @@ function SurfaceRow({
             </select>
           </label>
 
+          <label
+            class="text-subtle"
+            style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+          >
+            Target Chroma ({surface.targetChroma ?? 0})
+            <input
+              type="range"
+              min="0"
+              max="0.4"
+              step="0.01"
+              value={surface.targetChroma ?? 0}
+              onInput={(e) =>
+                onUpdate({ targetChroma: Number(e.currentTarget.value) })
+              }
+              style={{ width: "100%" }}
+            />
+          </label>
+
           <div
             style={{
               display: "flex",
