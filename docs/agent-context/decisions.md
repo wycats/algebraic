@@ -81,3 +81,21 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Unified Theme Manager**: We decided to centralize all theme-related side effects (DOM classes, meta tags, favicons) into a single `ThemeManager` class rather than having disparate utilities. This ensures a single source of truth for the current mode.
 - **Event-Driven Sync**: We chose to use `requestAnimationFrame` and event listeners for syncing theme changes instead of `MutationObserver` or polling. This is more performant and less prone to race conditions.
 - **Native UI Primitives**: We opted to use standard CSS properties (`color-scheme`, `scrollbar-color`) for native UI integration, ensuring that the system plays nicely with the browser's built-in form controls and scrollbars without requiring custom JavaScript for every element.
+
+### [2025-11-25] Baseline Newly Available Browser Support
+
+- **Context**: We are implementing advanced color features (P3 Gamut) using `oklch`. We need to decide whether to support older browsers with fallbacks (e.g., hex codes).
+- **Decision**: Adopt a "Baseline Newly Available" support policy. We will **not** generate fallbacks for `oklch`, `light-dark()`, or `@property`.
+- **Rationale**:
+  - **Simplicity**: Drastically reduces the complexity of the generator and CSS output.
+  - **Future-Proof**: `oklch` is the standard for color on the web. Support is already >92% and growing.
+  - **Target Audience**: This system is designed for modern web applications that likely already require modern browser features.
+
+### [2025-11-25] Isomorphic Solver Architecture
+
+- **Context**: We need to support both static CSS generation (CLI) and live theme editing (Demo App).
+- **Decision**: Maintain a strictly isomorphic core (`src/lib`) that runs identically in Node.js and the Browser.
+- **Rationale**:
+  - **Consistency**: Guarantees that the "Live Preview" in the Theme Builder is pixel-perfectly identical to the final generated CSS.
+  - **Maintainability**: A single codebase for the math engine reduces bugs and duplication.
+  - **Flexibility**: Allows for future use cases like "Server-Side Rendering" of themes or "Edge Computing" generation.

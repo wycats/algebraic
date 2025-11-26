@@ -135,3 +135,15 @@
   - Forces light mode, removes backgrounds to save ink, and hides interactive elements.
 - **Documentation**:
   - Added a comprehensive **Accessibility** guide covering APCA (WCAG 3), Forced Colors, and Print.
+
+## Epoch 5: Phase 3 - P3 Gamut Support (2025-11-25)
+
+**Goal**: Unlock the full color capabilities of the system by enabling P3 Gamut support.
+
+**Completed Work**:
+
+- **Solver Architecture**: Updated `solve` to return full `ColorSpec` (L, C, H) instead of just lightness.
+- **Generator Update**: Updated `generateTokensCss` to output `oklch(L C H)` instead of hardcoded grayscale.
+- **Configuration**: Added `targetChroma` to `SurfaceConfig` to allow specific surfaces (like buttons) to have vibrancy.
+- **Policy**: Established "Baseline Newly Available" policy (no fallbacks for older browsers).
+- **Verification**: Verified that the isomorphic architecture ensures consistency between CLI generation and live runtime solving.

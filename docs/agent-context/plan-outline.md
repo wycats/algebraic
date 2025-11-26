@@ -59,7 +59,14 @@
     - **Forced Colors**: Verify and refine existing Windows High Contrast support.
     - **Prefers Contrast**: Support for `prefers-contrast: more`.
     - **Print Styles**: Graceful degradation for printing.
-  - **P3 Gamut**: Support for `color(display-p3 ...)` output.
+  - **P3 Gamut (Phase 3) (Completed)**:
+    - Support for `oklch` output with chroma.
+    - "Baseline Newly Available" policy.
+  - **Demo & Documentation Alignment (Phase 4) (Planned)**:
+    - Update Demo App to use `ThemeManager`.
+    - Expose `targetChroma` in Theme Builder.
+    - **Educational Components**: `ContextVisualizer`, `GamutComparator`, `LightnessScale`.
+    - Simulate High Contrast in Demo.
 
 ## Epoch 6: Design System Primitives (Planned)
 
