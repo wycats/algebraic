@@ -40,6 +40,10 @@ To start a new phase, use the `.github/prompts/phase-start.prompt.md` prompt.
 
 To resume work on an existing phase (e.g., in a new chat session), use the `.github/prompts/phase-continue.prompt.md` prompt.
 
+### Checking Phase Status
+
+To get a status report on the current phase, use the `.github/prompts/phase-status.prompt.md` prompt.
+
 ### Phase Transitions
 
 To complete the current phase and transition to the next one, use the `.github/prompts/phase-transition.prompt.md` prompt.

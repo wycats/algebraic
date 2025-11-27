@@ -1,5 +1,6 @@
 import { calculateHueShift, solveForegroundLightness } from "color-system/math";
 import { useEffect, useRef, useState } from "preact/hooks";
+import { useTheme } from "../context/ThemeContext";
 
 export function HueShiftVisualizer() {
   // Configuration State
@@ -8,41 +9,10 @@ export function HueShiftVisualizer() {
   const [hueShiftAmount, setHueShiftAmount] = useState(5); // System Default
 
   // Theme State
-  const [isDark, setIsDark] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const updateTheme = () => {
-      const rootScheme = document.documentElement.style.colorScheme;
-      if (rootScheme === "dark") {
-        setIsDark(true);
-      } else if (rootScheme === "light") {
-        setIsDark(false);
-      } else {
-        setIsDark(query.matches);
-      }
-    };
-
-    // Initial check
-    updateTheme();
-
-    // Listen for system changes
-    const mediaHandler = () => updateTheme();
-    query.addEventListener("change", mediaHandler);
-
-    // Listen for manual overrides (attribute changes on html)
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["style"],
-    });
-
-    return () => {
-      query.removeEventListener("change", mediaHandler);
-      observer.disconnect();
-    };
-  }, [isDark]);
+  // Constants
 
   // Constants
   const cardLight = 0.92;
@@ -348,7 +318,7 @@ export function HueShiftVisualizer() {
 
           {/* The Programming Model (Code Inspector) */}
           <div
-            className="surface-subtle bordered"
+            className="surface-tinted bordered"
             style={{
               padding: "2rem",
               borderRadius: "8px",

@@ -33,30 +33,34 @@ The **Solver** handles the complexity for you:
 
 ### 1. Guarantees Contrast
 
-<div class="docs-flex surface-card docs-p-4 docs-rounded">
-  <button class="surface-action hue-brand docs-p-2 docs-rounded">Brand</button>
-  <button class="surface-action hue-blue docs-p-2 docs-rounded">Blue</button>
-  <button class="surface-action hue-success docs-p-2 docs-rounded">Success</button>
-  <button class="surface-action hue-warning docs-p-2 docs-rounded">Warning</button>
+<div class="not-content">
+  <div class="docs-flex surface-card docs-p-4 docs-rounded">
+    <button class="surface-action hue-brand docs-p-2 docs-rounded">Brand</button>
+    <button class="surface-action hue-blue docs-p-2 docs-rounded">Blue</button>
+    <button class="surface-action hue-success docs-p-2 docs-rounded">Success</button>
+    <button class="surface-action hue-warning docs-p-2 docs-rounded">Warning</button>
+  </div>
 </div>
 
 _All these buttons have different hues, but the system mathematically guarantees they meet the same contrast standard._
 
 ### 2. Handles Polarity & Perception
 
-<div class="docs-grid">
-  <div class="force-light surface-page docs-p-4 docs-rounded docs-border">
-    <strong>Light Mode</strong>
-    <div class="surface-card docs-p-4 docs-rounded docs-mt-4">
-      Card
-      <div class="text-subtle">Lc 90 vs Page</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="force-light surface-page docs-p-4 docs-rounded docs-border">
+      <strong>Light Mode</strong>
+      <div class="surface-card docs-p-4 docs-rounded docs-mt-4">
+        Card
+        <div class="text-subtle">Lc 90 vs Page</div>
+      </div>
     </div>
-  </div>
-  <div class="force-dark surface-page docs-p-4 docs-rounded docs-border">
-    <strong>Dark Mode</strong>
-    <div class="surface-card docs-p-4 docs-rounded docs-mt-4">
-      Card
-      <div class="text-subtle">Lc 90 vs Page</div>
+    <div class="force-dark surface-page docs-p-4 docs-rounded docs-border">
+      <strong>Dark Mode</strong>
+      <div class="surface-card docs-p-4 docs-rounded docs-mt-4">
+        Card
+        <div class="text-subtle">Lc 90 vs Page</div>
+      </div>
     </div>
   </div>
 </div>
@@ -65,28 +69,30 @@ _The system automatically inverts the colors. Notice how the "Card" feels equall
 
 ### 3. Shifts Hue (Bezold–Brücke Effect)
 
-<div class="docs-grid">
-  <div class="surface-page docs-p-4 docs-rounded docs-border">
-    <strong>Linear (Boring)</strong>
-    <div class="docs-flex docs-mt-4" style="gap: 0">
-      <div style="background: oklch(0.2 0.1 260); height: 40px; flex: 1; border-radius: 4px 0 0 4px"></div>
-      <div style="background: oklch(0.4 0.1 260); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.6 0.1 260); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.8 0.1 260); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.95 0.1 260); height: 40px; flex: 1; border-radius: 0 4px 4px 0"></div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="surface-page docs-p-4 docs-rounded docs-border">
+      <strong>Linear (Boring)</strong>
+      <div class="docs-flex docs-mt-4" style="gap: 0">
+        <div style="background: oklch(0.2 0.1 260); height: 40px; flex: 1; border-radius: 4px 0 0 4px"></div>
+        <div style="background: oklch(0.4 0.1 260); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.6 0.1 260); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.8 0.1 260); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.95 0.1 260); height: 40px; flex: 1; border-radius: 0 4px 4px 0"></div>
+      </div>
+      <div class="text-subtle docs-mt-2">Same hue (260) at all lightness levels.</div>
     </div>
-    <div class="text-subtle docs-mt-2">Same hue (260) at all lightness levels.</div>
-  </div>
-  <div class="surface-page docs-p-4 docs-rounded docs-border">
-    <strong>Shifted (Dynamic)</strong>
-    <div class="docs-flex docs-mt-4" style="gap: 0">
-      <div style="background: oklch(0.2 0.1 260); height: 40px; flex: 1; border-radius: 4px 0 0 4px"></div>
-      <div style="background: oklch(0.4 0.1 270); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.6 0.1 285); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.8 0.1 305); height: 40px; flex: 1;"></div>
-      <div style="background: oklch(0.95 0.1 330); height: 40px; flex: 1; border-radius: 0 4px 4px 0"></div>
+    <div class="surface-page docs-p-4 docs-rounded docs-border">
+      <strong>Shifted (Dynamic)</strong>
+      <div class="docs-flex docs-mt-4" style="gap: 0">
+        <div style="background: oklch(0.2 0.1 260); height: 40px; flex: 1; border-radius: 4px 0 0 4px"></div>
+        <div style="background: oklch(0.4 0.1 270); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.6 0.1 285); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.8 0.1 305); height: 40px; flex: 1;"></div>
+        <div style="background: oklch(0.95 0.1 330); height: 40px; flex: 1; border-radius: 0 4px 4px 0"></div>
+      </div>
+      <div class="text-subtle docs-mt-2">Hue rotates (Blue &rarr; Purple &rarr; Pink) as lightness increases.</div>
     </div>
-    <div class="text-subtle docs-mt-2">Hue rotates (Blue &rarr; Purple &rarr; Pink) as lightness increases.</div>
   </div>
 </div>
 
@@ -110,14 +116,16 @@ A Surface is not just a background color. It is a **Context Creator**. When you 
 
 Before understanding specific surfaces, you must understand **Polarity**. Every surface has a polarity that determines how it reacts to Light and Dark mode.
 
-<div class="docs-grid">
-  <div class="surface-card docs-p-4 docs-rounded">
-    <strong>Page-Aligned</strong>
-    <div class="text-subtle">Follows the theme (Light on Light)</div>
-  </div>
-  <div class="surface-spotlight docs-p-4 docs-rounded">
-    <strong>Inverted</strong>
-    <div class="text-subtle">Opposes the theme (Dark on Light)</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="surface-card docs-p-4 docs-rounded">
+      <strong>Page-Aligned</strong>
+      <div class="text-subtle">Follows the theme (Light on Light)</div>
+    </div>
+    <div class="surface-spotlight docs-p-4 docs-rounded">
+      <strong>Inverted</strong>
+      <div class="text-subtle">Opposes the theme (Dark on Light)</div>
+    </div>
   </div>
 </div>
 
@@ -139,22 +147,25 @@ The system groups surfaces into four semantic categories based on their intent:
 
 The system comes with a standard set of surfaces that map to these categories. While you can create custom surfaces in the Theme Builder, these defaults cover most UI patterns.
 
-<div class="surface-page docs-p-4 docs-rounded docs-border">
-  <strong>Page (Canvas)</strong>
-  <div class="text-subtle docs-mb-4">The infinite backdrop</div>
+<div class="not-content">
+  <div class="surface-page docs-p-4 docs-rounded docs-border">
+    <strong>Page (Canvas)</strong>
+    <div class="text-subtle docs-mb-4">The infinite backdrop</div>
 
-  <div class="surface-workspace docs-p-4 docs-rounded docs-border">
-    <strong>Workspace (Canvas)</strong>
-    <div class="text-subtle docs-mb-4">Elevated area</div>
+    <div class="surface-workspace docs-p-4 docs-rounded docs-border">
+      <strong>Workspace (Canvas)</strong>
+      <div class="text-subtle docs-mb-4">Elevated area</div>
 
-    <div class="surface-card docs-p-4 docs-rounded">
-      <strong>Card (Container)</strong>
-      <div class="text-subtle docs-mb-4">Contained element</div>
+      <div class="surface-card docs-p-4 docs-rounded">
+        <strong>Card (Container)</strong>
+        <div class="text-subtle docs-mb-4">Contained element</div>
 
-      <div class="surface-tinted docs-p-4 docs-rounded">
-        <strong>Tinted (Container)</strong>
-        <div class="text-subtle">Subtle grouping</div>
+        <div class="surface-tinted docs-p-4 docs-rounded">
+          <strong>Tinted (Container)</strong>
+          <div class="text-subtle">Subtle grouping</div>
+        </div>
       </div>
+
     </div>
 
   </div>
@@ -164,24 +175,28 @@ The system comes with a standard set of surfaces that map to these categories. W
 
 Actions are surfaces that invite user input. They are the "buttons" and "controls" of your interface.
 
-<div class="docs-flex surface-card docs-p-4 docs-rounded">
-  <button class="surface-action docs-p-2 docs-rounded">Action</button>
-  <button class="surface-action hue-brand docs-p-2 docs-rounded">Brand Action</button>
-  <button class="surface-action hue-danger docs-p-2 docs-rounded">Danger Action</button>
+<div class="not-content">
+  <div class="docs-flex surface-card docs-p-4 docs-rounded">
+    <button class="surface-action docs-p-2 docs-rounded">Action</button>
+    <button class="surface-action hue-brand docs-p-2 docs-rounded">Brand Action</button>
+    <button class="surface-action hue-danger docs-p-2 docs-rounded">Danger Action</button>
+  </div>
 </div>
 
 ### Spotlights (Attention)
 
 Spotlights are used to draw immediate attention. They use **Inverted Polarity** to create maximum contrast and visual separation from the page.
 
-<div class="docs-grid">
-  <div class="surface-spotlight docs-p-4 docs-rounded">
-    <strong>Spotlight</strong>
-    <div class="text-subtle">High emphasis</div>
-  </div>
-  <div class="surface-soft-spotlight docs-p-4 docs-rounded">
-    <strong>Soft Spotlight</strong>
-    <div class="text-subtle">Medium emphasis</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="surface-spotlight docs-p-4 docs-rounded">
+      <strong>Spotlight</strong>
+      <div class="text-subtle">High emphasis</div>
+    </div>
+    <div class="surface-soft-spotlight docs-p-4 docs-rounded">
+      <strong>Soft Spotlight</strong>
+      <div class="text-subtle">Medium emphasis</div>
+    </div>
   </div>
 </div>
 
@@ -226,15 +241,17 @@ Text and borders are **Context Consumers**. They don't have their own colors; th
 
 This means you can copy-paste a component from a light card to a dark spotlight, and the text will automatically invert to remain readable.
 
-<div class="docs-grid">
-  <div class="surface-card docs-p-4 docs-rounded">
-    <div class="text-strong">Strong Text</div>
-    <div class="text-subtle">Subtle Text</div>
-    <div class="bordered docs-p-2 docs-m-4">Bordered Element</div>
-  </div>
-  <div class="surface-spotlight docs-p-4 docs-rounded">
-    <div class="text-strong">Strong Text</div>
-    <div class="text-subtle">Subtle Text</div>
-    <div class="bordered docs-p-2 docs-m-4">Bordered Element</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="surface-card docs-p-4 docs-rounded">
+      <div class="text-strong">Strong Text</div>
+      <div class="text-subtle">Subtle Text</div>
+      <div class="bordered docs-p-2 docs-m-4">Bordered Element</div>
+    </div>
+    <div class="surface-spotlight docs-p-4 docs-rounded">
+      <div class="text-strong">Strong Text</div>
+      <div class="text-subtle">Subtle Text</div>
+      <div class="bordered docs-p-2 docs-m-4">Bordered Element</div>
+    </div>
   </div>
 </div>

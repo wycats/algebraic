@@ -1,55 +1,105 @@
-# Walkthrough - Epoch 8: Architecture Migration (Astro Starlight)
+# Walkthrough - Epoch 8 Refinement
 
-## Summary
+## Overview
 
-We successfully initialized the new documentation site using **Astro Starlight** and migrated the existing content from `mdbook`. We chose **Preact** for the interactive components to enable direct code reuse from the existing `demo` application.
+This phase focuses on polishing the visual presentation of the new Astro Starlight documentation site, addressing regressions observed after the initial migration.
 
-## Key Changes
+## Changes
 
-### 1. Infrastructure Setup
+### 1. Restored Documentation Utilities
 
-- Created `site/` as the new documentation root.
-- Initialized Astro Starlight with Preact support.
-- Configured `site/astro.config.mjs` with:
-  - Sidebar structure mirroring the old docs.
-  - Vite aliases (`@demo`, `@lib`) to allow importing code from the `demo` and `src` directories.
-- Updated root `package.json` scripts (`docs:dev`, `docs:build`) to point to the new Astro site.
+The migration from `mdbook` left behind some custom utility classes (`docs-p-4`, `docs-rounded`, etc.) that were used in the Markdown files.
 
-### 2. Content Migration
+- Created `site/src/styles/docs.css` to define these utilities.
+- Imported this stylesheet in `site/src/components/SystemDemo.tsx` so it's available to all demo-wrapped pages.
 
-- Wrote a custom migration script (`scripts/migrate-docs.ts`) that:
-  - Reads markdown files from `docs/legacy-guide`.
-  - Adds required Frontmatter (title) for Starlight.
-  - Moves them to `site/src/content/docs`.
-- Successfully migrated all chapters (Concepts, Usage, API).
+### 2. Theme Synchronization
 
-### 3. Component Integration Strategy
+The `SystemDemo` component (which wraps interactive examples) was managing its own theme state, leading to desynchronization with Starlight's global theme picker.
 
-- Created a `SystemDemo` wrapper component (`site/src/components/SystemDemo.tsx`).
-  - This wraps children in `ConfigProvider` and `ThemeProvider` from the demo app.
-  - This allows us to use complex demo components (like `ContextVisualizer`) directly in MDX files without rewriting state logic.
-- Verified this works by creating a test page `demo-test.mdx`.
+- Implemented a `ThemeSync` component inside `SystemDemo`.
+- It observes the `data-theme` attribute on the `<html>` element and updates the internal `ThemeContext` to match.
 
-### 4. Interactive Components Integration
+### 3. Component Fixes
 
-- **ContextVisualizer**: Integrated into `concepts/surfaces.mdx`.
-  - Renamed file to `.mdx` to support components.
-  - Replaced the "Nesting Surfaces" HTML block with the live component.
-  - Wrapped content in `<SystemDemo>` to provide theme context.
-- **HueShiftVisualizer**: Integrated into `concepts/hue-shifting.mdx`.
-  - Replaced the static "Visual Comparison" section with the interactive visualizer.
-  - This allows users to experiment with the hue shift curve directly in the docs.
+- **HueShiftVisualizer**:
+  - Updated to use the shared `useTheme` hook instead of redundant (and potentially conflicting) internal logic.
+  - Replaced the missing `surface-subtle` class with `surface-tinted` to ensure correct rendering.
+- **MDX Content**:
+  - Fixed syntax errors in `hue-shifting.mdx` (duplicate content, HTML comments) that were causing build failures.
 
-### 5. Deployment & Cleanup
+### 4. Build Stability
 
-- **Build Pipeline**:
-  - Updated `scripts/build-site.ts` to build the Astro site and the Demo app, then merge them.
-  - Updated `.github/workflows/deploy.yml` to deploy the `site/dist` artifact.
-- **Cleanup**:
-  - Verified all links using `scripts/check-links.ts` (fixed missing dependency).
-  - Deleted `docs/legacy-guide` as the migration is complete.
+- **SSR Compatibility**:
 
-## Next Steps
+  - Updated `ConfigContext` to safely handle `localStorage` access during Server-Side Rendering, preventing build errors and log noise.
+  - Implemented a robust check to ensure `localStorage` is only accessed when available:
 
-- The `scripts/check-links.ts` script was created to find broken relative links but failed due to a missing `glob` dependency. This needs to be fixed and run.
-- We need to systematically replace the static HTML placeholders in the migrated markdown with the actual Preact components.
+    ```typescript
+    // Before
+    if (typeof localStorage === "undefined" || typeof localStorage.getItem !== "function") ...
+
+    // After
+    if (typeof localStorage !== "undefined" && localStorage?.getItem) ...
+    ```
+
+  This resolved the build errors and ensures the site generates static HTML correctly without crashing on browser-specific APIs.
+
+### CSS Spacing Override
+
+The user identified a specific Starlight CSS rule (`.sl-markdown-content :not(...) + :not(...)`) that was injecting unwanted `margin-top` between elements inside our `.docs-card` components, causing misalignment.
+
+We updated `site/src/styles/docs.css` to explicitly override this behavior:
+
+```css
+.docs-card {
+  /* ... */
+  gap: 0.5rem; /* Use gap for internal spacing instead of margins */
+}
+
+/* Override Starlight's aggressive markdown spacing */
+.sl-markdown-content .docs-card > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+```
+
+This ensures that the spacing within our custom documentation cards is controlled entirely by our CSS (`gap`), ignoring the default markdown typography rules that were causing the "taller first box" issue.
+
+### Alignment Refinements
+
+The user reported that the "first box is taller" and that the boxes were not aligned. This was likely due to variable title lengths causing the content below (the color bars) to start at different vertical positions, creating a misaligned appearance.
+
+We introduced a `.docs-card-header` class with a `min-height` to enforce consistent vertical rhythm:
+
+```css
+.docs-card-header {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  min-height: 2.5em; /* Ensure alignment for 1-2 line titles */
+}
+```
+
+We updated `hue-shifting.mdx` to use this new class for all card titles. This ensures that even if one title wraps and another doesn't, the content below them remains perfectly aligned.
+
+### Visual Hierarchy & Alignment Fixes
+
+The user reported that the "boxes" in the Hue Shifting documentation were misaligned and lacked visual hierarchy. We identified that the previous implementation relied on simple borders without a background, and the grid items weren't strictly enforcing equal height or content alignment.
+
+We introduced a new semantic class `.docs-card` in `site/src/styles/docs.css`:
+
+```css
+.docs-card {
+  background-color: var(--sl-color-gray-6); /* distinct background */
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* ensures equal height in grid */
+  gap: 0.5rem; /* Use gap for internal spacing instead of margins */
+}
+```
+
+We then updated `site/src/content/docs/concepts/hue-shifting.mdx` to use this class, replacing the verbose utility classes (`docs-p-4 docs-rounded docs-border`). This ensures a consistent, aligned, and visually distinct presentation for the examples.

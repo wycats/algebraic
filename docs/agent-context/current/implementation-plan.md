@@ -1,68 +1,41 @@
-# Implementation Plan - Epoch 8: Architecture Migration (Astro Starlight)
+# Implementation Plan - Epoch 8 Extension: The "Fresh Eyes" Documentation Overhaul
 
 ## Goal
 
-Modernize the documentation stack by migrating from `mdbook` to **Astro Starlight**. This will enable us to embed live **Preact** components (from the demo app) directly into the documentation, creating a truly interactive style guide.
+Conduct a comprehensive review and rewrite of the entire documentation suite. The objective is not just to "port" content, but to re-author it as if writing for the first time, ensuring it fully reflects the current system's capabilities, philosophy, and the new interactive possibilities of the Astro platform.
+
+## Philosophy: "Greenfield Mindset"
+
+We will approach the documentation with a "Greenfield Mindset". Instead of asking "How do I migrate this file?", we ask:
+*   "If I were explaining this system today, how would I do it?"
+*   "Does this concept still matter?"
+*   "Can this wall of text be replaced by a live component?"
+*   "Is the narrative flow logical for a new user?"
+
+## Scope
+
+All content within `site/src/content/docs/`.
 
 ## Strategy
 
-### 1. Directory Structure
+1.  **Audit & Outline**:
+    *   Review the current structure.
+    *   Draft an "Ideal Table of Contents" based on the system *as it exists now*.
+    *   Identify legacy artifacts or "mdbook-isms" to remove.
 
-We will use the `site/` directory for the new Astro project, keeping the existing `docs/` folder for legacy content and agent context.
+2.  **Section-by-Section Rewrite**:
+    *   **Introduction**: Hook the reader. Why does this system exist?
+    *   **Concepts**: Explain the "Physics" of the system (Anchors, Surfaces, Context) using the new visualizers.
+    *   **Usage**: Practical guides for developers and designers.
+    *   **Internals**: Deep dives for contributors (APCA, Solver logic).
 
-- **Legacy**: `docs/legacy-guide/` (mdbook source), `docs/agent-context/` (AI context).
-- **New**: `site/` (Astro root), `site/src/content/docs/` (Markdown content).
+3.  **Visual Integration**:
+    *   Ensure every concept is backed by a visual or interactive demo.
+    *   Use the `SystemDemo` and `ContextVisualizer` components aggressively to show, not just tell.
 
-### 2. Component Sharing
+## Success Criteria
 
-The system itself is framework-agnostic and does not expose UI components. However, the **Demo App** contains valuable educational components (like `ContextVisualizer`) built with **Preact**.
+*   The documentation feels cohesive and native to the new platform.
+*   No "legacy" phrasing (e.g., referencing old CLI commands that changed).
+*   Interactive components are woven naturally into the narrative.
 
-- **Decision**: We will use **Preact** for the documentation site.
-- **Rationale**: This allows us to directly import and reuse the existing visualization components from `demo/src/components` without rewriting them in another framework (like Svelte or Vue).
-- We will configure Vite (inside Astro) to alias `@demo/` to `demo/src/`.
-
-### 3. Migration Process
-
-1.  **Backup**: `docs/guide` has been moved to `docs/legacy-guide`.
-2.  **Scaffold**: Astro Starlight initialized in `site/`.
-3.  **Port**: Move markdown files to `site/src/content/docs`.
-4.  **Enhance**: Replace static HTML/CSS blocks with MDX components imported from the demo.
-
-## Phases
-
-### Phase 1: Setup & Scaffolding
-
-- [x] Rename `docs/guide` to `docs/legacy-guide`.
-- [x] Initialize Astro Starlight in `site/`.
-- [x] Install dependencies: `preact`, `@astrojs/preact`.
-- [x] Configure `site/astro.config.mjs`:
-  - Enable Starlight.
-  - Enable Preact.
-  - Configure Sidebar (based on old `SUMMARY.md`).
-- [x] Configure `site/tsconfig.json` to extend root config and support Preact.
-
-### Phase 2: Content Migration
-
-- [x] Port `introduction.md` and `philosophy.md`.
-- [x] Port "Concepts" chapter.
-- [x] Port "Usage" chapter.
-- [x] Port "API" chapter.
-- [ ] Fix internal links and image paths.
-
-### Phase 3: Interactive Components
-
-- [x] Configure Vite aliases in `site/astro.config.mjs` to access `demo/src/`.
-- [x] Create a `SystemDemo` wrapper component in Astro to provide the `ThemeContext` (using the system's runtime).
-- [ ] Replace the "Live CSS" HTML blocks in `concepts/surfaces.md` with the `ContextVisualizer` component from the demo.
-- [ ] Replace `hue-shifting.md` diagrams with `HueShiftVisualizer`.
-
-### Phase 4: Deployment & Cleanup
-
-- [ ] Update `package.json` scripts (`docs:dev`, `docs:build` to point to `site`).
-- [ ] Update GitHub Actions workflow.
-- [ ] Delete `docs/legacy-guide`.
-
-## Risks
-
-- **Broken Links**: Moving files might break relative links. Starlight warns about this, but we need to be careful.
-- **Styling**: We must ensure the System's CSS (`engine.css`) is loaded globally so the components render correctly, without conflicting with Starlight's default styles. We will **not** use Tailwind.

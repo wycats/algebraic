@@ -45,21 +45,22 @@ const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 export function ConfigProvider({ children }: { children: any }) {
   const [presetId, setPresetId] = useState<string>(() => {
     try {
-      return localStorage.getItem(PRESET_ID_KEY) || "";
-    } catch {
-      return "";
-    }
+      if (typeof localStorage !== "undefined" && localStorage?.getItem) {
+        return localStorage.getItem(PRESET_ID_KEY) || "";
+      }
+    } catch {}
+    return "";
   });
 
   const [config, setConfig] = useState<SolverConfig>(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        return JSON.parse(stored);
+      if (typeof localStorage !== "undefined" && localStorage?.getItem) {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          return JSON.parse(stored);
+        }
       }
-    } catch (e) {
-      console.error("Failed to load config from localStorage", e);
-    }
+    } catch {}
     return DEFAULT_CONFIG;
   });
 

@@ -1,0 +1,75 @@
+/* Documentation Utilities */
+
+.docs-p-2 {
+  padding: 0.5rem;
+}
+
+.docs-p-4 {
+  padding: 1rem;
+}
+
+.docs-m-2 {
+  margin: 0.5rem;
+}
+
+.docs-m-4 {
+  margin: 1rem;
+}
+
+.docs-mt-4 {
+  margin-top: 1rem;
+}
+
+.docs-mb-4 {
+  margin-bottom: 1rem;
+}
+
+.docs-rounded {
+  border-radius: 0.5rem;
+}
+
+.docs-border {
+  border: 1px solid var(--sl-color-gray-5); /* Starlight variable or fallback */
+}
+
+.docs-card {
+  background-color: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.5rem; /* Use gap for internal spacing */
+}
+
+.docs-card-header {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  min-height: 2.5em; /* Ensure alignment for 1-2 line titles */
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.docs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.docs-flex {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Ensure surfaces have relative positioning for contained absolute elements if any */
+[class*="surface-"] {
+  position: relative;
+}

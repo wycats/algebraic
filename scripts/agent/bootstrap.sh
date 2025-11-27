@@ -42,6 +42,34 @@ When picking up work in the middle of a phase (e.g., starting a new chat session
   - Continue execution from that point.
 EOF
 
+cat << 'EOF' > .github/prompts/phase-status.prompt.md
+---
+agent: agent
+description: This prompt is used to get a status report on the current phase.
+---
+
+### Phase Status Report
+
+When asked for the status of the current phase, perform the following actions:
+
+1.  **Gather Context**:
+    - Read `${workspaceFolder}/docs/agent-context/current/task-list.md` to see what is done and what is pending.
+    - Read `${workspaceFolder}/docs/agent-context/current/implementation-plan.md` to understand the goals and scope.
+    - Read `${workspaceFolder}/docs/agent-context/current/walkthrough.md` to see the narrative of progress so far.
+    - Read `${workspaceFolder}/docs/agent-context/plan-outline.md` to identify the current phase number and title.
+
+2.  **Generate Report**:
+    - **Phase Identity**: State the current phase number and title.
+    - **Progress Summary**: Summarize how much of the work is complete (e.g., "Design and Core Implementation are done, currently working on Tests").
+    - **Pending Tasks**: List the immediate next tasks from the `task-list.md`.
+    - **Blockers/Issues**: If the context suggests any open questions or deferred work, mention them.
+    - **Next Action**: Suggest the logical next step for the user or agent.
+
+3.  **Presentation**:
+    - Keep the report concise and high-level.
+    - Use bullet points for readability.
+EOF
+
 cat << 'EOF' > .github/prompts/phase-transition.prompt.md
 ---
 agent: agent
@@ -332,6 +360,10 @@ To start a new phase, use the `.github/prompts/phase-start.prompt.md` prompt.
 ### Continuing a Phase
 
 To resume work on an existing phase (e.g., in a new chat session), use the `.github/prompts/phase-continue.prompt.md` prompt.
+
+### Checking Phase Status
+
+To get a status report on the current phase, use the `.github/prompts/phase-status.prompt.md` prompt.
 
 ### Phase Transitions
 

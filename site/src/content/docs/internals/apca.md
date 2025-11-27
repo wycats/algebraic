@@ -17,29 +17,31 @@ The old math was simple, but flawed. It treated all colors equally. But your eye
 
 WCAG 2.x treats all text the same, regardless of how thin or thick it is. But your eye needs much more contrast to see a thin line than a thick block.
 
-<div class="docs-grid">
-  <div class="docs-p-4 docs-rounded docs-border">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-      <strong style="color: #15803d;">WCAG Passes (4.5:1)</strong>
-      <span style="font-size: 0.8em; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">Passes</span>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="docs-p-4 docs-rounded docs-border">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <strong style="color: #15803d;">WCAG Passes (4.5:1)</strong>
+        <span style="font-size: 0.8em; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">Passes</span>
+      </div>
+      <div style="font-weight: 100; font-size: 2.5rem; color: #767676; font-family: sans-serif; margin-bottom: 1rem;">
+        Thin Text
+      </div>
+      <div class="text-subtle" style="font-size: 0.9em; line-height: 1.4;">
+        Technically passes WCAG AA. <br><strong>Hard to read.</strong>
+      </div>
     </div>
-    <div style="font-weight: 100; font-size: 2.5rem; color: #767676; font-family: sans-serif; margin-bottom: 1rem;">
-      Thin Text
-    </div>
-    <div class="text-subtle" style="font-size: 0.9em; line-height: 1.4;">
-      Technically passes WCAG AA. <br><strong>Hard to read.</strong>
-    </div>
-  </div>
-  <div class="docs-p-4 docs-rounded docs-border">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-      <strong style="color: #b45309;">WCAG Fails (3.5:1)</strong>
-      <span style="font-size: 0.8em; background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px;">Fails</span>
-    </div>
-    <div style="font-weight: 900; font-size: 2.5rem; color: #888888; font-family: sans-serif; margin-bottom: 1rem;">
-      Bold Text
-    </div>
-    <div class="text-subtle" style="font-size: 0.9em; line-height: 1.4;">
-      Technically fails WCAG AA. <br><strong>Easy to read.</strong>
+    <div class="docs-p-4 docs-rounded docs-border">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <strong style="color: #b45309;">WCAG Fails (3.5:1)</strong>
+        <span style="font-size: 0.8em; background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px;">Fails</span>
+      </div>
+      <div style="font-weight: 900; font-size: 2.5rem; color: #888888; font-family: sans-serif; margin-bottom: 1rem;">
+        Bold Text
+      </div>
+      <div class="text-subtle" style="font-size: 0.9em; line-height: 1.4;">
+        Technically fails WCAG AA. <br><strong>Easy to read.</strong>
+      </div>
     </div>
   </div>
 </div>
@@ -50,23 +52,25 @@ _APCA understands this. It would give the thin text a lower score and the bold t
 
 WCAG 2.x treats **White on Black** exactly the same as **Black on White**. But your eye doesn't.
 
-<div class="docs-grid">
-  <div class="docs-p-4 docs-rounded docs-border" style="background: white; color: black;">
-    <div style="margin-bottom: 1rem;">
-      <strong>Positive Polarity</strong>
-      <div style="font-size: 0.8em; opacity: 0.7;">Dark on Light</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="docs-p-4 docs-rounded docs-border" style="background: white; color: black;">
+      <div style="margin-bottom: 1rem;">
+        <strong>Positive Polarity</strong>
+        <div style="font-size: 0.8em; opacity: 0.7;">Dark on Light</div>
+      </div>
+      <div style="font-size: 1.1em; line-height: 1.5;">
+        The eye resolves this detail very well.
+      </div>
     </div>
-    <div style="font-size: 1.1em; line-height: 1.5;">
-      The eye resolves this detail very well.
-    </div>
-  </div>
-  <div class="docs-p-4 docs-rounded docs-border" style="background: black; color: white;">
-    <div style="margin-bottom: 1rem;">
-      <strong>Negative Polarity</strong>
-      <div style="font-size: 0.8em; opacity: 0.7;">Light on Dark</div>
-    </div>
-    <div style="font-size: 1.1em; line-height: 1.5;">
-      The eye needs slightly <em>more</em> contrast here to avoid "halation".
+    <div class="docs-p-4 docs-rounded docs-border" style="background: black; color: white;">
+      <div style="margin-bottom: 1rem;">
+        <strong>Negative Polarity</strong>
+        <div style="font-size: 0.8em; opacity: 0.7;">Light on Dark</div>
+      </div>
+      <div style="font-size: 1.1em; line-height: 1.5;">
+        The eye needs slightly <em>more</em> contrast here to avoid "halation".
+      </div>
     </div>
   </div>
 </div>
@@ -88,20 +92,22 @@ APCA outputs a score from `Lc 0` (invisible) to `Lc 106` (pure black on pure whi
 
 ## Visualizing Contrast
 
-<div class="docs-grid">
-  <div class="surface-page docs-p-4 docs-rounded docs-border">
-    <div style="opacity: 0.2">Lc 15 (Decorative)</div>
-    <div style="opacity: 0.4">Lc 30 (Disabled)</div>
-    <div style="opacity: 0.6">Lc 45 (Headlines)</div>
-    <div class="text-subtle">Lc 60 (Body Text)</div>
-    <div class="text-strong">Lc 90 (High Contrast)</div>
-  </div>
-  <div class="surface-spotlight docs-p-4 docs-rounded">
-    <div style="opacity: 0.2">Lc 15 (Decorative)</div>
-    <div style="opacity: 0.4">Lc 30 (Disabled)</div>
-    <div style="opacity: 0.6">Lc 45 (Headlines)</div>
-    <div class="text-subtle">Lc 60 (Body Text)</div>
-    <div class="text-strong">Lc 90 (High Contrast)</div>
+<div class="not-content">
+  <div class="docs-grid">
+    <div class="surface-page docs-p-4 docs-rounded docs-border">
+      <div style="opacity: 0.2">Lc 15 (Decorative)</div>
+      <div style="opacity: 0.4">Lc 30 (Disabled)</div>
+      <div style="opacity: 0.6">Lc 45 (Headlines)</div>
+      <div class="text-subtle">Lc 60 (Body Text)</div>
+      <div class="text-strong">Lc 90 (High Contrast)</div>
+    </div>
+    <div class="surface-spotlight docs-p-4 docs-rounded">
+      <div style="opacity: 0.2">Lc 15 (Decorative)</div>
+      <div style="opacity: 0.4">Lc 30 (Disabled)</div>
+      <div style="opacity: 0.6">Lc 45 (Headlines)</div>
+      <div class="text-subtle">Lc 60 (Body Text)</div>
+      <div class="text-strong">Lc 90 (High Contrast)</div>
+    </div>
   </div>
 </div>
 

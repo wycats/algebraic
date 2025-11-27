@@ -1,14 +1,20 @@
-- [x] Move `docs/guide` to `docs/legacy-guide`
-- [x] Initialize Astro Starlight project in `site/`
-- [x] Install Preact integration
-- [x] Configure `site/astro.config.mjs` (Sidebar, Title, Vite Aliases)
-- [x] Update `package.json` scripts for new docs
-- [x] Write and run `scripts/migrate-docs.ts` to port content
-- [x] Verify dev server runs with migrated content
-- [x] Create `SystemDemo` wrapper for context injection
-- [x] Fix broken internal links (Script `scripts/check-links.ts` created but missing dependencies)
-- [x] Integrate `ContextVisualizer` into `concepts/surfaces.md`
-- [x] Integrate `HueShiftVisualizer` into `concepts/hue-shifting.md`
-- [x] Update `scripts/build-site.ts` for Astro
-- [x] Update GitHub Actions workflow
-- [x] Delete `docs/legacy-guide`
+# Task List - Epoch 8 Extension: Fresh Eyes Overhaul
+
+- [ ] **Phase 1: Strategy & Structure**
+  - [ ] Audit current `SUMMARY.md` / Sidebar structure against "Ideal Flow" <!-- id: 1 -->
+  - [ ] Identify "Dead" content (concepts that are no longer relevant) <!-- id: 2 -->
+  - [ ] Identify "Missing" content (new features not yet documented) <!-- id: 3 -->
+
+- [ ] **Phase 2: Content Rewrite (Iterative)**
+  - [ ] **Introduction & Philosophy**: Rewrite `index.mdx` and `philosophy.md` to be punchy and modern. <!-- id: 4 -->
+  - [ ] **Core Concepts**: Rewrite `concepts/*.mdx`. Focus on "Surfaces" and "Anchors". Replace text with demos. <!-- id: 5 -->
+  - [ ] **Usage Guides**: Rewrite `usage/*.mdx`. Ensure code examples are up to date with the latest API. <!-- id: 6 -->
+  - [ ] **Internals**: Review `internals/*.mdx`. Keep it technical but accessible. <!-- id: 7 -->
+
+- [ ] **Phase 3: Visual & Interactive Polish**
+  - [ ] Audit all embedded components for relevance and styling. <!-- id: 8 -->
+  - [ ] Create new diagrams/visuals if a concept is hard to explain with text. <!-- id: 9 -->
+
+- [ ] **Phase 4: Final Review**
+  - [ ] Full read-through for tone and consistency. <!-- id: 10 -->
+
