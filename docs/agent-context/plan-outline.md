@@ -105,21 +105,25 @@
   - **Simplified DX**: Single Vite-based dev server (no proxying).
   - **Better Search**: Starlight's built-in search.
 
-## Epoch 9: Documentation Restructure (Planned)
+## Epoch 9: Documentation Restructure (In Progress)
 
 - **Goal**: Realign the documentation structure with the "User Journey" and address "Fresh Eyes" feedback.
 - **Phases**:
-  - **Phase 1: Structural Reorganization**
+  - **Phase 1: Structural Reorganization (Completed)**
     - Implement new sidebar hierarchy in `astro.config.mjs`.
     - Move and rename files to `concepts/`, `guides/`, `catalog/`, `advanced/`.
-  - **Phase 2: Content Rewrite (The User Journey)**
+  - **Phase 2: Content Rewrite (The User Journey) (Completed)**
     - **Welcome**: New `index.mdx` with "Quick Start".
     - **Mental Model**: Merge Surfaces/Context, move Anchors to Physics.
     - **Getting Started**: Expand Theme Builder guide, clarify Integration.
-  - **Phase 3: Persona-Driven Additions**
-    - **Compliance**: New page for WCAG/APCA analysis.
-    - **Enterprise**: New guide for Multi-Theme/Overrides.
-    - **Navigation**: Add "Launch Theme Builder" CTA.
+  - **Phase 3: Visual & Interactive Polish (Completed)**
+    - **Data Viz**: Add `DataVizDemo` to visualize chart palettes.
+    - **Visuals**: Fix alignment and spacing in grid layouts.
+    - **Theme Sync**: Ensure Starlight theme picker syncs with internal context.
+  - **Phase 4: Dogfooding & Robustness (In Progress)**
+    - **Strategy**: Define how the docs site consumes the system's own tokens.
+    - **Refactor**: Replace hardcoded hex values in components (e.g., `DynamicRange`) with system tokens.
+    - **Linting**: Explore tooling to forbid hardcoded colors in the `site/` directory.
 
 ## Epoch 10: Ecosystem & Interoperability (Planned)
 

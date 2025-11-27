@@ -7,8 +7,8 @@ The Algebraic Color System is distributed as a CLI tool that generates a static 
 
 ## Prerequisites
 
--   **Node.js**: v18 or higher.
--   **Package Manager**: npm, pnpm, or yarn.
+- **Node.js**: v18 or higher.
+- **Package Manager**: npm, pnpm, or yarn.
 
 ## 1. Install the CLI
 
@@ -75,5 +75,5 @@ For convenience, add these commands to your `package.json`:
 
 Now that you have a `theme.css` file, you need to integrate it into your application.
 
--   **[Integration Guide](./integration)**: Learn how to load the CSS and start using surfaces.
--   **[The Theme Builder](./theme-builder)**: Learn how to visually customize your `color-config.json`.
+- **[Integration Guide](./integration)**: Learn how to load the CSS and start using surfaces.
+- **[The Theme Builder](./theme-builder)**: Learn how to visually customize your `color-config.json`.

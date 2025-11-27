@@ -94,6 +94,13 @@ interface PaletteConfig {
      */
     targetChroma?: number;
     /**
+     * Target contrast against the page background (APCA).
+     * Lower values (e.g. 45-60) result in lighter colors in light mode (more pastel/vibrant)
+     * and darker colors in dark mode.
+     * Defaults to 60.
+     */
+    targetContrast?: number;
+    /**
      * List of hues to use for the palette.
      * Defaults to a standard 10-color categorical scale.
      */

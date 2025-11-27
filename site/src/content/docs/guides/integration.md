@@ -56,13 +56,9 @@ The most common pattern is placing content inside a card.
 Buttons are interactive surfaces.
 
 ```html
-<button class="surface-action hue-brand">
-  Primary Action
-</button>
+<button class="surface-action hue-brand">Primary Action</button>
 
-<button class="surface-action">
-  Secondary Action
-</button>
+<button class="surface-action">Secondary Action</button>
 ```
 
 ## 4. Handling Dark Mode
@@ -81,10 +77,14 @@ If you want to offer a toggle button, you can force a specific mode by adding a 
 
 ```html
 <!-- Force Dark Mode -->
-<body class="surface-page force-dark">...</body>
+<body class="surface-page force-dark">
+  ...
+</body>
 
 <!-- Force Light Mode -->
-<body class="surface-page force-light">...</body>
+<body class="surface-page force-light">
+  ...
+</body>
 ```
 
 ## Framework Examples
@@ -96,9 +96,7 @@ function Card({ title, children }) {
   return (
     <div className="surface-card p-4 rounded-lg">
       <h3 className="text-strong text-lg font-bold">{title}</h3>
-      <div className="text-subtle mt-2">
-        {children}
-      </div>
+      <div className="text-subtle mt-2">{children}</div>
     </div>
   );
 }
@@ -108,6 +106,6 @@ function Card({ title, children }) {
 
 The Color System plays nicely with Tailwind. You can use Tailwind for layout (`p-4`, `flex`, `rounded`) and the Color System for... well, color.
 
-If you want to use the Color System's tokens *inside* Tailwind utility classes (e.g., `bg-surface-card`), you can configure your `tailwind.config.js` to map to the CSS variables.
+If you want to use the Color System's tokens _inside_ Tailwind utility classes (e.g., `bg-surface-card`), you can configure your `tailwind.config.js` to map to the CSS variables.
 
-*Note: A dedicated Tailwind plugin is on the roadmap.*
+_Note: A dedicated Tailwind plugin is on the roadmap._

@@ -2,10 +2,10 @@
 import { solve, getKeyColorStats } from '../chunk-4O54K6CL.js';
 import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
-import { generateTokensCss, toHighContrast } from '../chunk-BHESPRR4.js';
+import { generateTokensCss, toHighContrast } from '../chunk-JBRRT2GK.js';
 import '../chunk-7LUK7J7M.js';
-import '../chunk-PP7SAROB.js';
-import { DEFAULT_CONFIG } from '../chunk-XL23LTBT.js';
+import '../chunk-W5IKP2D6.js';
+import { DEFAULT_CONFIG } from '../chunk-A2CSS6V4.js';
 import { existsSync, writeFileSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 

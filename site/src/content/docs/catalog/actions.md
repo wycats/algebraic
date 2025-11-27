@@ -3,8 +3,6 @@ title: Actions
 description: Interactive surfaces and states.
 ---
 
-import { Diagram } from "../../../components/Diagram";
-
 Actions are surfaces that invite user interaction. They are the "buttons" and "controls" of your interface.
 
 ## Action Surfaces
@@ -13,26 +11,20 @@ Actions are surfaces that invite user interaction. They are the "buttons" and "c
 
 The primary interactive surface. Used for buttons, toggles, and active states.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
+<div class="not-content surface-card docs-p-4 docs-rounded">
   <button class="surface-action docs-p-2 docs-rounded">Default Action</button>
-  <button class="surface-action hue-brand docs-p-2 docs-rounded">
-    Brand Action
-  </button>
-  <button class="surface-action hue-danger docs-p-2 docs-rounded">
-    Danger Action
-  </button>
-</Diagram>
+  <button class="surface-action hue-brand docs-p-2 docs-rounded">Brand Action</button>
+  <button class="surface-action hue-danger docs-p-2 docs-rounded">Danger Action</button>
+</div>
 
 ### `surface-action-soft`
 
 A lower-emphasis interactive surface. Useful for secondary buttons or ghost buttons.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
+<div class="not-content surface-card docs-p-4 docs-rounded">
   <button class="surface-action-soft docs-p-2 docs-rounded">Soft Action</button>
-  <button class="surface-action-soft hue-brand docs-p-2 docs-rounded">
-    Brand Soft
-  </button>
-</Diagram>
+  <button class="surface-action-soft hue-brand docs-p-2 docs-rounded">Brand Soft</button>
+</div>
 
 ## States
 
@@ -46,42 +38,26 @@ The system automatically generates hover and active states for all action surfac
 
 Used to indicate that an item is currently chosen (e.g., a selected item in a list). This maps to the system's "Highlight" color.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
-  <div class="surface-action state-selected docs-p-2 docs-rounded">
-    Selected Item
-  </div>
-</Diagram>
+<div class="not-content surface-card docs-p-4 docs-rounded">
+  <div class="surface-action state-selected docs-p-2 docs-rounded">Selected Item</div>
+</div>
 
 ### `state-disabled`
 
 Used for non-interactive items. This maps to the system's "GrayText" color and reduces contrast while maintaining legibility.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
-  <button class="surface-action state-disabled docs-p-2 docs-rounded" disabled>
-    Disabled Action
-  </button>
-</Diagram>
+<div class="not-content surface-card docs-p-4 docs-rounded">
+  <button class="surface-action state-disabled docs-p-2 docs-rounded" disabled>Disabled Action</button>
+</div>
 
 ## Focus Indicators
 
 Accessible focus indicators are critical for keyboard navigation. The system provides a universal focus ring that adapts to the brand color and ensures contrast.
 
-<Diagram
-  className="surface-card bordered"
-  style={{ padding: "2rem", display: "flex", gap: "1rem" }}
->
-  <button
-    class="surface-action focus-ring"
-    style={{ padding: "0.5rem 1rem", border: "none", borderRadius: "4px" }}
-  >
-    Focus Me
-  </button>
-  <input
-    class="surface-workspace focus-ring bordered"
-    placeholder="Focus Me"
-    style={{ padding: "0.5rem", borderRadius: "4px" }}
-  />
-</Diagram>
+<div class="not-content surface-card bordered" style="padding: 2rem; display: flex; gap: 1rem;">
+  <button class="surface-action focus-ring" style="padding: 0.5rem 1rem; border: none; border-radius: 4px;">Focus Me</button>
+  <input class="surface-workspace focus-ring bordered" placeholder="Focus Me" style="padding: 0.5rem; border-radius: 4px;">
+</div>
 
 ### Usage
 

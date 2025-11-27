@@ -29,6 +29,7 @@ npx color-system init
 ```
 
 **Behavior:**
+
 - Checks if `color-config.json` exists.
 - If not, creates it with the default configuration.
 - If it exists, exits with an error to prevent overwriting.
@@ -44,12 +45,13 @@ npx color-system [config-file] [output-file]
 **Arguments:**
 
 1.  **`config-file`** (Optional)
-    -   Path to your JSON configuration file.
-    -   **Default**: `./color-config.json`
+
+    - Path to your JSON configuration file.
+    - **Default**: `./color-config.json`
 
 2.  **`output-file`** (Optional)
-    -   Path where the generated CSS will be written.
-    -   **Default**: `./theme.css`
+    - Path where the generated CSS will be written.
+    - **Default**: `./theme.css`
 
 **Examples:**
 

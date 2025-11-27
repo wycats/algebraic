@@ -3,8 +3,6 @@ title: Typography
 description: Semantic text colors that adapt to context.
 ---
 
-import { Diagram } from "../../../components/Diagram";
-
 In the Algebraic Color System, you don't pick text colors. You pick **Text Hierarchy**.
 
 The system automatically calculates the correct color for each level of hierarchy based on the surface it sits on, ensuring APCA compliance.
@@ -15,43 +13,39 @@ The system automatically calculates the correct color for each level of hierarch
 
 Used for headings, titles, and primary content. This has the highest contrast against the background.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
+<div class="not-content surface-card docs-p-4 docs-rounded">
   <h1 class="text-strong">This is Strong Text</h1>
-</Diagram>
+</div>
 
 ### `text-subtle` (Secondary)
 
 Used for body text, descriptions, and secondary content. It has lower contrast than strong text but is still fully readable.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
-  <p class="text-subtle">
-    This is subtle text. It is easier on the eyes for long reading.
-  </p>
-</Diagram>
+<div class="not-content surface-card docs-p-4 docs-rounded">
+  <p class="text-subtle">This is subtle text. It is easier on the eyes for long reading.</p>
+</div>
 
 ### `text-subtler` (Tertiary)
 
 Used for metadata, captions, and low-emphasis content.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
+<div class="not-content surface-card docs-p-4 docs-rounded">
   <span class="text-subtler">Posted 2 hours ago</span>
-</Diagram>
+</div>
 
 ### `text-link` (Interactive)
 
 Used for hyperlinks and interactive text elements. It uses the brand hue (or a specific link hue) and ensures contrast.
 
-<Diagram className="surface-card docs-p-4 docs-rounded">
-  <a href="#" class="text-link">
-    Read more ->
-  </a>
-</Diagram>
+<div class="not-content surface-card docs-p-4 docs-rounded">
+  <a href="#" class="text-link">Read more -></a>
+</div>
 
 ## Context Adaptation
 
 The power of these classes is that they adapt to their container.
 
-<Diagram className="docs-grid">
+<div class="not-content docs-grid">
   <div class="surface-card docs-p-4 docs-rounded">
     <strong>Light Context</strong>
     <div class="text-strong">Strong</div>
@@ -62,6 +56,6 @@ The power of these classes is that they adapt to their container.
     <div class="text-strong">Strong</div>
     <div class="text-subtle">Subtle</div>
   </div>
-</Diagram>
+</div>
 
 Notice how `text-strong` is dark on the card but light on the spotlight. You didn't have to change the class name.

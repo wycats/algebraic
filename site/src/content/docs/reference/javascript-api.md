@@ -20,12 +20,12 @@ const themeManager = new ThemeManager(options?: ThemeManagerOptions);
 
 **Options:**
 
-| Option | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `root` | `HTMLElement` | `document.documentElement` | The element to apply the theme to. |
-| `lightClass` | `string` | `undefined` | Class to add in light mode. If omitted, sets `style="color-scheme: light"`. |
-| `darkClass` | `string` | `undefined` | Class to add in dark mode. If omitted, sets `style="color-scheme: dark"`. |
-| `faviconGenerator` | `(color: string) => string` | `undefined` | Function to generate an SVG favicon based on the current theme color. |
+| Option             | Type                        | Default                    | Description                                                                 |
+| :----------------- | :-------------------------- | :------------------------- | :-------------------------------------------------------------------------- |
+| `root`             | `HTMLElement`               | `document.documentElement` | The element to apply the theme to.                                          |
+| `lightClass`       | `string`                    | `undefined`                | Class to add in light mode. If omitted, sets `style="color-scheme: light"`. |
+| `darkClass`        | `string`                    | `undefined`                | Class to add in dark mode. If omitted, sets `style="color-scheme: dark"`.   |
+| `faviconGenerator` | `(color: string) => string` | `undefined`                | Function to generate an SVG favicon based on the current theme color.       |
 
 ### Methods
 
@@ -33,7 +33,7 @@ const themeManager = new ThemeManager(options?: ThemeManagerOptions);
 
 Sets the active theme mode.
 
--   **`mode`**: `"light" | "dark" | "system"`
+- **`mode`**: `"light" | "dark" | "system"`
 
 ```typescript
 themeManager.setMode("dark");
@@ -70,9 +70,11 @@ Updates the favicon dynamically.
 ```typescript
 import { updateFavicon } from "color-system/browser";
 
-updateFavicon((color) => `
+updateFavicon(
+  (color) => `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
     <circle cx="16" cy="16" r="14" fill="${color}" />
   </svg>
-`);
+`
+);
 ```

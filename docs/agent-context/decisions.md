@@ -197,3 +197,22 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Separation of Concerns**: The Demo App remains a standalone SPA with its own routing logic.
   - **Unified Deployment**: We deploy a single artifact to GitHub Pages.
   - **Deep Linking**: We use Hash Routing in the Demo App to ensure it works when hosted under a subdirectory/static host.
+
+### [2025-11-27] Dogfooding Strategy for Docs
+
+- **Context**: The documentation site was using hardcoded colors in its interactive components, which meant it didn't reflect the actual system configuration or theme changes.
+- **Decision**: Configure the docs site to generate its own theme using the `color-system` CLI and consume those tokens in components.
+- **Rationale**:
+  - **Accuracy**: Ensures that the documentation always reflects the true state of the system.
+  - **Testing**: Acts as a real-world integration test for the CLI and generated CSS.
+  - **Maintainability**: Removes the need to manually update color values in the docs when the system defaults change.
+
+### [2025-11-27] Data Viz Demo Implementation
+
+- **Context**: The "Data Visualization" page described the palette generation feature but lacked any visual proof or example.
+- **Decision**: Implement a lightweight `DataVizDemo` component using standard HTML/CSS (conic gradients, flexbox) rather than pulling in a charting library.
+- **Rationale**:
+  - **Performance**: Avoids adding heavy dependencies (like Recharts or Chart.js) to the documentation site.
+  - **Simplicity**: The goal is to show the *colors*, not to build a full charting library.
+  - **Dogfooding**: Demonstrates how to use the system's tokens (`--chart-1`) directly in CSS.
+

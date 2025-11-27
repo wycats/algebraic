@@ -249,3 +249,25 @@
   - Updated build pipeline (`scripts/build-site.ts`) to build both the Astro site and the standalone Demo app.
   - Updated GitHub Actions workflow to deploy the new Astro build.
   - Deleted legacy `mdbook` source.
+
+## Epoch 9: Documentation Restructure (2025-11-27)
+
+**Goal**: Realign the documentation structure with the "User Journey", address "Fresh Eyes" feedback, and ensure the documentation site itself is a testbed for the system ("Dogfooding").
+
+**Completed Work**:
+
+- **Phase 1: Strategy & Structure**:
+  - Reorganized the sidebar and file structure to match the "Ideal Flow" (Welcome -> Mental Model -> Usage -> Catalog).
+  - Audited and removed "dead" content.
+- **Phase 2: Content Rewrite**:
+  - Rewrote `index.mdx` and `philosophy.md` for a more modern tone.
+  - Refactored "Mental Model" chapters (`thinking-in-surfaces`, `physics-of-light`).
+  - Updated "Getting Started" and "Catalog" guides.
+- **Phase 3: Visual & Interactive Polish**:
+  - **Data Visualization Demo**: Implemented `DataVizDemo` to visualize the `--chart-*` tokens with live bar and pie charts.
+  - **Visual Hierarchy**: Introduced `.docs-card` and `.docs-card-header` to fix alignment and spacing issues in grid layouts.
+  - **Theme Sync**: Fixed desynchronization between Starlight's theme picker and the internal `ThemeContext`.
+- **Phase 4: Dogfooding (Partial)**:
+  - **Strategy**: Configured the docs site to generate and consume its own theme using the `color-system` CLI.
+  - **Refactor**: Updated `DynamicRange` and other components to use generated CSS variables instead of hardcoded values.
+

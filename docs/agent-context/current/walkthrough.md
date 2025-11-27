@@ -103,3 +103,23 @@ We introduced a new semantic class `.docs-card` in `site/src/styles/docs.css`:
 ```
 
 We then updated `site/src/content/docs/concepts/hue-shifting.mdx` to use this class, replacing the verbose utility classes (`docs-p-4 docs-rounded docs-border`). This ensures a consistent, aligned, and visually distinct presentation for the examples.
+
+### 5. Dogfooding & Robustness
+
+To ensure the documentation site accurately reflects the system it documents, we implemented a "Dogfooding" strategy:
+
+-   **Theme Generation**: Added a `generate:theme` script to `site/package.json` that uses the `color-system` CLI to generate a CSS theme from `site/color-config.json`.
+-   **Integration**: Configured `site/astro.config.mjs` to load the generated `theme.css` globally.
+-   **Refactoring**: Updated `site/src/components/DynamicRange.tsx` to use the generated CSS variables (e.g., `var(--surface-token)`) instead of hardcoded hex values. This ensures the component visualizes the *actual* system theme.
+-   **Color Scheme Handling**: Leveraged the `colorScheme` CSS property to force light/dark modes on specific components, allowing them to use the system's `light-dark()` tokens correctly.
+
+### 6. Data Visualization Showcase
+
+We identified that the "Data Visualization" documentation page described the feature but lacked any visual representation.
+
+-   **Created `DataVizDemo`**: A new component in `site/src/components/DataVizDemo.tsx` that renders:
+    -   A grid of palette swatches (1-10).
+    -   A sample bar chart.
+    -   A sample pie chart (using conic gradients).
+-   **Dogfooding**: The component uses the generated `--chart-N` CSS variables, ensuring it accurately reflects the current theme configuration.
+-   **Integration**: Added the component to `site/src/content/docs/catalog/data-viz.md`.

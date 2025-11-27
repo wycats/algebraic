@@ -21,6 +21,7 @@ export default defineConfig({
     preact(),
     starlight({
       title: "Algebraic Color System",
+      customCss: ["./src/styles/theme.css", "./src/styles/docs.css"],
       social: [
         {
           icon: "github",
@@ -32,9 +33,18 @@ export default defineConfig({
         {
           label: "The Mental Model",
           items: [
-            { label: "Thinking in Surfaces", slug: "concepts/thinking-in-surfaces" },
-            { label: "The Physics of Light", slug: "concepts/physics-of-light" },
-            { label: "Accessibility First", slug: "concepts/accessibility-first" },
+            {
+              label: "Thinking in Surfaces",
+              slug: "concepts/thinking-in-surfaces",
+            },
+            {
+              label: "The Physics of Light",
+              slug: "concepts/physics-of-light",
+            },
+            {
+              label: "Accessibility First",
+              slug: "concepts/accessibility-first",
+            },
           ],
         },
         {

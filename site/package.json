@@ -4,9 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "pnpm generate:theme && astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "generate:theme": "pnpm exec color-system color-config.json src/styles/theme.css",
+    "build": "pnpm generate:theme && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

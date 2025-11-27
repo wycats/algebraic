@@ -16,7 +16,7 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid } from "@astrojs/starlight/components";
 
 ## Why Algebraic?
 
@@ -27,16 +27,24 @@ The **Algebraic Color System** is different. It's a **Solver**.
 You define the **Constraints** (e.g., "I need a surface that guarantees APCA 60 contrast"), and the system calculates the exact lightness values to meet them.
 
 <CardGrid stagger>
-	<Card title="Automated Accessibility" icon="approve-check-circle">
-		The system uses **APCA** (the future WCAG 3.0 standard) to mathematically guarantee readability. If your background changes, your text automatically adjusts to maintain contrast.
-	</Card>
-	<Card title="True Dark Mode" icon="moon">
-		Don't maintain two separate palettes. The system understands **Polarity**. It automatically inverts your surfaces and recalculates contrast for dark mode, ensuring a perfect visual balance.
-	</Card>
-	<Card title="Context Aware" icon="puzzle">
-		Components adapt to their environment. A "Secondary Text" class looks different on a white card than it does on a dark tooltip, but it always maintains the same *semantic weight*.
-	</Card>
-	<Card title="Modern CSS" icon="rocket">
-		Built on the cutting edge of the web platform: **OKLCH**, **Relative Color Syntax**, and **CSS Custom Properties**. No JavaScript runtime required for the final output.
-	</Card>
+  <Card title="Automated Accessibility" icon="approve-check-circle">
+    The system uses **APCA** (the future WCAG 3.0 standard) to mathematically
+    guarantee readability. If your background changes, your text automatically
+    adjusts to maintain contrast.
+  </Card>
+  <Card title="True Dark Mode" icon="moon">
+    Don't maintain two separate palettes. The system understands **Polarity**.
+    It automatically inverts your surfaces and recalculates contrast for dark
+    mode, ensuring a perfect visual balance.
+  </Card>
+  <Card title="Context Aware" icon="puzzle">
+    Components adapt to their environment. A "Secondary Text" class looks
+    different on a white card than it does on a dark tooltip, but it always
+    maintains the same *semantic weight*.
+  </Card>
+  <Card title="Modern CSS" icon="rocket">
+    Built on the cutting edge of the web platform: **OKLCH**, **Relative Color
+    Syntax**, and **CSS Custom Properties**. No JavaScript runtime required for
+    the final output.
+  </Card>
 </CardGrid>

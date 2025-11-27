@@ -156,8 +156,9 @@ When you run `npx color-system` (or change a setting in the Builder), this pipel
 
 The solver runs a second pass to generate a **High Contrast** variant (`@media (prefers-contrast: more)`).
 In this pass:
--   **Key Colors** are removed (forced to grayscale).
--   **Anchors** are pushed to pure Black (0) and White (1).
--   **Chroma** is disabled.
+
+- **Key Colors** are removed (forced to grayscale).
+- **Anchors** are pushed to pure Black (0) and White (1).
+- **Chroma** is disabled.
 
 This ensures that users who need maximum legibility get a strictly accessible, high-contrast version of your theme automatically.

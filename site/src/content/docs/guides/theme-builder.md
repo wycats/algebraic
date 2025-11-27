@@ -26,23 +26,23 @@ The Theme Builder is designed to work hand-in-hand with the CLI.
 
 The most powerful feature of the builder is the **Anchor Tuner**.
 
--   **Background Anchors**: Drag the sliders to change the "start" (page background) and "end" (highest surface) lightness. Watch how every surface in the preview updates instantly.
--   **Foreground Anchors**: Adjust the contrast range for text.
+- **Background Anchors**: Drag the sliders to change the "start" (page background) and "end" (highest surface) lightness. Watch how every surface in the preview updates instantly.
+- **Foreground Anchors**: Adjust the contrast range for text.
 
 ### 2. Semantic Colors
 
 You can define your semantic hues (Brand, Success, Danger, etc.) and see how they look across different surfaces.
 
--   **Hue**: Pick the base hue.
--   **Chroma**: Adjust the saturation.
--   **Usage**: See how the color looks as a button (`surface-action`), a badge (`surface-tinted`), or text (`text-link`).
+- **Hue**: Pick the base hue.
+- **Chroma**: Adjust the saturation.
+- **Usage**: See how the color looks as a button (`surface-action`), a badge (`surface-tinted`), or text (`text-link`).
 
 ### 3. Real-time Accessibility Check
 
 As you drag sliders, the builder runs the **APCA Solver** in real-time.
 
--   If you make the background too dark for the text, the text will automatically lighten to maintain readability.
--   If you create a combination that is mathematically impossible to solve (e.g., low contrast background + low contrast text), the builder will warn you.
+- If you make the background too dark for the text, the text will automatically lighten to maintain readability.
+- If you create a combination that is mathematically impossible to solve (e.g., low contrast background + low contrast text), the builder will warn you.
 
 ## Importing an Existing Config
 

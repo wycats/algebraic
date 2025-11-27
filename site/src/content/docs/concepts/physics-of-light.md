@@ -5,7 +5,6 @@ description: How the system calculates color relationships using anchors and int
 
 import { SystemDemo } from "../../../components/SystemDemo";
 import { DynamicRange } from "../../../components/DynamicRange";
-import { Diagram } from "../../../components/Diagram";
 
 <SystemDemo>
 
@@ -21,9 +20,7 @@ Imagine a vertical axis representing Lightness, from 0% (Absolute Black) to 100%
 
 An **Anchor** is a fixed point on this scale. It tells the solver: _"This is where the world begins, and this is where it ends."_
 
-<Diagram>
-  <DynamicRange />
-</Diagram>
+<DynamicRange />
 
 ## The "Rubber Band" Effect
 
