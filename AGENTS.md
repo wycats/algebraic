@@ -53,11 +53,8 @@ The context for the phased development workflow is stored in the `docs/agent-con
 
 When starting a phase in a new chat, you should restore the project context by following these steps:
 
-- **Context Loading**: Make sure you understand the phased development workflow as described in this document. This is crucial for interpreting the project context correctly.
-- **State Verification**: Start by reviewing `docs/agent-context` files to understand project goals. Review the `#codebase` to get additional context on the current state of the code that may not be fully captured agent context.
-  - Review `docs/agent-context/decisions.md` to understand the architectural constraints and design philosophy established so far.
-  - Review `docs/agent-context/current/walkthrough.md`. It will give you a sense of the most recent completed phase.
-  - Check `docs/design` for any relevant design documents or philosophy that should guide the current work.
+- **Context Loading**: Make sure you understand the phased development workflow as described in this document.
+- **State Verification**: Run `scripts/agent/restore-context.sh`. This script will output the project goals, decisions, changelog, and current phase state. Read this output carefully to ground yourself in the project's history and current status.
 - **Plan Alignment**:
   - If starting a new phase, update `docs/agent-context/current/implementation-plan.md` to be completely focused on the implementation plan for the next phase. Ask the user for feedback.
   - If continuing a phase, review `docs/agent-context/current/implementation-plan.md` to track progress.
@@ -66,24 +63,21 @@ When starting a phase in a new chat, you should restore the project context by f
 ### Phase Transitions
 
 - **Completion Check**: Before marking a phase as complete in `docs/agent-context/current/task-list.md`, ensure all related tasks are done.
+- **Verification**: Run `scripts/agent/verify-phase.sh`. This script runs tests and clippy, and provides a checklist for the next steps.
 - **Meta-Review**: Update `AGENTS.md` with any new instructions or changes in workflow. If something didn't work well in this phase, fix the process now.
-- **Verification**: Run `pnpm test` and `pnpm lint` to verify everything is in order.
-- **Coherence Check**: Verify that coherence between the documentation and codebase is increasing. If necessary, update documentation to reflect recent changes or surface any new gaps between the intent of the system as documented, the planning documents, and the actual implementation.
-- **Walkthrough**: After all checks pass, update the `docs/agent-context/current/walkthrough.md` file to reflect the work done since the last phase transition and surface it to the user for review. Include a summary of the most important or controversial changes made that the user has not yet reviewed. Wait for the user to review the walkthrough and approve it before proceeding. This step may involve a back-and-forth with the user to ensure they understand and approve the changes made during the phase, and may even require doing additional implementation work if the user identifies gaps or issues that need to be addressed before the phase can be considered complete.
+- **Coherence Check**: Verify that coherence between the documentation and codebase is increasing. If necessary, update documentation to reflect recent changes.
+- **Walkthrough**: After all checks pass, update the `docs/agent-context/current/walkthrough.md` file to reflect the work done since the last phase transition and surface it to the user for review.
 - **Finalize**: Once the user has approved the walkthrough:
-  - Review the implementation plan in `docs/agent-context/current/implementation-plan.md`, the task list in `docs/agent-context/current/task-list.md` and the walkthrough in `docs/agent-context/current/walkthrough.md` to determine what was completed during the phase.
-  - Extract key decisions from `docs/agent-context/current/walkthrough.md` and append them to `docs/agent-context/decisions.md`.
-  - Consolidate the completed work into a description and add an entry to `docs/agent-context/changelog.md` to reflect the completed work.
-  - If any part of the implementation plan was not completed, document the reasons in `docs/agent-context/changelog.md` and update `docs/agent-context/future/deferred_work.md` as needed.
-  - Update `docs/agent-context/plan-outline.md` to reflect any changes to the overall project plan based on the work completed in the phase.
-  - **Commit**: Commit the changes to the repository to preserve the history of the `docs/agent-context/current/` files.
-  - **Reset**: Once the commit is made, **DO NOT DELETE** the files in `docs/agent-context/current/`. Instead, clear their contents (make them empty files) to prepare for the next phase.
+  - Run `scripts/agent/prepare-phase-transition.sh`. This script will display the current context and remind you of the necessary updates.
+  - Follow the script's output to update `docs/agent-context/changelog.md`, `docs/agent-context/decisions.md`, and `docs/agent-context/plan-outline.md`.
+  - Once the documentation is updated, run `scripts/agent/complete-phase-transition.sh "<commit_message>"`. This script will commit the changes, empty the current context files, and display the future work context.
 
 ### Preparation
 
-- Once a phase transition is complete, prepare for the next phase by reviewing `docs/agent-context/future/deferred-work.md` and `docs/agent-context/implementation-plan.md` to identify the next set of tasks.
-- Update `docs/agent-context/current/implementation-plan.md` with a proposed _outline_ of the next phase. Do not include detailed implementation steps yet; just provide a high-level overview of what the next phase will entail. The implementation plan will be fleshed out in detail during the next phase planning step.
-- Once the user has approved the high-level outline of the next phase, update the `docs/agent-context/plan-outline.md` to reflect the portion of the outline that will be tackled in the next phase.
+- The `complete-phase-transition.sh` script will have displayed the contents of `docs/agent-context/future/`. Review this output and the chat history.
+- Propose a high-level outline for the next phase to the user.
+- Once the user has approved the high-level outline, update `docs/agent-context/current/implementation-plan.md` with the agreed outline. Do not include detailed implementation steps yet.
+- Update `docs/agent-context/plan-outline.md` to reflect the portion of the outline that will be tackled in the next phase.
 - Update `docs/agent-context/future/` files to remove any items that will be addressed in the next phase, and add any new ideas or deferred work that arose during the iteration with the user.
 
 ### Ideas and Deferred Work

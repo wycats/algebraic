@@ -1,29 +1,27 @@
-# Phase Walkthrough: Documentation & Deployment Fixes
+# Phase Walkthrough: Dev Environment Simplification
 
 ## Goal
-Unify the Demo and Documentation into a single deployable site and ensure it renders correctly on GitHub Pages.
+Simplify the local development environment to match the production deployment structure (GitHub Pages) without using fragile custom scripts.
 
 ## Changes
 
-### 1. Deployment Pipeline
-- Configured GitHub Actions to deploy the `docs/guide/book` directory to `gh-pages`.
-- Ensured the build process runs `scripts/update-docs.sh` and `mdbook build`.
+### 1. Removed Custom Proxy Script
+- Deleted `scripts/dev-site.ts`. This script was attempting to manually proxy requests to `mdbook` and `vite`, but was causing `EADDRINUSE` errors and zombie processes.
 
-### 2. CSS Asset Management
-- Updated `scripts/update-docs.sh` to:
-  - Concatenate CSS files (`tokens.css`, `engine.css`, `utilities.css`, `theme.css`) into `docs/guide/css/color-system.css`.
-  - Strip `@import` statements from the concatenated file to prevent 404 errors in production.
-- Updated `docs/guide/book.toml` to reference the correct CSS path (`css/color-system.css`).
+### 2. Configured Vite Proxy
+- Updated `demo/vite.config.ts` to use Vite's built-in proxy capabilities.
+- Vite now runs on port 3000 and proxies any request that is *not* for the demo app to the `mdbook` server running on port 3001.
+- This creates a unified local server at `http://localhost:3000` that mirrors the production structure:
+  - `/` -> Documentation (proxied to mdbook)
+  - `/demo/` -> Demo App (served by Vite)
 
-### 3. Global Styling
-- Updated `css/engine.css` to target `:where(:root, .surface-page, body)` to ensure the page surface color is applied globally to the document body.
-- Updated `src/lib/generator.ts` to include `body` in the `page` surface generation logic.
-
-### 4. JavaScript Runtime Fix
-- Removed custom theme overrides in `docs/guide/theme/` (`book.js`, `highlight.js`, `css/`, `fonts/`) which were causing a runtime error (`Uncaught TypeError: Cannot read properties of null (reading 'querySelectorAll')`) due to incompatibility with the default mdbook theme.
-- Reverted to using the default mdbook theme scripts and assets, while layering the custom `color-system.css` on top.
+### 3. Updated Scripts
+- Updated `package.json` scripts:
+  - `docs:dev`: Runs `mdbook serve` on port 3001 (after updating docs).
+  - `dev:site`: Runs both `docs:dev` and the demo's `dev` script concurrently.
 
 ## Verification
-- **Build**: `scripts/update-docs.sh` runs successfully and generates `docs/guide/css/color-system.css`.
-- **Deployment**: GitHub Actions pipeline should deploy the site.
-- **Runtime**: The JS error should be resolved, and the theme switcher should work (using the default mdbook theme switcher).
+- Run `pnpm dev:site`.
+- Visit `http://localhost:3000/` to see the docs.
+- Visit `http://localhost:3000/demo/` to see the demo.
+- No more `EADDRINUSE` errors.

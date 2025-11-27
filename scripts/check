@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+echo "Running pnpm test..."
+pnpm test
+
+echo "Running pnpm lint..."
+pnpm lint

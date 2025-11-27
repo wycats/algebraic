@@ -1,3 +1,4 @@
-- [x] Fix JS runtime error in deployed documentation
-- [x] Ensure CSS assets are correctly loaded and applied
-- [x] Verify global body styling
+- [x] Delete scripts/dev-site.ts
+- [x] Configure Vite proxy in demo/vite.config.ts
+- [x] Update package.json scripts
+- [x] Verify pnpm dev:site works

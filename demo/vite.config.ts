@@ -18,8 +18,16 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
+    port: 3000,
     fs: {
       allow: [".."],
+    },
+    proxy: {
+      // Proxy all requests that don't start with /demo to mdbook
+      "^/(?!demo|@vite|@fs|src|node_modules|@id).*": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
     },
   },
 }));
