@@ -70,21 +70,21 @@ In the Theme Builder, you add **Surfaces** to a list.
 <div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
 <span class="text-strong" style="flex: 1;">Page</span>
 <code class="text-subtle">.surface-page</code>
-<span style="font-size: 0.8em; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">Passes</span>
+<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
 </div>
 
 <!-- Surface Item 2 -->
 <div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
 <span class="text-strong" style="flex: 1;">Card</span>
 <code class="text-subtle">.surface-card</code>
-<span style="font-size: 0.8em; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">Passes</span>
+<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
 </div>
 
 <!-- Surface Item 3 -->
 <div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
 <span class="text-strong" style="flex: 1;">Sidebar</span>
 <code class="text-subtle">.surface-sidebar</code>
-<span style="font-size: 0.8em; background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px;">Passes</span>
+<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
 </div>
 
 </div>
@@ -116,12 +116,11 @@ If we just divided the lightness values evenly (Linear Lightness), the steps wou
 <!-- Linear Contrast -->
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
 <h4 class="text-strong" style="margin: 0 0 1rem 0">Linear Contrast (Good)</h4>
-<div style="display: flex; flex-direction: column; gap: 0;">
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="background: oklch(98% 0 0); color: black;">Step 1 (Lc 106)</div>
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="background: oklch(92% 0 0); color: black;">Step 2 (Lc 90)</div>
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="background: oklch(84% 0 0); color: black;">Step 3 (Lc 75)</div>
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="background: oklch(74% 0 0); color: black;">Step 4 (Lc 60)</div>
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="background: oklch(62% 0 0); color: white;">Step 5 (Lc 45)</div>
+<div style="display: flex; flex-direction: column; gap: 0.5rem;">
+<div class="surface-page docs-p-2 docs-rounded docs-border">Page (Start)</div>
+<div class="surface-workspace docs-p-2 docs-rounded docs-border">Workspace</div>
+<div class="surface-card docs-p-2 docs-rounded docs-border">Card</div>
+<div class="surface-action docs-p-2 docs-rounded docs-border">Action (End)</div>
 </div>
 </div>
 

@@ -9,7 +9,8 @@
     "generate:theme": "pnpm exec color-system color-config.json src/styles/theme.css",
     "build": "pnpm generate:theme && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint:colors": "if grep -rE \"#[0-9a-fA-F]{3,6}|rgb\\(|hsl\\(\" src/components src/content/docs | grep -v \"theme.css\"; then echo \"Error: Hardcoded colors found\"; exit 1; else echo \"No hardcoded colors found\"; exit 0; fi"
   },
   "dependencies": {
     "@astrojs/preact": "^4.1.3",

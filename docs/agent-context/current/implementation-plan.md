@@ -1,43 +1,27 @@
-# Implementation Plan - Epoch 8 Extension: The "Fresh Eyes" Documentation Overhaul
+# Implementation Plan - Phase 4: Dogfooding & Robustness
 
 ## Goal
-
-Conduct a comprehensive review and rewrite of the entire documentation suite. The objective is not just to "port" content, but to re-author it as if writing for the first time, ensuring it fully reflects the current system's capabilities, philosophy, and the new interactive possibilities of the Astro platform.
-
-## Philosophy: "Greenfield Mindset"
-
-We will approach the documentation with a "Greenfield Mindset". Instead of asking "How do I migrate this file?", we ask:
-
-- "If I were explaining this system today, how would I do it?"
-- "Does this concept still matter?"
-- "Can this wall of text be replaced by a live component?"
-- "Is the narrative flow logical for a new user?"
-
-## Scope
-
-All content within `site/src/content/docs/`.
+Ensure the documentation site (`site/`) uses the system's own generated tokens (`theme.css`) for all its styling and visualizations, rather than hardcoded values. This serves as a continuous integration test for the system.
 
 ## Strategy
 
-1.  **Audit & Outline**:
+1.  **Token Generation**:
+    - Ensure `site/theme.css` is generated from `site/color-config.json` during the build.
+    - Verify `astro.config.mjs` imports this CSS.
 
-    - Review the current structure.
-    - Draft an "Ideal Table of Contents" based on the system _as it exists now_.
-    - Identify legacy artifacts or "mdbook-isms" to remove.
+2.  **Component Refactor**:
+    - Audit `site/src/components/` for hardcoded colors (hex, rgb, hsl).
+    - Replace them with `var(--surface-*)`, `var(--text-*)`, or `var(--chart-*)`.
+    - Key components to check:
+        - `DynamicRange.tsx`
+        - `ContextVisualizer.tsx`
+        - `HueShiftVisualizer.tsx`
+        - `GamutComparator.tsx`
 
-2.  **Section-by-Section Rewrite**:
+3.  **Linting (Exploration)**:
+    - Investigate `stylelint` or `eslint` rules to forbid hex codes in `site/src/`.
+    - If feasible, add a `lint:colors` script.
 
-    - **Introduction**: Hook the reader. Why does this system exist?
-    - **Concepts**: Explain the "Physics" of the system (Anchors, Surfaces, Context) using the new visualizers.
-    - **Usage**: Practical guides for developers and designers.
-    - **Internals**: Deep dives for contributors (APCA, Solver logic).
-
-3.  **Visual Integration**:
-    - Ensure every concept is backed by a visual or interactive demo.
-    - Use the `SystemDemo` and `ContextVisualizer` components aggressively to show, not just tell.
-
-## Success Criteria
-
-- The documentation feels cohesive and native to the new platform.
-- No "legacy" phrasing (e.g., referencing old CLI commands that changed).
-- Interactive components are woven naturally into the narrative.
+## Verification
+- The docs site should look correct (light/dark mode) without any "flash of unstyled content" or mismatched colors.
+- Changing `site/color-config.json` and regenerating should immediately update the docs visuals.

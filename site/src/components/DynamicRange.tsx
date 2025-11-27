@@ -78,24 +78,24 @@ const RangeCard = ({
       style={{
         // Force the color scheme for this card
         colorScheme: mode,
-        border: "1px solid var(--sl-color-gray-5)",
+        border: "1px solid var(--border-subtle-token)",
         borderRadius: "8px",
         overflow: "hidden",
-        background: "var(--sl-color-bg-nav)",
-        boxShadow: "var(--sl-shadow-sm)",
+        background: "var(--surface-workspace)",
+        boxShadow: "var(--shadow-sm)",
       }}
     >
       <div
         style={{
           padding: "1rem",
-          borderBottom: "1px solid var(--sl-color-gray-5)",
+          borderBottom: "1px solid var(--border-subtle-token)",
         }}
       >
         <strong
           style={{
             display: "block",
             marginBottom: "0.5rem",
-            color: "var(--sl-color-text)",
+            color: "var(--text-token)",
           }}
         >
           {title}
@@ -104,7 +104,7 @@ const RangeCard = ({
           style={{
             margin: 0,
             fontSize: "0.9em",
-            color: "var(--sl-color-text-gray)",
+            color: "var(--text-subtle-token)",
             lineHeight: 1.4,
           }}
         >

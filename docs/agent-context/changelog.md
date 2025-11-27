@@ -267,7 +267,8 @@
   - **Data Visualization Demo**: Implemented `DataVizDemo` to visualize the `--chart-*` tokens with live bar and pie charts.
   - **Visual Hierarchy**: Introduced `.docs-card` and `.docs-card-header` to fix alignment and spacing issues in grid layouts.
   - **Theme Sync**: Fixed desynchronization between Starlight's theme picker and the internal `ThemeContext`.
-- **Phase 4: Dogfooding (Partial)**:
+- **Phase 4: Dogfooding & Robustness**:
   - **Strategy**: Configured the docs site to generate and consume its own theme using the `color-system` CLI.
-  - **Refactor**: Updated `DynamicRange` and other components to use generated CSS variables instead of hardcoded values.
+  - **Refactor**: Updated `DynamicRange`, `HueShiftVisualizer`, and other components to use generated CSS variables (`--surface-*`, `--chart-*`) instead of hardcoded values.
+  - **Linting**: Added `lint:colors` script to forbid hardcoded colors in the documentation codebase.
 

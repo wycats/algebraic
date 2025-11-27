@@ -339,12 +339,12 @@ export function HueShiftVisualizer() {
               }}
             >
               <div style={{ color: "var(--text-subtle)" }}>Background L</div>
-              <div style={{ textAlign: "right", color: "#3b82f6" }}>
+              <div style={{ textAlign: "right", color: "var(--chart-4)" }}>
                 {currentBg}
               </div>
 
               <div style={{ color: "var(--text-subtle)" }}>Target APCA</div>
-              <div style={{ textAlign: "right", color: "#3b82f6" }}>
+              <div style={{ textAlign: "right", color: "var(--chart-4)" }}>
                 {contrastTarget}
               </div>
 
@@ -364,7 +364,7 @@ export function HueShiftVisualizer() {
               <div
                 style={{
                   textAlign: "right",
-                  color: "#22c55e",
+                  color: "var(--chart-3)",
                   fontWeight: "bold",
                 }}
               >
@@ -394,11 +394,11 @@ export function HueShiftVisualizer() {
                 Generated CSS
               </div>
               <div>
-                <span style={{ color: "#ec4899" }}>--text-token</span>: oklch(
-                <span style={{ color: "#22c55e", fontWeight: "bold" }}>
+                <span style={{ color: "var(--chart-8)" }}>--text-token</span>: oklch(
+                <span style={{ color: "var(--chart-3)", fontWeight: "bold" }}>
                   {currentFg.toFixed(4)}
                 </span>{" "}
-                0.01 <span style={{ color: "#3b82f6" }}>{baseHue}</span>)
+                0.01 <span style={{ color: "var(--chart-4)" }}>{baseHue}</span>)
               </div>
             </div>
           </div>

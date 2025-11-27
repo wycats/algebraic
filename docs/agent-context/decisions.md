@@ -216,3 +216,13 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Simplicity**: The goal is to show the *colors*, not to build a full charting library.
   - **Dogfooding**: Demonstrates how to use the system's tokens (`--chart-1`) directly in CSS.
 
+### [2025-11-27] Linting for Hardcoded Colors
+
+- **Context**: To enforce the "Dogfooding" strategy, we needed a way to prevent developers (or agents) from accidentally re-introducing hardcoded colors.
+- **Decision**: Add a `lint:colors` script that greps for hex/rgb/hsl patterns in the documentation source code and fails the build if found.
+- **Rationale**:
+  - **Automation**: Enforces the policy automatically in CI/CD.
+  - **Simplicity**: A simple grep script is sufficient for this purpose without needing complex AST analysis.
+  - **Robustness**: Prevents regression over time.
+
+

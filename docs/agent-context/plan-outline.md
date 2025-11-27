@@ -120,10 +120,14 @@
     - **Data Viz**: Add `DataVizDemo` to visualize chart palettes.
     - **Visuals**: Fix alignment and spacing in grid layouts.
     - **Theme Sync**: Ensure Starlight theme picker syncs with internal context.
-  - **Phase 4: Dogfooding & Robustness (In Progress)**
+  - **Phase 4: Dogfooding & Robustness (Completed)**
     - **Strategy**: Define how the docs site consumes the system's own tokens.
     - **Refactor**: Replace hardcoded hex values in components (e.g., `DynamicRange`) with system tokens.
     - **Linting**: Explore tooling to forbid hardcoded colors in the `site/` directory.
+  - **Phase 5: Holistic Review & Theme Builder Polish (In Progress)**
+    - **Holistic Review**: Audit the entire site and all demos for alignment with project goals.
+    - **Theme Builder**: Deep dive into the Theme Builder UI and docs to ensure they are effective.
+    - **Polish**: Implement improvements based on the review.
 
 ## Epoch 10: Ecosystem & Interoperability (Planned)
 
