@@ -1,41 +1,38 @@
-# Implementation Plan - Phase 6: Deep Content & Design Audit
+# Implementation Plan - Phase 7: Theme Builder Refinement
 
 ## Goal
 
-Perform a "Fresh Eyes" audit of the entire project, focusing on three key pillars:
-
-1.  **Content Narrative**: Does the documentation tell a coherent story? Is the "User Journey" actually followed?
-2.  **Demo Integration**: Do the interactive components (`ContextVisualizer`, `HueShiftVisualizer`, etc.) effectively reinforce the concepts, or are they disconnected?
-3.  **System Design**: Does the system design itself (APIs, CSS variables, mental model) hold up under scrutiny when explained? Are there inconsistencies?
+Polish the Theme Builder UI to address usability issues identified in the "Fresh Eyes" audit, specifically focusing on mobile responsiveness, layout conflicts, and code maintainability.
 
 ## Strategy
 
-### 1. The Narrative Walkthrough
+### 1. Fix Layout Conflict
 
-- **Persona**: A skeptical senior engineer (Marcus) and a curious beginner (Sarah).
-- **Action**: Read the documentation linearly from `index.mdx` through `concepts/` and `guides/`.
-- **Questions**:
-  - "Why am I reading this?" (Relevance)
-  - "Do I understand the previous concept before this one?" (Prerequisites)
-  - "Is the tone consistent?"
+-   **Problem**: `demo/src/app.css` applies a global `max-width` and `text-align: center` to the `#app` container. This forces the Theme Builder (which wants to be a full-screen tool) into a centered, constrained box.
+-   **Solution**:
+    -   Modify `demo/src/app.css` to remove the global constraints or scope them to non-builder routes.
+    -   Alternatively, apply a specific class to the body/root when the builder is active (though this is harder with hash routing).
+    -   **Preferred**: Use a CSS `:has()` selector or a route-based class on the main container to switch layouts.
 
-### 2. The Interactive Audit
+### 2. Mobile Responsiveness
 
-- **Action**: Interact with every embedded demo in the docs.
-- **Questions**:
-  - "Does this demo prove the text above it?"
-  - "Is the demo intuitive, or does it need instructions?"
-  - "Does the demo look like it belongs to the system?"
+-   **Problem**: The Theme Builder has a fixed-width sidebar (`350px`) and uses `flex-direction: row`. On mobile, this squashes the preview area or causes overflow.
+-   **Solution**:
+    -   Implement a media query (breakpoint: `768px`).
+    -   Switch flex direction to `column`.
+    -   Make the sidebar width `100%` and potentially collapsible (or just stacked at the top/bottom).
+    -   Ensure the preview area takes remaining height.
 
-### 3. The System Design Critique
+### 3. Refactor Inline Styles
 
-- **Action**: Look for friction points where the documentation struggles to explain a concept. This often indicates a flaw in the system design itself.
-- **Questions**:
-  - "Is this concept hard to explain because it's complex, or because it's bad design?"
-  - "Are the naming conventions (Anchors, Surfaces, Context) intuitive?"
+-   **Problem**: The `ThemeBuilder` components rely heavily on `style={{ ... }}` props. This makes it hard to use media queries and maintain consistency.
+-   **Solution**:
+    -   Create `demo/src/components/ThemeBuilder/ThemeBuilder.css`.
+    -   Extract layout styles (flex, width, height, padding) into CSS classes.
+    -   Replace inline styles with `className` props.
 
-## Output
+## Deliverables
 
-- A new section in `docs/design/fresh-eyes-review.md` titled "Phase 6: Deep Audit".
-- A list of "System Design Observations" that might lead to future refactors.
-- A list of "Content Improvements" for immediate action.
+-   [ ] **Full-Width Layout**: The Theme Builder should occupy 100% of the viewport width on desktop.
+-   [ ] **Mobile Layout**: The Theme Builder should stack vertically on mobile devices without horizontal scroll.
+-   [ ] **Clean Code**: `ThemeBuilder.tsx` and sub-components should use CSS classes instead of inline styles for layout.

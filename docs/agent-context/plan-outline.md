@@ -128,9 +128,15 @@
     - **Holistic Review**: Audit the entire site and all demos for alignment with project goals.
     - **Theme Builder**: Deep dive into the Theme Builder UI and docs to ensure they are effective.
     - **Polish**: Implement improvements based on the review.
-  - **Phase 6: Deep Content & Design Audit (In Progress)**
+  - **Phase 6: Deep Content & Design Audit (Completed)**
     - **Goal**: A comprehensive critique of the documentation narrative, demo integration, and system design from a "Fresh Eyes" perspective.
     - **Scope**: Review all content, interactive elements, and underlying system concepts.
+  - **Phase 7: Theme Builder Refinement (Planned)**
+    - **Goal**: Polish the Theme Builder to be mobile-responsive and visually consistent with the rest of the application.
+    - **Key Deliverables**:
+      - **Layout Fix**: Resolve CSS conflict preventing full-width usage.
+      - **Mobile Responsiveness**: Implement responsive layout for sidebar/preview.
+      - **Refactor**: Replace inline styles with utility classes.
 
 ## Epoch 10: Ecosystem & Interoperability (Planned)
 
