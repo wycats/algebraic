@@ -1,6 +1,10 @@
-import { h, type ComponentChildren } from "preact";
+import { type ComponentChildren } from "preact";
 
-export function FullScreenContainer({ children }: { children: ComponentChildren }) {
+export function FullScreenContainer({
+  children,
+}: {
+  children: ComponentChildren;
+}) {
   return (
     <div
       style={{

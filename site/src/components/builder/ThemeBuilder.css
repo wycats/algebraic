@@ -74,20 +74,20 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  
+
   /* Typography */
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
   font-weight: bold;
-  
+
   /* Sizing */
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
-  
+
   /* Border - Use the computed color from the engine, or transparent */
   border: 1px solid var(--computed-border-dec-color, transparent);
-  
+
   cursor: pointer;
 }
 
@@ -97,16 +97,16 @@
   display: inline-flex;
   align-items: center;
   margin: 0;
-  
+
   /* Typography */
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
-  
+
   /* Sizing */
   padding: 0.75rem 1rem; /* Match button vertical padding */
   border-radius: 6px;
-  
+
   /* Border */
   border: 1px solid var(--computed-border-dec-color, transparent);
 }
@@ -130,16 +130,16 @@
   display: inline-flex;
   align-items: center;
   margin: 0;
-  
+
   /* Typography */
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
-  
+
   /* Sizing */
   padding: 0.75rem 1.5rem; /* Match button padding for alignment */
   border-radius: 6px;
-  
+
   /* Border */
   border: 1px solid var(--computed-border-dec-color, transparent);
 }

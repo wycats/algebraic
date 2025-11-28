@@ -1,7 +1,6 @@
 import { useConfig } from "../../context/ConfigContext";
-import { SurfaceManager } from "./SurfaceManager";
-import { Stack } from "../layout/Stack";
 import { Cluster } from "../layout/Cluster";
+import { SurfaceManager } from "./SurfaceManager";
 import "./ThemeBuilder.css";
 
 export function ThemeBuilder() {
@@ -14,17 +13,17 @@ export function ThemeBuilder() {
         <div class="theme-builder-header">
           <h2 class="text-strong">Theme Builder</h2>
           <p class="text-subtle">Customize global system parameters.</p>
-          <button 
+          <button
             onClick={resetConfig}
             class="surface-workspace bordered text-subtle"
-            style={{ 
-              marginTop: "0.75rem", 
+            style={{
+              marginTop: "0.75rem",
               width: "100%",
               padding: "0.5rem",
               borderRadius: "6px",
               cursor: "pointer",
               fontSize: "0.85rem",
-              fontWeight: 500
+              fontWeight: 500,
             }}
           >
             Reset to Default

@@ -1,5 +1,5 @@
-import { HueShiftVisualizer } from "@demo/components/HueShiftVisualizer";
-import { ThemeProvider } from "@demo/context/ThemeContext";
+import { ThemeProvider } from "../context/ThemeContext";
+import { HueShiftVisualizer } from "./HueShiftVisualizer";
 
 export function HueShiftDemo() {
   return (

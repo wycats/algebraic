@@ -171,16 +171,17 @@
       - Corrected package name and installation docs.
       - Enhanced DTCG exporter (P3 support).
       - Restored Hue Shift documentation.
-  - **Phase 4: Unification (Theme Builder Integration)**
+  - **Phase 4: Unification (Theme Builder Integration) (Completed)**
     - **Goal**: Move the Theme Builder from the standalone `demo` app into the Astro site.
     - **Deliverables**: `site/src/pages/builder`, integrated navigation.
 
-## Epoch 12: Framework Migration (Future)
+## Epoch 12: Framework Migration (In Progress)
 
-- **Goal**: Migrate interactive components to Svelte to align with other projects and improve developer experience.
-- **Scope**: Use Svelte components within the existing Astro Starlight architecture (not SvelteKit).
-- **Key Deliverables**:
-  - **Svelte Integration**: Configure Astro to support Svelte.
-  - **Component Migration**: Port existing Preact/React components (Theme Builder, Visualizers) to Svelte.
-  - **State Management**: Refactor context-based state (ConfigContext, ThemeContext) to Svelte stores.
-
+- **Goal**: Migrate interactive components to Svelte 5 to align with other projects and improve developer experience.
+- **Phases**:
+  - **Phase 1: Infrastructure & Proof of Concept (Completed)**
+    - **Goal**: Initialize Svelte 5 and port foundational components.
+    - **Deliverables**: Svelte integration in Astro, `Stack.svelte`, `Cluster.svelte`, `ContrastBadge.svelte`.
+  - **Phase 2: Visualizations (Planned)**
+    - **Goal**: Port stateless visualization components to Svelte.
+    - **Deliverables**: `ContextVisualizer.svelte`, `DynamicRange.svelte`, `HueShiftVisualizer.svelte`.

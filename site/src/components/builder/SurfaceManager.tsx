@@ -163,7 +163,7 @@ export function SurfaceManager() {
                   cursor: "pointer",
                   fontSize: "0.9rem",
                   width: "100%",
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
               >
                 + Add Surface

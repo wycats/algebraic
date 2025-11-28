@@ -1,16 +1,29 @@
-# Implementation Plan: Phase 4 (Unification)
+# Implementation Plan - Epoch 12: Framework Migration (Phase 1)
 
-## Overview
+## Goal
 
-We are merging the standalone `demo` application (Theme Builder) into the main documentation site (`site`). This will create a unified experience where users can learn about the system and then immediately build a theme in the same interface.
+Initialize the Svelte 5 environment within the Astro project and validate the migration path by porting foundational components.
 
-## Strategy
+## Proposed Changes
 
-1.  **Lift and Shift**: Move the React components from `demo/src` to `site/src`.
-2.  **Hydration**: Use Astro's `client:only="react"` directive to render the Theme Builder, as it relies heavily on browser APIs (`localStorage`, `window.matchMedia`).
-3.  **Context Sharing**: Ensure the `ThemeContext` used by the docs (for live demos) is compatible with or the same as the one used by the Builder.
+### 1. Infrastructure Setup
 
-## Risks
+- [ ] Install `@astrojs/svelte` and `svelte` (v5).
+- [ ] Update `astro.config.mjs` to include the Svelte integration.
+- [ ] Verify `tsconfig.json` settings for Svelte support.
 
-- **CSS Conflicts**: The `demo` app uses global CSS that might conflict with Starlight's styles.
-- **Routing**: The `demo` app uses Hash Routing. We need to decide if we keep that or switch to standard URL routing within Astro.
+### 2. Layout Primitives Port
+
+- [ ] Create `site/src/components/layout/Stack.svelte`.
+- [ ] Create `site/src/components/layout/Cluster.svelte`.
+- [ ] Ensure they match the API and behavior of the React versions.
+
+### 3. Simple Component Port
+
+- [ ] Port `ContrastBadge` to `site/src/components/builder/ContrastBadge.svelte`.
+- [ ] Use this to test prop passing and basic logic in Svelte 5.
+
+### 4. Verification
+
+- [ ] Create a temporary test page (or use an existing one) to render the Svelte components.
+- [ ] Verify that Svelte and Preact components coexist without issues in the Astro build.

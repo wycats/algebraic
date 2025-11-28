@@ -42,7 +42,9 @@ export function ThemeProvider({ children }: { children: ComponentChildren }) {
       attributeFilter: ["data-theme"],
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (

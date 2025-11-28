@@ -1,4 +1,4 @@
-import { h, type ComponentChildren } from "preact";
+import { type ComponentChildren } from "preact";
 import "./Layout.css";
 
 interface ClusterProps {
@@ -9,16 +9,16 @@ interface ClusterProps {
   className?: string;
 }
 
-export function Cluster({ 
-  children, 
-  gap = "1rem", 
-  align = "center", 
+export function Cluster({
+  children,
+  gap = "1rem",
+  align = "center",
   justify = "start",
-  className = "" 
+  className = "",
 }: ClusterProps) {
   return (
-    <div 
-      class={`layout-cluster ${className}`} 
+    <div
+      class={`layout-cluster ${className}`}
       style={{ gap, alignItems: align, justifyContent: justify } as any}
     >
       {children}

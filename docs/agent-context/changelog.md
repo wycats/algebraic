@@ -371,3 +371,19 @@
 - **Cleanup**:
   - Removed the legacy `demo` directory.
 
+## Epoch 12: Phase 1 - Framework Migration (Infrastructure) (2025-11-28)
+
+**Goal**: Initialize the Svelte 5 environment within the Astro project and validate the migration path by porting foundational components.
+
+**Completed Work**:
+
+- **Infrastructure**:
+  - Installed `svelte` (v5) and `@astrojs/svelte`.
+  - Configured `astro.config.mjs` to support Svelte integration.
+- **Component Porting**:
+  - Ported layout primitives: `Stack.svelte` and `Cluster.svelte`.
+  - Ported `ContrastBadge.svelte` using Svelte 5 runes (`$props`, `$derived`).
+- **Fixes**:
+  - Restored missing visualization components (`ContextVisualizer`, `HueShiftVisualizer`).
+  - Fixed broken imports in `SystemDemo.tsx` and `HueShiftDemo.tsx`.
+  - Fixed Theme Builder layout regression in documentation using `.not-content` wrapper.

@@ -1,4 +1,7 @@
-import { contrastForPair, textLightness } from "@algebraic-systems/color-system/math";
+import {
+  contrastForPair,
+  textLightness,
+} from "@algebraic-systems/color-system/math";
 import { useConfig } from "../../context/ConfigContext";
 import { useTheme } from "../../context/ThemeContext";
 import { useSolvedTheme } from "../../hooks/useSolvedTheme";

@@ -1,7 +1,7 @@
-import { ConfigProvider } from "@demo/context/ConfigContext";
-import { ThemeProvider, useTheme } from "@demo/context/ThemeContext";
 import { useEffect } from "preact/hooks";
 import "../../../css/index.css";
+import { ConfigProvider } from "../context/ConfigContext";
+import { ThemeProvider, useTheme } from "../context/ThemeContext";
 import "../styles/docs.css";
 
 function ThemeSync() {

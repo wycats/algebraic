@@ -267,3 +267,19 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Maintainability**: Centralizes layout logic, making it easier to update spacing or alignment globally.
   - **Consistency**: Ensures a uniform rhythm across the UI.
 
+### [2025-11-28] Migrate to Svelte 5
+
+- **Context**: The project was using Preact for interactive components. We wanted to align with other projects and leverage Svelte 5's improved developer experience and performance.
+- **Decision**: Migrate all interactive components to **Svelte 5**.
+- **Rationale**:
+  - **Runes**: Svelte 5's new reactivity model (Runes) simplifies state management compared to React hooks.
+  - **Performance**: Svelte's compiler-based approach results in smaller bundles and faster runtime performance.
+  - **Ecosystem**: Svelte 5 is the future of the framework, and adopting it now ensures longevity.
+
+### [2025-11-28] Pure Component Migration Strategy
+
+- **Context**: We are migrating from a Context-heavy React architecture to Svelte.
+- **Decision**: Port leaf components (like `ContrastBadge`) as **pure components** first, accepting data via props instead of relying on global stores/context immediately.
+- **Rationale**:
+  - **Isolation**: Allows testing components in isolation without mocking complex context providers.
+  - **Incremental Adoption**: We can use these components within the existing React app (via islands or wrappers) or in new Svelte pages without a full rewrite of the state management layer upfront.

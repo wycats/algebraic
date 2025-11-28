@@ -1,6 +1,7 @@
 // @ts-check
 import preact from "@astrojs/preact";
 import starlight from "@astrojs/starlight";
+import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -19,6 +20,7 @@ export default defineConfig({
   },
   integrations: [
     preact(),
+    svelte(),
     starlight({
       title: "Algebraic Color System",
       customCss: [
