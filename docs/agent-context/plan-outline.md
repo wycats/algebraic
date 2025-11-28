@@ -142,6 +142,9 @@
 
 - **Goal**: Connect the Color System with the broader design tool ecosystem.
 - **Key Deliverables**:
-  - **DTCG Export**: Export tokens in the W3C Design Tokens Format Module (2025.10 Stable).
-  - **Figma Sync**: Generate a token file compatible with Figma plugins (e.g., Tokens Studio).
-  - **Style Dictionary**: Ensure compatibility with Style Dictionary for cross-platform code generation (iOS/Android).
+  - **DTCG Export (Phase 1) (Completed)**:
+    - Export tokens in the W3C Design Tokens Format Module (2025.10 Stable).
+    - Implemented `color-system export --format dtcg`.
+  - **Tailwind Integration**: Generate a Tailwind preset for seamless usage in modern stacks.
+  - **DX Improvements**: JSON Schema for config validation and Intellisense.
+  - **Figma Sync**: Guide for using exported tokens with Figma plugins.

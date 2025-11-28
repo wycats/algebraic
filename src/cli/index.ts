@@ -4,6 +4,7 @@ import { join, resolve } from "node:path";
 import { generateTokensCss, toHighContrast } from "../lib/generator.ts";
 import { getKeyColorStats, solve } from "../lib/index.ts";
 import type { SolverConfig } from "../lib/types.ts";
+import { exportCommand } from "./commands/export.ts";
 import { DEFAULT_CONFIG } from "./default-config.ts";
 
 const args = process.argv.slice(2);
@@ -19,6 +20,11 @@ if (import.meta.main) {
     writeFileSync(targetPath, JSON.stringify(DEFAULT_CONFIG, null, 2));
     console.log("Created color-config.json");
     console.log("Run `color-system` to generate your theme.");
+    process.exit(0);
+  }
+
+  if (args[0] === "export") {
+    exportCommand(args.slice(1), CWD);
     process.exit(0);
   }
 
@@ -40,6 +46,7 @@ if (import.meta.main) {
       );
       console.error("Usage: color-system [config-file] [output-file]");
       console.error("   or: color-system init");
+      console.error("   or: color-system export --format dtcg");
       process.exit(1);
     }
   }

@@ -292,3 +292,14 @@
   - **Mobile Responsiveness**: Added media queries to `ThemeBuilder.css` to ensure the layout adapts gracefully to smaller screens (stacking sidebar).
 - **Visual Polish**:
   - Audited for hardcoded values and replaced them with system tokens.
+
+## Epoch 10: Phase 1 - DTCG Export (2025-11-27)
+
+**Goal**: Enable exporting the generated theme tokens in the W3C Design Tokens Format Module (DTCG) standard.
+
+**Completed Work**:
+
+- **DTCG Exporter**: Implemented `toDTCG` in `src/lib/exporters/dtcg.ts` to map the internal `Theme` object to DTCG JSON.
+- **CLI Command**: Added `export` command to the CLI (`color-system export --format dtcg`).
+- **Type Definitions**: Formalized the `Theme` interface in `src/lib/types.ts`.
+- **Testing**: Added unit tests for the exporter and verified the CLI output.

@@ -147,3 +147,8 @@ export type SurfaceDefinition = {
   label: string;
   lightness: Record<Mode, number>;
 };
+
+export interface Theme {
+  surfaces: SurfaceConfig[];
+  backgrounds: Map<string, Record<Mode, ColorSpec>>;
+}

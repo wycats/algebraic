@@ -1,42 +1,41 @@
-# Implementation Plan - Phase 7: Theme Builder Refinement & Docs Fixes
+# Implementation Plan - Epoch 10: Ecosystem & Interoperability
+
+## Phase 1: DTCG Export (Design Tokens)
 
 ## Goal
-Polish the Theme Builder to be mobile-responsive and visually consistent, and fix critical rendering issues in the documentation.
+
+Implement the ability to export the system's generated tokens in the W3C Design Tokens Format Module (DTCG) standard. This will allow the color system to be consumed by tools like Figma (via Tokens Studio) and Style Dictionary.
 
 ## Objectives
 
-1.  **Documentation Fixes (Priority)**
-    - [ ] **Context Adaptation**: Fix the "Light Context" vs "Dark Context" visualization to correctly show the difference (likely missing a wrapper class or incorrect context injection).
-    - [ ] **Data Visualization**: Fix the MDX rendering issue where import statements are printed as text instead of being executed.
-    - [ ] **Hue Shifting**: Investigate and fix the runtime error in the Hue Shift visualizer.
-    - [ ] **Linear Contrast**: Fix the visual alignment and content of the "Linear Contrast" comparison (ensure boxes line up and show the correct gradient/steps).
-
-2.  **Refactor Inline Styles (Theme Builder)**
-    - [ ] Audit `ThemeBuilder.tsx` and its sub-components for inline styles.
-    - [ ] Move styles to `ThemeBuilder.css` using BEM-like class naming or semantic class names.
-    - [ ] Utilize system utility classes (e.g., `.text-strong`, `.text-subtle`, `.bordered`) where appropriate.
-
-3.  **Mobile Responsiveness Polish**
-    - [ ] Verify the stacking behavior on mobile (already implemented in `ThemeBuilder.css`).
-    - [ ] Adjust padding and margins for smaller screens to maximize usable space.
-    - [ ] Ensure touch targets are large enough.
-
-4.  **Visual Consistency**
-    - [ ] Ensure all colors and spacing use system tokens.
-    - [ ] Standardize border radii and shadow usage.
+1.  **CLI Export Command**: Add a new `export` command to the CLI.
+2.  **DTCG Mapper**: Implement logic to map the internal `Theme` and `ColorSpec` objects to the DTCG JSON structure.
+3.  **Verification**: Verify the output against the DTCG spec and ensure it can be imported into a test tool (or at least validates).
 
 ## Proposed Changes
 
-### Documentation
-- **`site/src/content/docs/concepts/thinking-in-surfaces.mdx`** (or similar): Check how the Context Adaptation example is implemented. It likely needs a `SystemDemo` wrapper or specific classes to force the context.
-- **`site/src/content/docs/usage/data-viz.mdx`**: Fix the MDX syntax for imports. Ensure there are no extra spaces or weird formatting preventing the import from being recognized.
-- **`site/src/content/docs/concepts/physics-of-light.mdx`** (or similar): Check the Linear Contrast visualization. It might be a custom component that needs CSS fixes.
-- **`demo/src/components/HueShiftVisualizer.tsx`**: Debug the error.
+### CLI (`src/cli/`)
 
-### Theme Builder
-- **`demo/src/components/ThemeBuilder/ThemeBuilder.tsx`**: Remove `style={{ ... }}` props.
-- **`demo/src/components/ThemeBuilder/ThemeBuilder.css`**: Add styles for the new classes.
+- Modify `src/cli/index.ts` to add the `export` command.
+  - Options: `--format <format>` (defaulting to `dtcg` for now, or required), `--out <file>`.
+- Create `src/cli/commands/export.ts` to handle the command logic.
 
-## Verification Plan
-- **Docs Review**: Manually check the affected pages in the local dev server (`pnpm dev:site`).
-- **Theme Builder Review**: Check the Theme Builder in the browser at various viewport widths.
+### Library (`src/lib/`)
+
+- Create `src/lib/exporters/` directory.
+- Create `src/lib/exporters/dtcg.ts`:
+  - Function `toDTCG(theme: Theme): DTCGTokenGroup`.
+  - Map semantic surfaces (`--surface-primary`) to DTCG tokens.
+  - Map primitives (if we want to expose them, though we mostly deal in semantic tokens).
+  - Ensure types (color, dimension, etc.) are correct.
+
+### Testing
+
+- Add unit tests for the DTCG mapper in `src/lib/exporters/__tests__/dtcg.test.ts`.
+- Add an integration test for the CLI command.
+
+## Future Phases (For Context)
+
+- **Phase 2**: Tailwind CSS Integration.
+- **Phase 3**: DX Improvements (JSON Schema).
+- **Phase 4**: Documentation & Guides.

@@ -1,24 +1,26 @@
-# Walkthrough - Phase 7: Theme Builder Refinement & Docs Fixes
+# Walkthrough - Epoch 10: Ecosystem & Interoperability
 
-## Overview
-This phase focused on polishing the Theme Builder UI and fixing critical rendering issues in the documentation. We refactored inline styles into a dedicated CSS file, improved mobile responsiveness, and addressed several visual bugs in the docs.
+## Phase 1: DTCG Export
 
-## Key Changes
+### Goal
+Enable exporting the generated theme tokens in the W3C Design Tokens Format Module (DTCG) standard, allowing integration with tools like Figma (via Tokens Studio) and Style Dictionary.
 
-### Documentation Fixes
-- **Context Adaptation**: Fixed the "Light Context" vs "Dark Context" visualization by ensuring `engine.css` and `utilities.css` are correctly loaded in the documentation site. This ensures that `surface-spotlight` correctly inverts the text color.
-- **Data Visualization**: Renamed `data-viz.md` to `data-viz.mdx` to enable MDX features, fixing the issue where import statements were rendered as text.
-- **Hue Shifting**: Added error handling to the `HueShiftVisualizer` to prevent runtime crashes when invalid contrast targets are temporarily set. Also created a dedicated `HueShiftDemo` wrapper component in the site project to ensure the `ThemeProvider` context is correctly propagated to the visualizer within the Astro island.
-- **Linear Contrast**: Aligned the "Linear Contrast" visualization in `solver-internals.md` to match the "Linear Lightness" example, making the comparison clearer.
+### Implementation
 
-### Theme Builder Refinement
-- **Refactored Inline Styles**: Moved all inline styles from `ThemeBuilder.tsx` to `ThemeBuilder.css` using semantic class names (e.g., `.preview-section`, `.preview-controls`).
-- **Mobile Responsiveness**: Added media queries to `ThemeBuilder.css` to ensure the layout adapts gracefully to smaller screens. The sidebar now stacks vertically on mobile, and padding is adjusted for better usability.
+#### 1. DTCG Exporter (`src/lib/exporters/dtcg.ts`)
+We implemented a `toDTCG` function that takes a solved `Theme` object and converts it into a DTCG-compliant JSON structure.
+- **Structure**: The output is grouped by mode (`light` / `dark`), then by semantic role (`surface` / `on-surface`).
+- **Format**: Colors are converted to Hex strings for maximum compatibility.
+- **Metadata**: Includes `$description` from the surface config.
 
-## Technical Details
-- **CSS Architecture**: We manually copied `engine.css` and `utilities.css` to `site/src/styles/` to ensure the documentation site has access to the full system capabilities. This is a temporary measure; a more robust sync mechanism should be considered in the future.
-- **Error Handling**: The `HueShiftVisualizer` now catches errors during the solve process and falls back to safe values, ensuring the UI remains stable.
+#### 2. CLI Export Command (`src/cli/commands/export.ts`)
+We added a new `export` command to the CLI.
+- **Usage**: `color-system export --config <file> --out <file> --format dtcg`
+- **Logic**: Loads the config, solves the theme using the core engine, and then passes the result to the exporter.
 
-## Verification
-- **Docs**: The "Context Adaptation" example now correctly shows white text on the dark spotlight surface. The "Data Visualization" page now renders the interactive demo.
-- **Theme Builder**: The Theme Builder UI is now fully responsive and uses clean, maintainable CSS classes.
+#### 3. Type Definitions
+We formalized the `Theme` interface in `src/lib/types.ts` to ensure type safety across the exporter and CLI.
+
+### Verification
+- **Unit Tests**: Added `src/lib/exporters/__tests__/dtcg.test.ts` to verify the JSON structure.
+- **Manual Test**: Verified that `color-system export` generates a valid JSON file with the expected tokens.
