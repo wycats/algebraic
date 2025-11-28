@@ -169,6 +169,8 @@
   --base-chroma: var(--chroma-brand);
   /* Ensure text is white/light on dark brand background */
   --override-fg-chroma: 0;
+  /* Force the surface to match the brand color's lightness */
+  --override-surface-lightness: var(--lightness-brand);
 }
 
 .surface-action.hue-success {

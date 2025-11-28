@@ -57,6 +57,12 @@
   inherits: true;
 }
 
+@property --override-surface-lightness {
+  syntax: "<number>";
+  initial-value: initial;
+  inherits: true;
+}
+
 @property --surface-lightness {
   syntax: "<number>";
   inherits: true;
@@ -186,7 +192,8 @@
   /* Reify Surface Color */
   /* Extract L and H (Shift) from token, combine with computed C and base hue */
   --computed-surface: oklch(
-    from var(--surface-token) l var(--computed-surface-C)
+    from var(--surface-token) var(--override-surface-lightness, l)
+      var(--computed-surface-C)
       calc(var(--base-hue, 0) + var(--hue-adjust, 0) + h)
   );
 

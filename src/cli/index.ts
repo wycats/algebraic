@@ -67,11 +67,17 @@ if (import.meta.main) {
   );
 
   const stats = getKeyColorStats(config.anchors.keyColors);
-  if (stats.chroma !== undefined || stats.hue !== undefined) {
+  if (
+    stats.chroma !== undefined ||
+    stats.hue !== undefined ||
+    stats.lightness !== undefined
+  ) {
     const vars: string[] = [];
     if (stats.chroma !== undefined)
       vars.push(`  --chroma-brand: ${stats.chroma};`);
     if (stats.hue !== undefined) vars.push(`  --hue-brand: ${stats.hue};`);
+    if (stats.lightness !== undefined)
+      vars.push(`  --lightness-brand: ${stats.lightness};`);
 
     if (vars.length > 0) {
       css = `:root {\n${vars.join("\n")}\n}\n\n` + css;
