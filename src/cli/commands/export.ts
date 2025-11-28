@@ -1,15 +1,16 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { solve } from "../../lib/index.ts";
 import { toDTCG } from "../../lib/exporters/dtcg.ts";
+import { toTailwind } from "../../lib/exporters/tailwind.ts";
+import { solve } from "../../lib/index.ts";
 import type { SolverConfig } from "../../lib/types.ts";
 
 export function exportCommand(args: string[], cwd: string): void {
   // Simple arg parsing
   // color-system export --config <file> --out <file> --format <format>
-  
+
   let configPath = "color-config.json";
-  let outPath = "tokens.json";
+  let outPath = ""; // Will be set based on format if not provided
   let format = "dtcg";
 
   for (let i = 0; i < args.length; i++) {
@@ -26,11 +27,22 @@ export function exportCommand(args: string[], cwd: string): void {
     }
   }
 
+  // Set default output path if not provided
+  if (!outPath) {
+    if (format === "dtcg") {
+      outPath = "tokens.json";
+    } else if (format === "tailwind") {
+      outPath = "tailwind.preset.js";
+    }
+  }
+
   const absConfigPath = resolve(cwd, configPath);
   const absOutPath = resolve(cwd, outPath);
 
-  if (format !== "dtcg") {
-    console.error(`Error: Unsupported format '${format}'. Only 'dtcg' is supported.`);
+  if (format !== "dtcg" && format !== "tailwind") {
+    console.error(
+      `Error: Unsupported format '${format}'. Supported formats: 'dtcg', 'tailwind'.`
+    );
     process.exit(1);
   }
 
@@ -47,9 +59,18 @@ export function exportCommand(args: string[], cwd: string): void {
   const theme = solve(config);
 
   console.log(`Exporting to ${format.toUpperCase()}...`);
-  const tokens = toDTCG(theme);
+  let outputContent = "";
+
+  if (format === "dtcg") {
+    const tokens = toDTCG(theme);
+    outputContent = JSON.stringify(tokens, null, 2);
+  } else if (format === "tailwind") {
+    const preset = toTailwind(theme);
+    // Output as CommonJS module
+    outputContent = `module.exports = ${JSON.stringify(preset, null, 2)};`;
+  }
 
   console.log(`Writing to: ${absOutPath}`);
-  writeFileSync(absOutPath, JSON.stringify(tokens, null, 2));
+  writeFileSync(absOutPath, outputContent);
   console.log("Done!");
 }

@@ -1,11 +1,6 @@
-# Task List - Epoch 10: Ecosystem & Interoperability
+# Task List
 
-## Phase 1: DTCG Export
-
-- [x] Define `Theme` interface in `src/lib/types.ts`
-- [x] Create `src/lib/exporters/dtcg.ts`
-- [x] Implement `toDTCG` function
-- [x] Create `src/cli/commands/export.ts`
-- [x] Update `src/cli/index.ts` to support `export` command
-- [x] Add unit tests for DTCG exporter
-- [x] Verify CLI command manually
+- [x] Implement `toTailwind` exporter in `src/lib/exporters/tailwind.ts` <!-- id: 0 -->
+- [x] Add unit tests for Tailwind exporter <!-- id: 1 -->
+- [x] Update CLI `export` command to support `tailwind` format <!-- id: 2 -->
+- [x] Verify generated preset works in a sample project (manual verification) <!-- id: 3 -->

@@ -1,26 +1,33 @@
-# Walkthrough - Epoch 10: Ecosystem & Interoperability
+# Walkthrough - Epoch 10: Phase 2 (Tailwind Integration)
 
-## Phase 1: DTCG Export
+## Overview
 
-### Goal
-Enable exporting the generated theme tokens in the W3C Design Tokens Format Module (DTCG) standard, allowing integration with tools like Figma (via Tokens Studio) and Style Dictionary.
+This phase focuses on integrating the Color System with Tailwind CSS by generating a preset that maps system tokens to Tailwind utilities.
 
-### Implementation
+## Key Decisions
 
-#### 1. DTCG Exporter (`src/lib/exporters/dtcg.ts`)
-We implemented a `toDTCG` function that takes a solved `Theme` object and converts it into a DTCG-compliant JSON structure.
-- **Structure**: The output is grouped by mode (`light` / `dark`), then by semantic role (`surface` / `on-surface`).
-- **Format**: Colors are converted to Hex strings for maximum compatibility.
-- **Metadata**: Includes `$description` from the surface config.
+- **Contextual vs. Global**: We map text/border tokens to CSS variables (`var(--text-high-token)`) to preserve the system's contextual logic.
+- **Surface Colors**: We map surface colors to their calculated values (`light-dark(...)`) to allow for flexible usage (e.g., `bg-surface-card`), while acknowledging that this bypasses the context system.
+- **Output Format**: The CLI exports a CommonJS module (`module.exports = ...`) so it can be directly required in `tailwind.config.js`.
 
-#### 2. CLI Export Command (`src/cli/commands/export.ts`)
-We added a new `export` command to the CLI.
-- **Usage**: `color-system export --config <file> --out <file> --format dtcg`
-- **Logic**: Loads the config, solves the theme using the core engine, and then passes the result to the exporter.
+## Implementation Details
 
-#### 3. Type Definitions
-We formalized the `Theme` interface in `src/lib/types.ts` to ensure type safety across the exporter and CLI.
+### `src/lib/exporters/tailwind.ts`
 
-### Verification
-- **Unit Tests**: Added `src/lib/exporters/__tests__/dtcg.test.ts` to verify the JSON structure.
-- **Manual Test**: Verified that `color-system export` generates a valid JSON file with the expected tokens.
+The `toTailwind` function generates a configuration object with:
+- `theme.extend.colors`:
+  - `text.*`: Maps to `--text-*-token`.
+  - `border.*`: Maps to `--border-*-token`.
+  - `surface.*`: Maps to `light-dark(...)` values for each surface.
+  - `chart.*`: Maps to `--chart-*` variables.
+- `theme.extend.boxShadow`:
+  - Maps `sm`, `md`, `lg`, `xl` to `--shadow-*` variables.
+
+### CLI Update
+
+The `export` command now accepts `--format tailwind`. It defaults to outputting `tailwind.preset.js`.
+
+## Verification
+
+- **Unit Tests**: Added `src/lib/exporters/__tests__/tailwind.test.ts` to verify the structure of the generated object.
+- **Manual Test**: Ran the CLI against `site/color-config.json` and verified the output file contains the expected keys and values.

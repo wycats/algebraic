@@ -1,41 +1,51 @@
 # Implementation Plan - Epoch 10: Ecosystem & Interoperability
 
-## Phase 1: DTCG Export (Design Tokens)
+## Phase 2: Tailwind CSS Integration
 
 ## Goal
 
-Implement the ability to export the system's generated tokens in the W3C Design Tokens Format Module (DTCG) standard. This will allow the color system to be consumed by tools like Figma (via Tokens Studio) and Style Dictionary.
+Generate a Tailwind CSS configuration (preset) that allows users to use the color system's tokens as utility classes (e.g., `text-subtle`, `border-dec`, `bg-surface-card`).
 
 ## Objectives
 
-1.  **CLI Export Command**: Add a new `export` command to the CLI.
-2.  **DTCG Mapper**: Implement logic to map the internal `Theme` and `ColorSpec` objects to the DTCG JSON structure.
-3.  **Verification**: Verify the output against the DTCG spec and ensure it can be imported into a test tool (or at least validates).
+1.  **CLI Export Command**: Extend the `export` command to support `--format tailwind`.
+2.  **Tailwind Exporter**: Implement logic to map the internal `Theme` object to a Tailwind theme configuration object.
+3.  **Verification**: Verify the output structure matches Tailwind's expected format and works in a sample environment.
 
 ## Proposed Changes
 
 ### CLI (`src/cli/`)
 
-- Modify `src/cli/index.ts` to add the `export` command.
-  - Options: `--format <format>` (defaulting to `dtcg` for now, or required), `--out <file>`.
-- Create `src/cli/commands/export.ts` to handle the command logic.
+- Update `src/cli/commands/export.ts` to handle `tailwind` format.
+- Output file should default to `tailwind.preset.js`.
 
 ### Library (`src/lib/`)
 
-- Create `src/lib/exporters/` directory.
-- Create `src/lib/exporters/dtcg.ts`:
-  - Function `toDTCG(theme: Theme): DTCGTokenGroup`.
-  - Map semantic surfaces (`--surface-primary`) to DTCG tokens.
-  - Map primitives (if we want to expose them, though we mostly deal in semantic tokens).
-  - Ensure types (color, dimension, etc.) are correct.
+- Create `src/lib/exporters/tailwind.ts`:
+  - Function `toTailwind(theme: Theme): Record<string, any>`.
+  - **Contextual Tokens**: Map text and border colors to the CSS variables provided by the system's runtime.
+    - `colors.text.high` -> `var(--text-high-token)`
+    - `colors.text.subtle` -> `var(--text-subtle-token)`
+    - `colors.text.subtlest` -> `var(--text-subtlest-token)`
+    - `colors.border.dec` -> `var(--border-dec-token)`
+    - `colors.border.int` -> `var(--border-int-token)`
+  - **Global Tokens**: Map global system tokens.
+    - `colors.focus` -> `var(--focus-ring-color)`
+    - `colors.chart.*` -> `var(--chart-*)`
+  - **Surface Colors**: Map surface backgrounds to their calculated `light-dark()` values.
+    - `colors.surface[slug]` -> `light-dark(oklch(...), oklch(...))`
+    - *Rationale*: This allows users to use `bg-surface-card` or `border-surface-card` for one-off styling, even though the preferred method is using the `.surface-card` class (which sets context).
+  - **Shadows**: Map system shadows to Tailwind's `boxShadow` theme.
+    - `boxShadow.sm` -> `var(--shadow-sm)`
+    - `boxShadow.md` -> `var(--shadow-md)`
+    - ...
 
 ### Testing
 
-- Add unit tests for the DTCG mapper in `src/lib/exporters/__tests__/dtcg.test.ts`.
-- Add an integration test for the CLI command.
+- Add unit tests for the Tailwind exporter in `src/lib/exporters/__tests__/tailwind.test.ts`.
+- Verify the generated JS object structure.
 
 ## Future Phases (For Context)
 
-- **Phase 2**: Tailwind CSS Integration.
 - **Phase 3**: DX Improvements (JSON Schema).
 - **Phase 4**: Documentation & Guides.

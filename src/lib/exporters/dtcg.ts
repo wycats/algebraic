@@ -1,5 +1,5 @@
 import { formatHex } from "culori";
-import type { Theme, ColorSpec, Mode } from "../types.ts";
+import type { ColorSpec, Mode, Theme } from "../types.ts";
 
 interface DTCGToken {
   $type: "color" | "dimension" | "fontFamily" | "fontWeight" | "number";
@@ -52,21 +52,21 @@ export function toDTCG(theme: Theme): Record<string, DTCGGroup> {
       const fgSpec = surface.computed?.[mode];
       if (fgSpec) {
         const fgTokens: DTCGGroup = {};
-        
+
         // Map internal names to semantic names if needed, or just use keys
         // "fg-high", "fg-strong", etc.
         for (const [key, lightness] of Object.entries(fgSpec)) {
-            if (key === 'background') continue; // Skip background as it's redundant
-            
-            // Clean up key name: "fg-high" -> "high"
-            const cleanKey = key.replace('fg-', '');
-            
-            fgTokens[cleanKey] = {
-                $type: "color",
-                $value: formatFg(lightness),
-            };
+          if (key === "background") continue; // Skip background as it's redundant
+
+          // Clean up key name: "fg-high" -> "high"
+          const cleanKey = key.replace("fg-", "");
+
+          fgTokens[cleanKey] = {
+            $type: "color",
+            $value: formatFg(lightness),
+          };
         }
-        
+
         onSurfaceGroup[surface.slug] = fgTokens;
       }
     }

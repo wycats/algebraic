@@ -145,6 +145,7 @@
   - **DTCG Export (Phase 1) (Completed)**:
     - Export tokens in the W3C Design Tokens Format Module (2025.10 Stable).
     - Implemented `color-system export --format dtcg`.
-  - **Tailwind Integration**: Generate a Tailwind preset for seamless usage in modern stacks.
+  - **Tailwind Integration (Phase 2) (In Progress)**:
+    - Generate a Tailwind preset for seamless usage in modern stacks.
   - **DX Improvements**: JSON Schema for config validation and Intellisense.
   - **Figma Sync**: Guide for using exported tokens with Figma plugins.

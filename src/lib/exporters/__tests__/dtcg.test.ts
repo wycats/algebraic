@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import type { ColorSpec, Mode, SurfaceConfig, Theme } from "../../types.ts";
 import { toDTCG } from "../dtcg.ts";
-import type { Theme, SurfaceConfig, ColorSpec, Mode } from "../../types.ts";
 
 describe("DTCG Exporter", () => {
   it("should export a simple theme to DTCG format", () => {
@@ -49,7 +49,7 @@ describe("DTCG Exporter", () => {
     // Check Light Mode
     const light = dtcg.light;
     if (!light) throw new Error("Light mode missing");
-    
+
     expect(light).toHaveProperty("surface");
     expect(light).toHaveProperty("on-surface");
 
