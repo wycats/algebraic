@@ -127,39 +127,80 @@ _Design system architect, thinking about scale and maintenance._
 This section details the observations from the "Fresh Eyes" audit conducted on November 27, 2025. The audit focused on the project's documentation, Theme Builder UI, and overall user experience for the defined personas.
 
 ### 1. Navigation & Discovery
-*   **Observation**: The "Theme Builder" is a core value proposition but is buried in the sidebar under "Getting Started". The home page hero section only links to "Installation" and "Philosophy".
-*   **Impact**: Users (especially **Sarah** and **Marcus**) might miss the interactive tool that best demonstrates the system's power.
-*   **Recommendation**: Add a primary or secondary action button to the home page hero in `site/src/content/docs/index.mdx` labeled "Try the Theme Builder" linking to `/guides/theme-builder` (or directly to the builder if possible).
+
+- **Observation**: The "Theme Builder" is a core value proposition but is buried in the sidebar under "Getting Started". The home page hero section only links to "Installation" and "Philosophy".
+- **Impact**: Users (especially **Sarah** and **Marcus**) might miss the interactive tool that best demonstrates the system's power.
+- **Recommendation**: Add a primary or secondary action button to the home page hero in `site/src/content/docs/index.mdx` labeled "Try the Theme Builder" linking to `/guides/theme-builder` (or directly to the builder if possible).
 
 ### 2. Cohesion & Visual Consistency
-*   **Observation**: The documentation and the demo app share the same underlying design tokens (via `theme.css` and `index.css`), ensuring a consistent visual language.
-*   **Observation**: There is a layout conflict in the demo app. `demo/src/app.css` applies a `max-width: 1280px` and `text-align: center` to `#app`. This conflicts with the `ThemeBuilder` component's intent to use the full screen (`width: "100%"`), potentially causing the builder to feel constrained or misaligned.
-*   **Observation**: The Theme Builder relies heavily on inline styles (e.g., `style={{ width: "350px" }}`), whereas the documentation uses utility classes. This makes the codebase harder to maintain and less consistent.
-*   **Recommendation**:
-    *   Refactor `demo/src/app.css` to allow the Theme Builder route to occupy the full viewport width.
-    *   Gradually replace inline styles in `ThemeBuilder` components with a utility class system or a CSS-in-JS solution that aligns with the project's styling strategy.
+
+- **Observation**: The documentation and the demo app share the same underlying design tokens (via `theme.css` and `index.css`), ensuring a consistent visual language.
+- **Observation**: There is a layout conflict in the demo app. `demo/src/app.css` applies a `max-width: 1280px` and `text-align: center` to `#app`. This conflicts with the `ThemeBuilder` component's intent to use the full screen (`width: "100%"`), potentially causing the builder to feel constrained or misaligned.
+- **Observation**: The Theme Builder relies heavily on inline styles (e.g., `style={{ width: "350px" }}`), whereas the documentation uses utility classes. This makes the codebase harder to maintain and less consistent.
+- **Recommendation**:
+  - Refactor `demo/src/app.css` to allow the Theme Builder route to occupy the full viewport width.
+  - Gradually replace inline styles in `ThemeBuilder` components with a utility class system or a CSS-in-JS solution that aligns with the project's styling strategy.
 
 ### 3. Dogfooding
-*   **Observation**: The documentation components (e.g., `DynamicRange.tsx`) correctly "dogfood" the system by using generated CSS variables like `var(--surface-token)` and `var(--text-high-token)`. This ensures that the docs always reflect the current state of the system.
-*   **Status**: **Pass**. The project is effectively using its own tools to build its documentation.
+
+- **Observation**: The documentation components (e.g., `DynamicRange.tsx`) correctly "dogfood" the system by using generated CSS variables like `var(--surface-token)` and `var(--text-high-token)`. This ensures that the docs always reflect the current state of the system.
+- **Status**: **Pass**. The project is effectively using its own tools to build its documentation.
 
 ### 4. Terminology
-*   **Observation**: The Theme Builder UI consistently uses the terms "Anchors" (in `AnchorsEditor.tsx`) and "Surfaces" (in `SurfaceManager.tsx`), matching the "Mental Model" documentation.
-*   **Observation**: The distinction between "Page" and "Inverted" polarity is clearly presented in the `AnchorsEditor`, reinforcing the core concepts for **Dr. Chen** and **Alex**.
-*   **Status**: **Pass**. The UI terminology reinforces the documentation.
+
+- **Observation**: The Theme Builder UI consistently uses the terms "Anchors" (in `AnchorsEditor.tsx`) and "Surfaces" (in `SurfaceManager.tsx`), matching the "Mental Model" documentation.
+- **Observation**: The distinction between "Page" and "Inverted" polarity is clearly presented in the `AnchorsEditor`, reinforcing the core concepts for **Dr. Chen** and **Alex**.
+- **Status**: **Pass**. The UI terminology reinforces the documentation.
 
 ### 5. Mobile Responsiveness
-*   **Observation**: The Theme Builder is **not responsive**.
-    *   The sidebar has a fixed width of `350px`.
-    *   The main layout uses `display: flex` (row) without wrapping.
-    *   There are no media queries to handle smaller screens.
-*   **Impact**: The tool is unusable on mobile devices, which is a significant barrier for users who want to quickly explore the system on their phones (e.g., **Marcus** checking a link on the go).
-*   **Recommendation**: Implement a responsive layout for the Theme Builder.
-    *   On mobile, stack the sidebar and preview area vertically.
-    *   Consider a collapsible sidebar or a tabbed interface to switch between "Config" and "Preview" on small screens.
+
+- **Observation**: The Theme Builder is **not responsive**.
+  - The sidebar has a fixed width of `350px`.
+  - The main layout uses `display: flex` (row) without wrapping.
+  - There are no media queries to handle smaller screens.
+- **Impact**: The tool is unusable on mobile devices, which is a significant barrier for users who want to quickly explore the system on their phones (e.g., **Marcus** checking a link on the go).
+- **Recommendation**: Implement a responsive layout for the Theme Builder.
+  - On mobile, stack the sidebar and preview area vertically.
+  - Consider a collapsible sidebar or a tabbed interface to switch between "Config" and "Preview" on small screens.
 
 ### Summary of Action Items (2025)
+
 1.  **[High Priority]** Add "Try Theme Builder" link to Docs Home Page.
 2.  **[High Priority]** Fix CSS layout conflict in `demo/src/app.css` to allow full-width Theme Builder.
 3.  **[Medium Priority]** Implement mobile responsiveness for the Theme Builder.
 4.  **[Low Priority]** Refactor inline styles in Theme Builder to use shared utility classes.
+
+## Phase 6: Deep Audit (November 2025)
+
+**Reviewer:** GitHub Copilot (Agent)
+**Focus:** Narrative Flow, Demo Integration, and System Design.
+
+### 1. Narrative & User Journey
+
+-   **The "Welcome" Hook**: The `index.mdx` page is strong. The "Stop picking colors. Start defining intent." tagline is compelling. The "Try the Theme Builder" link correctly points to `/demo/#/builder`, keeping the user in the ecosystem.
+-   **The "Philosophy" Gap**: The transition from `index.mdx` to `philosophy.md` is logical, but `philosophy.md` jumps quickly into "The Reactive Pipeline" (technical implementation) before fully establishing the "Why".
+    -   *Recommendation*: Move the "Reactive Pipeline" section to `concepts/thinking-in-surfaces.mdx` or a dedicated "Architecture" page. Keep Philosophy focused on the "Mental Model" (Math vs. Magic, Intent).
+-   **The "Theme Builder" Disconnect**: The `guides/theme-builder.md` page contains a hardcoded link to `https://color-system-demo.netlify.app`. This contradicts the `index.mdx` link (`/demo/#/builder`) and likely points to an outdated or external deployment.
+    -   *Action*: Update `guides/theme-builder.md` to link to `/demo/#/builder` to ensure consistency with the unified build strategy.
+
+### 2. Demo Integration
+
+-   **Embedded Visualizations**: The use of `<SystemDemo>` and `<Diagram>` in `catalog/*.mdx` is excellent. It proves the system works by using the system's own tokens to render the documentation.
+-   **Hue Shift Visualizer**: The `advanced/hue-shifting.mdx` page is a standout. The interactive comparison between "Linear" and "Bezier" effectively communicates a complex concept.
+-   **Missing "Playground"**: While the Theme Builder is a full tool, the documentation lacks small, inline "playgrounds" where a user can tweak *just one* variable (like a hue) and see the result immediately without leaving the page.
+    -   *Idea*: Create a `<MiniSolver>` component for the "Thinking in Surfaces" page that lets users drag *just* the Page Anchor to see the "Rubber Band" effect in isolation.
+
+### 3. System Design Observations
+
+-   **Polarity Terminology**: The term "Polarity" is used heavily. While accurate, it might be intimidating. The UI uses "Page" and "Inverted" which is clearer. The docs should consistently use "Page Context" and "Inverted Context" where possible, introducing "Polarity" as the technical term.
+-   **"Soft" vs "Tinted"**: The distinction between `surface-tinted` (Catalog: Surfaces) and `surface-soft-spotlight` (Catalog: Surfaces) is subtle.
+    -   `surface-tinted`: "Subtle grouping... slight tint of brand color".
+    -   `surface-soft-spotlight`: "Softer version of spotlight... badges".
+    -   *Critique*: These seem to overlap. Is a badge a "tinted surface" or a "soft spotlight"? The system might benefit from clarifying if "Tinted" is for *containers* and "Soft Spotlight" is for *elements*.
+
+### 4. Action Plan
+
+1.  **Fix Broken Link**: Update `guides/theme-builder.md` to point to `/demo/#/builder`.
+2.  **Refine Philosophy**: Move technical implementation details out of `philosophy.md`.
+3.  **Clarify Semantics**: Add a "When to use what" section to `catalog/surfaces.mdx` comparing `surface-tinted` vs `surface-soft-spotlight`.
+

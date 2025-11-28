@@ -221,8 +221,10 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Context**: To enforce the "Dogfooding" strategy, we needed a way to prevent developers (or agents) from accidentally re-introducing hardcoded colors.
 - **Decision**: Add a `lint:colors` script that greps for hex/rgb/hsl patterns in the documentation source code and fails the build if found.
 - **Rationale**:
+
   - **Automation**: Enforces the policy automatically in CI/CD.
   - **Simplicity**: A simple grep script is sufficient for this purpose without needing complex AST analysis.
+
   ### [2025-11-27] Responsive Theme Builder Layout
 
 - **Context**: The Theme Builder UI was unusable on mobile devices due to a fixed-width sidebar and lack of wrapping.
@@ -230,4 +232,3 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Usability**: Enables users to explore the system on mobile devices.
   - **Maintainability**: Moving layout styles to a CSS file (instead of inline styles) makes it easier to manage media queries.
-

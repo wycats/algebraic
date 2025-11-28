@@ -275,4 +275,3 @@
   - **Docs Home**: Added a "Try the Theme Builder" CTA to the hero section for better discovery.
   - **Layout Fix**: Resolved a CSS conflict in `demo/src/app.css` to allow full-width layouts.
   - **Mobile Responsiveness**: Implemented a responsive layout for the Theme Builder (stacking sidebar on mobile).
-

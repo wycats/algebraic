@@ -1,34 +1,41 @@
-# Implementation Plan - Phase 5: Holistic Review & Theme Builder Polish
+# Implementation Plan - Phase 6: Deep Content & Design Audit
 
 ## Goal
 
-Ensure the entire documentation site and the Theme Builder UI work together cohesively to teach the user the system's mental model. We want to move from "functional" to "educational and intuitive."
+Perform a "Fresh Eyes" audit of the entire project, focusing on three key pillars:
+
+1.  **Content Narrative**: Does the documentation tell a coherent story? Is the "User Journey" actually followed?
+2.  **Demo Integration**: Do the interactive components (`ContextVisualizer`, `HueShiftVisualizer`, etc.) effectively reinforce the concepts, or are they disconnected?
+3.  **System Design**: Does the system design itself (APIs, CSS variables, mental model) hold up under scrutiny when explained? Are there inconsistencies?
 
 ## Strategy
 
-1.  **Holistic Review (The "Fresh Eyes" Audit)**
-    - **Objective**: Re-evaluate the system from the perspective of our Personas (Sarah, Alex, Jordan, etc.) given the recent changes (Astro migration, new features).
-    - **Action**: Update `docs/design/fresh-eyes-review.md` with current findings.
-    - **Focus Areas**:
-        - **Navigation**: Is the "Theme Builder" easy to find?
-        - **Cohesion**: Do the docs and the demo app feel like one product?
-        - **Dogfooding**: Are there any hardcoded colors left in the docs?
+### 1. The Narrative Walkthrough
 
-2.  **Theme Builder Deep Dive**
-    - **Objective**: Ensure the Theme Builder UI is professional and ergonomic.
-    - **Action**: Audit the UI against the "Mental Model" described in the docs.
-    - **Focus Areas**:
-        - **Terminology**: Does the UI use the same terms as the docs (Anchors, Surfaces)?
-        - **Feedback**: Is the "Live Solving" obvious?
-        - **Mobile**: Does the layout work on smaller screens?
+- **Persona**: A skeptical senior engineer (Marcus) and a curious beginner (Sarah).
+- **Action**: Read the documentation linearly from `index.mdx` through `concepts/` and `guides/`.
+- **Questions**:
+  - "Why am I reading this?" (Relevance)
+  - "Do I understand the previous concept before this one?" (Prerequisites)
+  - "Is the tone consistent?"
 
-3.  **Execution (Polish)**
-    - **Visuals**: Create new diagrams (using HTML/CSS/SVG) if concepts are abstract.
-    - **UI Tweaks**: Rename labels, add tooltips, or rearrange controls to match the mental model.
-    - **Content Updates**: Rewrite sections of the guide that are confusing or outdated.
+### 2. The Interactive Audit
+
+- **Action**: Interact with every embedded demo in the docs.
+- **Questions**:
+  - "Does this demo prove the text above it?"
+  - "Is the demo intuitive, or does it need instructions?"
+  - "Does the demo look like it belongs to the system?"
+
+### 3. The System Design Critique
+
+- **Action**: Look for friction points where the documentation struggles to explain a concept. This often indicates a flaw in the system design itself.
+- **Questions**:
+  - "Is this concept hard to explain because it's complex, or because it's bad design?"
+  - "Are the naming conventions (Anchors, Surfaces, Context) intuitive?"
 
 ## Output
 
-- Updated `docs/design/fresh-eyes-review.md` with 2025 findings.
-- A list of concrete "Action Items" (PRs) to address the findings.
-- Updated documentation and UI code.
+- A new section in `docs/design/fresh-eyes-review.md` titled "Phase 6: Deep Audit".
+- A list of "System Design Observations" that might lead to future refactors.
+- A list of "Content Improvements" for immediate action.
