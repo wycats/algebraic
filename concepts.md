@@ -2,6 +2,8 @@
 
 This document explains the high-level concepts of the color system.
 
+> **Note**: For the foundational laws and philosophy governing the system, see [The Constitution (Axioms)](docs/design/axioms.md).
+
 ## Core Philosophy
 
 The color system is designed to be **Platform-Native**, **Adaptive**, and **Automated**.

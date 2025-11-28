@@ -1,16 +1,11 @@
-# Task List - Epoch 10: Phase 3 - DX Improvements
+# Task List - Epoch 11: Phase 1 - The Constitution (Axioms)
 
-- [x] **JSON Schema for Configuration**
+- [x] **Draft Axioms**
 
-  - [x] Install `ts-json-schema-generator`.
-  - [x] Add `schema` script to `package.json`.
-  - [x] Add `color-config.schema.json` to `files` in `package.json`.
-  - [x] Verify schema generation.
+  - [x] Read existing design docs (`system_goals.md`, `intuition.md`, `hue-shift-rationale.md`).
+  - [x] Create `docs/design/axioms.md`.
 
-- [x] **Figma Integration Guide**
-
-  - [x] Create `docs/guide/src/ecosystem/figma.mdx`.
-  - [x] Update sidebar in `site/astro.config.mjs`.
-
-- [x] **CLI Improvements**
-  - [x] Update `color-system init` to add `$schema` property.
+- [x] **Cleanup**
+  - [x] Move consolidated files to `docs/agent-context/design/archive/`.
+  - [x] Update `docs/design/index.md` (if it exists) or create one.
+  - [x] Update `concepts.md` to point to `axioms.md`.

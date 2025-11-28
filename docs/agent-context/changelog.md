@@ -318,3 +318,18 @@
   - Resolved an issue where Brand buttons appeared black in inverted contexts.
   - **Override Architecture**: Implemented `--override-surface-lightness` in `engine.css` to allow specific surfaces to break contrast rules when necessary (e.g., for brand identity).
   - **Engine Fix**: Unregistered override properties to ensure `var()` fallbacks function correctly.
+
+## Epoch 10: Phase 3 - DX Improvements (2025-11-28)
+
+**Goal**: Improve the Developer Experience (DX) by adding tooling support for configuration and documenting ecosystem integrations.
+
+**Completed Work**:
+
+- **JSON Schema Support**:
+  - Added automatic generation of `color-config.schema.json` from TypeScript types.
+  - Updated `color-system init` to automatically inject the `$schema` property, enabling Intellisense out of the box.
+- **Figma Integration**:
+  - Created a comprehensive guide (`guides/ecosystem/figma`) for using exported DTCG tokens with Figma.
+  - Documented the workflow for **Tokens Studio** and Figma Variables.
+- **Documentation**:
+  - Added a new "Ecosystem" section to the sidebar.

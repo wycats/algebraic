@@ -148,6 +148,23 @@
   - **Tailwind Integration (Phase 2) (Completed)**:
     - Generate a Tailwind CSS preset for seamless usage in modern stacks.
     - Implemented `color-system export --format tailwind`.
-  - **DX Improvements (Phase 3) (In Progress)**:
+  - **DX Improvements (Phase 3) (Completed)**:
     - JSON Schema for config validation and Intellisense.
-  - **Figma Sync**: Guide for using exported tokens with Figma plugins.
+    - **Figma Sync**: Guide for using exported tokens with Figma plugins.
+
+## Epoch 11: Refinement & Consolidation (Planned)
+
+- **Goal**: Solidify the project's foundation by consolidating design wisdom, refining personas, and unifying the product experience.
+- **Phases**:
+  - **Phase 1: The Constitution (Axioms)**
+    - **Goal**: Consolidate scattered design docs into a single authoritative `axioms.md`.
+    - **Deliverables**: `docs/design/axioms.md`.
+  - **Phase 2: Persona Refinement**
+    - **Goal**: Update personas based on recent learnings and feedback.
+    - **Deliverables**: Updated `docs/design/personas.md`.
+  - **Phase 3: Fresh Eyes Audit**
+    - **Goal**: Comprehensive review of the system using new personas and axioms.
+    - **Deliverables**: Prioritized list of friction points.
+  - **Phase 4: Unification (Theme Builder Integration)**
+    - **Goal**: Move the Theme Builder from the standalone `demo` app into the Astro site.
+    - **Deliverables**: `site/src/pages/builder`, integrated navigation.
