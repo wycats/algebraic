@@ -1,0 +1,333 @@
+{
+  "$ref": "#/definitions/SolverConfig",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AnchorValue": {
+      "additionalProperties": false,
+      "properties": {
+        "adjustable": {
+          "type": "boolean"
+        },
+        "background": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "background"
+      ],
+      "type": "object"
+    },
+    "Anchors": {
+      "additionalProperties": false,
+      "properties": {
+        "dark": {
+          "$ref": "#/definitions/ModeAnchors"
+        },
+        "light": {
+          "$ref": "#/definitions/ModeAnchors"
+        }
+      },
+      "required": [
+        "light",
+        "dark"
+      ],
+      "type": "object"
+    },
+    "BezierCurve": {
+      "additionalProperties": false,
+      "properties": {
+        "p1": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "p2": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "p1",
+        "p2"
+      ],
+      "type": "object"
+    },
+    "BorderTargets": {
+      "additionalProperties": false,
+      "properties": {
+        "critical": {
+          "type": "number"
+        },
+        "decorative": {
+          "type": "number"
+        },
+        "interactive": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "decorative",
+        "interactive",
+        "critical"
+      ],
+      "type": "object"
+    },
+    "ContrastOffsets": {
+      "additionalProperties": false,
+      "properties": {
+        "dark": {
+          "type": "number"
+        },
+        "light": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "HueShiftConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "curve": {
+          "$ref": "#/definitions/BezierCurve"
+        },
+        "maxRotation": {
+          "description": "Maximum hue rotation in degrees.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "curve",
+        "maxRotation"
+      ],
+      "type": "object"
+    },
+    "ModeAnchors": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "$ref": "#/definitions/AnchorValue"
+        },
+        "start": {
+          "$ref": "#/definitions/AnchorValue"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object"
+    },
+    "ModeSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "background": {
+          "type": "number"
+        },
+        "fg-baseline": {
+          "type": "number"
+        },
+        "fg-high": {
+          "type": "number"
+        },
+        "fg-strong": {
+          "type": "number"
+        },
+        "fg-subtle": {
+          "type": "number"
+        },
+        "fg-subtlest": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "background",
+        "fg-high",
+        "fg-strong",
+        "fg-baseline",
+        "fg-subtle",
+        "fg-subtlest"
+      ],
+      "type": "object"
+    },
+    "PaletteConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "hues": {
+          "description": "List of hues to use for the palette. Defaults to a standard 10-color categorical scale.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "targetChroma": {
+          "description": "Target chroma for chart colors. Defaults to ~0.12 (vibrant but not neon). Can be set to 'auto' to match the Action color.",
+          "type": "number"
+        },
+        "targetContrast": {
+          "description": "Target contrast against the page background (APCA). Lower values (e.g. 45-60) result in lighter colors in light mode (more pastel/vibrant) and darker colors in dark mode. Defaults to 60.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Polarity": {
+      "enum": [
+        "page",
+        "inverted"
+      ],
+      "type": "string"
+    },
+    "PolarityAnchors": {
+      "additionalProperties": false,
+      "properties": {
+        "inverted": {
+          "$ref": "#/definitions/Anchors"
+        },
+        "keyColors": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "page": {
+          "$ref": "#/definitions/Anchors"
+        }
+      },
+      "required": [
+        "page",
+        "inverted",
+        "keyColors"
+      ],
+      "type": "object"
+    },
+    "SolverConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "$ref": "#/definitions/PolarityAnchors"
+        },
+        "borderTargets": {
+          "$ref": "#/definitions/BorderTargets"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/definitions/SurfaceGroup"
+          },
+          "type": "array"
+        },
+        "hueShift": {
+          "$ref": "#/definitions/HueShiftConfig"
+        },
+        "palette": {
+          "$ref": "#/definitions/PaletteConfig"
+        }
+      },
+      "required": [
+        "anchors",
+        "groups"
+      ],
+      "type": "object"
+    },
+    "StateDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "offset": {
+          "description": "Contrast offset relative to the parent surface. Positive = more contrast against text (lighter in light mode, darker in dark mode).",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "offset"
+      ],
+      "type": "object"
+    },
+    "SurfaceConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "computed": {
+          "additionalProperties": false,
+          "properties": {
+            "dark": {
+              "$ref": "#/definitions/ModeSpec"
+            },
+            "light": {
+              "$ref": "#/definitions/ModeSpec"
+            }
+          },
+          "required": [
+            "light",
+            "dark"
+          ],
+          "type": "object"
+        },
+        "contrastOffset": {
+          "$ref": "#/definitions/ContrastOffsets",
+          "description": "Shifts the surface's target contrast relative to its position in the sequence."
+        },
+        "description": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "polarity": {
+          "$ref": "#/definitions/Polarity"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "states": {
+          "description": "Derivative surfaces (states) that are solved relative to this surface.",
+          "items": {
+            "$ref": "#/definitions/StateDefinition"
+          },
+          "type": "array"
+        },
+        "targetChroma": {
+          "description": "Target chroma for this surface. If set, the solver will adjust Lightness to compensate for the HK effect.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "slug",
+        "label",
+        "polarity"
+      ],
+      "type": "object"
+    },
+    "SurfaceGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "gapBefore": {
+          "description": "Extra spacing (in contrast steps) before this group starts. Used to create visual separation between groups.",
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surfaces": {
+          "items": {
+            "$ref": "#/definitions/SurfaceConfig"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "surfaces"
+      ],
+      "type": "object"
+    }
+  }
+}

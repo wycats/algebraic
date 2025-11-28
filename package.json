@@ -20,12 +20,14 @@
   "files": [
     "dist",
     "css",
-    "src"
+    "src",
+    "color-config.schema.json"
   ],
   "scripts": {
     "solve": "node src/cli/index.ts scripts/surface-lightness.config.json css/theme.css",
     "sketch": "node scripts/lightness-lut-sketch.ts",
-    "build": "tsup",
+    "build": "tsup && pnpm schema",
+    "schema": "ts-json-schema-generator --path 'src/lib/types.ts' --type 'SolverConfig' --out 'color-config.schema.json'",
     "prepublishOnly": "pnpm test && pnpm build",
     "test": "vitest --run",
     "test:ui": "vitest --ui",
@@ -70,6 +72,7 @@
     "eslint": "^9.39.1",
     "glob": "^13.0.0",
     "http-proxy": "^1.18.1",
+    "ts-json-schema-generator": "^2.4.0",
     "tsup": "^8.5.1",
     "typescript-eslint": "^8.48.0",
     "vitest": "^4.0.14"

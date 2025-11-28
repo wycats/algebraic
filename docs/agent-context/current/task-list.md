@@ -1,11 +1,16 @@
-# Phase Task List: Tailwind Integration & Visual Fixes
+# Task List - Epoch 10: Phase 3 - DX Improvements
 
-- [x] **Tailwind Integration**
-  - [x] Implement `toTailwind` exporter in `src/lib/exporters/tailwind.ts`
-  - [x] Add unit tests for Tailwind exporter
-  - [x] Update CLI to support `--format tailwind`
-- [x] **Visual Regression Fix (Action Surfaces)**
-  - [x] Invert polarity of `surface-action` in `color-config.json`
-  - [x] Add `surface-action-soft` for secondary actions
-  - [x] Implement `--override-surface-lightness` mechanism in `engine.css`
-  - [x] Unregister override properties to enable `var()` fallbacks
+- [x] **JSON Schema for Configuration**
+
+  - [x] Install `ts-json-schema-generator`.
+  - [x] Add `schema` script to `package.json`.
+  - [x] Add `color-config.schema.json` to `files` in `package.json`.
+  - [x] Verify schema generation.
+
+- [x] **Figma Integration Guide**
+
+  - [x] Create `docs/guide/src/ecosystem/figma.mdx`.
+  - [x] Update sidebar in `site/astro.config.mjs`.
+
+- [x] **CLI Improvements**
+  - [x] Update `color-system init` to add `$schema` property.

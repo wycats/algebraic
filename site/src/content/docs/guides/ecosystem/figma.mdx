@@ -1,0 +1,55 @@
+---
+title: Figma Integration
+description: Learn how to use your generated color tokens in Figma.
+---
+
+The Algebraic Color System is designed to be the "Source of Truth" for your color palette. However, we know that design happens in tools like Figma. This guide explains how to bridge the gap.
+
+## The Workflow
+
+1.  **Configure & Solve**: Use the [Theme Builder](/guides/theme-builder) or edit `color-config.json` to define your system.
+2.  **Export**: Run the CLI to generate a W3C Design Tokens (DTCG) file.
+3.  **Import**: Load the tokens into Figma using a plugin like **Tokens Studio**.
+
+:::caution[Code First]
+The flow is **unidirectional**. You should treat your `color-config.json` as the source of truth. If you make changes in Figma, they will be lost the next time you import tokens. Always update the config first, then re-export.
+:::
+
+## Exporting Tokens
+
+To generate a DTCG-compatible JSON file, use the `export` command:
+
+```bash
+pnpm color-system export --format dtcg > tokens.json
+```
+
+This will output a JSON file containing your entire theme (Light and Dark modes) in the standard format.
+
+## Importing into Figma
+
+### Using Tokens Studio (Recommended)
+
+[Tokens Studio for Figma](https://tokens.studio/) is the industry standard for managing design tokens in Figma. It fully supports the W3C format.
+
+1.  Open the **Tokens Studio** plugin in Figma.
+2.  Go to the **Tools** tab (or Settings).
+3.  Click **Load from file/folder** or **Import**.
+4.  Select your generated `tokens.json`.
+5.  The plugin will create token sets for `light` and `dark`.
+
+### Using Native Figma Variables
+
+Native Figma Variables are powerful but have a stricter structure. Currently, the best way to import DTCG tokens into native variables is via a plugin that handles the conversion, or by using Tokens Studio's "Create Variables" feature.
+
+1.  Import tokens into **Tokens Studio** (as above).
+2.  Click **Create Variables** in the plugin.
+3.  Map the `light` and `dark` sets to a Figma Mode (e.g., "Color Mode").
+
+## Token Structure
+
+The exported tokens follow this structure:
+
+- **Surfaces**: `light.surface.brand`, `dark.surface.brand`
+- **Foregrounds**: `light.on-surface.brand.high`, `dark.on-surface.brand.high`
+
+This structure ensures that you can bind your Figma layers to semantic tokens (like "Brand Surface") rather than raw hex values.

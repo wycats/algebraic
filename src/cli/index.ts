@@ -17,7 +17,11 @@ if (import.meta.main) {
       console.error("Error: color-config.json already exists.");
       process.exit(1);
     }
-    writeFileSync(targetPath, JSON.stringify(DEFAULT_CONFIG, null, 2));
+    const configWithSchema = {
+      $schema: "./node_modules/color-system/color-config.schema.json",
+      ...DEFAULT_CONFIG,
+    };
+    writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
     console.log("Created color-config.json");
     console.log("Run `color-system` to generate your theme.");
     process.exit(0);

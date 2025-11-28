@@ -78,6 +78,12 @@ export default defineConfig({
           ],
         },
         {
+          label: "Ecosystem",
+          items: [
+            { label: "Figma Integration", slug: "guides/ecosystem/figma" },
+          ],
+        },
+        {
           label: "Reference",
           items: [
             { label: "CLI", slug: "reference/cli" },
