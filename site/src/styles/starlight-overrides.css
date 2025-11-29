@@ -1,6 +1,18 @@
 /* Starlight Overrides */
 /* Mapping the Algebraic Color System to Starlight's variables */
 
+/* 
+   CRITICAL: Force color-scheme based on data-theme attribute.
+   This ensures light-dark() works correctly when Starlight toggles the theme.
+*/
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
 /* We use :root[data-theme] to ensure we override Starlight's specific selectors */
 :root, :root[data-theme='light'], :root[data-theme='dark'] {
   /* --- Brand Colors --- */
