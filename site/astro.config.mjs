@@ -19,8 +19,8 @@ export default defineConfig({
     },
   },
   integrations: [
-    preact(),
     svelte(),
+    preact(),
     starlight({
       title: "Algebraic Color System",
       customCss: [
@@ -28,6 +28,7 @@ export default defineConfig({
         "./src/styles/theme.css",
         "./src/styles/utilities.css",
         "./src/styles/docs.css",
+        "./src/styles/starlight-overrides.css",
       ],
       social: [
         {
