@@ -21,6 +21,26 @@ describe("Tailwind Exporter", () => {
     const theme: Theme = {
       surfaces,
       backgrounds,
+      charts: [
+        {
+          light: { l: 0.5, c: 0.1, h: 0 },
+          dark: { l: 0.6, c: 0.1, h: 0 },
+        },
+      ],
+      primitives: {
+        shadows: {
+          sm: {
+            light: "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+            dark: "0 1px 2px 0 oklch(1 0 0 / 0.15)",
+          },
+          md: { light: "", dark: "" },
+          lg: { light: "", dark: "" },
+          xl: { light: "", dark: "" },
+        },
+        focus: {
+          ring: { light: "oklch(0.5 0.2 250)", dark: "oklch(0.6 0.2 250)" },
+        },
+      },
     };
 
     const preset = toTailwind(theme) as any;
@@ -42,10 +62,10 @@ describe("Tailwind Exporter", () => {
     expect(colors.surface.card).toContain("oklch(0.1 0.01 100)");
 
     // Check Chart Colors
-    expect(colors.chart["1"]).toBe("var(--chart-1)");
+    expect(colors.chart["1"]).toContain("light-dark(");
 
     // Check Shadows
     const shadows = preset.theme.extend.boxShadow;
-    expect(shadows.sm).toBe("var(--shadow-sm)");
+    expect(shadows.sm).toContain("light-dark(");
   });
 });

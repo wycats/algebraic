@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateTokensCss } from "../generator.ts";
-import type { ColorSpec, Mode, SurfaceGroup } from "../types.ts";
+import type { ColorSpec, Mode, SurfaceGroup, Theme } from "../types.ts";
 
 describe("generateTokensCss", () => {
   it("generates correct CSS for a standard surface group", () => {
@@ -44,7 +44,14 @@ describe("generateTokensCss", () => {
       critical: 0.8,
     };
 
-    const css = generateTokensCss(groups, backgrounds, borderTargets);
+    const theme = {
+      surfaces: [],
+      backgrounds,
+      charts: [],
+      primitives: undefined,
+    } as unknown as Theme;
+
+    const css = generateTokensCss(groups, theme, borderTargets);
 
     expect(css).toMatchSnapshot();
   });
@@ -66,7 +73,14 @@ describe("generateTokensCss", () => {
     const backgrounds = new Map<string, Record<Mode, ColorSpec>>();
     // "unknown" is missing
 
-    const css = generateTokensCss(groups, backgrounds);
+    const theme = {
+      surfaces: [],
+      backgrounds,
+      charts: [],
+      primitives: undefined,
+    } as unknown as Theme;
+
+    const css = generateTokensCss(groups, theme);
     expect(css).toMatchSnapshot();
   });
 
@@ -78,18 +92,29 @@ describe("generateTokensCss", () => {
       dark: { l: 0, c: 0, h: 0 },
     });
 
-    const palette = {
-      targetChroma: 0.15,
-      hues: [0, 120, 240],
-    };
+    const charts = [
+      {
+        light: { l: 0.5, c: 0.15, h: 0 },
+        dark: { l: 0.6, c: 0.15, h: 0 },
+      },
+      {
+        light: { l: 0.5, c: 0.15, h: 120 },
+        dark: { l: 0.6, c: 0.15, h: 120 },
+      },
+      {
+        light: { l: 0.5, c: 0.15, h: 240 },
+        dark: { l: 0.6, c: 0.15, h: 240 },
+      },
+    ];
 
-    const css = generateTokensCss(
-      groups,
+    const theme = {
+      surfaces: [],
       backgrounds,
-      undefined,
-      undefined,
-      palette
-    );
+      charts,
+      primitives: undefined,
+    } as unknown as Theme;
+
+    const css = generateTokensCss(groups, theme, undefined, undefined);
 
     expect(css).toContain("--chart-1");
     expect(css).toContain("--chart-2");

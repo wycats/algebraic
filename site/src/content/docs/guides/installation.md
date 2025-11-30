@@ -7,7 +7,7 @@ The Algebraic Color System is distributed as a CLI tool that generates a static 
 
 ## Prerequisites
 
-- **Node.js**: v18 or higher.
+- **Node.js**: v24 or higher.
 - **Package Manager**: npm, pnpm, or yarn.
 
 ## 1. Install the CLI
@@ -16,10 +16,10 @@ You can install the package globally or as a dev dependency in your project.
 
 ```bash
 # Install as a dev dependency (Recommended)
-npm install -D @algebraic/color-system
+npm install -D @algebraic-systems/color-system
 
 # Or using pnpm
-pnpm add -D @algebraic/color-system
+pnpm add -D @algebraic-systems/color-system
 ```
 
 ## 2. Initialize the Configuration

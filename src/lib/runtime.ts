@@ -15,15 +15,14 @@ export { toHighContrast } from "./generator.ts";
  * @param selector Optional CSS selector to scope the rules to (e.g. "#my-app")
  */
 export function generateTheme(config: SolverConfig, selector?: string): string {
-  const { backgrounds } = solve(config);
+  const theme = solve(config);
   const stats = getKeyColorStats(config.anchors.keyColors);
 
   let css = generateTokensCss(
     config.groups,
-    backgrounds,
+    theme,
     config.borderTargets,
-    selector,
-    config.palette
+    selector
   );
 
   // Prepend variables if key colors exist

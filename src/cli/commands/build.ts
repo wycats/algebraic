@@ -37,15 +37,14 @@ export function buildCommand(args: string[], cwd: string): void {
     }
 
     console.log("Solving surfaces...");
-    const { backgrounds } = solve(config);
+    const theme = solve(config);
 
     console.log("Generating CSS...");
     let css = generateTokensCss(
       config.groups,
-      backgrounds,
+      theme,
       config.borderTargets,
-      undefined,
-      config.palette
+      undefined
     );
 
     const stats = getKeyColorStats(config.anchors.keyColors);
@@ -69,13 +68,12 @@ export function buildCommand(args: string[], cwd: string): void {
     // --- High Contrast Generation ---
     console.log("Generating High Contrast variant...");
     const hcConfig = toHighContrast(config);
-    const { backgrounds: hcBackgrounds } = solve(hcConfig);
+    const hcTheme = solve(hcConfig);
     const hcCss = generateTokensCss(
       hcConfig.groups,
-      hcBackgrounds,
+      hcTheme,
       hcConfig.borderTargets,
-      undefined,
-      hcConfig.palette
+      undefined
     );
 
     // Wrap in media query and add overrides

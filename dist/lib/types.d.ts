@@ -123,9 +123,41 @@ type SurfaceDefinition = {
     label: string;
     lightness: Record<Mode, number>;
 };
+interface ChartColor {
+    light: ColorSpec;
+    dark: ColorSpec;
+}
+interface Primitives {
+    shadows: {
+        sm: {
+            light: string;
+            dark: string;
+        };
+        md: {
+            light: string;
+            dark: string;
+        };
+        lg: {
+            light: string;
+            dark: string;
+        };
+        xl: {
+            light: string;
+            dark: string;
+        };
+    };
+    focus: {
+        ring: {
+            light: string;
+            dark: string;
+        };
+    };
+}
 interface Theme {
     surfaces: SurfaceConfig[];
     backgrounds: Map<string, Record<Mode, ColorSpec>>;
+    charts: ChartColor[];
+    primitives: Primitives;
 }
 
-export type { AnchorValue, Anchors, BezierCurve, BorderTargets, ColorSpec, Context, ContrastOffsets, HueShiftConfig, Mode, ModeAnchors, ModeSpec, Mutable, PaletteConfig, Polarity, PolarityAnchors, SolverConfig, StateDefinition, SurfaceConfig, SurfaceDefinition, SurfaceGroup, Theme };
+export type { AnchorValue, Anchors, BezierCurve, BorderTargets, ChartColor, ColorSpec, Context, ContrastOffsets, HueShiftConfig, Mode, ModeAnchors, ModeSpec, Mutable, PaletteConfig, Polarity, PolarityAnchors, Primitives, SolverConfig, StateDefinition, SurfaceConfig, SurfaceDefinition, SurfaceGroup, Theme };

@@ -39,6 +39,26 @@ describe("DTCG Exporter", () => {
     const theme: Theme = {
       surfaces,
       backgrounds,
+      charts: [
+        {
+          light: { l: 0.5, c: 0.1, h: 0 },
+          dark: { l: 0.6, c: 0.1, h: 0 },
+        },
+      ],
+      primitives: {
+        shadows: {
+          sm: {
+            light: "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+            dark: "0 1px 2px 0 oklch(1 0 0 / 0.15)",
+          },
+          md: { light: "", dark: "" },
+          lg: { light: "", dark: "" },
+          xl: { light: "", dark: "" },
+        },
+        focus: {
+          ring: { light: "oklch(0.5 0.2 250)", dark: "oklch(0.6 0.2 250)" },
+        },
+      },
     };
 
     const dtcg = toDTCG(theme);
@@ -68,5 +88,19 @@ describe("DTCG Exporter", () => {
     expect(cardFg).toHaveProperty("high");
     expect(cardFg["high"]).toHaveProperty("$type", "color");
     expect(cardFg["high"]).toHaveProperty("$value");
+
+    // Check Charts
+    expect(light).toHaveProperty("chart");
+    const chartGroup = light["chart"] as any;
+    expect(chartGroup["1"]).toHaveProperty("$type", "color");
+
+    // Check Primitives
+    expect(light).toHaveProperty("shadow");
+    const shadowGroup = light["shadow"] as any;
+    expect(shadowGroup["sm"]).toHaveProperty("$type", "other");
+
+    expect(light).toHaveProperty("focus");
+    const focusGroup = light["focus"] as any;
+    expect(focusGroup["ring"]).toHaveProperty("$type", "color");
   });
 });

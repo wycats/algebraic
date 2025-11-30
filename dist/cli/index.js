@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { toDTCG } from '../chunk-ZWO7KCVF.js';
-import { toTailwind } from '../chunk-HKGYP2YK.js';
-import { solve, getKeyColorStats } from '../chunk-4O54K6CL.js';
+import { toDTCG } from '../chunk-FZL5EAWM.js';
+import { toTailwind } from '../chunk-Z6AAYZVX.js';
+import { solve, getKeyColorStats } from '../chunk-GSAJWB6E.js';
 import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
-import { generateTokensCss, toHighContrast } from '../chunk-JBRRT2GK.js';
+import { generateTokensCss, toHighContrast } from '../chunk-JSZ6EFMC.js';
 import '../chunk-7LUK7J7M.js';
 import '../chunk-W5IKP2D6.js';
 import { DEFAULT_CONFIG } from '../chunk-A2CSS6V4.js';
@@ -42,14 +42,13 @@ function buildCommand(args2, cwd) {
       return;
     }
     console.log("Solving surfaces...");
-    const { backgrounds } = solve(config);
+    const theme = solve(config);
     console.log("Generating CSS...");
     let css = generateTokensCss(
       config.groups,
-      backgrounds,
+      theme,
       config.borderTargets,
-      void 0,
-      config.palette
+      void 0
     );
     const stats = getKeyColorStats(config.anchors.keyColors);
     if (stats.chroma !== void 0 || stats.hue !== void 0 || stats.lightness !== void 0) {
@@ -69,13 +68,12 @@ ${vars.join("\n")}
     }
     console.log("Generating High Contrast variant...");
     const hcConfig = toHighContrast(config);
-    const { backgrounds: hcBackgrounds } = solve(hcConfig);
+    const hcTheme = solve(hcConfig);
     const hcCss = generateTokensCss(
       hcConfig.groups,
-      hcBackgrounds,
+      hcTheme,
       hcConfig.borderTargets,
-      void 0,
-      hcConfig.palette
+      void 0
     );
     const hcBlock = `
 @media (prefers-contrast: more) {
@@ -174,11 +172,16 @@ if (isMain) {
       process.exit(1);
     }
     const configWithSchema = {
-      $schema: "./node_modules/@algebraic-systems/color-system/color-config.schema.json",
+      $schema: "node_modules/@algebraic-systems/color-system/color-config.schema.json",
       ...DEFAULT_CONFIG
     };
     writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
     console.log("Created color-config.json");
+    if (!existsSync(join(CWD, "node_modules"))) {
+      console.warn(
+        "Note: node_modules not found in current directory. You may need to adjust the $schema path."
+      );
+    }
     console.log("Run `color-system build` to generate your theme.");
     process.exit(0);
   } else if (command === "export") {

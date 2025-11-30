@@ -148,7 +148,26 @@ export type SurfaceDefinition = {
   lightness: Record<Mode, number>;
 };
 
+export interface ChartColor {
+  light: ColorSpec;
+  dark: ColorSpec;
+}
+
+export interface Primitives {
+  shadows: {
+    sm: { light: string; dark: string };
+    md: { light: string; dark: string };
+    lg: { light: string; dark: string };
+    xl: { light: string; dark: string };
+  };
+  focus: {
+    ring: { light: string; dark: string };
+  };
+}
+
 export interface Theme {
   surfaces: SurfaceConfig[];
   backgrounds: Map<string, Record<Mode, ColorSpec>>;
+  charts: ChartColor[];
+  primitives: Primitives;
 }

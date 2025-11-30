@@ -22,11 +22,18 @@ if (isMain) {
     }
     const configWithSchema = {
       $schema:
-        "./node_modules/@algebraic-systems/color-system/color-config.schema.json",
+        "node_modules/@algebraic-systems/color-system/color-config.schema.json",
       ...DEFAULT_CONFIG,
     };
     writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
     console.log("Created color-config.json");
+    
+    if (!existsSync(join(CWD, "node_modules"))) {
+      console.warn(
+        "Note: node_modules not found in current directory. You may need to adjust the $schema path."
+      );
+    }
+
     console.log("Run `color-system build` to generate your theme.");
     process.exit(0);
   } else if (command === "export") {

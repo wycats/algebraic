@@ -41,22 +41,28 @@ export function toTailwind(theme: Theme): Record<string, unknown> {
   }
 
   // 2. Generate Chart Colors (1-10)
-  // We assume these are generated as --chart-1, --chart-2, etc.
   const chartColors = colors.chart as Record<string, string>;
-  for (let i = 1; i <= 10; i++) {
-    chartColors[i.toString()] = `var(--chart-${i})`;
+  if (theme.charts) {
+    theme.charts.forEach((chart, index) => {
+      chartColors[(index + 1).toString()] = `light-dark(${formatOklch(
+        chart.light
+      )}, ${formatOklch(chart.dark)})`;
+    });
+  }
+
+  const boxShadow: Record<string, string> = {};
+  if (theme.primitives) {
+    for (const [size, token] of Object.entries(theme.primitives.shadows)) {
+      boxShadow[size] = `light-dark(${token.light}, ${token.dark})`;
+    }
+    colors.focus = `light-dark(${theme.primitives.focus.ring.light}, ${theme.primitives.focus.ring.dark})`;
   }
 
   return {
     theme: {
       extend: {
         colors,
-        boxShadow: {
-          sm: "var(--shadow-sm)",
-          md: "var(--shadow-md)",
-          lg: "var(--shadow-lg)",
-          xl: "var(--shadow-xl)",
-        },
+        boxShadow,
       },
     },
   };

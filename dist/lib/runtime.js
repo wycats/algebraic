@@ -1,8 +1,8 @@
-import { solve, getKeyColorStats } from '../chunk-4O54K6CL.js';
+import { solve, getKeyColorStats } from '../chunk-GSAJWB6E.js';
 import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
-import { generateTokensCss } from '../chunk-JBRRT2GK.js';
-export { toHighContrast } from '../chunk-JBRRT2GK.js';
+import { generateTokensCss } from '../chunk-JSZ6EFMC.js';
+export { toHighContrast } from '../chunk-JSZ6EFMC.js';
 import '../chunk-7LUK7J7M.js';
 import '../chunk-W5IKP2D6.js';
 import '../chunk-A2CSS6V4.js';
@@ -10,14 +10,13 @@ import '../chunk-G3PMV62Z.js';
 
 // src/lib/runtime.ts
 function generateTheme(config, selector) {
-  const { backgrounds } = solve(config);
+  const theme = solve(config);
   const stats = getKeyColorStats(config.anchors.keyColors);
   let css = generateTokensCss(
     config.groups,
-    backgrounds,
+    theme,
     config.borderTargets,
-    selector,
-    config.palette
+    selector
   );
   if (stats.chroma !== void 0 || stats.hue !== void 0) {
     const vars = [];

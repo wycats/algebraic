@@ -162,9 +162,16 @@
   - **Phase 2: Persona Refinement (Completed)**
     - **Goal**: Update personas based on recent learnings and feedback.
     - **Deliverables**: Updated `docs/design/personas.md`.
-  - **Phase 3: Fresh Eyes Audit**
+  - **Phase 3: Fresh Eyes Audit (Completed)**
     - **Goal**: Comprehensive review of the system using new personas and axioms.
-    - **Deliverables**: Prioritized list of friction points. - **Phase 3.5: Critical Fixes (Completed)**
+    - **Deliverables**: Prioritized list of friction points.
+  - **Phase 4: Audit Fixes (In Progress)**
+    - **Goal**: Address critical issues identified in the Fresh Eyes Audit (Package Name, Exports).
+    - **Deliverables**:
+      - Corrected `installation.md`.
+      - Updated `solve()` to return full Theme.
+      - Updated Exporters (DTCG, Tailwind).
+      - Aligned Node versions. - **Phase 3.5: Critical Fixes (Completed)**
     - **Goal**: Address critical friction points identified in the audit (CLI, Docs, Export).
     - **Deliverables**:
       - Updated CLI with `build` command and flags.

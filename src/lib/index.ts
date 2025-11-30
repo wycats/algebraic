@@ -8,10 +8,12 @@ import {
   contrastForBackground,
   roundLightness,
   solveBackgroundForContrast,
+  solveForegroundLightness,
   solveForegroundSpec,
 } from "./math.ts";
 import type {
   Anchors,
+  ChartColor,
   ColorSpec,
   Context,
   Mode,
@@ -19,9 +21,10 @@ import type {
   ModeSpec,
   Mutable,
   PolarityAnchors,
+  Primitives,
   SolverConfig,
-  SurfaceConfig,
   SurfaceGroup,
+  Theme,
 } from "./types.ts";
 export * from "./browser.ts";
 export * from "./constants.ts";
@@ -212,10 +215,67 @@ function solveBackgroundSequence(
   return backgrounds;
 }
 
-export function solve(config: SolverConfig): {
-  surfaces: SurfaceConfig[];
-  backgrounds: Map<string, Record<Mode, ColorSpec>>;
-} {
+function solveCharts(
+  config: SolverConfig,
+  backgrounds: Map<string, Record<Mode, ColorSpec>>
+): ChartColor[] {
+  const palette = config.palette;
+  if (!palette || !palette.hues) {
+    return [];
+  }
+
+  const targetChroma = palette.targetChroma ?? 0.12;
+  const targetContrast = palette.targetContrast ?? 60;
+
+  const pageBg = backgrounds.get("page") ?? {
+    light: { l: 1, c: 0, h: 0 },
+    dark: { l: 0, c: 0, h: 0 },
+  };
+
+  return palette.hues.map((hue) => {
+    const lightL = solveForegroundLightness(pageBg.light.l, targetContrast);
+    const darkL = solveForegroundLightness(pageBg.dark.l, targetContrast);
+
+    return {
+      light: { l: lightL, c: targetChroma, h: hue },
+      dark: { l: darkL, c: targetChroma, h: hue },
+    };
+  });
+}
+
+function solvePrimitives(): Primitives {
+  return {
+    shadows: {
+      sm: {
+        light: "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+        dark: "0 1px 2px 0 oklch(1 0 0 / 0.15)",
+      },
+      md: {
+        light:
+          "0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -1px oklch(0 0 0 / 0.06)",
+        dark: "0 4px 6px -1px oklch(1 0 0 / 0.15), 0 2px 4px -1px oklch(1 0 0 / 0.1)",
+      },
+      lg: {
+        light:
+          "0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -2px oklch(0 0 0 / 0.05)",
+        dark: "0 10px 15px -3px oklch(1 0 0 / 0.15), 0 4px 6px -2px oklch(1 0 0 / 0.1)",
+      },
+      xl: {
+        light:
+          "0 20px 25px -5px oklch(0 0 0 / 0.1), 0 10px 10px -5px oklch(0 0 0 / 0.04)",
+        dark: "0 20px 25px -5px oklch(1 0 0 / 0.15), 0 10px 10px -5px oklch(1 0 0 / 0.1)",
+      },
+    },
+    focus: {
+      ring: {
+        light: "oklch(0.45 0.2 var(--hue-brand, 250))",
+        dark: "oklch(0.75 0.2 var(--hue-brand, 250))",
+      },
+    },
+  };
+}
+
+export function solve(config: SolverConfig): Theme {
   const anchors = config.anchors;
   const groups = config.groups;
   const allSurfaces = groups.flatMap((g) => g.surfaces);
@@ -297,8 +357,13 @@ export function solve(config: SolverConfig): {
     return { ...surface, computed };
   });
 
+  const charts = solveCharts(config, backgrounds);
+  const primitives = solvePrimitives();
+
   return {
     surfaces: solvedSurfaces,
     backgrounds: backgrounds,
+    charts,
+    primitives,
   };
 }
