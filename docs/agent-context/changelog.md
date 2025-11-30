@@ -454,3 +454,17 @@
 - **The Constitution**: Updated `docs/design/axioms.md` to include new axioms for State Management (Runes), Isomorphism, and Browser Support.
 - **Documentation Structure**: Updated `docs/design/index.md` to organize design docs into Core, Deep Dives, and Audits.
 - **Consolidation**: Verified that `axioms.md` aligns with the current codebase and architecture.
+
+## Epoch 11: Phase 2 - Persona Refinement (2025-11-29)
+
+**Goal**: Update personas to reflect recent learnings from the "Fresh Eyes" audits and align with the new "Constitution" (Axioms).
+
+**Completed Work**:
+
+- **Persona Updates**:
+  - **Sarah (The Overwhelmed Pragmatist)**: Added specific pain points around CLI reliability and documentation accuracy.
+  - **Alex (The Visual Tinkerer)**: Emphasized the need for "Immediate Feedback" and "Playgrounds".
+  - **Jordan (The Accessibility Champion)**: Clarified the need for "Proof of Compliance" (APCA vs WCAG).
+  - **Dr. Chen (The Color Scientist)**: Linked interests to the new "Laws of Physics" axioms.
+  - **Marcus (The System Architect)**: Added requirements for "Lossless Interoperability" (P3 export).
+- **Alignment**: Ensured all personas reference the new `axioms.md` correctly.

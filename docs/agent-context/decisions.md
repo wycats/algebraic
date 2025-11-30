@@ -301,3 +301,11 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Single Source of Truth**: Provides a clear reference for both human developers and AI agents.
   - **Alignment**: Ensures that new features (like Svelte migration) are checked against established principles.
   - **Clarity**: Explicitly defining "Laws" (Physics, Architecture, Integration) helps resolve conflicts during decision making.
+
+### [2025-11-29] Refine Personas based on Audits
+
+- **Context**: The "Fresh Eyes" audits revealed gaps between our theoretical personas and the actual friction points users were experiencing (e.g., CLI issues, export fidelity).
+- **Decision**: Update the personas in `docs/design/personas.md` to explicitly list these "Needs" and "Frustrations".
+- **Rationale**:
+  - **Realism**: Personas should reflect reality, not just an ideal state. By documenting the friction, we prioritize fixing it.
+  - **Alignment**: Ensures that future work (like Phase 3.5 fixes) is directly traceable to a user need.

@@ -1,30 +1,28 @@
-# Implementation Plan - Epoch 11: Phase 1 - The Constitution (Axioms)
+# Implementation Plan - Epoch 11: Phase 2 - Persona Refinement
 
-**Goal**: Consolidate scattered design wisdom and architectural decisions into a single authoritative document: `docs/design/axioms.md`. This document will serve as the "Constitution" for the system, guiding future decisions and ensuring consistency.
+**Goal**: Update `docs/design/personas.md` to reflect recent learnings from the "Fresh Eyes" audits and align with the newly established "Constitution" (Axioms).
 
 ## Context
-The project has evolved significantly (Svelte migration, new features). We need to ensure our core design principles ("Axioms") are up-to-date and accurately reflect the current system. Although `axioms.md` exists, we need to verify its completeness against other design documents and the current codebase.
+Our personas drive our documentation and feature prioritization. The recent audits (Epoch 11) highlighted gaps between our personas' needs and the current reality (e.g., CLI mismatches for the Pragmatist, Export data loss for the Architect). We need to refine the personas to explicitly capture these needs so we can address them systematically.
 
 ## Proposed Changes
 
-### 1. Review and Refine `axioms.md`
-- **Audit**: Compare `axioms.md` against:
-    - `concepts.md` (The public-facing mental model)
-    - `implementation.md` (The technical details)
-    - `docs/design/hue-shift.md` (Specific physics)
-    - `docs/design/state-architecture.md` (New Svelte architecture)
-- **Update**: Add or refine axioms to cover:
-    - **State Management**: The "Classes with Runes" architecture.
-    - **Isomorphism**: The "Code is Source of Truth" principle extending to the runtime engine.
-    - **Ecosystem**: The "Baseline Newly Available" browser support policy.
+### 1. Update `docs/design/personas.md`
+- **The Overwhelmed Pragmatist**:
+    - Add specific pain points around "CLI reliability" and "Documentation accuracy" (based on Audit 2).
+    - Emphasize the need for "Zero-Config" to truly mean *zero* friction.
+- **The Visual Tinkerer**:
+    - Explicitly mention the need for "Playgrounds" and "Immediate Feedback" (Theme Builder access).
+- **The Accessibility Champion**:
+    - Refine their need for "Compliance Evidence" (APCA vs WCAG mapping).
+- **The Color Scientist**:
+    - Link their interests to the new "Laws of Physics" axioms.
+- **The System Architect**:
+    - Add a specific need for "Lossless Interoperability" (P3 support in exports) and "Ecosystem Sync" (Figma/Tailwind).
 
-### 2. Consolidate Design Docs
-- **Deprecate**: Identify if any older design docs in `docs/design/` should be archived or merged into `axioms.md`.
-- **Link**: Ensure `axioms.md` links to deep-dive documents where appropriate (e.g., linking to `hue-shift.md` for the "Bezold-Brücke" axiom).
-
-### 3. Update Project Plan
-- Mark Epoch 11, Phase 1 as "In Progress" in `docs/agent-context/plan-outline.md`.
+### 2. Update Project Plan
+- Mark Epoch 11, Phase 2 as "In Progress" in `docs/agent-context/plan-outline.md`.
 
 ## Verification Plan
-- **Manual Review**: Read the updated `axioms.md` to ensure it flows logically and covers all key aspects of the system.
-- **Cross-Check**: Verify that the "Laws" in `axioms.md` are not contradicted by the code or other documentation.
+- **Manual Review**: Ensure the updated personas accurately reflect the "Fresh Eyes" findings.
+- **Alignment Check**: Verify that the personas' "Relationship to Axioms" section references the new `axioms.md` correctly.

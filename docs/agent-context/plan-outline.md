@@ -159,7 +159,7 @@
   - **Phase 1: The Constitution (Axioms) (Completed)**
     - **Goal**: Consolidate scattered design docs into a single authoritative `axioms.md`.
     - **Deliverables**: `docs/design/axioms.md`.
-  - **Phase 2: Persona Refinement**
+  - **Phase 2: Persona Refinement (Completed)**
     - **Goal**: Update personas based on recent learnings and feedback.
     - **Deliverables**: Updated `docs/design/personas.md`.
   - **Phase 3: Fresh Eyes Audit**

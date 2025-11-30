@@ -1,22 +1,17 @@
-# Walkthrough - Epoch 11: Phase 1 - The Constitution (Axioms)
+# Walkthrough - Epoch 11: Phase 2 - Persona Refinement
 
-In this phase, we consolidated the project's design philosophy into a single authoritative document: `docs/design/axioms.md`.
+In this phase, we updated the project personas to reflect recent learnings from the "Fresh Eyes" audits and align with the new "Constitution" (Axioms).
 
 ## Key Changes
 
-### 1. The Constitution (Axioms)
-We updated `docs/design/axioms.md` to serve as the "Constitution" for the system. This document now includes:
-- **The Prime Directive**: Accessibility is the foundation of aesthetics.
-- **The Laws of Physics**: Lightness is relative, Chroma is expensive, Hue rotates.
-- **The Laws of Architecture**: Surfaces are containers, Context flows down, Text is relative.
-- **The Laws of Integration**: Code is the source of truth (Isomorphism), No magic numbers, Baseline Newly Available.
-- **The Laws of Engineering**: State is a Domain Model (Classes with Runes).
+### 1. Updated Personas (`docs/design/personas.md`)
+We refined the 5 core personas to be more specific about their needs and friction points:
 
-### 2. Design Documentation Structure
-We updated `docs/design/index.md` to better organize the design documentation:
-- **Core Documents**: Axioms, Personas.
-- **Deep Dives**: Hue Shift Rationale, State Architecture.
-- **Audits**: Fresh Eyes Reviews.
+- **Sarah (The Overwhelmed Pragmatist)**: Now explicitly highlights her sensitivity to CLI failures and documentation inaccuracies.
+- **Alex (The Visual Tinkerer)**: Emphasizes the need for "Immediate Feedback" and "Playgrounds" (Theme Builder).
+- **Jordan (The Accessibility Champion)**: Clarifies the need for "Proof of Compliance" (APCA vs WCAG).
+- **Dr. Chen (The Color Scientist)**: Links her interests to the new "Laws of Physics" axioms.
+- **Marcus (The System Architect)**: Adds a specific requirement for "Lossless Interoperability" (P3 support in exports).
 
 ## Rationale
-As the project has grown (Svelte migration, new features), it was critical to have a single source of truth for our design principles. This ensures that future decisions (by humans or agents) remain consistent with the project's core philosophy.
+These updates ensure that our personas are not just static archetypes but active tools for evaluating the system. By explicitly listing their "Needs" based on recent audit findings, we can better prioritize future work (like fixing the CLI docs or improving the DTCG exporter).

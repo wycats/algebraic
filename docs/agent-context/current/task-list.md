@@ -1,3 +1,2 @@
-- [x] Review and Refine `axioms.md`
-- [x] Consolidate Design Docs (`index.md`)
+- [x] Update `docs/design/personas.md`
 - [x] Update Project Plan (`plan-outline.md`)
