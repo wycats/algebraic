@@ -12,6 +12,11 @@ This directory contains the high-level design documents for the Color System.
 - [Hue Shift Rationale](hue-shift.md): The physics and math behind the non-linear hue rotation.
 - [State Architecture](state-architecture.md): The "Classes with Runes" pattern used in the Svelte migration.
 
+## Best Practices & Guides
+
+- [Astro Interactive Components](astro-interactive-best-practices.md): Best practices for avoiding hydration issues (e.g., duplicate IDs).
+- [Playwright Headless Setup](playwright-headless-setup.md): How to set up headless browser testing for debugging.
+
 ## Audits & Reviews
 
 - [Fresh Eyes Review (2023)](fresh-eyes-review.md): Initial audit.

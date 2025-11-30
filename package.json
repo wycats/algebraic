@@ -72,6 +72,7 @@
     "eslint": "^9.39.1",
     "glob": "^13.0.0",
     "http-proxy": "^1.18.1",
+    "playwright": "^1.57.0",
     "ts-json-schema-generator": "^2.4.0",
     "tsup": "^8.5.1",
     "typescript-eslint": "^8.48.0",

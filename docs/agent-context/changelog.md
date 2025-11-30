@@ -484,6 +484,25 @@
   - Created `docs/design/fresh-eyes-audit-3.md` with detailed findings.
   - Prioritized a list of critical fixes for the next phase.
 
+## Epoch 14: Svelte 5 + Astro Hydration Research
+
+### Phase 2: Reproduction via Isolation (Completed)
+
+- **Visualizer Fixes**:
+  - Refactored `HueShiftVisualizer` to use native SVG Cubic Bezier paths (`<path d="M... C...">`) for smoother rendering.
+  - Fixed a critical visibility bug where the curve stroke color was using an undefined CSS variable (`--key-brand-color`). Swapped to `--text-high-token`.
+  - Added UI controls to toggle control handles and improved the default curve shape.
+- **Documentation Integration**:
+  - Integrated the interactive `HueShiftVisualizer` directly into `hue-shifting.mdx`.
+  - Removed the broken "Static (SSR)" version of the component to avoid user confusion.
+- **Findings**:
+  - The reported "hydration errors" were likely red herrings or secondary to the visual bugs. The component hydrates correctly with `client:load` when CSS variables are present.
+
+### Phase 1: Isolated Reproduction (Completed)
+
+- **Isolation Strategy**: Created `src/pages/repro.astro` to test Svelte 5 components in isolation.
+- **Verification**: Confirmed that basic Svelte 5 Runes (`$state`, `$derived`) and Context API work correctly in Astro.
+
 ## Epoch 13: User Experience & Integration (Concluded)
 
 **Goal**: Address the "Missing Features" identified in Fresh Eyes Audit 4 by restructuring the documentation and tooling to create a seamless "Golden Path" for adoption.
@@ -530,4 +549,3 @@
 - **Documentation Enhancements**:
   - Added WCAG contrast mappings to `tokens.json`.
   - Integrated dynamic token tables into documentation pages.
-

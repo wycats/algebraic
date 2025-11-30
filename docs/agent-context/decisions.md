@@ -334,3 +334,21 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Context**: We spent significant time in Epoch 13 trying to fix a hydration error (`TypeError: ... get_first_child`) using trial-and-error methods (guards, timeouts, directives).
 - **Decision**: We will stop "mashing" and start a dedicated research phase. We will create a "Playbook" document that defines the proven, reliable patterns for using Svelte 5 in this specific Astro environment.
 - **Rationale**: The error is environmental, not component-specific. Continuing to patch individual components is inefficient. We need to understand the root cause (likely version mismatch or configuration) to ensure long-term stability.
+
+### [2025-11-30] Native SVG Paths for Visualizers
+
+- **Context**: The `HueShiftVisualizer` was using polyline approximations which looked jagged and were hard to debug.
+- **Decision**: Switch to native SVG Cubic Bezier paths (`<path d="M... C...">`).
+- **Rationale**:
+  - **Quality**: Provides mathematically perfect curves at any zoom level.
+  - **Performance**: Reduces the number of DOM elements compared to hundreds of line segments.
+  - **Maintainability**: Easier to debug a single path string than a loop of points.
+
+### [2025-11-30] Client-Only Interactivity for Tools
+
+- **Context**: We attempted to support SSR for the `HueShiftVisualizer`, but it resulted in broken "static" versions that confused users.
+- **Decision**: Remove the "Static (SSR)" versions and rely on `client:load` for interactive tools.
+- **Rationale**:
+  - **Clarity**: Users should only see the tool when it is fully functional.
+  - **Simplicity**: Removes the need to maintain a separate "static" implementation that inevitably drifts from the interactive one.
+  - **Reality**: These are "apps" embedded in docs, not just content. They require JS to be useful.

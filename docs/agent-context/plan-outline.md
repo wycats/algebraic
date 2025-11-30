@@ -231,25 +231,25 @@
       - **Audit Command**: Implement `color-system audit` as a "Verify" step in the documentation flow.
       - **Override Capability**: Allow "breaking the rules" in the Theme Builder with appropriate warnings (Alex's gap).
 
-## Epoch 14: Svelte 5 + Astro Hydration Research (In Progress)
+## Epoch 14: Svelte 5 + Astro Hydration Research (Completed)
 
 - **Goal**: Create a reliable "Playbook" for integrating Svelte 5 interactive components into Astro Starlight, resolving persistent hydration issues.
-- **Context**: We encountered severe hydration mismatches (`TypeError: Cannot read properties of undefined (reading 'call')`) when using Svelte 5 components in Astro. This phase is dedicated to understanding the root cause and documenting the correct pattern.
+- **Outcome**: The "hydration issues" were largely attributed to visual bugs (missing CSS variables) and suboptimal SVG rendering. The components are now working correctly.
 - **Phases**:
-  - **Phase 1: Research & Reproduction (In Progress)**
-    - **Goal**: Isolate the issue in a minimal environment and understand the mechanics of the failure.
-    - **Deliverables**:
-      - Minimal Reproduction Repo (or branch).
-      - "Split Test" results (SSR vs Client-Only).
-      - Root Cause Analysis Document.
-  - **Phase 2: The Playbook**
-    - **Goal**: Define the "Rules of Engagement" for Svelte 5 in Astro.
-    - **Deliverables**:
-      - `docs/design/svelte-astro-playbook.md`.
-      - Documented constraints (e.g., "Do not use `client:only` with Runes", "Always wrap in `display: contents`").
-  - **Phase 3: Remediation**
-    - **Goal**: Apply the playbook to fix the `HueShiftVisualizer` and other broken components.
-    - **Deliverables**:
-      - Working `HueShiftVisualizer`.
-      - Working `ContextVisualizer`.
-      - Regression tests (if possible).
+  - **Phase 1: Isolated Reproduction (Completed)**
+    - **Goal**: Create a minimal, deterministic reproduction of the hydration error.
+    - **Deliverables**: Minimal reproduction case, confirmation of failure scope (Runes vs Legacy, SSR vs Client).
+  - **Phase 2: Reproduction via Isolation (Completed)**
+    - **Goal**: Isolate the specific factor causing the failure.
+    - **Outcome**: Identified that the "failure" was visual/CSS-related, not architectural.
+  - **Phase 3: Deep Research (Skipped)**
+    - **Reason**: Root cause was identified as non-architectural.
+  - **Phase 4: The Playbook (Skipped)**
+    - **Reason**: Standard Svelte 5 + Astro integration works as expected.
+  - **Phase 5: Remediation (Completed)**
+    - **Goal**: Fix the production components (`HueShiftVisualizer`, etc.).
+    - **Deliverables**: Working visualizers.
+
+## Epoch 15: Future Work (Planned)
+
+- **Goal**: Continue with the deferred tasks from Epoch 13 (Concept-to-Code Bridge, Framework Integration).

@@ -7,14 +7,6 @@ import DebugVisualizer from "../../../components/DebugVisualizer.svelte";
 import HueShiftVisualizer from "../../../components/HueShiftVisualizer.svelte";
 import Diagram from "../../../components/Diagram.svelte";
 
-### Static (SSR)
-
-<HueShiftVisualizer />
-
-### Client Only
-
-<HueShiftVisualizer client:load />
-
 ## Why Shift Hues?
 
 In the real world, objects rarely stay the same hue as they get lighter or darker.
@@ -165,6 +157,12 @@ export function calculateHueShift(
   return factor * maxRotation;
 }
 ```
+
+### Interactive Playground
+
+Experiment with the Bezier curve control points to see how they affect the hue shift across the lightness spectrum.
+
+<HueShiftVisualizer client:load />
 
 ### Control Points
 

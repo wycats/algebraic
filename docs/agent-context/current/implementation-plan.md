@@ -1,29 +1,28 @@
-# Implementation Plan: Epoch 14 (Svelte 5 + Astro Hydration)
+# Implementation Plan - Phase 2: Reproduction via Isolation
 
 ## Goal
-Establish a reliable, documented pattern for using Svelte 5 interactive components within the Astro Starlight documentation site, resolving the persistent `TypeError: Cannot read properties of undefined (reading 'call')` hydration error.
 
-## Strategy
-We will move from "trial and error" to "first principles debugging". We need to understand *why* the hydration fails before we try to fix it again.
+Isolate the specific factor causing the Svelte 5 hydration error by systematically moving from a working environment (`src/pages/*.astro`) to the failing environment (`src/content/docs/*.mdx` + Starlight).
 
-## Phase 1: Isolation & Diagnosis
-1.  **Dependency Audit**: Ensure we don't have conflicting Svelte versions (already checked, but need to be 100% sure about peer deps).
-2.  **Minimal Reproduction**:
-    - We already have `DebugVisualizer`.
-    - We need to test it in isolation from `StateProvider` and other context wrappers.
-    - We need to test if *any* Svelte component works (e.g., a simple `<div>Hello</div>`).
-3.  **Configuration Audit**:
-    - Review `astro.config.mjs`.
-    - Review `tsconfig.json` (compiler options).
-    - Review `svelte.config.js` (if it exists, or lack thereof).
+## Steps
 
-## Phase 2: The Playbook
-Once we find the working configuration, we will document it in `docs/design/svelte-astro-playbook.md`. This will cover:
-- **Directives**: When to use `client:load`, `client:only`, `client:visible`.
-- **Wrappers**: The necessity of `<div>` wrappers for Astro Islands.
-- **State**: How to safely share state between islands using `svelte/store` or Runes in `.svelte.ts` files.
+1.  **Test Standalone MDX**:
 
-## Phase 3: Restoration
-1.  Apply the fix to `HueShiftVisualizer`.
-2.  Uncomment the component in `advanced/hue-shifting.mdx`.
-3.  Verify no regression in `ContextVisualizer`.
+    - Create `site/src/pages/repro-mdx.mdx`.
+    - Include `HueShiftVisualizer` with `client:load`.
+    - Verify if it works (tests MDX compilation without Starlight layout).
+
+2.  **Test Starlight MDX**:
+
+    - Create `site/src/content/docs/repro-doc.mdx`.
+    - Include `HueShiftVisualizer` with `client:load`.
+    - Verify if it fails (tests Starlight layout + MDX).
+
+3.  **Isolate Factors**:
+
+    - If Starlight MDX fails, try to simplify the component usage.
+    - Check if `client:only` works in Starlight MDX (we know it does from the workaround).
+    - Check if other Svelte components fail in Starlight MDX.
+
+4.  **Root Cause Analysis**:
+    - Compare the generated HTML/JS between the working `repro.astro` and the failing `repro-doc.mdx`.
