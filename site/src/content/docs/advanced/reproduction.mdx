@@ -1,0 +1,22 @@
+---
+title: Hydration Reproduction
+description: A minimal reproduction case for Svelte 5 hydration issues.
+---
+
+import Reproduction from "../../../components/Reproduction.svelte";
+import HueShiftVisualizer from "../../../components/HueShiftVisualizer.svelte";
+import BuilderWrapper from "../../../components/BuilderWrapper.svelte";
+
+## The Test
+
+This page attempts to mount a minimal Svelte 5 component using `client:load`.
+
+<Reproduction client:load />
+
+## Hue Shift Visualizer
+
+<HueShiftVisualizer client:load />
+
+## Builder Wrapper
+
+<BuilderWrapper client:only="svelte" />

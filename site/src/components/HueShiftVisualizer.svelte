@@ -131,7 +131,7 @@
     <div class="graph-section">
       <div class="graph-container">
         <!-- SVG Commented out for debugging -->
-        <!-- <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="graph-svg">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="graph-svg">
           <defs>
             <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path d="M 10 0 L 0 0 0 10" fill="none" stroke="var(--border-subtle-token)" stroke-width="0.5"/>
@@ -145,8 +145,8 @@
           <circle cx={p2x * 100} cy={(1 - p2y) * 100} r="2" fill="var(--text-subtle-token)" vector-effect="non-scaling-stroke" />
           <line x1="0" y1="100" x2={p1x * 100} y2={(1 - p1y) * 100} stroke="var(--text-subtle-token)" stroke-width="1" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" opacity="0.5" />
           <line x1="100" y1="0" x2={p2x * 100} y2={(1 - p2y) * 100} stroke="var(--text-subtle-token)" stroke-width="1" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" opacity="0.5" />
-        </svg> -->
-        <div style="padding: 2rem; text-align: center;">Graph Placeholder</div>
+        </svg>
+        <!-- <div style="padding: 2rem; text-align: center;">Graph Placeholder</div> -->
         
         <!-- Axis Labels -->
         <div class="axis-label x-axis">Lightness (0 → 100)</div>

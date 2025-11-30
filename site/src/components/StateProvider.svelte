@@ -12,11 +12,4 @@
   setContext("config", configState);
 </script>
 
-<!-- 
-  Wrapping the children in a div with display: contents helps stabilize hydration 
-  by ensuring there is a concrete element for Svelte to anchor to, 
-  preventing "get_first_child" errors when the snippet renders directly.
--->
-<div style="display: contents">
-  {@render children()}
-</div>
+{@render children()}

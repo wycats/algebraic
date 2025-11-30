@@ -1,0 +1,39 @@
+---
+import ReproCounter from '../components/ReproCounter.svelte';
+import HueShiftVisualizer from '../components/HueShiftVisualizer.svelte';
+import Diagram from '../components/Diagram.svelte';
+import BuilderWrapper from '../components/BuilderWrapper.svelte';
+import BrokenWrapper from '../components/BrokenWrapper.svelte';
+---
+
+<html>
+	<head>
+		<title>Reproduction</title>
+	</head>
+	<body>
+		<h1>Svelte 5 Hydration Repro</h1>
+		
+        <h2>Diagram (SSR)</h2>
+        <Diagram>
+            <p>This is inside a diagram</p>
+        </Diagram>
+
+        <h2>Repro Counter (client:load)</h2>
+        <ReproCounter client:load />
+
+        <h2>Static (SSR)</h2>
+        <HueShiftVisualizer />
+
+        <h2>Client Load</h2>
+        <HueShiftVisualizer client:load />
+
+        <h2>Client Only</h2>
+        <HueShiftVisualizer client:only="svelte" />
+
+        <h2>Builder Wrapper (client:load)</h2>
+        <BuilderWrapper client:load />
+
+        <h2>Broken Wrapper (client:load)</h2>
+        <BrokenWrapper client:load />
+	</body>
+</html>

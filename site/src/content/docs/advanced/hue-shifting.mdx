@@ -4,13 +4,16 @@ title: Hue Shifting
 
 import DemoWrapper from "../../../components/DemoWrapper.svelte";
 import DebugVisualizer from "../../../components/DebugVisualizer.svelte";
+import HueShiftVisualizer from "../../../components/HueShiftVisualizer.svelte";
 import Diagram from "../../../components/Diagram.svelte";
 
 ### Static (SSR)
-<DebugVisualizer />
+
+<HueShiftVisualizer />
 
 ### Client Only
-<DebugVisualizer client:only="svelte" />
+
+<HueShiftVisualizer client:load />
 
 ## Why Shift Hues?
 
@@ -275,5 +278,3 @@ The cubic Bezier implementation assumes the curve starts at `(0,0)` and ends at 
 - **OKLCH Color Space**: Hue rotations happen in the perceptually uniform OKLCH space, ensuring equal visual impact across the spectrum
 - **Chroma Independence**: Hue shifts don't affect saturation, maintaining consistent vibrancy
 - **CSS `@property`**: Registered custom properties allow smooth animated transitions between hue-shifted values
-
-
