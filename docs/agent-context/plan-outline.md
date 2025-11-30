@@ -201,31 +201,55 @@
     - **Goal**: Migrate the core `ThemeBuilder` application to Svelte 5.
     - **Deliverables**: `ThemeBuilder.svelte`, `AnchorsEditor.svelte`, `SurfaceManager.svelte`, Live Injection.
 
-## Epoch 13: User Experience & Integration (In Progress)
+## Epoch 13: User Experience & Integration (Completed)
 
 - **Goal**: Address the "Missing Features" identified in Fresh Eyes Audit 4 by restructuring the documentation and tooling to create a seamless "Golden Path" for adoption.
+- **Status**: Partially completed. The "Golden Path" work was started but blocked by critical hydration issues in the documentation site itself.
 - **Phases**:
-  - **Phase 1: The Golden Path (Onboarding) (In Progress)**
+  - **Phase 1: The Golden Path (Onboarding) (Completed)**
     - **Goal**: Create a zero-friction path from "What is this?" to "I have a running app".
     - **Deliverables**:
       - **Quick Start Overhaul**: Rewrite the "Quick Start" as a step-by-step tutorial (HTML & React) rather than just installation instructions.
       - **Embedded Snippets**: Integrate the "Snippet Library" directly into the documentation flow, allowing users to copy-paste "Card", "Button", and "Layout" patterns immediately.
       - **Interactive "Try It"**: Add a "Open in StackBlitz/CodeSandbox" button to the docs that pre-loads the system.
-  - **Phase 2: The Concept-to-Code Bridge (Mental Model)**
+  - **Phase 2: The Concept-to-Code Bridge (Mental Model) (Deferred)**
     - **Goal**: Connect abstract concepts (Surfaces, Context) directly to implementation details within the docs.
     - **Deliverables**:
       - **Inline Token Inspector**: A documentation component that allows users to click on a surface in a diagram and see the exact CSS variables and values being applied.
       - **Deep Linking**: Update the Theme Builder to link back to specific documentation sections (e.g., "Why is this locked?" -> "Contrast Constraints" doc).
       - **Visual Debugger**: Add a `--debug` flag to the build that outputs comments in CSS, helping users map the generated code back to the concepts they read about.
-  - **Phase 3: Framework-Specific Integration (Implementation)**
+  - **Phase 3: Framework-Specific Integration (Implementation) (Deferred)**
     - **Goal**: Provide specific, copy-pasteable implementation guides for major frameworks, removing the guesswork.
     - **Deliverables**:
       - **Framework Guides**: Dedicated pages for **React**, **Svelte**, and **Plain HTML**.
       - **Theme Toggle Component**: A drop-in component/script for each framework to handle Dark Mode (addressing Sarah's gap).
       - **TypeScript Export**: Implement `color-system export --format typescript` to support the "Typed CSS" workflow in React/Svelte.
-  - **Phase 4: Advanced Customization (Mastery)**
+  - **Phase 4: Advanced Customization (Mastery) (Deferred)**
     - **Goal**: Remove friction for advanced users integrating into complex environments.
     - **Deliverables**:
       - **Configuration Options**: Add `prefix` and `selector` options to support existing codebases (Marcus's gap).
       - **Audit Command**: Implement `color-system audit` as a "Verify" step in the documentation flow.
       - **Override Capability**: Allow "breaking the rules" in the Theme Builder with appropriate warnings (Alex's gap).
+
+## Epoch 14: Svelte 5 + Astro Hydration Research (In Progress)
+
+- **Goal**: Create a reliable "Playbook" for integrating Svelte 5 interactive components into Astro Starlight, resolving persistent hydration issues.
+- **Context**: We encountered severe hydration mismatches (`TypeError: Cannot read properties of undefined (reading 'call')`) when using Svelte 5 components in Astro. This phase is dedicated to understanding the root cause and documenting the correct pattern.
+- **Phases**:
+  - **Phase 1: Research & Reproduction (In Progress)**
+    - **Goal**: Isolate the issue in a minimal environment and understand the mechanics of the failure.
+    - **Deliverables**:
+      - Minimal Reproduction Repo (or branch).
+      - "Split Test" results (SSR vs Client-Only).
+      - Root Cause Analysis Document.
+  - **Phase 2: The Playbook**
+    - **Goal**: Define the "Rules of Engagement" for Svelte 5 in Astro.
+    - **Deliverables**:
+      - `docs/design/svelte-astro-playbook.md`.
+      - Documented constraints (e.g., "Do not use `client:only` with Runes", "Always wrap in `display: contents`").
+  - **Phase 3: Remediation**
+    - **Goal**: Apply the playbook to fix the `HueShiftVisualizer` and other broken components.
+    - **Deliverables**:
+      - Working `HueShiftVisualizer`.
+      - Working `ContextVisualizer`.
+      - Regression tests (if possible).

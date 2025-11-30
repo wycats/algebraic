@@ -319,7 +319,7 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Simplicity**: Users can copy the HTML directly into their projects without needing to strip out React/Svelte specific syntax.
   - **Maintainability**: Snippets are just files. They can be linted, formatted, and tested independently of the documentation content.
 
-### [2025-11-30] Client-Only Hydration for Visualizers
+### [2025-11-30] Client-Only Hydration for Visualizers (REVERTED)
 
 - **Context**: The `HueShiftVisualizer` component (Svelte 5) was causing hydration errors (`TypeError: Cannot read properties of undefined`) when rendered with `client:load` in Astro.
 - **Decision**: Use `client:only="svelte"` for complex, interactive visualization components.
@@ -327,3 +327,10 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Stability**: Avoids hydration mismatches where the server-rendered HTML differs slightly from the client's initial state (common with SVG math or browser-specific inputs).
   - **Performance**: These components are "app-like" tools, not content. They don't need to be SEO-indexed or rendered on the server.
   - **Simplicity**: Bypasses the complexity of debugging Svelte 5 hydration edge cases in Astro islands.
+- **Update (2025-11-30)**: This decision was **reverted** because `client:only` also failed with the same error. We are now investigating a deeper root cause in Epoch 14.
+
+### [2025-11-30] The "Playbook" Approach (Epoch 14)
+
+- **Context**: We spent significant time in Epoch 13 trying to fix a hydration error (`TypeError: ... get_first_child`) using trial-and-error methods (guards, timeouts, directives).
+- **Decision**: We will stop "mashing" and start a dedicated research phase. We will create a "Playbook" document that defines the proven, reliable patterns for using Svelte 5 in this specific Astro environment.
+- **Rationale**: The error is environmental, not component-specific. Continuing to patch individual components is inefficient. We need to understand the root cause (likely version mismatch or configuration) to ensure long-term stability.

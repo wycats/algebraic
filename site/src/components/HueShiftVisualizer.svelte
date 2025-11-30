@@ -130,8 +130,8 @@
     <!-- Graph Section -->
     <div class="graph-section">
       <div class="graph-container">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="graph-svg">
-          <!-- Background Grid -->
+        <!-- SVG Commented out for debugging -->
+        <!-- <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="graph-svg">
           <defs>
             <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path d="M 10 0 L 0 0 0 10" fill="none" stroke="var(--border-subtle-token)" stroke-width="0.5"/>
@@ -139,15 +139,14 @@
           </defs>
           <rect width="100" height="100" fill="url(#grid)" opacity="0.3" />
           
-          <!-- Curve -->
           <path d={svgPath} fill="none" stroke="var(--key-brand-color)" stroke-width="2" vector-effect="non-scaling-stroke" />
           
-          <!-- Control Points Visualization (Simplified) -->
           <circle cx={p1x * 100} cy={(1 - p1y) * 100} r="2" fill="var(--text-subtle-token)" vector-effect="non-scaling-stroke" />
           <circle cx={p2x * 100} cy={(1 - p2y) * 100} r="2" fill="var(--text-subtle-token)" vector-effect="non-scaling-stroke" />
           <line x1="0" y1="100" x2={p1x * 100} y2={(1 - p1y) * 100} stroke="var(--text-subtle-token)" stroke-width="1" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" opacity="0.5" />
           <line x1="100" y1="0" x2={p2x * 100} y2={(1 - p2y) * 100} stroke="var(--text-subtle-token)" stroke-width="1" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" opacity="0.5" />
-        </svg>
+        </svg> -->
+        <div style="padding: 2rem; text-align: center;">Graph Placeholder</div>
         
         <!-- Axis Labels -->
         <div class="axis-label x-axis">Lightness (0 → 100)</div>
@@ -156,7 +155,8 @@
 
       <!-- Gradient Strip -->
       <div class="gradient-preview">
-        <div class="gradient-strip" style:background={`linear-gradient(to right, ${gradientStops})`}></div>
+        <!-- <div class="gradient-strip" style:background={`linear-gradient(to right, ${gradientStops})`}></div> -->
+        <div class="gradient-strip" style="background: #eee;"></div>
         <div class="gradient-labels">
           <span>Black</span>
           <span>White</span>

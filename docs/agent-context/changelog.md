@@ -484,23 +484,22 @@
   - Created `docs/design/fresh-eyes-audit-3.md` with detailed findings.
   - Prioritized a list of critical fixes for the next phase.
 
-## Epoch 13: Phase 1 - The Golden Path (2025-11-29)
+## Epoch 13: User Experience & Integration (Concluded)
 
-**Goal**: Create a zero-friction onboarding experience that guides users from "What is this?" to "I have a running app" with minimal effort.
+**Goal**: Address the "Missing Features" identified in Fresh Eyes Audit 4 by restructuring the documentation and tooling to create a seamless "Golden Path" for adoption.
+
+**Status**: Concluded early due to technical blockers.
 
 **Completed Work**:
 
-- **Quick Start Overhaul**:
-  - Rewrote `site/src/content/docs/index.mdx` to feature a step-by-step "Hello World" tutorial.
-  - Replaced generic marketing copy with a practical guide to building a "Profile Card".
-- **Snippet Library**:
-  - Created a `snippets/` directory with raw HTML examples (`card.html`, `button.html`, etc.).
-  - Implemented `<Snippet>` component in Astro to render live previews and source code from these files.
-- **Interactive "Try It"**:
-  - Added an "Open in StackBlitz" button to the hero section, linking to the repository for instant experimentation.
-- **Verification**:
-  - Verified the documentation build passes with the new components.
-  - Fixed lint errors and updated snapshots in the core library (`generator.ts`).
+- **Quick Start Overhaul**: Rewrote the landing page with a "Zero to Hero" tutorial.
+- **Snippet Library**: Implemented a system for embedding live HTML snippets in docs.
+- **Interactive "Try It"**: Added StackBlitz integration.
+
+**Blocked Work**:
+
+- **Hydration Instability**: Encountered severe Svelte 5 hydration errors in Astro, preventing the deployment of complex interactive documentation components (`HueShiftVisualizer`).
+- **Decision**: Transitioned to Epoch 14 to focus exclusively on resolving this instability.
 
 ## Epoch 11: Phase 4 - Audit Fixes (2025-11-30)
 
