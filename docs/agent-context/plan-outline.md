@@ -32,9 +32,18 @@
 
 - **Goal**: Rename and rebrand the project to "Axiomatic Color" (`@axiomatic-design/color`) to reflect its structural and deterministic nature.
 - **Phases**:
-  - **Phase 1: Package & CLI Updates**
+  - **Phase 1: Package & CLI Updates (Completed)**
     - **Goal**: Update package metadata, CLI commands, and internal references.
   - **Phase 2: Documentation & Site Updates**
     - **Goal**: Update README, Personas, Concepts, and Site branding.
   - **Phase 3: Verification & Publish**
     - **Goal**: Verify the new package name and publish the rebranded version.
+
+## Epoch 20: Linting & Quality Assurance (Planned)
+
+- **Goal**: Tighten up lints to get better feedback and fix existing issues.
+- **Phases**:
+  - **Phase 1: Lint Configuration**
+    - **Goal**: Review and tighten ESLint and Prettier configurations.
+  - **Phase 2: Fix Issues**
+    - **Goal**: Resolve all linting errors and warnings.

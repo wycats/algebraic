@@ -646,3 +646,19 @@
   - Updated `package.json` metadata (description, keywords).
   - Fixed Vite alias configuration in `astro.config.mjs` to support the new package name during development.
   - Verified build pipeline and CLI functionality with the new identity.
+
+## Epoch 19: Phase 1 - Package & CLI Updates (2025-12-01)
+
+**Goal**: Initiate the rebranding to "Axiomatic Color" by updating the core package identity and CLI tools.
+
+**Completed Work**:
+
+- **Package Renaming**:
+  - Renamed NPM package to `@axiomatic-design/color`.
+  - Renamed CLI binary to `axiomatic`.
+- **CLI Updates**:
+  - Updated help text and usage instructions in `src/cli/index.ts`.
+  - Verified the new command works correctly.
+- **Infrastructure**:
+  - Updated `package.json` metadata.
+  - Verified build pipeline.

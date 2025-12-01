@@ -15,6 +15,24 @@ const isMain = process.argv[1] === fileURLToPath(import.meta.url);
 if (isMain) {
   const command = args[0];
 
+  if (args.includes("--help") || args.includes("-h")) {
+    console.log(`
+Axiomatic Color CLI
+
+Usage:
+  axiomatic init              Create a new color-config.json
+  axiomatic build [flags]     Generate CSS from config
+  axiomatic export [flags]    Export tokens to other formats
+  axiomatic audit             Audit the generated theme
+
+Flags:
+  --config <path>   Path to config file (default: color-config.json)
+  --out <path>      Path to output file (default: theme.css)
+  --watch           Watch for changes
+`);
+    process.exit(0);
+  }
+
   if (command === "init") {
     const targetPath = join(CWD, "color-config.json");
     if (existsSync(targetPath)) {

@@ -221,7 +221,6 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Context**: To enforce the "Dogfooding" strategy, we needed a way to prevent developers (or agents) from accidentally re-introducing hardcoded colors.
 - **Decision**: Add a `lint:colors` script that greps for hex/rgb/hsl patterns in the documentation source code and fails the build if found.
 - **Rationale**:
-
   - **Automation**: Enforces the policy automatically in CI/CD.
   - **Simplicity**: A simple grep script is sufficient for this purpose without needing complex AST analysis.
 
@@ -412,3 +411,12 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Focus**: The current goal (Epoch 18) is deployment and sharing. Starting a major UI refactor now would derail the release.
   - **Planning**: These ideas need careful design and prototyping. Rushing them into the current codebase would likely result in technical debt.
   - **Documentation**: Capturing them in a dedicated document ensures they aren't lost and provides a clear starting point for the next phase.
+
+### [2025-12-01] Rebrand to Axiomatic Color
+
+- **Context**: The project was originally named "Algebraic Color System". As the design philosophy matured, we realized "Axiomatic" better described the deterministic, rule-based nature of the system.
+- **Decision**: Rename the project to "Axiomatic Color" and the package to `@axiomatic-design/color`.
+- **Rationale**:
+  - **Clarity**: "Algebraic" implies math is the primary interface. "Axiomatic" implies _rules_ are the primary interface, which is more accurate for a design system.
+  - **Ecosystem**: Aligns with the broader "Axiomatic Design" suite of tools we are planning.
+  - **Identity**: Creates a stronger, more distinct brand identity.

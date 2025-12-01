@@ -2,9 +2,9 @@
 
 ## Phase 1: Package & CLI Updates
 
-- [ ] Update `package.json` (name: `@axiomatic-design/color`, bin: `axiomatic`) <!-- id: 0 -->
-- [ ] Update `src/cli/index.ts` (Help text, headers) <!-- id: 1 -->
-- [ ] Verify CLI works with `pnpm exec axiomatic` <!-- id: 2 -->
+- [x] Update `package.json` (name: `@axiomatic-design/color`, bin: `axiomatic`) <!-- id: 0 -->
+- [x] Update `src/cli/index.ts` (Help text, headers) <!-- id: 1 -->
+- [x] Verify CLI works with `pnpm exec axiomatic` <!-- id: 2 -->
 
 ## Phase 2: Documentation Updates
 
