@@ -7,15 +7,15 @@ pre-commit:
       run: pnpm test
 
 pre-push:
-  parallel: true
+  parallel: false
   commands:
     check:
       run: ./scripts/check
-    build:
-      run: pnpm build
     typecheck:
       run: tsc --noEmit
-    publint:
-      run: pnpm check:exports
     site-check:
       run: pnpm --filter site astro check
+    build:
+      run: pnpm build
+    publint:
+      run: pnpm check:exports
