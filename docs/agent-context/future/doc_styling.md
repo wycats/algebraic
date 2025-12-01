@@ -8,7 +8,7 @@ The user has noted that the current styling of the documentation visualizations 
 
 ## Tasks
 
-- [ ] Review all custom HTML/CSS in MDX files.
-- [ ] Refactor inline styles into reusable CSS classes or components.
-- [ ] Ensure consistent use of design tokens (spacing, colors, typography).
-- [ ] Improve the visual hierarchy and readability of diagrams.
+- [x] Review all custom HTML/CSS in MDX files.
+- [x] Refactor inline styles into reusable CSS classes or components.
+- [x] Ensure consistent use of design tokens (spacing, colors, typography).
+- [x] Improve the visual hierarchy and readability of diagrams.

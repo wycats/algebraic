@@ -26,26 +26,14 @@ If you create a color palette by simply changing lightness (e.g., `oklch(0.5 0.2
   <div class="docs-grid docs-mb-4">
     <div class="docs-card">
       <strong class="docs-card-header">Static Hue (Boring)</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 260)
-      );"
-      ></div>
+      <div class="docs-gradient-bar docs-gradient-static"></div>
       <div class="text-subtle docs-mt-2 docs-text-sm">
         Just changing lightness. The result feels mechanical and flat.
       </div>
     </div>
     <div class="docs-card">
       <strong class="docs-card-header">Shifted Hue (Dynamic)</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 320)
-      );"
-      ></div>
+      <div class="docs-gradient-bar docs-gradient-shifted"></div>
       <div class="text-subtle docs-mt-2 docs-text-sm">
         Rotating hue from Blue (260) to Purple (320) as lightness increases. The
         result feels more vibrant and natural.
@@ -66,13 +54,7 @@ A naive implementation might apply hue rotation linearly. However, this doesn't 
   <div class="docs-grid docs-mb-4">
     <div class="docs-card">
       <strong class="docs-card-header">No Shift (Static Hue)</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 260)
-      );"
-      ></div>
+      <div class="docs-gradient-bar docs-gradient-static"></div>
       <div class="text-subtle docs-mt-2 docs-text-sm">
         Shadows can feel "muddy" or flat because they lack the natural coolness
         of ambient light.
@@ -80,13 +62,7 @@ A naive implementation might apply hue rotation linearly. However, this doesn't 
     </div>
     <div class="docs-card">
       <strong class="docs-card-header">Linear Shift</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 320)
-      );"
-      ></div>
+      <div class="docs-gradient-bar docs-gradient-shifted"></div>
       <div class="text-subtle docs-mt-2 docs-text-sm">
         A linear shift (0° to 60°) can feel abrupt in the mid-tones, making the
         color change too noticeable.
@@ -103,45 +79,18 @@ Instead, we use a **cubic Bezier curve** to map lightness values (0-1) to hue ro
   <div class="docs-grid docs-mb-4">
     <div class="docs-card">
       <strong class="docs-card-header">No Shift</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 260)
-      );"
-      ></div>
-      <div class="text-subtle docs-mt-2 docs-text-sm">
-        Static hue.
-      </div>
+      <div class="docs-gradient-bar docs-gradient-static"></div>
+      <div class="text-subtle docs-mt-2 docs-text-sm">Static hue.</div>
     </div>
     <div class="docs-card">
       <strong class="docs-card-header">Linear Shift</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260), 
-        oklch(0.95 0.1 320)
-      );"
-      ></div>
-      <div class="text-subtle docs-mt-2 docs-text-sm">
-        Abrupt mid-tones.
-      </div>
+      <div class="docs-gradient-bar docs-gradient-shifted"></div>
+      <div class="text-subtle docs-mt-2 docs-text-sm">Abrupt mid-tones.</div>
     </div>
     <div class="docs-card">
       <strong class="docs-card-header">Bezier Shift</strong>
-      <div
-        class="docs-gradient-bar"
-        style="background: linear-gradient(to right, 
-        oklch(0.2 0.1 260),   /* Start: Blue */
-        oklch(0.4 0.1 265),   /* Slow start */
-        oklch(0.6 0.1 290),   /* Fast middle */
-        oklch(0.8 0.1 315),   /* Slow end */
-        oklch(0.95 0.1 320)   /* End: Purple */
-      );"
-      ></div>
-      <div class="text-subtle docs-mt-2 docs-text-sm">
-        Smooth S-curve.
-      </div>
+      <div class="docs-gradient-bar docs-gradient-bezier"></div>
+      <div class="text-subtle docs-mt-2 docs-text-sm">Smooth S-curve.</div>
     </div>
   </div>
 </Diagram>
@@ -207,21 +156,21 @@ Here is how the hue rotation (0° to 180°) is applied across the lightness spec
     {/* Linear Row */}
     <div class="text-subtle text-right">Linear</div>
     <div class="docs-swatch-grid">
-      <div class="docs-swatch" style="background: oklch(0.1 0.15 278);" title="L=0.1, H=278 (+18°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.3 0.15 314);" title="L=0.3, H=314 (+54°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.5 0.15 350);" title="L=0.5, H=350 (+90°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.7 0.15 26);" title="L=0.7, H=26 (+126°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.9 0.15 62);" title="L=0.9, H=62 (+162°)"></div>
+      <div class="docs-swatch docs-swatch-linear-1" title="L=0.1, H=278 (+18°)"></div>
+      <div class="docs-swatch docs-swatch-linear-2" title="L=0.3, H=314 (+54°)"></div>
+      <div class="docs-swatch docs-swatch-linear-3" title="L=0.5, H=350 (+90°)"></div>
+      <div class="docs-swatch docs-swatch-linear-4" title="L=0.7, H=26 (+126°)"></div>
+      <div class="docs-swatch docs-swatch-linear-5" title="L=0.9, H=62 (+162°)"></div>
     </div>
 
     {/* Bezier Row */}
     <div class="text-subtle text-right">Bezier</div>
     <div class="docs-swatch-grid">
-      <div class="docs-swatch" style="background: oklch(0.1 0.15 265);" title="L=0.1, H=265 (+5°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.3 0.15 299);" title="L=0.3, H=299 (+39°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.5 0.15 350);" title="L=0.5, H=350 (+90°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.7 0.15 41);" title="L=0.7, H=41 (+141°)"></div>
-      <div class="docs-swatch" style="background: oklch(0.9 0.15 75);" title="L=0.9, H=75 (+175°)"></div>
+      <div class="docs-swatch docs-swatch-bezier-1" title="L=0.1, H=265 (+5°)"></div>
+      <div class="docs-swatch docs-swatch-bezier-2" title="L=0.3, H=299 (+39°)"></div>
+      <div class="docs-swatch docs-swatch-bezier-3" title="L=0.5, H=350 (+90°)"></div>
+      <div class="docs-swatch docs-swatch-bezier-4" title="L=0.7, H=41 (+141°)"></div>
+      <div class="docs-swatch docs-swatch-bezier-5" title="L=0.9, H=75 (+175°)"></div>
     </div>
 
     {/* Labels */}

@@ -41,4 +41,3 @@ jobs:
 
       - name: Audit Theme
         run: pnpm audit:theme
-

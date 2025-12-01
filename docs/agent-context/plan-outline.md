@@ -258,10 +258,15 @@
 
 - **Goal**: Elevate the visual quality of the documentation and enforce accessibility standards automatically.
 - **Phases**:
-  - **Phase 1: Documentation Styling & CI Integration (In Progress)**
+  - **Phase 1: Documentation Styling & CI Integration (Completed)**
     - **Goal**: Refactor ad-hoc styles and ensure accessibility compliance in CI.
     - **Key Deliverables**:
       - Refactored MDX styles (utility classes).
       - Polished Concept diagrams.
       - CI workflow with `color-system audit`.
-
+  - **Phase 2: Framework Guides & Visual Consistency (In Progress)**
+    - **Goal**: Complete the documentation styling refactor by addressing framework guides and ensuring zero inline styles remain.
+    - **Key Deliverables**:
+      - Refactored Framework Guides (`react.mdx`, `svelte.mdx`, `html.mdx`).
+      - Global Style Audit.
+      - Consistent Diagram Styling.

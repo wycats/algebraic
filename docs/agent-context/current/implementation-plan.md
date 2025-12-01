@@ -1,31 +1,31 @@
-# Implementation Plan - Epoch 16 Phase 1: Documentation Styling & CI Integration
+# Implementation Plan - Epoch 16 Phase 2: Framework Guides & Visual Consistency (Completed)
 
 ## Goal
-Elevate the visual quality of the documentation by removing technical debt (inline styles) and enforcing accessibility standards automatically via CI.
+
+Complete the documentation styling refactor by addressing framework guides and ensuring zero inline styles remain in the documentation source.
 
 ## Proposed Changes
 
-### 1. Documentation Styling Refactor
-- **Target**: `site/src/content/docs/**/*.mdx`
-- **Action**:
-    - Identify components or HTML elements using `style="..."`.
-    - Replace with Tailwind-like utility classes (if available) or standard CSS classes defined in `site/src/styles/custom.css` (or similar).
-    - Ensure consistent use of design tokens (e.g., `var(--color-surface-base)` instead of hardcoded hex).
+### 1. Refactor Framework Guides (Completed)
 
-### 2. Diagram Polish
-- **Target**: Concept diagrams in `concepts/`.
-- **Action**:
-    - Improve contrast and spacing.
-    - Ensure diagrams look good in both Light and Dark modes.
-    - Use the "Inline Token Inspector" pattern where applicable.
+- **Target Files**:
+  - `site/src/content/docs/guides/frameworks/react.mdx`
+  - `site/src/content/docs/guides/frameworks/svelte.mdx`
+  - `site/src/content/docs/guides/frameworks/html.mdx`
+- **Action**: Replace inline `style` attributes with semantic classes from `site/src/styles/docs.css`.
+- **Consideration**: Ensure that code examples that _teach_ inline styles are preserved, but live components used for demonstration are styled via classes.
 
-### 3. CI Integration
-- **Target**: `.github/workflows/`
-- **Action**:
-    - Add a step to run `pnpm exec color-system audit` (or the package script) during the build process.
-    - Fail the build if the audit finds violations.
+### 2. Global Style Audit (Completed)
 
-## Verification Plan
-- **Visual Check**: Manually verify the documentation site (`pnpm dev`) to ensure no visual regressions.
-- **Automated Check**: Run `color-system audit` locally and verify it passes.
-- **CI Check**: Push changes and verify GitHub Actions success.
+- **Action**: Run a global search for `style=` in `site/src/content/docs` to catch any missed instances.
+- **Refactor**: Move any remaining ad-hoc styles to `docs.css`.
+
+### 3. Diagram Polish (Completed)
+
+- **Action**: Review concept diagrams (e.g., in `concepts/`) to ensure they use the new utility classes (`.docs-swatch-grid`, etc.) and look consistent.
+
+## Verification Plan (Completed)
+
+- **Visual Check**: Manually verify the rendered pages for React, Svelte, and HTML guides.
+- **Build Check**: Run `pnpm build:site` to ensure no regressions.
+- **Audit Check**: Run `pnpm audit:theme` to ensure accessibility.

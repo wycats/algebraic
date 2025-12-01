@@ -22,33 +22,33 @@ In the Theme Builder, you set the **Anchors**. These are the boundaries of your 
 <div class="not-content">
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
 <div class="docs-mb-4">
-<h4 class="text-strong" style="margin: 0 0 0.5rem 0">Page Anchors</h4>
-<p class="text-subtle" style="margin: 0; font-size: 0.9rem">
+<h4 class="text-strong docs-mb-2">Page Anchors</h4>
+<p class="docs-text-subtle-sm">
 Defines the lightness range for the "Page" polarity.
 </p>
 </div>
 
 <!-- Start Slider -->
 <div class="docs-mb-4">
-<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<div class="docs-flex-between docs-mb-2">
 <span class="text-subtle">Start (Background)</span>
 <span class="text-strong">0.98</span>
 </div>
-<div style="height: 6px; background: var(--border-subtle-token); border-radius: 3px; position: relative;">
-<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 98%; background: var(--text-subtle-token); opacity: 0.2; border-radius: 3px;"></div>
-<div style="position: absolute; right: 2%; top: 50%; transform: translate(50%, -50%); width: 16px; height: 16px; background: var(--text-strong-token); border-radius: 50%; border: 2px solid var(--surface-token);"></div>
+<div class="docs-slider-track">
+<div class="docs-slider-fill" style="left: 0; width: 98%;"></div>
+<div class="docs-slider-thumb right" style="right: 2%;"></div>
 </div>
 </div>
 
 <!-- End Slider -->
 <div>
-<div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+<div class="docs-flex-between docs-mb-2">
 <span class="text-subtle">End (Elevated)</span>
 <span class="text-strong">0.12</span>
 </div>
-<div style="height: 6px; background: var(--border-subtle-token); border-radius: 3px; position: relative;">
-<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 12%; background: var(--text-subtle-token); opacity: 0.2; border-radius: 3px;"></div>
-<div style="position: absolute; left: 12%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: var(--text-strong-token); border-radius: 50%; border: 2px solid var(--surface-token);"></div>
+<div class="docs-slider-track">
+<div class="docs-slider-fill" style="left: 0; width: 12%;"></div>
+<div class="docs-slider-thumb left" style="left: 12%;"></div>
 </div>
 </div>
 </div>
@@ -63,28 +63,28 @@ In the Theme Builder, you add **Surfaces** to a list.
 
 <div class="not-content">
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
-<h4 class="text-strong" style="margin: 0 0 1rem 0">Surfaces</h4>
+<h4 class="text-strong docs-mb-4">Surfaces</h4>
 
 <div class="docs-col">
 <!-- Surface Item 1 -->
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
-<span class="text-strong" style="flex: 1;">Page</span>
+<div class="surface-card docs-p-2 docs-rounded docs-border docs-flex-center-gap">
+<span class="text-strong docs-flex-1">Page</span>
 <code class="text-subtle">.surface-page</code>
-<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
+<span class="docs-badge-pass">Passes</span>
 </div>
 
 <!-- Surface Item 2 -->
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
-<span class="text-strong" style="flex: 1;">Card</span>
+<div class="surface-card docs-p-2 docs-rounded docs-border docs-flex-center-gap">
+<span class="text-strong docs-flex-1">Card</span>
 <code class="text-subtle">.surface-card</code>
-<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
+<span class="docs-badge-pass">Passes</span>
 </div>
 
 <!-- Surface Item 3 -->
-<div class="surface-card docs-p-2 docs-rounded docs-border" style="display: flex; align-items: center; gap: 1rem;">
-<span class="text-strong" style="flex: 1;">Sidebar</span>
+<div class="surface-card docs-p-2 docs-rounded docs-border docs-flex-center-gap">
+<span class="text-strong docs-flex-1">Sidebar</span>
 <code class="text-subtle">.surface-sidebar</code>
-<span style="font-size: 0.8em; border: 1px solid var(--chart-3); color: var(--chart-3); padding: 2px 6px; border-radius: 4px; font-weight: bold;">Passes</span>
+<span class="docs-badge-pass">Passes</span>
 </div>
 
 </div>
@@ -103,20 +103,20 @@ If we just divided the lightness values evenly (Linear Lightness), the steps wou
 
 <!-- Linear Lightness -->
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
-<h4 class="text-strong" style="margin: 0 0 1rem 0">Linear Lightness (Bad)</h4>
-<div style="display: flex; flex-direction: column; gap: 0;">
-<div class="docs-p-2" style="background: oklch(95% 0 0); color: black;">Step 1 (95%)</div>
-<div class="docs-p-2" style="background: oklch(85% 0 0); color: black;">Step 2 (85%)</div>
-<div class="docs-p-2" style="background: oklch(75% 0 0); color: black;">Step 3 (75%)</div>
-<div class="docs-p-2" style="background: oklch(65% 0 0); color: white;">Step 4 (65%)</div>
-<div class="docs-p-2" style="background: oklch(55% 0 0); color: white;">Step 5 (55%)</div>
+<h4 class="text-strong docs-mb-4">Linear Lightness (Bad)</h4>
+<div class="docs-col-gap-0">
+<div class="docs-p-2 docs-step-95">Step 1 (95%)</div>
+<div class="docs-p-2 docs-step-85">Step 2 (85%)</div>
+<div class="docs-p-2 docs-step-75">Step 3 (75%)</div>
+<div class="docs-p-2 docs-step-65">Step 4 (65%)</div>
+<div class="docs-p-2 docs-step-55">Step 5 (55%)</div>
 </div>
 </div>
 
 <!-- Linear Contrast -->
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
-<h4 class="text-strong" style="margin: 0 0 1rem 0">Linear Contrast (Good)</h4>
-<div style="display: flex; flex-direction: column; gap: 0;">
+<h4 class="text-strong docs-mb-4">Linear Contrast (Good)</h4>
+<div class="docs-col-gap-0">
 <div class="surface-page docs-p-2">Page (Start)</div>
 <div class="surface-workspace docs-p-2">Workspace</div>
 <div class="surface-card docs-p-2">Card</div>
@@ -133,8 +133,8 @@ Finally, the solver outputs the CSS tokens that the Theme Builder (and your app)
 
 <div class="not-content">
 <div class="surface-workspace docs-p-4 docs-rounded docs-border">
-<h4 class="text-strong" style="margin: 0 0 1rem 0">Generated CSS</h4>
-<pre style="background: var(--surface-token); padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>--lightness-surface-page: light-dark(0.98, 0.12);
+<h4 class="text-strong docs-mb-4">Generated CSS</h4>
+<pre class="docs-code-block"><code>--lightness-surface-page: light-dark(0.98, 0.12);
 --lightness-surface-card: light-dark(0.95, 0.15);
 --lightness-surface-sidebar: light-dark(0.92, 0.18);</code></pre>
 </div>

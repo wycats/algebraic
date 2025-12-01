@@ -5,8 +5,8 @@ description: How to use the visual Theme Builder to generate your configuration.
 
 The **Theme Builder** is a web-based tool that allows you to visually design your theme and export the configuration for your project.
 
-<div style="margin: 2rem 0;">
-  <a href="/builder/" style="background: var(--sl-color-accent-high); color: var(--sl-color-black); padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+<div class="docs-cta-container">
+  <a href="/builder/" class="docs-cta-button">
     Launch Theme Builder →
   </a>
 </div>
