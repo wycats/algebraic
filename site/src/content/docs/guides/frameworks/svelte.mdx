@@ -62,33 +62,44 @@ We can create a reusable `<Surface>` component.
 </svelte:element>
 ```
 
-## 3. The Theme Toggle
+## 3. The Theme Service
 
-```svelte
-<!-- src/lib/components/ThemeToggle.svelte -->
-<script lang="ts">
-  import { onMount } from 'svelte';
+We can wrap the `ThemeManager` in a Svelte 5 reactive class to handle state management.
 
-  let theme = $state<'light' | 'dark'>('light');
+```typescript
+// src/lib/theme.svelte.ts
+import { ThemeManager, type ThemeMode } from '@axiomatic-design/color/browser';
 
-  onMount(() => {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+export class ThemeService {
+  private manager: ThemeManager;
+  mode = $state<ThemeMode>('system');
 
-    theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  });
-
-  function toggleTheme() {
-    theme = theme === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+  constructor() {
+    this.manager = new ThemeManager();
+    
+    // Restore saved preference
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('theme') as ThemeMode | null;
+      if (saved) {
+        this.setMode(saved);
+      }
+    }
   }
-</script>
 
-<button onclick={toggleTheme}>
-  {theme === 'light' ? '🌙' : '☀️'}
-</button>
+  setMode(mode: ThemeMode) {
+    this.mode = mode;
+    this.manager.setMode(mode);
+    localStorage.setItem('theme', mode);
+  }
+
+  toggle() {
+    const next = this.manager.resolvedMode === 'light' ? 'dark' : 'light';
+    this.setMode(next);
+  }
+}
+
+// Export a singleton instance
+export const theme = new ThemeService();
 ```
 
 ## 4. Usage Example
@@ -97,14 +108,17 @@ We can create a reusable `<Surface>` component.
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
   import Surface from '$lib/components/Surface.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+  import { theme } from '$lib/theme.svelte';
   import { tokens } from '$lib/theme';
 </script>
 
 <Surface variant="page" style="min-height: 100vh; padding: 2rem;">
   <header style="display: flex; justify-content: space-between;">
     <h1 style="color: {tokens.context.text.high}">My App</h1>
-    <ThemeToggle />
+    
+    <button onclick={() => theme.toggle()}>
+      {theme.mode === 'light' ? '🌙' : '☀️'}
+    </button>
   </header>
 
   <main>

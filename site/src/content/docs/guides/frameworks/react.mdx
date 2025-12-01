@@ -55,72 +55,104 @@ export function Surface({
 }
 ```
 
-## 3. The Theme Toggle
+## 3. The Theme Context
 
-To handle Dark Mode, we need a component that toggles the `data-theme` attribute on the `<html>` element.
+To handle Dark Mode and System preferences robustly, we recommend creating a Context that wraps the `ThemeManager`.
 
 ```tsx
-// src/components/ThemeToggle.tsx
-import React, { useEffect, useState } from "react";
+// src/context/ThemeContext.tsx
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ThemeManager, type ThemeMode } from "@axiomatic-design/color/browser";
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+type ThemeContextType = {
+  mode: ThemeMode;
+  setMode: (mode: ThemeMode) => void;
+  toggle: () => void;
+};
+
+const ThemeContext = createContext<ThemeContextType | null>(null);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Initialize the manager once
+  const [manager] = useState(() => new ThemeManager());
+  const [mode, setModeState] = useState<ThemeMode>("system");
 
   useEffect(() => {
-    // Check system preference on mount
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    // Restore saved preference on mount
+    const saved = localStorage.getItem("theme") as ThemeMode | null;
+    if (saved) {
+      manager.setMode(saved);
+      setModeState(saved);
+    }
+  }, [manager]);
 
-    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-    setTheme(initialTheme);
-    document.documentElement.setAttribute("data-theme", initialTheme);
-  }, []);
+  const setMode = (newMode: ThemeMode) => {
+    manager.setMode(newMode);
+    setModeState(newMode);
+    localStorage.setItem("theme", newMode);
+  };
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
+  const toggle = () => {
+    const next = manager.resolvedMode === "light" ? "dark" : "light";
+    setMode(next);
   };
 
   return (
-    <button onClick={toggleTheme}>{theme === "light" ? "🌙" : "☀️"}</button>
+    <ThemeContext.Provider value={{ mode, setMode, toggle }}>
+      {children}
+    </ThemeContext.Provider>
   );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used within a ThemeProvider");
+  return context;
 }
 ```
 
 ## 4. Usage Example
 
-Now you can build your UI using these primitives.
+Wrap your application in the `ThemeProvider`, and then use the `useTheme` hook to control the theme.
 
 ```tsx
 // src/App.tsx
 import { Surface } from "./components/Surface";
-import { ThemeToggle } from "./components/ThemeToggle";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { tokens } from "./theme";
+
+function Header() {
+  const { toggle, mode } = useTheme();
+  
+  return (
+    <header style={{ display: "flex", justifyContent: "space-between" }}>
+      <h1 style={{ color: tokens.context.text.high }}>My App</h1>
+      <button onClick={toggle}>
+        {mode === "light" ? "🌙" : "☀️"}
+      </button>
+    </header>
+  );
+}
 
 export default function App() {
   return (
-    <Surface variant="page" style={{ minHeight: "100vh", padding: "2rem" }}>
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <h1 style={{ color: tokens.context.text.high }}>My App</h1>
-        <ThemeToggle />
-      </header>
+    <ThemeProvider>
+      <Surface variant="page" style={{ minHeight: "100vh", padding: "2rem" }}>
+        <Header />
 
-      <main>
-        <Surface
-          variant="card"
-          style={{ padding: "2rem", borderRadius: "8px" }}
-        >
-          <h2 style={{ color: tokens.context.text.high }}>Hello World</h2>
-          <p style={{ color: tokens.context.text.subtle }}>
-            This card is automatically themed based on its context.
-          </p>
-        </Surface>
-      </main>
-    </Surface>
+        <main>
+          <Surface
+            variant="card"
+            style={{ padding: "2rem", borderRadius: "8px" }}
+          >
+            <h2 style={{ color: tokens.context.text.high }}>Hello World</h2>
+            <p style={{ color: tokens.context.text.subtle }}>
+              This card is automatically themed based on its context.
+            </p>
+          </Surface>
+        </main>
+      </Surface>
+    </ThemeProvider>
   );
 }
 ```
