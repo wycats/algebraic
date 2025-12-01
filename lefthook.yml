@@ -1,16 +1,20 @@
 pre-commit:
   parallel: true
   commands:
+    sync-lockfile:
+      run: pnpm install && git add pnpm-lock.yaml
     lint:
       run: pnpm lint
+    security:
+      run: pnpm lint:security
+    knip:
+      run: pnpm knip
     test:
       run: pnpm test
 
 pre-push:
   parallel: false
   commands:
-    check:
-      run: ./scripts/check
     typecheck:
       run: tsc --noEmit
     site-check:
@@ -19,7 +23,3 @@ pre-push:
       run: pnpm build
     publint:
       run: pnpm check:exports
-    knip:
-      run: pnpm knip
-    security:
-      run: pnpm lint:security
