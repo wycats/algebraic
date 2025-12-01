@@ -15,7 +15,9 @@ async function checkLinks() {
     let match;
 
     while ((match = linkRegex.exec(content)) !== null) {
-      const [fullMatch, text, link] = match;
+      const [, , link] = match;
+
+      if (!link) continue;
 
       // Ignore external links, anchors, and absolute paths (for now)
       if (

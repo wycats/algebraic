@@ -22,8 +22,9 @@ function migrateFile(filePath: string): void {
 
   // Extract title from first H1
   const h1Index = lines.findIndex((line) => line.startsWith("# "));
-  if (h1Index !== -1) {
-    title = lines[h1Index].substring(2).trim();
+  const h1Line = lines[h1Index];
+  if (h1Index !== -1 && h1Line) {
+    title = h1Line.substring(2).trim();
     // Remove the H1 line
     lines.splice(h1Index, 1);
     newContent = lines.join("\n").trim();
