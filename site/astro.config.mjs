@@ -41,7 +41,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/wycats/algebraic",
+          href: "https://github.com/design-axioms/color",
         },
       ],
       sidebar: [
