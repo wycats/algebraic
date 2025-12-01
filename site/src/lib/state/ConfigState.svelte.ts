@@ -3,7 +3,7 @@ import {
   PRESETS,
   solve,
   syncDarkToLight,
-} from "@algebraic-systems/color-system";
+} from "@axiomatic-design/color";
 import type {
   AnchorValue,
   Mutable,
@@ -11,12 +11,12 @@ import type {
   SurfaceConfig,
   SurfaceGroup,
   Theme,
-} from "@algebraic-systems/color-system/types";
+} from "@axiomatic-design/color/types";
 
-const STORAGE_KEY = "color-system-config";
-const CUSTOM_STORAGE_KEY = "color-system-custom-config";
-const PRESET_ID_KEY = "color-system-preset-id";
-const SYNC_DARK_KEY = "color-system-sync-dark";
+const STORAGE_KEY = "axiomatic-config";
+const CUSTOM_STORAGE_KEY = "axiomatic-custom-config";
+const PRESET_ID_KEY = "axiomatic-preset-id";
+const SYNC_DARK_KEY = "axiomatic-sync-dark";
 
 export class ConfigState {
   config = $state<SolverConfig>(DEFAULT_CONFIG);

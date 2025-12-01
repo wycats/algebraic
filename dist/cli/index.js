@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { toTypeScript } from '../chunk-RTTZSXSI.js';
+import { toTypeScript } from '../chunk-4QN3PBPL.js';
 import { toDTCG } from '../chunk-FZL5EAWM.js';
 import { toTailwind } from '../chunk-Z6AAYZVX.js';
 import { solve, getKeyColorStats } from '../chunk-BD3BRDXG.js';
@@ -285,7 +285,7 @@ if (isMain) {
       process.exit(1);
     }
     const configWithSchema = {
-      $schema: "node_modules/@algebraic-systems/color-system/color-config.schema.json",
+      $schema: "node_modules/@axiomatic-design/color/color-config.schema.json",
       ...DEFAULT_CONFIG
     };
     writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
@@ -295,7 +295,7 @@ if (isMain) {
         "Note: node_modules not found in current directory. You may need to adjust the $schema path."
       );
     }
-    console.log("Run `color-system build` to generate your theme.");
+    console.log("Run `axiomatic build` to generate your theme.");
     process.exit(0);
   } else if (command === "export") {
     exportCommand(args.slice(1), CWD);

@@ -15,7 +15,7 @@ The system is maturing well, with strong alignment to the "Mental Model" and "Ax
 ### Quick Start (Sarah)
 
 - [x] **Clarity**: The "Zero to Hero" path is generally clear.
-- [ ] **Friction**: **CRITICAL ERROR**. The installation guide tells users to install `@algebraic/color-system`, but the package is actually `@algebraic-systems/color-system`. This will cause immediate failure for Sarah.
+- [ ] **Friction**: **CRITICAL ERROR**. The installation guide tells users to install `@algebraic/color-system`, but the package is actually `@axiomatic-design/color`. This will cause immediate failure for Sarah.
 - [ ] **Prerequisites**: The docs claim Node v18+ is supported, but `package.json` enforces `^25.0.0`. This is a confusing signal.
 
 ### Mental Model (Alex)
@@ -78,7 +78,7 @@ The system is maturing well, with strong alignment to the "Mental Model" and "Ax
 
 ### Critical Issues
 
-1.  **Package Name Mismatch**: Update `installation.md` to use `@algebraic-systems/color-system`.
+1.  **Package Name Mismatch**: Update `installation.md` to use `@axiomatic-design/color`.
 2.  **Incomplete Exports**: Refactor `solve()` to return a richer `Theme` object that includes Chart Colors and Primitives. Update `toDTCG` and `toTailwind` to consume this new data.
 
 ### High Priority

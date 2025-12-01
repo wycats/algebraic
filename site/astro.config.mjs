@@ -20,10 +20,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@lib": path.resolve(__dirname, "../src/lib"),
-        "@algebraic-systems/color-system": path.resolve(
-          __dirname,
-          "../src/lib"
-        ),
+        "@axiomatic-design/color": path.resolve(__dirname, "../src/lib"),
       },
     },
   },
@@ -31,7 +28,7 @@ export default defineConfig({
     svelte(),
     preact(),
     starlight({
-      title: "Algebraic Color System",
+      title: "Axiomatic Color",
       customCss: [
         "./src/styles/engine.css",
         "./src/styles/theme.css",

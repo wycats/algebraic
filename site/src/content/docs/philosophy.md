@@ -1,9 +1,9 @@
 ---
 title: Philosophy
-description: The core principles behind the Algebraic Color System.
+description: The core principles behind the Axiomatic Color.
 ---
 
-The Algebraic Color System is built on three core pillars: **Math**, **Semantics**, and **Adaptability**.
+The Axiomatic Color is built on three core pillars: **Math**, **Semantics**, and **Adaptability**.
 
 ## Math vs. Magic
 

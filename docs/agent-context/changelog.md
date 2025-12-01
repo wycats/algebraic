@@ -345,7 +345,7 @@
   - Updated `src/cli/index.ts` to correctly route commands (`init`, `build`, `export`) and handle legacy arguments.
   - Fixed `package.json` bin entry and scripts.
 - **Package Identity**:
-  - Renamed package to `@algebraic-systems/color-system` to reflect its new home and scope.
+  - Renamed package to `@axiomatic-design/color` to reflect its new home and scope.
 - **DTCG Export Upgrade**:
   - Updated the DTCG exporter to output `oklch(L C H)` values for full P3 gamut support.
   - Ensured all semantic foreground tokens (`fg-high`, `fg-strong`, etc.) are exported.

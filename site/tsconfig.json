@@ -5,8 +5,8 @@
     "paths": {
       "@demo/*": ["../demo/src/*"],
       "@lib/*": ["../src/lib/*"],
-      "@algebraic-systems/color-system": ["../src/lib/index.ts"],
-      "@algebraic-systems/color-system/*": ["../src/lib/*"]
+      "@axiomatic-design/color": ["../src/lib/index.ts"],
+      "@axiomatic-design/color/*": ["../src/lib/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

@@ -7,7 +7,7 @@ The **Solver** is the engine that powers the color system. It takes your high-le
 You can interact with the Theme Builder in two ways:
 
 1.  **The UI**: The interactive web interface (for exploration).
-2.  **The CLI**: The `color-system` command line tool (for production).
+2.  **The CLI**: The `axiomatic` command line tool (for production).
 
 Both use the exact same "Solver" logic under the hood.
 
@@ -142,7 +142,7 @@ Finally, the solver outputs the CSS tokens that the Theme Builder (and your app)
 
 ## The Pipeline
 
-When you run `npx color-system` (or change a setting in the Builder), this pipeline executes:
+When you run `npx axiomatic` (or change a setting in the Builder), this pipeline executes:
 
 1.  **Hydrate**: Read your `color-config.json`.
 2.  **Adjust Anchors**: Ensure the range supports High Contrast text.

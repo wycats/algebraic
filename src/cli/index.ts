@@ -23,7 +23,7 @@ if (isMain) {
     }
     const configWithSchema = {
       $schema:
-        "node_modules/@algebraic-systems/color-system/color-config.schema.json",
+        "node_modules/@axiomatic-design/color/color-config.schema.json",
       ...DEFAULT_CONFIG,
     };
     writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
@@ -35,7 +35,7 @@ if (isMain) {
       );
     }
 
-    console.log("Run `color-system build` to generate your theme.");
+    console.log("Run `axiomatic build` to generate your theme.");
     process.exit(0);
   } else if (command === "export") {
     exportCommand(args.slice(1), CWD);
@@ -46,7 +46,7 @@ if (isMain) {
   } else if (command === "build") {
     buildCommand(args.slice(1), CWD);
   } else if (command && !command.startsWith("-")) {
-    // Legacy/Default behavior: color-system <config> <out>
+    // Legacy/Default behavior: axiomatic <config> <out>
     const config = args[0];
     const out = args[1];
     const newArgs: string[] = [];
@@ -56,7 +56,7 @@ if (isMain) {
     buildCommand(newArgs, CWD);
   } else {
     // Default: just run build with passed args (flags)
-    // e.g. color-system --watch
+    // e.g. axiomatic --watch
     buildCommand(args, CWD);
   }
 }

@@ -9,7 +9,7 @@ import DemoWrapper from "../../../components/DemoWrapper.svelte";
 
 If "Surfaces" are the atoms of the system, **Anchors** are the laws of physics that govern them.
 
-The Algebraic Color System doesn't store a list of colors for every surface. Instead, it calculates them dynamically based on a set of boundary conditions.
+The Axiomatic Color doesn't store a list of colors for every surface. Instead, it calculates them dynamically based on a set of boundary conditions.
 
 ## The Dynamic Range
 
@@ -44,7 +44,7 @@ In a traditional system (Hex codes), changing the background color breaks everyt
 - "I made the background darker, now the cards are invisible."
 - "I made the background lighter, now the text contrast is failing."
 
-In the Algebraic System, the solver **re-runs the physics simulation** every time you change an anchor. It guarantees that:
+In the Axiomatic System, the solver **re-runs the physics simulation** every time you change an anchor. It guarantees that:
 
 1.  Surfaces stay visible against the background.
 2.  Text stays readable against the surfaces (by adjusting text colors if needed).

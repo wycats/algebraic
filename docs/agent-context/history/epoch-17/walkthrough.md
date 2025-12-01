@@ -36,7 +36,7 @@ We implemented a new `AnchorGraph.svelte` component that visualizes the anchor r
 - **Design**: Uses a "bar" style visualization with clear handles and labels. We refined the layout to stack the tracks vertically with clear axis labels, addressing user feedback about visual parsing and spacing.
 - **Integration**: Replaced the slider-based controls in `AnchorsEditor` with this new graph. We integrated the numerical values directly into the graph labels, allowing us to remove the redundant read-only cards below the graph.
 - **Sync Logic**: Added a "Sync Dark Mode" feature (enabled by default) that automatically updates the Dark Mode range to maintain equivalent **Contrast (Lc)** values relative to the text color. When Light Mode anchors are adjusted, the system calculates the contrast delta and applies it to the Dark Mode anchors, ensuring that the perceptual contrast range is preserved across modes, rather than just the linear lightness range.
-- **Core Logic Refactor**: We moved the contrast synchronization logic into the core `@algebraic-systems/color-system` package as `syncDarkToLight`. This ensures the domain logic is reusable and testable, keeping the UI state management focused on orchestration.
+- **Core Logic Refactor**: We moved the contrast synchronization logic into the core `@axiomatic-design/color` package as `syncDarkToLight`. This ensures the domain logic is reusable and testable, keeping the UI state management focused on orchestration.
 
 ### Technical Details
 
@@ -64,7 +64,7 @@ We established a robust CI/CD pipeline to ensure code quality and prevent regres
 
 We addressed issues with the local development environment.
 
-- **Vite Aliases**: Fixed an issue where the site build was failing to resolve the `@algebraic-systems/color-system` package in development mode. We updated `astro.config.mjs` to alias the package to `src/lib` directly, ensuring that changes in the library are immediately reflected in the site without a rebuild.
+- **Vite Aliases**: Fixed an issue where the site build was failing to resolve the `@axiomatic-design/color` package in development mode. We updated `astro.config.mjs` to alias the package to `src/lib` directly, ensuring that changes in the library are immediately reflected in the site without a rebuild.
 
 ### Documentation Upgrades
 

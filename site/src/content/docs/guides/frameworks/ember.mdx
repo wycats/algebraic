@@ -1,19 +1,19 @@
 ---
 title: Ember Integration
-description: How to use the Algebraic Color System in Ember (GTS).
+description: How to use the Axiomatic Color in Ember (GTS).
 ---
 
-This guide shows you how to integrate the Algebraic Color System into a modern Polaris Ember application (using `.gts` components and Vite).
+This guide shows you how to integrate the Axiomatic Color into a modern Polaris Ember application (using `.gts` components and Vite).
 
 ## 1. Setup
 
 First, install the CLI and generate your theme CSS and TypeScript definitions.
 
 ```bash
-pnpm add -D @algebraic-systems/color-system
-pnpm exec color-system init
-pnpm exec color-system build --out ./app/styles/theme.css
-pnpm exec color-system export --format typescript --out ./app/utils/theme.ts
+pnpm add -D @axiomatic-design/color
+pnpm exec axiomatic init
+pnpm exec axiomatic build --out ./app/styles/theme.css
+pnpm exec axiomatic export --format typescript --out ./app/utils/theme.ts
 ```
 
 Import the CSS in your application's entry point (e.g., `app/app.ts` or `app/styles/app.css` if using CSS imports).
@@ -61,7 +61,7 @@ import { tracked } from "@glimmer/tracking";
 import {
   ThemeManager,
   type ThemeMode,
-} from "@algebraic-systems/color-system/browser";
+} from "@axiomatic-design/color/browser";
 
 export default class ThemeService extends Service {
   @tracked mode: ThemeMode = "system";
@@ -142,11 +142,11 @@ export default class Welcome extends Component {
 
 ## 5. Build vs. Runtime
 
-The Algebraic Color System is designed to be flexible.
+The Axiomatic Color is designed to be flexible.
 
 ### Build Time (Recommended)
 
-The `color-system build` command generates a static CSS file. This is the most performant option.
+The `axiomatic build` command generates a static CSS file. This is the most performant option.
 
 ```css
 /* app/styles/app.css */
@@ -158,8 +158,8 @@ The `color-system build` command generates a static CSS file. This is the most p
 You can also use the `runtime` module to generate themes in the browser. This is useful for user-customizable themes.
 
 ```ts
-import { generateTheme, injectTheme } from '@algebraic-systems/color-system/runtime';
-import type { SolverConfig } from '@algebraic-systems/color-system/types';
+import { generateTheme, injectTheme } from '@axiomatic-design/color/runtime';
+import type { SolverConfig } from '@axiomatic-design/color/types';
 
 // Load your config (e.g. from an API or JSON file)
 const config: SolverConfig = { ... };

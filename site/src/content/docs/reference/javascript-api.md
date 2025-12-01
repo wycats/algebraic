@@ -9,7 +9,7 @@ The Runtime API allows you to manage the theme mode and sync it with the browser
 The `ThemeManager` class is the main entry point for runtime theme control.
 
 ```typescript
-import { ThemeManager } from "@algebraic-systems/color-system/browser";
+import { ThemeManager } from "@axiomatic-design/color/browser";
 ```
 
 ### Constructor
@@ -58,7 +58,7 @@ Cleans up event listeners (e.g., for system preference changes). Call this when 
 Updates the `<meta name="theme-color">` tag to match the computed background color of the document body. This is called automatically by `ThemeManager`, but you can export and use it manually if needed.
 
 ```typescript
-import { updateThemeColor } from "@algebraic-systems/color-system/browser";
+import { updateThemeColor } from "@axiomatic-design/color/browser";
 
 updateThemeColor();
 ```
@@ -68,7 +68,7 @@ updateThemeColor();
 Updates the favicon dynamically.
 
 ```typescript
-import { updateFavicon } from "color-system/browser";
+import { updateFavicon } from "@axiomatic-design/color/browser";
 
 updateFavicon(
   (color) => `

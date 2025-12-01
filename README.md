@@ -1,6 +1,6 @@
-# Automated Color System
+# Axiomatic Color
 
-**Platform-native, adaptive color system with APCA-driven accessibility.**
+**An Axiomatic approach to color. Automated contrast, platform-native adaptation, and mathematically guaranteed accessibility.**
 
 ## Features
 
@@ -16,11 +16,11 @@
 ## Installation
 
 ```bash
-npm install @algebraic-systems/color-system
+npm install @axiomatic-design/color
 # or
-pnpm add @algebraic-systems/color-system
+pnpm add @axiomatic-design/color
 # or
-yarn add @algebraic-systems/color-system
+yarn add @axiomatic-design/color
 ```
 
 ## Quick Start
@@ -30,7 +30,7 @@ yarn add @algebraic-systems/color-system
 Run the init command to scaffold a configuration file and default theme.
 
 ```bash
-pnpm exec color-system init
+pnpm exec axiomatic init
 ```
 
 This creates a `color-config.json` in your project root.
@@ -42,7 +42,7 @@ Add a script to your `package.json` to generate your theme tokens.
 ```json
 {
   "scripts": {
-    "theme": "color-system"
+    "theme": "axiomatic"
   }
 }
 ```
@@ -61,11 +61,11 @@ Import the core engine, utilities, and your generated theme into your applicatio
 
 ```css
 /* In your main CSS file */
-@import "@algebraic-systems/color-system/engine.css";
+@import "@axiomatic-design/color/engine.css";
 @import "./theme.css"; /* Your generated theme */
 
 /* Optional utilities */
-@import "@algebraic-systems/color-system/utilities.css";
+@import "@axiomatic-design/color/utilities.css";
 ```
 
 ### 4. Use Semantic Classes
@@ -79,17 +79,17 @@ Import the core engine, utilities, and your generated theme into your applicatio
 
 ## CLI Usage
 
-The `color-system` CLI is the primary tool for generating your theme.
+The `axiomatic` CLI is the primary tool for generating your theme.
 
 ```bash
 # Initialize a new config
-pnpm exec color-system init
+pnpm exec axiomatic init
 
 # Generate theme from default config (color-config.json) to default output (theme.css)
-pnpm exec color-system
+pnpm exec axiomatic
 
 # Generate theme with custom paths
-pnpm exec color-system ./my-config.json ./dist/my-theme.css
+pnpm exec axiomatic ./my-config.json ./dist/my-theme.css
 ```
 
 ## Runtime API
@@ -100,7 +100,7 @@ For dynamic theming or scoped applications, you can use the runtime API to gener
 import {
   generateTheme,
   injectTheme,
-} from "@algebraic-systems/color-system/runtime";
+} from "@axiomatic-design/color/runtime";
 import { config } from "./my-config";
 
 // Generate CSS for a specific scope

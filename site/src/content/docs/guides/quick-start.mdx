@@ -5,7 +5,7 @@ description: Go from zero to a themed UI in less than 5 minutes.
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
-This guide will walk you through setting up the Algebraic Color System and building your first themed component.
+This guide will walk you through setting up the Axiomatic Color and building your first themed component.
 
 ## 1. Install & Initialize
 
@@ -14,14 +14,14 @@ Run the following commands in your project root:
 <Tabs>
   <TabItem label="npm">
     ```bash
-    npm install -D @algebraic-systems/color-system
-    npx color-system init
+    npm install -D @axiomatic-design/color
+    npx axiomatic init
     ```
   </TabItem>
   <TabItem label="pnpm">
     ```bash
-    pnpm add -D @algebraic-systems/color-system
-    pnpm exec color-system init
+    pnpm add -D @axiomatic-design/color
+    pnpm exec axiomatic init
     ```
   </TabItem>
 </Tabs>
@@ -33,8 +33,8 @@ This creates a `color-config.json` file with default settings.
 Now, generate the CSS and TypeScript definitions.
 
 ```bash
-npx color-system build --out ./src/theme.css
-npx color-system export --format typescript --out ./src/theme.ts
+npx axiomatic build --out ./src/theme.css
+npx axiomatic export --format typescript --out ./src/theme.ts
 ```
 
 ## 3. Build a Card

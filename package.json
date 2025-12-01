@@ -1,14 +1,15 @@
 {
-  "name": "@algebraic-systems/color-system",
+  "name": "@axiomatic-design/color",
   "version": "0.1.0",
-  "description": "A semantic color system generator with automatic contrast balancing and runtime theming.",
+  "description": "An Axiomatic approach to color. Automated contrast, platform-native adaptation, and mathematically guaranteed accessibility.",
   "keywords": [
     "color",
     "design-system",
     "theming",
     "contrast",
     "accessibility",
-    "oklch"
+    "oklch",
+    "axiomatic"
   ],
   "author": "Yehuda Katz",
   "license": "MIT",
@@ -54,7 +55,7 @@
     "./theme.css": "./css/theme.css"
   },
   "bin": {
-    "color-system": "./dist/cli/index.js"
+    "axiomatic": "./dist/cli/index.js"
   },
   "dependencies": {
     "apca-w3": "^0.1.9",

@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@algebraic-systems/color-system/color-config.schema.json",
+  "$schema": "./node_modules/@axiomatic-design/color/color-config.schema.json",
   "anchors": {
     "page": {
       "light": {

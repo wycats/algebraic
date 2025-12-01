@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { contrastForPair } from "@algebraic-systems/color-system/math";
-  import type { Theme } from "@algebraic-systems/color-system/types";
+  import { contrastForPair } from "@axiomatic-design/color/math";
+  import type { Theme } from "@axiomatic-design/color/types";
 
   interface Props {
     slug: string;

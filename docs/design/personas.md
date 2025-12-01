@@ -1,9 +1,9 @@
 # Project Personas
 
 > **Status**: Living Document
-> **Version**: 1.1 (Epoch 11)
+> **Version**: 1.2 (Epoch 19)
 
-These personas represent the core audience for the Algebraic Color System. We use them to guide design decisions, prioritize features, and shape our documentation.
+These personas represent the core audience for Axiomatic Color. We use them to guide design decisions, prioritize features, and shape our documentation.
 
 ## 1. The Overwhelmed Pragmatist (Sarah)
 
@@ -11,8 +11,8 @@ _A front-end developer who knows they "should" do better with colors but is drow
 
 - **Description**: Sarah is building a product and just wants to ship. She knows hardcoding hex values is "technical debt," but the alternative (learning color theory, managing dark mode, checking contrast) feels like a massive distraction. She is highly sensitive to friction—if the CLI fails or the docs are wrong, she bails.
 - **Relationship to Axioms**:
-  - **Laws of Architecture**: She relies on the system's taxonomy (`surface-card`, `text-subtle`) to make decisions for her. She doesn't want to think about _color_; she wants to think about _structure_.
-  - **Prime Directive**: She trusts the system to handle accessibility compliance so she doesn't have to be an expert.
+  - **Laws of Architecture**: She relies on the Axiomatic taxonomy (`surface-card`, `text-subtle`) to make decisions for her. She doesn't want to think about _color_; she wants to think about _structure_.
+  - **Prime Directive**: She trusts Axiomatic to handle accessibility compliance so she doesn't have to be an expert.
 - **Needs**:
   - **Reliability**: The CLI must work exactly as documented. No "command not found" or confusing flags.
   - **Zero-Config Defaults**: A system that looks good immediately upon installation.

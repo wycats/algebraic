@@ -2,7 +2,7 @@
   import {
     generateTheme,
     injectTheme,
-  } from "@algebraic-systems/color-system/runtime";
+  } from "@axiomatic-design/color/runtime";
   import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import type { ThemeState } from "../../lib/state/ThemeState.svelte";
@@ -53,7 +53,7 @@
 <div class="theme-builder-container">
   <aside class="theme-builder-sidebar surface-workspace">
     <div class="theme-builder-header">
-      <h2 class="text-strong">Theme Builder</h2>
+      <h2 class="text-strong">Axiomatic Color</h2>
       <p class="text-subtle">Customize global system parameters.</p>
       <button
         onclick={() => configState.resetConfig()}

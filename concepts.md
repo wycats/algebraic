@@ -1,12 +1,12 @@
-# Color System Concepts
+# Axiomatic Color Concepts
 
-This document explains the high-level concepts of the color system.
+This document explains the high-level concepts of Axiomatic Color.
 
 > **Note**: For the foundational laws and philosophy governing the system, see [The Constitution (Axioms)](docs/design/axioms.md).
 
 ## Core Philosophy
 
-The color system is designed to be **Platform-Native**, **Adaptive**, and **Automated**.
+Axiomatic Color is designed to be **Platform-Native**, **Adaptive**, and **Automated**.
 
 ### Semantics Derived from Accessibility
 

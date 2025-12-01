@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SurfaceConfig } from "@algebraic-systems/color-system/types";
+  import type { SurfaceConfig } from "@axiomatic-design/color/types";
   import { formatHex } from "culori";
   import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";

@@ -2,20 +2,20 @@
 title: CLI Reference
 ---
 
-The `color-system` CLI is the primary tool for generating your theme tokens.
+The `axiomatic` CLI is the primary tool for generating your theme tokens.
 
 ## Installation
 
 ```bash
-pnpm add -D color-system
+pnpm add -D @axiomatic-design/color
 # or
-npm install -D color-system
+npm install -D @axiomatic-design/color
 ```
 
 ## Usage
 
 ```bash
-npx color-system [command] [options]
+npx axiomatic [command] [options]
 ```
 
 ## Commands
@@ -25,7 +25,7 @@ npx color-system [command] [options]
 Scaffolds a new configuration file in your project.
 
 ```bash
-npx color-system init
+npx axiomatic init
 ```
 
 **Behavior:**
@@ -39,7 +39,7 @@ npx color-system init
 Generates the CSS tokens based on your configuration. If no command is specified, this is the default behavior.
 
 ```bash
-npx color-system [config-file] [output-file]
+npx axiomatic [config-file] [output-file]
 ```
 
 **Arguments:**
@@ -57,13 +57,13 @@ npx color-system [config-file] [output-file]
 
 ```bash
 # Use defaults
-npx color-system
+npx axiomatic
 
 # Custom config, default output
-npx color-system ./design/my-colors.json
+npx axiomatic ./design/my-colors.json
 
 # Custom config and output
-npx color-system ./design/my-colors.json ./src/styles/variables.css
+npx axiomatic ./design/my-colors.json ./src/styles/variables.css
 ```
 
 ## Output

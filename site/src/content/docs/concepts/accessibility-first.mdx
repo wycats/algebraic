@@ -5,7 +5,7 @@ description: How the system ensures inclusive design by default using APCA and a
 
 In most design systems, accessibility is a step you take _after_ you choose your colors. You pick a palette, check the contrast ratios, and then tweak them until they pass.
 
-In the Algebraic Color System, accessibility is the **input**, not the output.
+In the Axiomatic Color, accessibility is the **input**, not the output.
 
 ## The Solver is an Accessibility Engine
 
@@ -36,7 +36,7 @@ While APCA is the future, we understand that many teams are legally required to 
 import Diagram from "../../../components/Diagram.svelte";
 import TokenLevelVisualizer from "../../../components/docs/TokenLevelVisualizer.svelte";
 
-The Algebraic Color System targets APCA values that **exceed** standard WCAG requirements. Here is a rough equivalence guide for compliance auditing:
+The Axiomatic Color targets APCA values that **exceed** standard WCAG requirements. Here is a rough equivalence guide for compliance auditing:
 
 <Diagram>
   <TokenLevelVisualizer />
@@ -50,7 +50,7 @@ Some users need more than just "good" contrast. They need **High Contrast**.
 
 Usually, supporting this requires a separate "High Contrast Theme" that you have to maintain manually.
 
-The Algebraic Color System generates this for you automatically. When you build your theme, it creates a `@media (prefers-contrast: more)` block that:
+The Axiomatic Color generates this for you automatically. When you build your theme, it creates a `@media (prefers-contrast: more)` block that:
 
 1.  **Maximizes Range**: Pushes the Page background to pure Black/White.
 2.  **Increases Contrast**: Bumps up the target contrast ratios for all text.

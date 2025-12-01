@@ -6,14 +6,14 @@
   "scripts": {
     "dev": "pnpm generate:theme && astro dev",
     "start": "astro dev",
-    "generate:theme": "pnpm exec color-system color-config.json src/styles/theme.css",
+    "generate:theme": "pnpm exec axiomatic color-config.json src/styles/theme.css",
     "build": "pnpm generate:theme && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint:colors": "if grep -rE \"#[0-9a-fA-F]{3,6}|rgb\\(|hsl\\(\" src/components src/content/docs | grep -v \"theme.css\"; then echo \"Error: Hardcoded colors found\"; exit 1; else echo \"No hardcoded colors found\"; exit 0; fi"
   },
   "dependencies": {
-    "@algebraic-systems/color-system": "workspace:*",
+    "@axiomatic-design/color": "workspace:*",
     "@astrojs/check": "^0.9.6",
     "@astrojs/preact": "^4.1.3",
     "@astrojs/starlight": "^0.36.3",

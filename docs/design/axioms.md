@@ -1,9 +1,9 @@
 # The Constitution (Axioms)
 
 > **Status**: Living Document
-> **Version**: 1.1 (Epoch 11)
+> **Version**: 1.2 (Epoch 19)
 
-This document serves as the "Constitution" for the Color System. It consolidates the core philosophy, physical laws, and architectural rules that govern the system. All design decisions and code changes must align with these axioms.
+This document serves as the "Constitution" for Axiomatic Color. It consolidates the core philosophy, physical laws, and architectural rules that govern the system. All design decisions and code changes must align with these axioms.
 
 ## I. The Prime Directive
 

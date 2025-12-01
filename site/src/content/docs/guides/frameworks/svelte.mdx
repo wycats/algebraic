@@ -1,19 +1,19 @@
 ---
 title: Svelte Integration
-description: How to use the Algebraic Color System in Svelte.
+description: How to use the Axiomatic Color in Svelte.
 ---
 
-This guide shows you how to integrate the Algebraic Color System into a Svelte application using TypeScript.
+This guide shows you how to integrate the Axiomatic Color into a Svelte application using TypeScript.
 
 ## 1. Setup
 
 First, install the CLI and generate your theme CSS and TypeScript definitions.
 
 ```bash
-npm install -D @algebraic-systems/color-system
-npx color-system init
-npx color-system build --out ./src/theme.css
-npx color-system export --format typescript --out ./src/lib/theme.ts
+npm install -D @axiomatic-design/color
+npx axiomatic init
+npx axiomatic build --out ./src/theme.css
+npx axiomatic export --format typescript --out ./src/lib/theme.ts
 ```
 
 Import the CSS in your root layout (e.g., `src/routes/+layout.svelte`):
