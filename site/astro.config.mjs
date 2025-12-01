@@ -70,6 +70,7 @@ export default defineConfig({
             { label: "Svelte Integration", slug: "guides/frameworks/svelte" },
             { label: "Ember Integration", slug: "guides/frameworks/ember" },
             { label: "HTML / Vanilla", slug: "guides/frameworks/html" },
+            { label: "Custom Frameworks", slug: "guides/frameworks/custom" },
             { label: "The Theme Builder", slug: "guides/theme-builder" },
           ],
         },

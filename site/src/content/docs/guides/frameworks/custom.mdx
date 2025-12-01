@@ -1,0 +1,110 @@
+---
+title: Custom Framework Integration
+description: Learn how to integrate Axiomatic Color into any JavaScript framework.
+---
+
+If we don't have a guide for your specific framework, don't worry! The Axiomatic Color system is designed to be framework-agnostic. This guide covers the core concepts and APIs you need to build your own integration.
+
+## Core Concepts
+
+There are three main pieces you need to implement:
+
+1.  **Theme Management**: Handling light/dark mode and system preferences.
+2.  **Surfaces**: A component to apply surface styles and nest contexts.
+3.  **Tokens**: Accessing the design tokens in your components.
+
+## 1. Theme Management
+
+The library provides a `ThemeManager` class that handles the complexity of:
+
+- Detecting system color preferences.
+- Listening for changes (e.g., when the user changes their OS theme).
+- Syncing the `meta[name="theme-color"]` tag.
+- Updating the `data-theme` attribute on the root element.
+
+### The `ThemeManager` Class
+
+```typescript
+import { ThemeManager, type ThemeMode } from "@axiomatic-design/color/browser";
+
+// 1. Initialize
+const manager = new ThemeManager();
+
+// 2. Get current state
+console.log(manager.mode); // 'light' | 'dark' | 'system'
+console.log(manager.resolvedMode); // 'light' | 'dark' (resolves 'system')
+
+// 3. Change mode
+manager.setMode("dark");
+
+// 4. Cleanup (if needed)
+manager.dispose();
+```
+
+### Implementing a Store/Context
+
+Most frameworks have a way to share state (Context in React, Stores in Svelte, Services in Ember). You should wrap the `ThemeManager` in your framework's state management primitive.
+
+**Requirements for your wrapper:**
+
+1.  **Persistence**: The `ThemeManager` does _not_ handle `localStorage`. You should read/write to `localStorage` in your wrapper.
+2.  **Reactivity**: The `ThemeManager` is imperative. You need to expose its state (`mode` and `resolvedMode`) in a reactive way for your UI to update.
+
+## 2. The Surface Component
+
+The "Surface" is the fundamental building block. It does two things:
+
+1.  Sets the `background-color` and `color` for its container.
+2.  Establishes a new "context" for nested content (e.g., adjusting contrast).
+
+Your framework likely has a way to render a component with a dynamic class.
+
+```typescript
+import { tokens } from "./your-generated-theme";
+
+// Pseudo-code for a Surface component
+function Surface({ variant, as = "div", children }) {
+  // 1. Get the class name for the variant (e.g., "surface-card")
+  const className = tokens.surface[variant];
+
+  // 2. Render the element
+  return <as className={className}>{children}</as>;
+}
+```
+
+## 3. Accessing Tokens
+
+When you run `axiomatic export`, you generate a TypeScript file containing your tokens.
+
+```bash
+npx axiomatic export --format typescript --out src/theme.ts
+```
+
+This file exports a `tokens` object that mirrors your CSS variables.
+
+```typescript
+import { tokens } from "./theme";
+
+// Usage in styles
+const style = {
+  color: tokens.context.text.high, // "var(--text-high-token)"
+};
+```
+
+### Why use the JS tokens?
+
+You _can_ use the CSS variables directly (e.g., `var(--text-high)`), but the JS tokens provide:
+
+- **Type Safety**: TypeScript will error if you use a token that doesn't exist.
+- **Refactoring**: Renaming a token in your config will cause build errors where it's used.
+- **Autocomplete**: Your IDE will suggest available tokens.
+
+## Checklist
+
+To have a complete integration, ensure you have:
+
+- [ ] Generated `theme.css` and imported it globally.
+- [ ] Generated `theme.ts` for type-safe token access.
+- [ ] Created a `ThemeService` / `ThemeContext` wrapping `ThemeManager`.
+- [ ] Created a `<Surface>` component.
+- [ ] (Optional) Added a theme toggle UI.
