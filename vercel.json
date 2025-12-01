@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm build && pnpm --filter site build",
   "outputDirectory": "site/dist",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- site/ .vercelignore"
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- site/ src/ package.json pnpm-lock.yaml vercel.json"
 }
