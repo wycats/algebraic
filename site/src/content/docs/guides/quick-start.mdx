@@ -1,0 +1,120 @@
+---
+title: Quick Start
+description: Go from zero to a themed UI in less than 5 minutes.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+This guide will walk you through setting up the Algebraic Color System and building your first themed component.
+
+## 1. Install & Initialize
+
+Run the following commands in your project root:
+
+<Tabs>
+  <TabItem label="npm">
+    ```bash npm install -D @algebraic-systems/color-system npx color-system init
+    ```
+  </TabItem>
+  <TabItem label="pnpm">
+    ```bash pnpm add -D @algebraic-systems/color-system pnpm exec color-system
+    init ```
+  </TabItem>
+</Tabs>
+
+This creates a `color-config.json` file with default settings.
+
+## 2. Generate Assets
+
+Now, generate the CSS and TypeScript definitions.
+
+```bash
+npx color-system build --out ./src/theme.css
+npx color-system export --format typescript --out ./src/theme.ts
+```
+
+## 3. Build a Card
+
+Let's build a simple "Card" component to see the system in action.
+
+<Tabs>
+  <TabItem label="React">
+  
+  First, import the CSS in your app entry point:
+  ```tsx
+  import './theme.css';
+  ```
+
+Then, create a Card component:
+
+```tsx
+import { tokens } from "./theme";
+
+export function Card() {
+  return (
+    <div
+      className={tokens.surface.card}
+      style={{ padding: "2rem", borderRadius: "8px" }}
+    >
+      <h2 style={{ color: tokens.context.text.high }}>Hello World</h2>
+      <p style={{ color: tokens.context.text.subtle }}>I am a themed card.</p>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+  <TabItem label="Svelte">
+  
+  First, import the CSS in your root layout:
+  ```svelte
+  <script>
+    import '../theme.css';
+  </script>
+  <slot />
+  ```
+
+Then, create a Card component:
+
+```svelte
+<script>
+  import { tokens } from '$lib/theme';
+</script>
+
+<div class={tokens.surface.card} style="padding: 2rem; border-radius: 8px;">
+  <h2 style="color: {tokens.context.text.high}">Hello World</h2>
+  <p style="color: {tokens.context.text.subtle}">
+    I am a themed card.
+  </p>
+</div>
+```
+
+  </TabItem>
+
+  <TabItem label="HTML">
+  
+  Link the CSS in your `<head>`:
+  ```html
+  <link rel="stylesheet" href="/theme.css">
+  ```
+
+Then, write the markup:
+
+```html
+<div class="surface-card" style="padding: 2rem; border-radius: 8px;">
+  <h2 style="color: var(--text-high-token)">Hello World</h2>
+  <p style="color: var(--text-subtle-token)">I am a themed card.</p>
+</div>
+```
+
+  </TabItem>
+</Tabs>
+
+## 4. Next Steps
+
+You now have a working theme system!
+
+- **[React Integration](./frameworks/react)**: Deep dive into React patterns.
+- **[Svelte Integration](./frameworks/svelte)**: Deep dive into Svelte patterns.
+- **[The Theme Builder](./theme-builder)**: Customize your colors visually.

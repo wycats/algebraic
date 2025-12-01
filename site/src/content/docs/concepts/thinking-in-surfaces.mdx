@@ -6,7 +6,6 @@ description: The fundamental mental model of the Algebraic Color System.
 import DemoWrapper from "../../../components/DemoWrapper.svelte";
 import ContextVisualizer from "../../../components/ContextVisualizer.svelte";
 import Diagram from "../../../components/Diagram.svelte";
-import TokenInspector from "../../../components/inspector/TokenInspector.svelte";
 
 <DemoWrapper>
 
@@ -28,9 +27,7 @@ Every surface acts as a "Context Provider." It automatically sets a suite of CSS
   <div class="mb-4 text-sm text-text-subtle">
     Click on any surface below to inspect its active tokens.
   </div>
-  <TokenInspector client:load>
-    <ContextVisualizer />
-  </TokenInspector>
+  <ContextVisualizer client:load />
 </Diagram>
 
 In the visualization above:

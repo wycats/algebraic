@@ -361,4 +361,3 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Discovery**: Makes the system self-documenting. Users can "ask" the documentation what a surface is made of.
   - **Transparency**: Demystifies the "magic" of the context engine by showing the raw values.
   - **Interactivity**: Encourages exploration and reinforces the mental model that "surfaces create context".
-

@@ -58,9 +58,11 @@ export default defineConfig({
         {
           label: "Getting Started",
           items: [
-            { label: "Installation", slug: "guides/installation" },
+            { label: "Quick Start", slug: "guides/quick-start" },
+            { label: "React Integration", slug: "guides/frameworks/react" },
+            { label: "Svelte Integration", slug: "guides/frameworks/svelte" },
+            { label: "HTML / Vanilla", slug: "guides/frameworks/html" },
             { label: "The Theme Builder", slug: "guides/theme-builder" },
-            { label: "Integration", slug: "guides/integration" },
           ],
         },
         {

@@ -1,33 +1,42 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
-  
-  const inspector = getContext<{ select: (el: HTMLElement) => void }>('inspector');
-  
-  let { children, class: className, ...rest } = $props() as HTMLAttributes<HTMLDivElement>;
-  
-  let element: HTMLElement;
-  
+  import { getContext } from "svelte";
+  import type { HTMLAttributes } from "svelte/elements";
+
+  const inspector = getContext<{
+    select: (el: HTMLElement) => void;
+    selected: HTMLElement | null;
+  }>("inspector");
+
+  let {
+    children,
+    class: className,
+    ...rest
+  } = $props() as HTMLAttributes<HTMLDivElement>;
+
+  let element = $state<HTMLElement>();
+  let isSelected = $derived(element && inspector.selected === element);
+
   function handleClick(e: MouseEvent) {
     e.stopPropagation();
-    inspector.select(element);
+    if (element) inspector.select(element);
   }
 
   function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      inspector.select(element);
+      if (element) inspector.select(element);
     }
   }
 </script>
 
-<div 
+<div
   bind:this={element}
   class={["inspector-surface", className].filter(Boolean).join(" ")}
   role="button"
   tabindex="0"
   onclick={handleClick}
   onkeydown={handleKeydown}
+  style:anchor-name={isSelected ? "--inspector-anchor" : undefined}
   {...rest}
 >
   {@render children?.()}
@@ -39,14 +48,19 @@
     transition: outline 0.2s;
     display: block;
   }
-  
+
   .inspector-surface:hover {
     outline: 2px solid var(--focus-ring-color);
     outline-offset: 2px;
     z-index: 10;
     position: relative;
   }
-  
+
+  /* Only show outline on the deepest hovered element */
+  :global(.inspector-surface:hover:has(.inspector-surface:hover)) {
+    outline: none;
+  }
+
   .inspector-surface:focus-visible {
     outline: 2px solid var(--focus-ring-color);
     outline-offset: 2px;

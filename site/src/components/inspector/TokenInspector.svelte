@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { setContext } from 'svelte';
-  import InspectorPanel from './InspectorPanel.svelte';
+  import { setContext } from "svelte";
+  import InspectorPanel from "./InspectorPanel.svelte";
 
   let selectedElement = $state<HTMLElement | null>(null);
 
@@ -8,9 +8,11 @@
     selectedElement = element;
   }
 
-  setContext('inspector', {
+  setContext("inspector", {
     select,
-    get selected() { return selectedElement; }
+    get selected() {
+      return selectedElement;
+    },
   });
 </script>
 
@@ -18,7 +20,7 @@
   <div class="inspector-content">
     <slot />
   </div>
-  
+
   {#if selectedElement}
     <InspectorPanel element={selectedElement} onClose={() => select(null)} />
   {/if}
@@ -32,7 +34,7 @@
     overflow: hidden;
     background: var(--surface-page-token);
   }
-  
+
   .inspector-content {
     padding: 1.5rem;
     /* Ensure the content has a stacking context */

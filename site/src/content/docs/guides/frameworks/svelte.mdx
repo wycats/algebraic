@@ -1,0 +1,119 @@
+---
+title: Svelte Integration
+description: How to use the Algebraic Color System in Svelte.
+---
+
+This guide shows you how to integrate the Algebraic Color System into a Svelte application using TypeScript.
+
+## 1. Setup
+
+First, install the CLI and generate your theme CSS and TypeScript definitions.
+
+```bash
+npm install -D @algebraic-systems/color-system
+npx color-system init
+npx color-system build --out ./src/theme.css
+npx color-system export --format typescript --out ./src/lib/theme.ts
+```
+
+Import the CSS in your root layout (e.g., `src/routes/+layout.svelte`):
+
+```svelte
+<script>
+  import '../theme.css';
+</script>
+
+<slot />
+```
+
+## 2. The Surface Component
+
+We can create a reusable `<Surface>` component.
+
+```svelte
+<!-- src/lib/components/Surface.svelte -->
+<script lang="ts">
+  import { tokens } from '$lib/theme';
+  import type { HTMLAttributes } from 'svelte/elements';
+
+  interface Props extends HTMLAttributes<HTMLElement> {
+    variant: keyof typeof tokens.surface;
+    as?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    variant,
+    as = 'div',
+    class: className = '',
+    children,
+    ...rest
+  }: Props = $props();
+
+  const surfaceClass = tokens.surface[variant];
+</script>
+
+<svelte:element
+  this={as}
+  class="{surfaceClass} {className}"
+  {...rest}
+>
+  {@render children?.()}
+</svelte:element>
+```
+
+## 3. The Theme Toggle
+
+```svelte
+<!-- src/lib/components/ThemeToggle.svelte -->
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+  let theme = $state<'light' | 'dark'>('light');
+
+  onMount(() => {
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+
+    theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  });
+
+  function toggleTheme() {
+    theme = theme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }
+</script>
+
+<button onclick={toggleTheme}>
+  {theme === 'light' ? '🌙' : '☀️'}
+</button>
+```
+
+## 4. Usage Example
+
+```svelte
+<!-- src/routes/+page.svelte -->
+<script lang="ts">
+  import Surface from '$lib/components/Surface.svelte';
+  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+  import { tokens } from '$lib/theme';
+</script>
+
+<Surface variant="page" style="min-height: 100vh; padding: 2rem;">
+  <header style="display: flex; justify-content: space-between;">
+    <h1 style="color: {tokens.context.text.high}">My App</h1>
+    <ThemeToggle />
+  </header>
+
+  <main>
+    <Surface variant="card" style="padding: 2rem; border-radius: 8px;">
+      <h2 style="color: {tokens.context.text.high}">Hello World</h2>
+      <p style="color: {tokens.context.text.subtle}">
+        This card is automatically themed based on its context.
+      </p>
+    </Surface>
+  </main>
+</Surface>
+```

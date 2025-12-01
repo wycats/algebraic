@@ -565,4 +565,3 @@
 - **Visual Refinement**:
   - Designed the panel to group tokens by category (Surface, Text, Border).
   - Added color previews and responsive layout.
-

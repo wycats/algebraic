@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { toDTCG } from "../../lib/exporters/dtcg.ts";
 import { toTailwind } from "../../lib/exporters/tailwind.ts";
+import { toTypeScript } from "../../lib/exporters/typescript.ts";
 import { solve } from "../../lib/index.ts";
 import type { SolverConfig } from "../../lib/types.ts";
 
@@ -33,15 +34,17 @@ export function exportCommand(args: string[], cwd: string): void {
       outPath = "tokens.json";
     } else if (format === "tailwind") {
       outPath = "tailwind.preset.js";
+    } else if (format === "typescript") {
+      outPath = "theme.ts";
     }
   }
 
   const absConfigPath = resolve(cwd, configPath);
   const absOutPath = resolve(cwd, outPath);
 
-  if (format !== "dtcg" && format !== "tailwind") {
+  if (format !== "dtcg" && format !== "tailwind" && format !== "typescript") {
     console.error(
-      `Error: Unsupported format '${format}'. Supported formats: 'dtcg', 'tailwind'.`
+      `Error: Unsupported format '${format}'. Supported formats: 'dtcg', 'tailwind', 'typescript'.`
     );
     process.exit(1);
   }
@@ -68,6 +71,8 @@ export function exportCommand(args: string[], cwd: string): void {
     const preset = toTailwind(theme);
     // Output as CommonJS module
     outputContent = `module.exports = ${JSON.stringify(preset, null, 2)};`;
+  } else if (format === "typescript") {
+    outputContent = toTypeScript(theme);
   }
 
   console.log(`Writing to: ${absOutPath}`);

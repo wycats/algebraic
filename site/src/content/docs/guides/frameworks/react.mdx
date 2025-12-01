@@ -1,0 +1,126 @@
+---
+title: React Integration
+description: How to use the Algebraic Color System in React.
+---
+
+This guide shows you how to integrate the Algebraic Color System into a React application using TypeScript.
+
+## 1. Setup
+
+First, install the CLI and generate your theme CSS and TypeScript definitions.
+
+```bash
+npm install -D @algebraic-systems/color-system
+npx color-system init
+npx color-system build --out ./src/theme.css
+npx color-system export --format typescript --out ./src/theme.ts
+```
+
+Import the CSS in your root entry point (e.g., `main.tsx` or `App.tsx`):
+
+```tsx
+import "./theme.css";
+```
+
+## 2. The Surface Component
+
+The core concept of the system is the **Surface**. In React, we can create a reusable `<Surface>` component that handles the nesting logic automatically.
+
+```tsx
+// src/components/Surface.tsx
+import React from "react";
+import { tokens } from "../theme";
+
+type SurfaceProps = {
+  as?: React.ElementType;
+  variant: keyof typeof tokens.surface;
+  children: React.ReactNode;
+  className?: string;
+} & React.HTMLAttributes<HTMLElement>;
+
+export function Surface({
+  as: Component = "div",
+  variant,
+  children,
+  className = "",
+  ...props
+}: SurfaceProps) {
+  const surfaceClass = tokens.surface[variant];
+
+  return (
+    <Component className={`${surfaceClass} ${className}`} {...props}>
+      {children}
+    </Component>
+  );
+}
+```
+
+## 3. The Theme Toggle
+
+To handle Dark Mode, we need a component that toggles the `data-theme` attribute on the `<html>` element.
+
+```tsx
+// src/components/ThemeToggle.tsx
+import React, { useEffect, useState } from "react";
+
+export function ThemeToggle() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    // Check system preference on mount
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+
+    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+    setTheme(initialTheme);
+    document.documentElement.setAttribute("data-theme", initialTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
+  return (
+    <button onClick={toggleTheme}>{theme === "light" ? "🌙" : "☀️"}</button>
+  );
+}
+```
+
+## 4. Usage Example
+
+Now you can build your UI using these primitives.
+
+```tsx
+// src/App.tsx
+import { Surface } from "./components/Surface";
+import { ThemeToggle } from "./components/ThemeToggle";
+import { tokens } from "./theme";
+
+export default function App() {
+  return (
+    <Surface variant="page" style={{ minHeight: "100vh", padding: "2rem" }}>
+      <header style={{ display: "flex", justifyContent: "space-between" }}>
+        <h1 style={{ color: tokens.context.text.high }}>My App</h1>
+        <ThemeToggle />
+      </header>
+
+      <main>
+        <Surface
+          variant="card"
+          style={{ padding: "2rem", borderRadius: "8px" }}
+        >
+          <h2 style={{ color: tokens.context.text.high }}>Hello World</h2>
+          <p style={{ color: tokens.context.text.subtle }}>
+            This card is automatically themed based on its context.
+          </p>
+        </Surface>
+      </main>
+    </Surface>
+  );
+}
+```
