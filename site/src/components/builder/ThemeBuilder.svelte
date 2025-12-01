@@ -1,8 +1,5 @@
 <script lang="ts">
-  import {
-    generateTheme,
-    injectTheme,
-  } from "@axiomatic-design/color/runtime";
+  import { generateTheme, injectTheme } from "@axiomatic-design/color/runtime";
   import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import type { ThemeState } from "../../lib/state/ThemeState.svelte";

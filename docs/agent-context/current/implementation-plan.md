@@ -21,15 +21,15 @@
 ### 2. Documentation (`README.md`, `docs/`)
 
 - [ ] **README:**
-    - Update title to "Axiomatic Color".
-    - Update installation instructions (`npm install @axiomatic-design/color`).
-    - Update tagline: "An Axiomatic approach to color. Automated contrast, platform-native adaptation, and mathematically guaranteed accessibility."
+  - Update title to "Axiomatic Color".
+  - Update installation instructions (`npm install @axiomatic-design/color`).
+  - Update tagline: "An Axiomatic approach to color. Automated contrast, platform-native adaptation, and mathematically guaranteed accessibility."
 - [ ] **Personas (`docs/design/personas.md`):**
-    - Replace "Algebraic Color System" with "Axiomatic Color".
-    - Refine descriptions to align with the new name.
+  - Replace "Algebraic Color System" with "Axiomatic Color".
+  - Refine descriptions to align with the new name.
 - [ ] **Concepts/Axioms (`concepts.md`, `docs/design/axioms.md`):**
-    - Shift terminology from "The System" to "The Axioms".
-    - Ensure "Algebraic" is reserved for internal math/solver context.
+  - Shift terminology from "The System" to "The Axioms".
+  - Ensure "Algebraic" is reserved for internal math/solver context.
 
 ### 3. Site & Demo
 

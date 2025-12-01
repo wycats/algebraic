@@ -123,13 +123,11 @@ import { tokens } from "./theme";
 
 function Header() {
   const { toggle, mode } = useTheme();
-  
+
   return (
     <header style={{ display: "flex", justifyContent: "space-between" }}>
       <h1 style={{ color: tokens.context.text.high }}>My App</h1>
-      <button onClick={toggle}>
-        {mode === "light" ? "🌙" : "☀️"}
-      </button>
+      <button onClick={toggle}>{mode === "light" ? "🌙" : "☀️"}</button>
     </header>
   );
 }

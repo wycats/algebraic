@@ -22,8 +22,7 @@ if (isMain) {
       process.exit(1);
     }
     const configWithSchema = {
-      $schema:
-        "node_modules/@axiomatic-design/color/color-config.schema.json",
+      $schema: "node_modules/@axiomatic-design/color/color-config.schema.json",
       ...DEFAULT_CONFIG,
     };
     writeFileSync(targetPath, JSON.stringify(configWithSchema, null, 2));
@@ -31,7 +30,7 @@ if (isMain) {
 
     if (!existsSync(join(CWD, "node_modules"))) {
       console.warn(
-        "Note: node_modules not found in current directory. You may need to adjust the $schema path."
+        "Note: node_modules not found in current directory. You may need to adjust the $schema path.",
       );
     }
 

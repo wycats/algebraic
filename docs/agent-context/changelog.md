@@ -583,6 +583,7 @@
   - Added support for manual hex overrides in `SurfaceConfig`.
   - Updated the `solve` engine to respect overrides, bypassing contrast calculations.
   - Added UI controls in the Theme Builder for setting Light/Dark mode overrides, with visual warning indicators.
+
 ## Epoch 17: Theme Builder V2
 
 **Focus:** Elevating the Theme Builder from a "utility" to a "product" with high-fidelity visualizations and intuitive controls.

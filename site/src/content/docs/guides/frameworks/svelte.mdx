@@ -68,18 +68,18 @@ We can wrap the `ThemeManager` in a Svelte 5 reactive class to handle state mana
 
 ```typescript
 // src/lib/theme.svelte.ts
-import { ThemeManager, type ThemeMode } from '@axiomatic-design/color/browser';
+import { ThemeManager, type ThemeMode } from "@axiomatic-design/color/browser";
 
 export class ThemeService {
   private manager: ThemeManager;
-  mode = $state<ThemeMode>('system');
+  mode = $state<ThemeMode>("system");
 
   constructor() {
     this.manager = new ThemeManager();
-    
+
     // Restore saved preference
-    if (typeof localStorage !== 'undefined') {
-      const saved = localStorage.getItem('theme') as ThemeMode | null;
+    if (typeof localStorage !== "undefined") {
+      const saved = localStorage.getItem("theme") as ThemeMode | null;
       if (saved) {
         this.setMode(saved);
       }
@@ -89,11 +89,11 @@ export class ThemeService {
   setMode(mode: ThemeMode) {
     this.mode = mode;
     this.manager.setMode(mode);
-    localStorage.setItem('theme', mode);
+    localStorage.setItem("theme", mode);
   }
 
   toggle() {
-    const next = this.manager.resolvedMode === 'light' ? 'dark' : 'light';
+    const next = this.manager.resolvedMode === "light" ? "dark" : "light";
     this.setMode(next);
   }
 }
@@ -115,7 +115,7 @@ export const theme = new ThemeService();
 <Surface variant="page" style="min-height: 100vh; padding: 2rem;">
   <header style="display: flex; justify-content: space-between;">
     <h1 style="color: {tokens.context.text.high}">My App</h1>
-    
+
     <button onclick={() => theme.toggle()}>
       {theme.mode === 'light' ? '🌙' : '☀️'}
     </button>

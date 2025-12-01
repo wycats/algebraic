@@ -97,10 +97,7 @@ pnpm exec axiomatic ./my-config.json ./dist/my-theme.css
 For dynamic theming or scoped applications, you can use the runtime API to generate and inject themes on the fly.
 
 ```typescript
-import {
-  generateTheme,
-  injectTheme,
-} from "@axiomatic-design/color/runtime";
+import { generateTheme, injectTheme } from "@axiomatic-design/color/runtime";
 import { config } from "./my-config";
 
 // Generate CSS for a specific scope

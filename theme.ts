@@ -4,10 +4,10 @@
 export const tokens = {
   /** Global shadow tokens */
   shadow: {
-    "sm": "var(--shadow-sm)",
-    "md": "var(--shadow-md)",
-    "lg": "var(--shadow-lg)",
-    "xl": "var(--shadow-xl)",
+    sm: "var(--shadow-sm)",
+    md: "var(--shadow-md)",
+    lg: "var(--shadow-lg)",
+    xl: "var(--shadow-xl)",
   },
   /** Global focus ring color */
   focus: "var(--focus-ring-color)",
@@ -39,11 +39,11 @@ export const tokens = {
   },
   /** Surface utility classes */
   surface: {
-    "page": "surface-page",
-    "workspace": "surface-workspace",
-    "card": "surface-card",
-    "action": "surface-action",
-    "spotlight": "surface-spotlight",
+    page: "surface-page",
+    workspace: "surface-workspace",
+    card: "surface-card",
+    action: "surface-action",
+    spotlight: "surface-spotlight",
   },
 } as const;
 
