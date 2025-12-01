@@ -9,13 +9,15 @@ import Diagram from "../../../components/Diagram.svelte";
 
 <DemoWrapper>
 
-The Algebraic Color System is not a palette generator. It is a **context engine**.
+**Static palettes are not enough for modern interfaces.**
 
-Most color systems ask you to pick a "primary color" and a "secondary color." This system asks you to think about **Surfaces**.
+In a dynamic UI, colors change based on where they live. A "gray" text needs to be dark on a white card, but light on a dark tooltip.
+
+The Algebraic Color System acts as a **Context Engine**. Instead of giving you a fixed list of colors, it gives you **Surfaces** that automatically adjust their content to fit the environment.
 
 ## The Core Concept
 
-A **Surface** is not just a background color. It is a semantic boundary that defines the rules for everything inside it.
+A **Surface** is not just a background color. It **sets the rules** for everything inside it.
 
 When you place an element on a surface, you aren't just painting pixels. You are entering a new **Context**.
 

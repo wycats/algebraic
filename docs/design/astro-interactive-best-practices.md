@@ -75,3 +75,45 @@ If you suspect a hydration issue:
 2.  **Disable JavaScript**: Does the content look correct without JS? If not, your SSR logic might be flawed.
 3.  **Isolate**: Create a minimal reproduction page with just that component.
 4.  **Headless Testing**: Use tools like Playwright to automate checks for console errors and interactivity (see [Playwright Headless Setup](./playwright-headless-setup.md)).
+
+## Starlight Style Isolation
+
+When embedding custom components into Starlight documentation pages (MDX), you will encounter style conflicts. Starlight applies aggressive typography and spacing rules (like `margin-top` on all elements) to the main content area (`.sl-markdown-content`).
+
+### The Symptom
+
+- **Broken Grids**: Grid items get pushed down or misaligned because of inherited margins.
+- **Unexpected Typography**: Headings or text inside your component look like documentation text instead of UI.
+
+### The Solution: `.not-content`
+
+Starlight provides a utility class called `.not-content`. Elements with this class are excluded from the global prose styles.
+
+**Always wrap complex UI components in the `<Diagram>` component.**
+
+The `<Diagram>` component is a simple wrapper that applies `.not-content` for you.
+
+#### Bad Pattern
+
+```mdx
+import MyComponent from "../../components/MyComponent.svelte";
+
+Here is my component:
+
+<MyComponent />
+```
+
+#### Good Pattern
+
+```mdx
+import Diagram from "../../components/Diagram.svelte";
+import MyComponent from "../../components/MyComponent.svelte";
+
+Here is my component:
+
+<Diagram>
+  <MyComponent />
+</Diagram>
+```
+
+This ensures your component renders exactly as you designed it, without fighting against the documentation theme.

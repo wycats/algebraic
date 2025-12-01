@@ -20,7 +20,7 @@ By aligning our taxonomy with these platform primitives (e.g., `Canvas`, `Button
 
 ## Surfaces & Context
 
-Everything sits on a **Surface**. A surface is not just a background color; it creates a **Context** for everything inside it.
+Everything sits on a **Surface**. A surface is not just a background color; it **sets the rules** for everything inside it (creating a **Context**).
 
 - **`surface-page`**: The application background.
 - **`surface-card`**: A contained content area.

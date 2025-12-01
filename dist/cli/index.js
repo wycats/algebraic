@@ -2,10 +2,10 @@
 import { toTypeScript } from '../chunk-RTTZSXSI.js';
 import { toDTCG } from '../chunk-FZL5EAWM.js';
 import { toTailwind } from '../chunk-Z6AAYZVX.js';
-import { solve, getKeyColorStats } from '../chunk-O4WD7A7V.js';
+import { solve, getKeyColorStats } from '../chunk-BD3BRDXG.js';
 import '../chunk-JY54TZUI.js';
 import '../chunk-LBEWBWXX.js';
-import { generateTokensCss, toHighContrast } from '../chunk-33YRQ25S.js';
+import { generateTokensCss, toHighContrast } from '../chunk-IM74VEST.js';
 import { solveForegroundSpec, contrastForPair } from '../chunk-AQSKLBNK.js';
 import '../chunk-LSX55S5Z.js';
 import { DEFAULT_CONFIG } from '../chunk-GEFRPWF4.js';
@@ -73,16 +73,12 @@ function auditCommand(args2, cwd) {
       if (surface.polarity === "page") {
         if (lightL < 0.5) {
           warnings.push(
-            `Surface '${surface.slug}' (Light): 'page' polarity surface is dark (${lightL.toFixed(
-              2
-            )}).`
+            `Surface '${surface.slug}' (Light): 'page' polarity surface is dark (${lightL.toFixed(2)}).`
           );
         }
         if (darkL > 0.5) {
           warnings.push(
-            `Surface '${surface.slug}' (Dark): 'page' polarity surface is light (${darkL.toFixed(
-              2
-            )}).`
+            `Surface '${surface.slug}' (Dark): 'page' polarity surface is light (${darkL.toFixed(2)}).`
           );
         }
       } else {

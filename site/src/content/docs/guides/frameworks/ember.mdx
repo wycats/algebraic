@@ -1,0 +1,172 @@
+---
+title: Ember Integration
+description: How to use the Algebraic Color System in Ember (GTS).
+---
+
+This guide shows you how to integrate the Algebraic Color System into a modern Polaris Ember application (using `.gts` components and Vite).
+
+## 1. Setup
+
+First, install the CLI and generate your theme CSS and TypeScript definitions.
+
+```bash
+pnpm add -D @algebraic-systems/color-system
+pnpm exec color-system init
+pnpm exec color-system build --out ./app/styles/theme.css
+pnpm exec color-system export --format typescript --out ./app/utils/theme.ts
+```
+
+Import the CSS in your application's entry point (e.g., `app/app.ts` or `app/styles/app.css` if using CSS imports).
+
+```css
+/* app/styles/app.css */
+@import "./theme.css";
+```
+
+## 2. The Surface Helper
+
+We recommend using a simple helper function to apply surface tokens. This keeps your template structure flat and allows you to use standard HTML elements.
+
+```ts
+// app/helpers/surface.ts
+import { tokens } from "../utils/theme";
+
+export function surface(variant: keyof typeof tokens.surface): string {
+  return tokens.surface[variant];
+}
+```
+
+You can then use this helper directly in your `.gts` components:
+
+```gts
+import { surface } from '../helpers/surface';
+
+<template>
+  <div class={{surface "card"}}>
+    Content
+  </div>
+</template>
+```
+
+This approach provides full type safety with Glint, ensuring you only use valid surface variants.
+
+## 3. The Theme Service
+
+The library provides a `ThemeManager` class to handle the low-level details of theme switching (like updating `meta` tags and handling system preferences). We can wrap this in an Ember Service to add persistence.
+
+```ts
+// app/services/theme.ts
+import Service from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import {
+  ThemeManager,
+  type ThemeMode,
+} from "@algebraic-systems/color-system/browser";
+
+export default class ThemeService extends Service {
+  @tracked mode: ThemeMode = "system";
+  private manager: ThemeManager;
+
+  constructor() {
+    super(...arguments);
+    // Initialize the manager
+    this.manager = new ThemeManager();
+
+    // Restore saved preference
+    this.restore();
+  }
+
+  restore() {
+    const saved = localStorage.getItem("theme") as ThemeMode | null;
+    if (saved) {
+      this.setMode(saved);
+    }
+  }
+
+  setMode(mode: ThemeMode) {
+    this.mode = mode;
+    this.manager.setMode(mode);
+    localStorage.setItem("theme", mode);
+  }
+
+  toggle() {
+    const next = this.manager.resolvedMode === "light" ? "dark" : "light";
+    this.setMode(next);
+  }
+}
+```
+
+## 4. Usage Example
+
+Here is how you put it all together in a component.
+
+```gts
+// app/components/welcome.gts
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { on } from '@ember/modifier';
+import { concat } from '@ember/helper';
+import { tokens } from '../utils/theme';
+import { surface } from '../helpers/surface';
+import type ThemeService from '../services/theme';
+
+export default class Welcome extends Component {
+  @service declare theme: ThemeService;
+
+  <template>
+    <div class={{surface "page"}} style="min-height: 100vh; padding: 2rem;">
+      <header style="display: flex; justify-content: space-between;">
+        <h1 style={{concat "color: " tokens.context.text.high}}>My Ember App</h1>
+
+        <button type="button" {{on "click" this.theme.toggle}}>
+          {{#if (eq this.theme.manager.resolvedMode "light")}}
+            🌙
+          {{else}}
+            ☀️
+          {{/if}}
+        </button>
+      </header>
+
+      <main>
+        <div class={{surface "card"}} style="padding: 2rem; border-radius: 8px;">
+          <h2 style={{concat "color: " tokens.context.text.high}}>Hello World</h2>
+          <p style={{concat "color: " tokens.context.text.subtle}}>
+            This card is automatically themed based on its context.
+          </p>
+        </div>
+      </main>
+    </div>
+  </template>
+}
+```
+
+## 5. Build vs. Runtime
+
+The Algebraic Color System is designed to be flexible.
+
+### Build Time (Recommended)
+
+The `color-system build` command generates a static CSS file. This is the most performant option.
+
+```css
+/* app/styles/app.css */
+@import "./theme.css";
+```
+
+### Runtime
+
+You can also use the `runtime` module to generate themes in the browser. This is useful for user-customizable themes.
+
+```ts
+import { generateTheme, injectTheme } from '@algebraic-systems/color-system/runtime';
+import type { SolverConfig } from '@algebraic-systems/color-system/types';
+
+// Load your config (e.g. from an API or JSON file)
+const config: SolverConfig = { ... };
+
+// Generate and inject the CSS
+const css = generateTheme(config);
+injectTheme(css);
+```
+
+> **Note:** The rest of this guide (the Surface helper, Theme Service, and usage patterns) works exactly the same way regardless of which mode you choose. The only difference is how the CSS variables are generated and loaded.

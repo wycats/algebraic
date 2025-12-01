@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@demo/*": ["../demo/src/*"],
-      "@lib/*": ["../src/lib/*"]
+      "@lib/*": ["../src/lib/*"],
+      "@algebraic-systems/color-system": ["../src/lib/index.ts"],
+      "@algebraic-systems/color-system/*": ["../src/lib/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

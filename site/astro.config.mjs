@@ -4,16 +4,26 @@ import starlight from "@astrojs/starlight";
 import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 import path from "path";
+import rehypeMathjax from "rehype-mathjax";
+import remarkMath from "remark-math";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeMathjax],
+  },
   vite: {
     resolve: {
       alias: {
         "@lib": path.resolve(__dirname, "../src/lib"),
+        "@algebraic-systems/color-system": path.resolve(
+          __dirname,
+          "../src/lib"
+        ),
       },
     },
   },
@@ -60,6 +70,7 @@ export default defineConfig({
             { label: "Quick Start", slug: "guides/quick-start" },
             { label: "React Integration", slug: "guides/frameworks/react" },
             { label: "Svelte Integration", slug: "guides/frameworks/svelte" },
+            { label: "Ember Integration", slug: "guides/frameworks/ember" },
             { label: "HTML / Vanilla", slug: "guides/frameworks/html" },
             { label: "The Theme Builder", slug: "guides/theme-builder" },
           ],

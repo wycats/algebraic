@@ -321,3 +321,29 @@
   cursor: not-allowed;
   border-color: var(--border-subtle-token);
 }
+
+/* --- Tabs --- */
+.preview-tabs {
+  display: flex;
+  align-items: center;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-subtle-token);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-button:hover {
+  color: var(--text-high-token);
+}
+
+.tab-button.active {
+  color: var(--text-high-token);
+  border-bottom-color: var(--surface-action);
+}

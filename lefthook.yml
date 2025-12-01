@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: pnpm lint
+    test:
+      run: pnpm test
+
+pre-push:
+  parallel: true
+  commands:
+    check:
+      run: ./scripts/check
+    build:
+      run: pnpm build

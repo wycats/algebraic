@@ -26,5 +26,12 @@
     "sharp": "^0.34.2",
     "svelte": "^5.45.2",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@fontsource-variable/space-grotesk": "^5.2.10",
+    "rehype-mathjax": "^7.1.0",
+    "remark-math": "^6.0.0"
   }
 }

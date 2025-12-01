@@ -2,6 +2,7 @@ import {
   DEFAULT_CONFIG,
   PRESETS,
   solve,
+  syncDarkToLight,
 } from "@algebraic-systems/color-system";
 import type {
   AnchorValue,
@@ -15,10 +16,12 @@ import type {
 const STORAGE_KEY = "color-system-config";
 const CUSTOM_STORAGE_KEY = "color-system-custom-config";
 const PRESET_ID_KEY = "color-system-preset-id";
+const SYNC_DARK_KEY = "color-system-sync-dark";
 
 export class ConfigState {
   config = $state<SolverConfig>(DEFAULT_CONFIG);
   presetId = $state<string>("");
+  syncDark = $state<boolean>(true);
 
   constructor() {
     if (
@@ -56,6 +59,19 @@ export class ConfigState {
           }
         }
       });
+
+      $effect(() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          typeof localStorage.setItem === "function"
+        ) {
+          try {
+            localStorage.setItem(SYNC_DARK_KEY, String(this.syncDark));
+          } catch (e) {
+            console.error("Failed to save syncDark to localStorage", e);
+          }
+        }
+      });
     });
   }
 
@@ -78,6 +94,11 @@ export class ConfigState {
       const storedPresetId = localStorage.getItem(PRESET_ID_KEY);
       if (storedPresetId) {
         this.presetId = storedPresetId;
+      }
+
+      const storedSyncDark = localStorage.getItem(SYNC_DARK_KEY);
+      if (storedSyncDark !== null) {
+        this.syncDark = storedSyncDark === "true";
       }
 
       const storedConfig = localStorage.getItem(STORAGE_KEY);
@@ -176,6 +197,13 @@ export class ConfigState {
     (
       this.config.anchors[polarity][mode][position] as Mutable<AnchorValue>
     ).background = value;
+
+    // Sync Dark Mode to Light Mode
+    if (this.syncDark && mode === "light") {
+      // For Inverted, we adjust 'start' because 'end' is often pinned to the key color
+      const adjustProperty = polarity === "inverted" ? "start" : "end";
+      syncDarkToLight(this.config.anchors, polarity, adjustProperty);
+    }
   }
 
   updateKeyColor(key: string, value: string): void {

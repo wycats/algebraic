@@ -385,3 +385,30 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Pragmatism**: Acknowledges that "perfect" math sometimes conflicts with brand guidelines or design intent.
   - **Control**: Gives power users an escape hatch while keeping the default path safe and automated.
+
+### [2025-12-02] Publint for Verification
+
+- **Context**: We were using a custom `verify-exports.ts` script to check if the package exports were correct. This script was brittle and hard to maintain.
+- **Decision**: Switch to `publint` for package verification.
+- **Rationale**:
+  - **Standardization**: `publint` is a community-standard tool for this purpose.
+  - **Robustness**: It handles edge cases (like CJS/ESM interop, types, etc.) much better than a custom script.
+  - **Maintenance**: We offload the maintenance burden of the verification logic to the tool maintainers.
+
+### [2025-12-02] Ember Helper API
+
+- **Context**: We needed to document how to integrate the color system with Ember.js. The initial thought was to use a component-heavy approach (e.g., `<Surface @name="card">`).
+- **Decision**: Recommend a helper-based API (`{{surface "card"}}`) and a `ThemeManager` service.
+- **Rationale**:
+  - **Modern Ember**: Aligns with Ember's modern "Glimmer" architecture and template capabilities.
+  - **Lightweight**: Avoids the overhead of creating a component instance for every single surface, which is critical for performance in complex UIs.
+  - **Flexibility**: Helpers can be used anywhere in templates (attributes, modifiers, etc.) more easily than components.
+
+### [2025-12-02] Defer Theme Builder Refactor
+
+- **Context**: The current Theme Builder is functional but feels more like a "configuration tool" than a "design tool". We have many ideas for improving it (visual graph, data density).
+- **Decision**: Defer major refactors to a dedicated future phase and capture aspirations in `docs/agent-context/future/theme-builder-aspirations.md`.
+- **Rationale**:
+  - **Focus**: The current goal (Epoch 18) is deployment and sharing. Starting a major UI refactor now would derail the release.
+  - **Planning**: These ideas need careful design and prototyping. Rushing them into the current codebase would likely result in technical debt.
+  - **Documentation**: Capturing them in a dedicated document ensures they aren't lost and provides a clear starting point for the next phase.

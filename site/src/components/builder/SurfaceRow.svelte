@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SurfaceConfig } from "@algebraic-systems/color-system/types";
+  import { formatHex } from "culori";
   import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import type { ThemeState } from "../../lib/state/ThemeState.svelte";
@@ -19,6 +20,13 @@
   let isExpanded = $state(false);
   let resolvedTheme = $derived(themeState.mode);
   let solved = $derived(configState.solved);
+
+  let colorSpec = $derived(
+    solved?.backgrounds.get(surface.slug)?.[resolvedTheme]
+  );
+  let hexValue = $derived(
+    colorSpec ? formatHex({ mode: "oklch", ...colorSpec }) : ""
+  );
 
   function update(updates: Partial<SurfaceConfig>) {
     configState.updateSurface(groupIndex, surfaceIndex, updates);
@@ -81,6 +89,14 @@
       }
     }
   }
+
+  function copyHex(e: Event) {
+    e.stopPropagation();
+    if (hexValue) {
+      navigator.clipboard.writeText(hexValue);
+      // Could add a toast here
+    }
+  }
 </script>
 
 <div
@@ -109,6 +125,18 @@
     <span class="text-strong" style="flex: 1;">
       {surface.label}
     </span>
+
+    {#if hexValue}
+      <button
+        class="text-subtle code-font"
+        style="background: none; border: none; cursor: copy; font-size: 0.8rem; padding: 2px 4px; border-radius: 4px;"
+        onclick={copyHex}
+        title="Copy Hex"
+      >
+        {hexValue.toUpperCase()}
+      </button>
+    {/if}
+
     {#if surface.override?.light || surface.override?.dark}
       <span
         title="Has manual overrides"
@@ -125,6 +153,29 @@
     <div
       style="padding: 0.75rem; border-top: 1px solid var(--border-subtle-token); display: flex; flex-direction: column; gap: 0.75rem;"
     >
+      <!-- Data Density Section -->
+      {#if colorSpec}
+        <div
+          class="surface-card bordered"
+          style="padding: 0.5rem; border-radius: 4px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center;"
+        >
+          <div>
+            <div class="text-subtlest" style="font-size: 0.75rem;">
+              Lightness
+            </div>
+            <div class="text-strong code-font">{colorSpec.l.toFixed(3)}</div>
+          </div>
+          <div>
+            <div class="text-subtlest" style="font-size: 0.75rem;">Chroma</div>
+            <div class="text-strong code-font">{colorSpec.c.toFixed(3)}</div>
+          </div>
+          <div>
+            <div class="text-subtlest" style="font-size: 0.75rem;">Hue</div>
+            <div class="text-strong code-font">{colorSpec.h.toFixed(1)}°</div>
+          </div>
+        </div>
+      {/if}
+
       <label
         class="text-subtle"
         style="display: flex; flex-direction: column; gap: 0.25rem;"

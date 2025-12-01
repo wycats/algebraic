@@ -8,6 +8,8 @@
 
 The current Theme Builder UI is functional but sparse. It lacks data density and intuitive representations of the complex color relationships being manipulated. Additionally, it currently lives as a separate SPA in `/demo`, which creates a disjointed experience from the documentation.
 
+> **Update (Epoch 18):** The user has noted that the current state does not meet the aspirational goals. A dedicated future phase is required to rethink the design goals. See [Theme Builder Aspirations](theme-builder-aspirations.md).
+
 - **Problem**:
   - Information is packed into cryptic icons (locks, warnings).
   - The "Surface List" is just a list of boxes.
@@ -23,6 +25,10 @@ The current Theme Builder UI is functional but sparse. It lacks data density and
 ## UI/UX
 
 - **Density Setting**: A "density" setting (similar to Gmail's comfort settings) that adjusts spacing scales. This would allow for a more compact UI without breaking the relative scaling of the system.
+- **Textbook Mode**: A "vibe" setting that switches typography to a more academic style (e.g., using **Fraunces** for headings) and reorganizes the sidebar/layout to feel like a structured textbook or scientific journal.
+- **Combine Density and Textbook Modes**: Don't have a bunch of sliders: have a single "vibe" setting that adjusts multiple parameters (density, typography, colorfulness) to create distinct moods (e.g., "Cozy", "Academic", "Vibrant", "Minimalist"). Potentially support custom vibes.
+- **Interactive Tutorials**: Guided walkthroughs within the Theme Builder that teach users about concepts like Contrast Space, APCA, and Surface Context as they adjust settings.
+  - I think this is a high priority once we get everything else sorted, but it implies thinking about how we want to represent code (a "REPL" mode?) and how to structure the tutorials. Svelte's tutorial structure is great, but implementing it will require thinking about design goals and axioms, personas, and learning outcomes. And _then_ we can build it.
 
 ## Ecosystem
 

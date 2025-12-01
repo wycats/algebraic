@@ -583,3 +583,47 @@
   - Added support for manual hex overrides in `SurfaceConfig`.
   - Updated the `solve` engine to respect overrides, bypassing contrast calculations.
   - Added UI controls in the Theme Builder for setting Light/Dark mode overrides, with visual warning indicators.
+## Epoch 17: Theme Builder V2
+
+**Focus:** Elevating the Theme Builder from a "utility" to a "product" with high-fidelity visualizations and intuitive controls.
+
+### Key Changes
+
+- **Visualizer Graph**:
+  - Implemented a D3-like SVG graph for visualizing lightness curves.
+  - Added interactive nodes for manipulating anchors directly on the graph.
+  - Visualized the "Safe Zone" (APCA compliance) and "Danger Zone" (Contrast failure).
+- **Data Density**:
+  - Enhanced `SurfaceRow` to display LCH values and Hex codes.
+  - Added "Copy to Clipboard" functionality for individual color values.
+- **Intuitive Controls**:
+  - Replaced raw number inputs with a custom `AnchorGraph` control.
+  - Implemented "Sync Dark Mode" logic to automatically calculate dark mode anchors based on light mode contrast ratios.
+- **Infrastructure**:
+  - **CI/CD**: Configured GitHub Actions for automated testing and deployment.
+  - **Lefthook**: Set up git hooks for pre-commit linting and type checking.
+  - **Vite Aliases**: Fixed module resolution issues for smoother local development.
+- **Documentation Polish**:
+  - **MathJax**: Added support for rendering mathematical formulas in documentation.
+  - **Token Visualizer**: Redesigned the "Token Level" table into a premium, card-based visualizer with live previews and accessibility badges.
+  - **Typography**: Upgraded to `Inter Variable` and `JetBrains Mono Variable` fonts.
+  - **Layout**: Fixed layout shifts and "jerking" issues in the sidebar and scrollbars.
+
+## Epoch 18: Deployment & Sharing
+
+**Focus:** Preparing the project for deployment and sharing with external stakeholders.
+
+### Key Changes
+
+- **CI/CD & Publishing**:
+  - Created `.github/workflows/publish.yml` for automated NPM publishing.
+  - Added `publint` to verify package exports.
+  - Added `.stackblitzrc` for better "Try it" experience.
+- **Documentation Expansion**:
+  - Added a comprehensive **Ember Integration Guide** (`guides/frameworks/ember.mdx`).
+  - Clarified **Build vs. Runtime** modes in documentation.
+- **Production Verification**:
+  - Verified production builds locally.
+  - Confirmed GitHub Pages deployment configuration.
+- **Review Materials**:
+  - Created `REVIEW.md` and `known-issues.md` to facilitate external review.

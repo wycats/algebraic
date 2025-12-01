@@ -1,0 +1,7 @@
+{
+  "installDependencies": true,
+  "startCommand": "pnpm dev:site",
+  "env": {
+    "NODE_VERSION": "24"
+  }
+}

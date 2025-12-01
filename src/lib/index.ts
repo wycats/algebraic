@@ -13,6 +13,7 @@ import {
 } from "./math.ts";
 import type {
   Anchors,
+  AnchorValue,
   ChartColor,
   ColorSpec,
   Context,
@@ -30,6 +31,11 @@ export * from "./browser.ts";
 export * from "./constants.ts";
 export * from "./defaults.ts";
 export { toHighContrast } from "./generator.ts";
+export {
+  contrastForBackground,
+  roundLightness,
+  solveBackgroundForContrast,
+} from "./math.ts";
 export * from "./presets.ts";
 
 const toOklch = converter("oklch");
@@ -121,6 +127,67 @@ function alignInvertedAnchors(
     };
 
     (anchors as Mutable<PolarityAnchors>).inverted = newInverted;
+  }
+}
+
+export function syncDarkToLight(
+  anchors: PolarityAnchors,
+  polarity: "page" | "inverted",
+  adjustProperty: "start" | "end" = "end"
+): void {
+  const lightStart = anchors[polarity].light.start.background;
+  const lightEnd = anchors[polarity].light.end.background;
+
+  const lightStartContrast = contrastForBackground(
+    { polarity, mode: "light" },
+    lightStart
+  );
+  const lightEndContrast = contrastForBackground(
+    { polarity, mode: "light" },
+    lightEnd
+  );
+  const deltaContrast = lightStartContrast - lightEndContrast;
+
+  const darkStart = anchors[polarity].dark.start.background;
+  const darkEnd = anchors[polarity].dark.end.background;
+
+  if (adjustProperty === "end") {
+    const darkStartContrast = contrastForBackground(
+      { polarity, mode: "dark" },
+      darkStart
+    );
+
+    // We want Dark End to have a contrast that is deltaContrast lower than Dark Start
+    const targetDarkEndContrast = darkStartContrast - deltaContrast;
+
+    const newDarkEnd = solveBackgroundForContrast(
+      { polarity, mode: "dark" },
+      targetDarkEndContrast,
+      0,
+      1
+    );
+
+    (anchors[polarity].dark.end as Mutable<AnchorValue>).background =
+      newDarkEnd;
+  } else {
+    // Adjust Start
+    const darkEndContrast = contrastForBackground(
+      { polarity, mode: "dark" },
+      darkEnd
+    );
+
+    // We want Dark Start to have a contrast that is deltaContrast higher than Dark End
+    const targetDarkStartContrast = darkEndContrast + deltaContrast;
+
+    const newDarkStart = solveBackgroundForContrast(
+      { polarity, mode: "dark" },
+      targetDarkStartContrast,
+      0,
+      1
+    );
+
+    (anchors[polarity].dark.start as Mutable<AnchorValue>).background =
+      newDarkStart;
   }
 }
 

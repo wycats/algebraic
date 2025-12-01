@@ -225,11 +225,26 @@
   gap: 0;
 }
 
-.docs-step-95 { background: oklch(95% 0 0); color: black; }
-.docs-step-85 { background: oklch(85% 0 0); color: black; }
-.docs-step-75 { background: oklch(75% 0 0); color: black; }
-.docs-step-65 { background: oklch(65% 0 0); color: white; }
-.docs-step-55 { background: oklch(55% 0 0); color: white; }
+.docs-step-95 {
+  background: oklch(95% 0 0);
+  color: black;
+}
+.docs-step-85 {
+  background: oklch(85% 0 0);
+  color: black;
+}
+.docs-step-75 {
+  background: oklch(75% 0 0);
+  color: black;
+}
+.docs-step-65 {
+  background: oklch(65% 0 0);
+  color: white;
+}
+.docs-step-55 {
+  background: oklch(55% 0 0);
+  color: white;
+}
 
 .docs-code-block {
   background: var(--surface-token);
@@ -241,36 +256,65 @@
 /* Hue Shifting Gradients */
 
 .docs-gradient-static {
-  background: linear-gradient(to right, oklch(0.2 0.1 260), oklch(0.95 0.1 260));
+  background: linear-gradient(
+    to right,
+    oklch(0.2 0.1 260),
+    oklch(0.95 0.1 260)
+  );
 }
 
 .docs-gradient-shifted {
-  background: linear-gradient(to right, oklch(0.2 0.1 260), oklch(0.95 0.1 320));
+  background: linear-gradient(
+    to right,
+    oklch(0.2 0.1 260),
+    oklch(0.95 0.1 320)
+  );
 }
 
 .docs-gradient-bezier {
-  background: linear-gradient(to right, 
-    oklch(0.2 0.1 260),   /* Start: Blue */
-    oklch(0.4 0.1 265),   /* Slow start */
-    oklch(0.6 0.1 290),   /* Fast middle */
-    oklch(0.8 0.1 315),   /* Slow end */
-    oklch(0.95 0.1 320)   /* End: Purple */
+  background: linear-gradient(
+    to right,
+    oklch(0.2 0.1 260),
+    /* Start: Blue */ oklch(0.4 0.1 265),
+    /* Slow start */ oklch(0.6 0.1 290),
+    /* Fast middle */ oklch(0.8 0.1 315),
+    /* Slow end */ oklch(0.95 0.1 320) /* End: Purple */
   );
 }
 
 /* Hue Shifting Swatches */
 
-.docs-swatch-linear-1 { background: oklch(0.1 0.15 278); }
-.docs-swatch-linear-2 { background: oklch(0.3 0.15 314); }
-.docs-swatch-linear-3 { background: oklch(0.5 0.15 350); }
-.docs-swatch-linear-4 { background: oklch(0.7 0.15 26); }
-.docs-swatch-linear-5 { background: oklch(0.9 0.15 62); }
+.docs-swatch-linear-1 {
+  background: oklch(0.1 0.15 278);
+}
+.docs-swatch-linear-2 {
+  background: oklch(0.3 0.15 314);
+}
+.docs-swatch-linear-3 {
+  background: oklch(0.5 0.15 350);
+}
+.docs-swatch-linear-4 {
+  background: oklch(0.7 0.15 26);
+}
+.docs-swatch-linear-5 {
+  background: oklch(0.9 0.15 62);
+}
 
-.docs-swatch-bezier-1 { background: oklch(0.1 0.15 265); }
-.docs-swatch-bezier-2 { background: oklch(0.3 0.15 299); }
-.docs-swatch-bezier-3 { background: oklch(0.5 0.15 350); }
-.docs-swatch-bezier-4 { background: oklch(0.7 0.15 41); }
-.docs-swatch-bezier-5 { background: oklch(0.9 0.15 75); }
+.docs-swatch-bezier-1 {
+  background: oklch(0.1 0.15 265);
+}
+.docs-swatch-bezier-2 {
+  background: oklch(0.3 0.15 299);
+}
+.docs-swatch-bezier-3 {
+  background: oklch(0.5 0.15 350);
+}
+.docs-swatch-bezier-4 {
+  background: oklch(0.7 0.15 41);
+}
+.docs-swatch-bezier-5 {
+  background: oklch(0.9 0.15 75);
+}
 
 /* CTA Button */
 
@@ -286,4 +330,32 @@
   text-decoration: none;
   font-weight: bold;
   display: inline-block;
+}
+
+/* MathJax Overrides */
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* Inline math should not break lines */
+/* Starlight forces SVGs to block, so we must override with higher specificity */
+.sl-markdown-content mjx-container:not([display="true"]) {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.sl-markdown-content mjx-container:not([display="true"]) svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+/* Block math */
+mjx-container[display="true"] {
+  display: block;
+  margin: 1.5rem 0;
+  text-align: center;
 }
