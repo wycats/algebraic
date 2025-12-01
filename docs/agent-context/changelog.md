@@ -627,3 +627,21 @@
   - Confirmed GitHub Pages deployment configuration.
 - **Review Materials**:
   - Created `REVIEW.md` and `known-issues.md` to facilitate external review.
+
+## Epoch 19: Rebranding to Axiomatic Color (2025-12-02)
+
+**Goal**: Establish a distinct identity for the project by renaming it from "Algebraic Color System" to "Axiomatic Color".
+
+**Completed Work**:
+
+- **Package Renaming**:
+  - Renamed NPM package to `@axiomatic-design/color`.
+  - Renamed CLI binary to `axiomatic`.
+- **Documentation Overhaul**:
+  - Updated all documentation content to reflect the new name and CLI commands.
+  - Replaced "Algebraic Color System" with "Axiomatic Color" throughout the site.
+  - Updated installation instructions in all guides.
+- **Infrastructure**:
+  - Updated `package.json` metadata (description, keywords).
+  - Fixed Vite alias configuration in `astro.config.mjs` to support the new package name during development.
+  - Verified build pipeline and CLI functionality with the new identity.
