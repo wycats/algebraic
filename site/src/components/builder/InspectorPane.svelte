@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
   import type { Snippet } from "svelte";
+  import { slide } from "svelte/transition";
 
   let {
     title,

@@ -1,10 +1,10 @@
 <script lang="ts">
+  import { contrastForPair } from "@axiomatic-design/color";
+  import type { ColorSpec } from "@axiomatic-design/color/types";
+  import { converter } from "culori";
   import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import type { ThemeState } from "../../lib/state/ThemeState.svelte";
-  import { contrastForPair } from "@axiomatic-design/color";
-  import { converter } from "culori";
-  import type { ColorSpec } from "@axiomatic-design/color/types";
 
   const configState = getContext<ConfigState>("config");
   const themeState = getContext<ThemeState>("theme");

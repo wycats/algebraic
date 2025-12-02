@@ -1,21 +1,21 @@
-# Phase 3 Walkthrough
+# Phase 3 Walkthrough: Design & Concept
 
-## Sub-phase 1: Foundation
+In this phase, we conducted a comprehensive design audit of the Theme Builder V1 to identify why it wasn't meeting our aspirational goals.
 
-### Highlight Token Implementation
+## Key Activities
 
-We identified a need to distinguish between "Focus" (interaction state) and "Selection" (inspection state) in the UI. To support this, we added a new `highlight` primitive to the core system.
+1.  **Design Audit**: We analyzed the current UI against our core axioms ("Context is King", "Physics of Light").
+    - _Finding_: The UI was a "Form Filler", not a "System Modeler".
+    - _Finding_: The hierarchy of context was invisible.
+    - _Finding_: Users were "flying blind" regarding gamut clipping.
 
-#### Changes
+2.  **Concept Definition**: We defined the requirements for V2.
+    - **Context Tree**: A hierarchical view of the system.
+    - **Gamut Visualization**: A visual guide to color space constraints.
+    - **Direct Manipulation**: Interactive graphs instead of abstract sliders.
 
-- **Configuration**: Added a `highlight` key color to `color-config.json`. We chose Magenta (`#bd33da`, hue ~320) to contrast with the Brand Blue (`#6e56cf`, hue ~250).
-- **Types**: Updated `Primitives` in `src/lib/types.ts` to include `highlight: { ring: ModeSpec; surface: ModeSpec; }`.
-- **Solver**: Updated `src/lib/solver.ts` to calculate highlight colors based on the configured key color (or fallback to hue 320).
-- **Generator**: Updated `src/lib/generator.ts` to output `--highlight-ring-color` and `--highlight-surface-color` CSS variables.
-- **Exporters**: Updated DTCG, Tailwind, and TypeScript exporters to include the new tokens.
+3.  **Linting & Cleanup**: We resolved strict linting issues to ensure a clean codebase for the upcoming implementation phase.
 
-#### Verification
+## Outcome
 
-- Verified that `tokens.json` contains the new highlight tokens.
-- Verified that `theme.css` contains the new CSS variables.
-- Verified that the hue matches the requested Magenta (approx 320).
+We have a clear roadmap for **Phase 4: V2 Implementation**, which will focus on building the components defined in the audit.
