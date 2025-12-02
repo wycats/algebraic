@@ -1,20 +1,29 @@
-# Task List - Epoch 19: Phase 2
+# Task List - Epoch 19: Phase 3 - Verification & Publish
 
-- [x] **Update Root README.md**
-  - [x] Change title to "Axiomatic Color".
-  - [x] Update description.
-  - [x] Update installation instructions.
-  - [x] Update CLI usage.
-- [x] **Update Site Metadata**
-  - [x] Update `site/astro.config.mjs` (site title).
-  - [x] Update `site/package.json` (verified).
-- [x] **Documentation Content Updates**
-  - [x] Global Find & Replace ("Algebraic Color System" -> "Axiomatic Color").
-  - [x] Update `site/src/styles/starlight-overrides.css`.
-  - [x] Update `AGENTS.md`.
-  - [x] Update `src/cli/commands/export.ts`.
-  - [x] Update `site/src/content/docs/index.mdx`.
-  - [x] Update `site/src/content/docs/philosophy.md`.
-  - [x] Update `site/src/content/docs/concepts/thinking-in-surfaces.mdx`.
-- [x] **Verification**
-  - [x] Run `pnpm docs:build` and verify success.
+## 1. Package Audit
+
+- [ ] **Metadata Review** <!-- id: 1 -->
+  - Verify `package.json` name is `@axiomatic-design/color`.
+  - Verify repository links, homepage, and bugs URL.
+  - Verify `exports` field configuration.
+- [ ] **Publint Check** <!-- id: 2 -->
+  - Run `publint` to verify package exports are spec-compliant.
+
+## 2. Build Verification
+
+- [ ] **Clean Build** <!-- id: 3 -->
+  - Run `pnpm clean` (if available) or manually remove `dist/`.
+  - Run `pnpm build`.
+- [ ] **Artifact Inspection** <!-- id: 4 -->
+  - Verify `dist/index.js` (ESM) exists.
+  - Verify `dist/index.cjs` (CJS) exists.
+  - Verify `dist/index.d.ts` (Types) exists.
+  - Verify `dist/cli/index.js` exists and is executable.
+
+## 3. Release Preparation
+
+- [ ] **Dry Run** <!-- id: 5 -->
+  - Run `pnpm publish --dry-run`.
+  - Inspect the tarball contents to ensure no unnecessary files are included.
+- [ ] **Workflow Review** <!-- id: 6 -->
+  - Review `.github/workflows/publish.yml` to ensure it uses the correct package name and secrets.

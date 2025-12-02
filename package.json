@@ -17,6 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/design-axioms/color.git"
   },
+  "bugs": {
+    "url": "https://github.com/design-axioms/color/issues"
+  },
+  "homepage": "https://design-axioms.github.io/color/",
   "type": "module",
   "files": [
     "dist",

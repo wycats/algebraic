@@ -1,38 +1,31 @@
-# Implementation Plan - Epoch 19: Phase 2 - Documentation & Site Updates
+# Implementation Plan - Epoch 19: Phase 3 - Verification & Publish
 
-**Goal**: Update all documentation, branding, and site content to reflect the new project name: **Axiomatic Color**.
+**Goal**: Ensure the rebranded package `@axiomatic-design/color` is correctly configured, builds properly, and is ready for distribution on NPM.
 
-## 1. README & Metadata Updates
+## 1. Package Audit
 
-- [ ] **Update Root README.md**
-  - Change title to "Axiomatic Color".
-  - Update description to reflect the "axiomatic" philosophy.
-  - Update installation instructions (`pnpm add @axiomatic-design/color`).
-  - Update CLI usage (`pnpm exec axiomatic init`).
-- [ ] **Update Site Metadata**
-  - Update `site/astro.config.mjs` (site title).
-  - Update `site/package.json` (if applicable).
+- [ ] **Metadata Review**
+  - Verify `package.json` name is `@axiomatic-design/color`.
+  - Verify repository links, homepage, and bugs URL.
+  - Verify `exports` field configuration.
+- [ ] **Publint Check**
+  - Run `publint` to verify package exports are spec-compliant.
 
-## 2. Documentation Content Updates
+## 2. Build Verification
 
-- [ ] **Global Find & Replace**
-  - Search for "Algebraic Color System" -> "Axiomatic Color".
-  - Search for "Algebraic Color" -> "Axiomatic Color".
-  - Search for `color-system` (CLI command) -> `axiomatic`.
-- [ ] **Specific File Updates**
-  - `docs/design/personas.md`: Update personas to reference the new name.
-  - `docs/design/axioms.md`: Ensure axioms align with the new branding.
-  - `site/src/content/docs/index.mdx`: Update hero title and tagline.
-  - `site/src/content/docs/introduction.mdx`: Update introduction text.
+- [ ] **Clean Build**
+  - Run `pnpm clean` (if available) or manually remove `dist/`.
+  - Run `pnpm build`.
+- [ ] **Artifact Inspection**
+  - Verify `dist/index.js` (ESM) exists.
+  - Verify `dist/index.cjs` (CJS) exists.
+  - Verify `dist/index.d.ts` (Types) exists.
+  - Verify `dist/cli/index.js` exists and is executable.
 
-## 3. Site Branding
+## 3. Release Preparation
 
-- [ ] **Visual Branding**
-  - Check for any logos or images that contain the old name (if any).
-  - Update page titles and meta tags.
-
-## 4. Verification
-
-- [ ] **Local Preview**
-  - Run `pnpm docs:dev` and verify the site loads correctly with the new branding.
-  - Check the "Getting Started" guide to ensure commands are correct.
+- [ ] **Dry Run**
+  - Run `pnpm publish --dry-run`.
+  - Inspect the tarball contents to ensure no unnecessary files are included.
+- [ ] **Workflow Review**
+  - Review `.github/workflows/publish.yml` to ensure it uses the correct package name and secrets.

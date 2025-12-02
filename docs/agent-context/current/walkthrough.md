@@ -1,25 +1,32 @@
-# Walkthrough - Epoch 19: Phase 2
+# Walkthrough - Epoch 19: Phase 3 - Verification & Publish
 
-**Goal**: Update all documentation, branding, and site content to reflect the new project name: **Axiomatic Color**.
+## Summary
 
-## Changes
+In this phase, we verified the package configuration and build artifacts for the rebranded `@axiomatic-design/color` package to ensure a successful NPM release.
 
-### 1. Branding Updates
+## Key Actions
 
-We have officially renamed the project from "Algebraic Color System" to "**Axiomatic Color**". This change reflects the shift in philosophy from "math-first" to "rules-first" (axioms).
+### 1. Package Audit
 
-- **Site Title**: Updated `site/astro.config.mjs` to "Axiomatic Color".
-- **Homepage**: Updated `site/src/content/docs/index.mdx` with the new title and tagline.
-- **Philosophy**: Updated `site/src/content/docs/philosophy.md` to reflect the new name and core pillars.
+- **Metadata**: Verified `package.json` contains the correct name (`@axiomatic-design/color`), repository URL, and exports.
+- **Enhancements**: Added missing `homepage` and `bugs` fields to `package.json` for better package discovery and support.
+- **Validation**: Ran `publint` (via `pnpm check:exports`) and confirmed that all exports are spec-compliant.
 
-### 2. Documentation Consistency
+### 2. Build Verification
 
-We performed a global audit and update of all documentation files to ensure consistent terminology.
+- **Clean Build**: Successfully ran a clean build using `pnpm build`.
+- **Artifact Inspection**:
+  - Verified the existence of ESM artifacts (`dist/lib/index.js`).
+  - Verified the existence of Type definitions (`dist/lib/index.d.ts`).
+  - Verified the existence and executability (shebang) of the CLI entry point (`dist/cli/index.js`).
+  - **Note**: CJS artifacts were not generated as the project is configured for ESM-only (`type: module` and `tsup` format `esm`). This is intentional for a modern Node.js package.
 
-- **Concepts**: Updated `thinking-in-surfaces.mdx` to refer to "Axiomatic Color".
-- **CLI**: Updated `src/cli/commands/export.ts` usage examples to use `axiomatic` instead of `color-system`.
-- **Internal Docs**: Updated `AGENTS.md` to reference the correct CLI binary name.
+### 3. Release Preparation
 
-### 3. Verification
+- **Dry Run**: executed `pnpm publish --dry-run` to verify the package tarball contents.
+  - Confirmed inclusion of `dist/`, `css/`, `src/`, `README.md`, and `color-config.schema.json`.
+- **Workflow Review**: Audited `.github/workflows/publish.yml` and confirmed it is correctly configured to publish to NPM on GitHub Release.
 
-We verified the changes by running a full documentation build (`pnpm docs:build`), which passed successfully.
+## Conclusion
+
+The package is ready for publication. The next step is to create a GitHub Release, which will trigger the publication workflow.
