@@ -48,11 +48,15 @@
   - **Phase 2: Fix Issues (Completed)**
     - **Goal**: Resolve all linting errors and warnings.
 
-## Epoch 21: Theme Builder Aspirations (Planned)
+## Epoch 21: Theme Builder V2 (In Progress)
 
 - **Goal**: Reimagine the Theme Builder as a learning environment and design tool.
 - **Phases**:
-  - **Phase 1: Design & Concept**
+  - **Phase 1: Config State & Live Preview (Completed)**
+    - **Goal**: Connect the Theme Builder UI to a reactive configuration state and enable live preview in the browser.
+  - **Phase 2: Layout Polish (Completed)**
+    - **Goal**: Refine the layout for responsiveness and isolation from documentation styles.
+  - **Phase 3: Design & Concept (Planned)**
     - **Goal**: Audit the current design, explore new concepts, and review architecture.
 
 ## Epoch 22: Developer Tooling (Planned)

@@ -455,3 +455,12 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Onboarding**: Helps new contributors (and AI agents) understand the expected workflow.
   - **Standardization**: Explicitly stating the "Branch -> PR -> Merge" flow reduces ambiguity.
+
+### [2025-12-02] Style Isolation for Theme Builder
+
+- **Context**: The Theme Builder UI, embedded within the Starlight documentation site, was inheriting prose styles (like margins on lists) that broke its layout.
+- **Decision**: Wrap the entire `StudioLayout` in a `<Diagram>` component, which applies the `not-content` class.
+- **Rationale**:
+  - **Isolation**: The `not-content` class is Starlight's standard mechanism for opting out of typography styles.
+  - **Simplicity**: Avoids writing complex CSS resets or using Shadow DOM.
+  - **Consistency**: Reuses an existing component (`Diagram`) designed for this exact purpose.

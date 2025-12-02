@@ -71,18 +71,18 @@
 <style>
   .stage-container {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 2rem;
+    padding: 4rem 2rem;
   }
 
   .grid-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
   }
 

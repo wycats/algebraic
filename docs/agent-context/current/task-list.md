@@ -1,5 +1,3 @@
-- [x] Create `site/src/lib/state/ConfigState.svelte.ts` <!-- id: 0 -->
-- [x] Create `site/src/components/StyleInjector.svelte` <!-- id: 1 -->
-- [x] Update `StudioWrapper.svelte` to include `StyleInjector` <!-- id: 2 -->
-- [x] Update `GlobalInspector.svelte` to bind to `ConfigState` <!-- id: 3 -->
-- [x] Update `SurfaceInspector.svelte` to bind to `ConfigState` <!-- id: 4 -->
+- [x] Wrap `StudioLayout` in `<Diagram>` to isolate styles <!-- id: 0 -->
+- [x] Update `ComponentView` layout for better responsiveness (1366px) <!-- id: 1 -->
+- [x] Optimize vertical space in `ComponentView` <!-- id: 2 -->

@@ -728,3 +728,16 @@
   - Created `StyleInjector.svelte` to apply the generated theme.
   - Bound `GlobalInspector` and `SurfaceInspector` to the reactive state.
   - Verified live updates for anchors, key colors, and surface overrides.
+
+## Epoch 21: Phase 2 - Theme Builder Layout Polish (2025-12-02)
+
+**Goal**: Refine the Theme Builder layout for better responsiveness and isolation from documentation styles.
+
+**Completed Work**:
+
+- **Style Isolation**:
+  - Wrapped `StudioLayout` in `<Diagram>` to apply the `not-content` class, preventing Starlight's prose styles from interfering with the UI.
+- **Responsive Layout**:
+  - Updated `ComponentView` to use a responsive grid (`repeat(auto-fit, minmax(320px, 1fr))`) instead of a fixed 2-column layout.
+  - Optimized vertical alignment (`flex-start` + padding) to reduce whitespace on taller screens.
+  - Increased `max-width` to `1000px` for better space utilization.

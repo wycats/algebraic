@@ -1,40 +1,24 @@
-# Walkthrough: Config State & Live Preview
+# Walkthrough: Theme Builder Layout Polish
 
 ## Overview
 
-This phase connected the Theme Builder UI to a real, reactive configuration state. This allows users to modify the theme parameters (anchors, key colors, surface overrides) and see the results instantly in the browser.
+This phase focused on refining the layout of the Theme Builder to ensure it works well on standard laptop screens (1366x768) and is isolated from the documentation site's global styles.
 
-## Key Changes
+## Changes
 
-### 1. Package Refactoring (`@axiomatic-design/color`)
+### Style Isolation
 
-To support running the solver and generator in the browser, we refactored the core package:
+- Wrapped the entire `StudioLayout` in the `<Diagram>` component.
+- This applies the `not-content` class, which prevents Starlight's typography styles (like margins on lists or adjacent elements) from interfering with the application UI.
 
-- **`src/lib/solver.ts`**: Extracted the core solving logic from `index.ts` to avoid circular dependencies.
-- **`src/lib/runtime.ts`**: Now exports `generateTheme` and `injectTheme` for browser usage.
-- **`src/lib/index.ts`**: Exports everything, including the new `solver` and `runtime` modules.
+### Responsive Layout
 
-### 2. `ConfigState` (Svelte 5 Rune)
+- Updated `ComponentView` to use `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))` instead of a fixed 2-column layout.
+- This ensures that on narrower screens (like 1366px with sidebars open), the grid adapts gracefully without overflowing or squishing content.
+- Increased `max-width` to `1000px` to better utilize space on wider screens.
 
-We implemented `site/src/lib/state/ConfigState.svelte.ts` as the central store for the theme configuration.
+### Vertical Space Optimization
 
-- **Reactive Config**: Uses `$state` to track the `SolverConfig`.
-- **Live Generation**: Uses `$derived` to automatically re-run `generateTheme` whenever the config changes.
-- **Persistence**: Saves/loads config from `localStorage`.
-
-### 3. Live Style Injection
-
-We created `site/src/components/StyleInjector.svelte` which subscribes to `ConfigState.css` and injects the generated CSS into the document head using `injectTheme`. This ensures the entire app (including the Builder UI itself) reflects the current theme.
-
-### 4. Inspector Binding
-
-We updated the Inspector components to bind directly to `ConfigState`:
-
-- **`GlobalInspector`**: Controls Page Anchors (Light/Dark Start/End) and Key Colors.
-- **`SurfaceInspector`**: Controls Surface Overrides (Contrast Offset) and displays solved L\* values.
-
-## Verification
-
-- **Live Updates**: Dragging a slider in the Global Inspector instantly updates the theme colors.
-- **Surface Overrides**: Selecting a surface and adjusting its contrast offset updates only that surface (and its children/states).
-- **Persistence**: Reloading the page restores the custom configuration.
+- Changed the vertical alignment of the stage from `center` to `flex-start`.
+- Added `padding-top: 4rem` to position the content comfortably at the top while avoiding the "floating in the void" effect.
+- This makes better use of vertical space, especially on taller screens, and prevents the UI from feeling empty.

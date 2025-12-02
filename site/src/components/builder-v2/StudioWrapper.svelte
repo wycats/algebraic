@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Diagram from "../Diagram.svelte";
   import StateProvider from "../StateProvider.svelte";
   import StyleInjector from "../StyleInjector.svelte";
   import StudioLayout from "./StudioLayout.svelte";
@@ -6,9 +7,9 @@
 
 <StateProvider>
   <StyleInjector />
-  <div class="fullscreen-studio">
+  <Diagram class="fullscreen-studio">
     <StudioLayout />
-  </div>
+  </Diagram>
 </StateProvider>
 
 <style>
