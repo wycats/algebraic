@@ -48,3 +48,10 @@ The current Theme Builder UI is functional but sparse. It lacks data density and
     - `no-hardcoded-colors`: Warns when using hex/rgb/hsl values directly instead of tokens.
     - `prefer-semantic-tokens`: Encourages using `--surface-card` over `--surface-token` where appropriate.
     - `validate-token-usage`: Checks if a token is valid for the current context (e.g., using a text token on a background).
+- **AI Context (`llms.txt`)**: A standardized file to help LLMs understand the project.
+  - **Goal**: Enable AI agents to effectively generate code using the Axiomatic Color system.
+  - **Content**:
+    - Core axioms and mental model.
+    - List of available tokens and their semantic meaning.
+    - Examples of correct usage (surfaces, modifiers).
+    - Architecture overview (Solver -> CSS Engine).

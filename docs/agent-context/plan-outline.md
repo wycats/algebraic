@@ -63,3 +63,5 @@
     - **Goal**: Visualize tokens inline, provide hover information, and autocomplete.
   - **Phase 2: Custom Lints**
     - **Goal**: Create ESLint or Stylelint rules to enforce system constraints (e.g., "No hardcoded colors", "Use semantic tokens").
+  - **Phase 3: AI Context (llms.txt)**
+    - **Goal**: Provide a standardized context file for LLMs to understand the system's architecture and tokens.
