@@ -3,64 +3,67 @@
 </script>
 
 <div class="stage-container">
-  <div class="surface-card bordered p-6 rounded-lg space-y-4">
-    <div class="header">
-      <h3>Dashboard</h3>
-      <p class="text-subtle">Overview of your system status.</p>
-    </div>
-
-    <div class="grid grid-cols-2 gap-4">
-      <!-- Card 1 -->
-      <div class="surface-sunken bordered p-4 rounded">
-        <h4 class="text-sm font-bold mb-2">Revenue</h4>
-        <p class="text-2xl font-mono">$12,450</p>
-        <p class="text-xs text-positive">+12% from last month</p>
+  <div class="grid-layout">
+    <!-- Main Dashboard Card -->
+    <div class="surface-card bordered p-6 rounded-lg space-y-4">
+      <div class="header">
+        <h3>Dashboard</h3>
+        <p class="text-subtle">Overview of your system status.</p>
       </div>
 
-      <!-- Card 2 -->
-      <div class="surface-sunken bordered p-4 rounded">
-        <h4 class="text-sm font-bold mb-2">Active Users</h4>
-        <p class="text-2xl font-mono">1,234</p>
-        <p class="text-xs text-subtle">Stable</p>
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Card 1 -->
+        <div class="surface-sunken bordered p-4 rounded">
+          <h4 class="text-sm font-bold mb-2">Revenue</h4>
+          <p class="text-2xl font-mono">$12,450</p>
+          <p class="text-xs text-positive">+12% from last month</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="surface-sunken bordered p-4 rounded">
+          <h4 class="text-sm font-bold mb-2">Active Users</h4>
+          <p class="text-2xl font-mono">1,234</p>
+          <p class="text-xs text-subtle">Stable</p>
+        </div>
+      </div>
+
+      <div class="form-group space-y-2">
+        <label for="email" class="text-sm font-medium">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          class="surface-input bordered w-full p-2 rounded"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div class="actions flex gap-2">
+        <button
+          class="surface-action hue-brand bordered px-4 py-2 rounded font-medium"
+        >
+          Save Changes
+        </button>
+        <button
+          class="surface-action hue-gray bordered px-4 py-2 rounded font-medium"
+        >
+          Cancel
+        </button>
       </div>
     </div>
 
-    <div class="form-group space-y-2">
-      <label for="email" class="text-sm font-medium">Email Address</label>
-      <input
-        id="email"
-        type="email"
-        class="surface-input bordered w-full p-2 rounded"
-        placeholder="you@example.com"
-      />
-    </div>
+    <!-- Nested Context Example (Side Column) -->
+    <div class="surface-card hue-indigo bordered p-6 rounded-lg">
+      <h3>Brand Context</h3>
+      <p class="mb-4">This card has a brand hue applied.</p>
 
-    <div class="actions flex gap-2">
-      <button
-        class="surface-action hue-brand bordered px-4 py-2 rounded font-medium"
-      >
-        Save Changes
-      </button>
-      <button
-        class="surface-action hue-gray bordered px-4 py-2 rounded font-medium"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-
-  <!-- Nested Context Example -->
-  <div class="surface-card hue-indigo bordered p-6 rounded-lg mt-4">
-    <h3>Brand Context</h3>
-    <p class="mb-4">This card has a brand hue applied.</p>
-
-    <div class="surface-sunken bordered p-4 rounded">
-      <p>Nested sunken surface inherits the hue.</p>
-      <button
-        class="surface-action hue-brand bordered px-3 py-1 rounded mt-2 text-sm"
-      >
-        Action
-      </button>
+      <div class="surface-sunken bordered p-4 rounded">
+        <p>Nested sunken surface inherits the hue.</p>
+        <button
+          class="surface-action hue-brand bordered px-3 py-1 rounded mt-2 text-sm"
+        >
+          Action
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -68,9 +71,19 @@
 <style>
   .stage-container {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 2rem;
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 900px;
+    width: 100%;
   }
 
   /* Utility classes for layout (mimicking Tailwind for speed, but using standard CSS) */

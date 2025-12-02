@@ -30,6 +30,10 @@
     overflow: hidden;
     background: var(--sl-color-bg);
     color: var(--sl-color-text);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Overlay Starlight UI */
   }
 
   .sidebar {
