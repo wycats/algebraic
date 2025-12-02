@@ -9,7 +9,7 @@
 - [x] **Exports Check**: Run `publint` to ensure all exports are correctly defined for the new package name.
 - [x] **CLI Verification**:
   - [x] Run `pnpm axiomatic --help` to verify the binary name and help text.
-  - [ ] Test `axiomatic init` in a temporary directory.
+  - [x] Test `axiomatic init` in a temporary directory.
 - [x] **Site Build**: Verify the documentation site builds with the new package references.
 
 ## 2. Publishing Preparation
@@ -24,6 +24,6 @@
   - [x] Create `.github/workflows/plan-release.yml`.
   - [x] Update `.github/workflows/publish.yml`.
   - [x] Create `RELEASE.md`.
-- [ ] **Push**: Push the configuration to `main`.
-- [ ] **Initial Tag**: Ensure `v0.1.0` tag exists (or `v0.0.0` if starting fresh).
-- [ ] **Trigger**: Create a dummy PR or wait for next PR to trigger the plan.
+- [x] **Push**: Push the configuration to `main`.
+- [x] **Initial Tag**: Ensure `v0.1.0` tag exists (or `v0.0.0` if starting fresh).
+- [x] **Trigger**: Create a dummy PR or wait for next PR to trigger the plan.
