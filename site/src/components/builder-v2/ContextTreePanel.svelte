@@ -2,7 +2,7 @@
   import ContextTree from "./ContextTree.svelte";
 </script>
 
-<div class="panel">
+<div class="panel surface-workspace">
   <h2>Context Tree</h2>
   <ContextTree />
 </div>
@@ -11,8 +11,7 @@
   .panel {
     height: 100%;
     padding: 1rem;
-    border-right: 1px solid var(--sl-color-gray-5);
-    background: var(--sl-color-gray-1);
+    border-right: 1px solid var(--border-dec-token);
     overflow-y: auto;
   }
 </style>

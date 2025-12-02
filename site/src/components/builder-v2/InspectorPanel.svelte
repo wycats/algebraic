@@ -7,7 +7,7 @@
   const builder = getContext<BuilderState>("builder");
 </script>
 
-<div class="panel">
+<div class="panel surface-workspace">
   {#if builder.inspectorMode === "surface" && builder.selectedSurfaceId}
     <SurfaceInspector />
   {:else}
@@ -18,8 +18,7 @@
 <style>
   .panel {
     height: 100%;
-    border-left: 1px solid var(--sl-color-gray-5);
-    background: var(--sl-color-gray-1);
+    border-left: 1px solid var(--border-dec-token);
     overflow-y: auto;
   }
 </style>

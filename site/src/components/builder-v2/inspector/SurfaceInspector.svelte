@@ -54,7 +54,7 @@
 
 <div class="inspector-section">
   <h3>Contrast</h3>
-  <div class="contrast-badge pass">
+  <div class="contrast-badge surface-action hue-success">
     <span class="score">APCA 75</span>
     <span class="status">Lc (Pass)</span>
   </div>
@@ -63,7 +63,7 @@
 <style>
   .inspector-section {
     padding: 1rem;
-    border-bottom: 1px solid var(--sl-color-gray-5);
+    border-bottom: 1px solid var(--border-dec-token);
   }
 
   .header {
@@ -76,7 +76,7 @@
   h3 {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--sl-color-text-accent);
+    color: var(--text-high-token);
     margin: 0;
   }
 
@@ -84,11 +84,11 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--sl-color-gray-4);
+    color: var(--text-subtle-token);
   }
 
   .context-trace {
-    background: var(--sl-color-gray-2);
+    border: 1px solid var(--border-dec-token);
     padding: 0.75rem;
     border-radius: 4px;
   }
@@ -102,13 +102,13 @@
 
   .trace-step.active {
     font-weight: bold;
-    color: var(--sl-color-text-accent);
+    color: var(--text-high-token);
   }
 
   .trace-arrow {
     text-align: center;
     font-size: 0.7rem;
-    color: var(--sl-color-gray-4);
+    color: var(--text-subtle-token);
     line-height: 0.8;
   }
 
@@ -129,11 +129,8 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    background: var(--sl-color-accent-low);
-    color: var(--sl-color-text-accent);
     padding: 0.5rem;
     border-radius: 4px;
-    border: 1px solid var(--sl-color-accent);
   }
 
   .score {

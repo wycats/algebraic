@@ -68,12 +68,12 @@
   }
 
   .node-row:hover {
-    background: var(--sl-color-gray-2);
+    background: var(--surface-card);
   }
 
   .node-row.selected {
-    background: var(--sl-color-accent-low);
-    color: var(--sl-color-accent-high);
+    background: var(--surface-action);
+    color: var(--text-high-token);
   }
 
   .toggle {
@@ -101,10 +101,10 @@
   }
 
   .icon.surface {
-    background: var(--sl-color-text);
+    background: var(--text-high-token);
   }
   .icon.action {
-    background: var(--sl-color-accent);
+    background: var(--text-link); /* Or brand hue */
   }
   .icon.text {
     background: transparent;

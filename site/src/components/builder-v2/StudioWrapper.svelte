@@ -17,6 +17,5 @@
     right: 0;
     bottom: 0;
     z-index: 100; /* Higher than Starlight nav */
-    background: var(--sl-color-bg);
   }
 </style>

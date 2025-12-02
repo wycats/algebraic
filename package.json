@@ -42,6 +42,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write",
     "lint:security": "node scripts/check-security.ts",
+    "lint:tokens": "./scripts/check-tokens.sh",
     "docs:dev": "pnpm --filter site dev",
     "docs:build": "pnpm --filter site build",
     "dev:site": "pnpm docs:dev & pnpm --filter demo dev",

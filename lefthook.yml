@@ -12,6 +12,9 @@ pre-commit:
     security:
       glob: "*"
       run: pnpm lint:security {staged_files}
+    tokens:
+      glob: "site/src/components/builder-v2/**/*"
+      run: pnpm lint:tokens
     knip:
       run: pnpm knip
     test:

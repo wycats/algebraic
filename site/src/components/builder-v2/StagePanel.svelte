@@ -46,12 +46,12 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: var(--sl-color-gray-2);
+    background: var(--surface-page);
   }
 
   .controls {
     padding: 0.5rem;
-    border-bottom: 1px solid var(--sl-color-gray-5);
+    border-bottom: 1px solid var(--border-dec-token);
     display: flex;
     gap: 0.5rem;
   }
@@ -66,13 +66,13 @@
   }
 
   button:hover {
-    background: var(--sl-color-gray-5);
+    background: var(--surface-card);
   }
 
   button.active {
-    background: var(--sl-color-accent-low);
-    border-color: var(--sl-color-accent);
-    color: var(--sl-color-text-accent);
+    background: var(--surface-action);
+    border-color: var(--border-int-token);
+    color: var(--text-high-token);
   }
 
   .canvas {

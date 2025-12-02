@@ -44,7 +44,7 @@
 
 <style>
   .context-tree {
-    font-family: var(--sl-font-system-mono);
+    font-family: monospace;
     font-size: 0.9rem;
   }
 </style>

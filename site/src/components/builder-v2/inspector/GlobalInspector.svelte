@@ -38,14 +38,14 @@
 <style>
   .inspector-section {
     padding: 1rem;
-    border-bottom: 1px solid var(--sl-color-gray-5);
+    border-bottom: 1px solid var(--border-dec-token);
   }
 
   h3 {
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
-    color: var(--sl-color-text-accent);
+    color: var(--text-high-token);
   }
 
   .control-group {
@@ -67,6 +67,6 @@
 
   .text-subtle {
     font-size: 0.8rem;
-    color: var(--sl-color-gray-4);
+    color: var(--text-subtle-token);
   }
 </style>

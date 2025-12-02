@@ -8,7 +8,7 @@
   const builder = getContext<BuilderState>("builder");
 </script>
 
-<div class="studio-layout">
+<div class="studio-layout surface-page">
   <aside class="sidebar" style="width: {builder.sidebarWidth}px">
     <ContextTreePanel />
   </aside>
@@ -28,8 +28,6 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    background: var(--sl-color-bg);
-    color: var(--sl-color-text);
     position: fixed;
     top: 0;
     left: 0;
@@ -38,7 +36,6 @@
 
   .sidebar {
     flex-shrink: 0;
-    border-right: 1px solid var(--sl-color-gray-5);
   }
 
   .stage {
@@ -48,6 +45,5 @@
 
   .inspector {
     flex-shrink: 0;
-    border-left: 1px solid var(--sl-color-gray-5);
   }
 </style>
