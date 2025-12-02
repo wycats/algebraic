@@ -47,3 +47,10 @@
     - **Goal**: Review and tighten ESLint and Prettier configurations.
   - **Phase 2: Fix Issues (Completed)**
     - **Goal**: Resolve all linting errors and warnings.
+
+## Epoch 21: Theme Builder Aspirations (Planned)
+
+- **Goal**: Reimagine the Theme Builder as a learning environment and design tool.
+- **Phases**:
+  - **Phase 1: Design & Concept**
+    - **Goal**: Audit the current design, explore new concepts, and review architecture.

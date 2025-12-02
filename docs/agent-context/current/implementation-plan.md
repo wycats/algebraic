@@ -1,54 +1,38 @@
-# Implementation Plan - Epoch 20: Linting & Quality Assurance (Phase 2)
+# Implementation Plan - Epoch 21: Theme Builder Aspirations
 
-**Goal**: Systematically resolve the ~130 linting errors identified in Phase 1 to achieve a clean, zero-error codebase.
+**Goal**: Reimagine the Theme Builder as a learning environment and design tool, moving beyond a simple configuration utility. This epoch focuses on the design and conceptualization phase before jumping into implementation.
 
-## 1. Svelte Component Fixes
+## Phase 1: Design & Concept
 
-- [ ] **Missing Keys**: Fix `svelte/require-each-key` errors in `#each` blocks.
-  - [ ] `DataVizDemo.svelte`
-  - [ ] `DynamicRange.svelte`
-  - [ ] `KeyColorsEditor.svelte`
-  - [ ] `VisualizerGraph.svelte`
-  - [ ] `TokenLevelVisualizer.svelte`
-  - [ ] `InspectorPanel.svelte`
-- [ ] **Return Types**: Add explicit return types to functions in components.
-  - [ ] `DebugVisualizer.svelte`
-  - [ ] `Diagram.svelte`
-  - [ ] `DynamicRange.svelte`
-  - [ ] `HueShiftVisualizer.svelte`
-  - [ ] `AnchorGraph.svelte`
-  - [ ] `SurfaceManager.svelte`
-  - [ ] `SurfaceRow.svelte`
-  - [ ] `VisualizerGraph.svelte`
-  - [ ] `InspectorSurface.svelte`
-  - [ ] `TokenInspector.svelte`
-- [ ] **Type Safety**: Resolve `no-unsafe-*` and `no-explicit-any` errors.
-  - [ ] `Diagram.svelte`
-  - [ ] `SurfaceManager.svelte` (heavy usage of `any`)
-  - [ ] `SurfaceRow.svelte` (heavy usage of `any`)
-  - [ ] `ThemeBuilder.svelte`
-- [ ] **Void Expressions**: Fix `no-confusing-void-expression` in arrow functions.
-  - [ ] `HueShiftVisualizer.svelte`
-  - [ ] `ThemeToggle.svelte`
-  - [ ] `AnchorGraph.svelte`
-  - [ ] `KeyColorsEditor.svelte`
-  - [ ] `SurfaceManager.svelte`
-  - [ ] `SurfaceRow.svelte`
-  - [ ] `ThemeBuilder.svelte`
-  - [ ] `TokenInspector.svelte`
-- [ ] **Mustache Interpolation**: Fix `svelte/no-useless-mustaches`.
-  - [ ] `HueShiftVisualizer.svelte`
-  - [ ] `ThemeBuilder.svelte`
+This phase is about research, design, and planning. We will not be writing production code yet, but rather exploring the "ideal state" for the Theme Builder.
 
-## 2. Script Fixes
+### 1. Design Audit
 
-- [ ] **Check Links**: Fix `scripts/check-links.ts` (return types, floating promises).
+- **Objective**: Evaluate the current Theme Builder against our core [Axioms](../../design/axioms.md) and [Personas](../../design/personas.md).
+- **Tasks**:
+  - Review `docs/design/axioms.md` and identify where the current builder falls short (e.g., "Physics of Light", "Context is King").
+  - Review `docs/design/personas.md` (specifically Alex the Visual Tinkerer and Sarah the Overwhelmed Pragmatist) and identify friction points.
+  - Document findings in `docs/agent-context/current/design-audit.md`.
 
-## 3. Library Fixes
+### 2. Concept Exploration
 
-- [ ] **Exporters**: Fix `no-unnecessary-condition` in `dtcg.ts` and `tailwind.ts`.
+- **Objective**: Sketch out the "Ideal Interaction Model" for a tool that _teaches_ while you use it.
+- **Tasks**:
+  - Brainstorm visualizations for "Context Flow" (how polarity/mode propagate).
+  - Brainstorm representations for "Data Density" (showing LCH values, contrast ratios).
+  - Explore "Direct Manipulation" controls (graphs, gradients) vs. abstract sliders.
+  - Create a "Lo-Fi" concept document (text/mermaid/ascii) describing the new UI layout and flow.
 
-## 4. Verification
+### 3. Architecture Review
 
-- [ ] Run `pnpm lint` to confirm 0 errors.
-- [ ] Run `pnpm test:coverage` to ensure no regressions.
+- **Objective**: Determine if the current Svelte 5 + State architecture can support the new vision.
+- **Tasks**:
+  - Analyze the current `ThemeState` and `ConfigState` implementation.
+  - Identify any technical blockers for advanced visualizations (e.g., performance of real-time graph rendering).
+  - Evaluate libraries for graphs/nodes (e.g., Svelte Flow, D3) vs. custom SVG.
+
+## Deliverables
+
+- `docs/agent-context/current/design-audit.md`: A critique of the current system.
+- `docs/agent-context/current/concept-model.md`: A proposal for the new UI/UX.
+- `docs/agent-context/current/architecture-review.md`: Technical feasibility assessment.

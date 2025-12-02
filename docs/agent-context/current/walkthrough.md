@@ -1,55 +1,43 @@
-# Phase 2: Fix Issues (Walkthrough)
+# Walkthrough: Epoch 21 - Phase 1 (Design & Concept)
 
-## Goal
+**Date**: 2025-12-02
 
-Resolve all linting errors and warnings identified in Phase 1.
+## Overview
 
-## Changes
+In this phase, we stepped back from the code to reimagine the **Theme Builder**. We identified that the current tool is a functional "Configuration Utility" but fails to be the "Design Studio" and "Learning Environment" we aspire to.
 
-### Svelte Components
+We conducted a design audit, explored new interaction models, and verified that our architecture can support this new vision.
 
-Systematically fixed ~130 linting errors across the `site/src/components` directory.
+## Key Deliverables
 
-#### Common Fixes
+### 1. Design Audit (`design-audit.md`)
 
-- **`svelte/require-each-key`**: Added unique keys (slugs, names, or indices) to all `#each` blocks.
-- **`@typescript-eslint/no-confusing-void-expression`**: Wrapped void-returning function calls in arrow functions with block bodies (e.g., `() => { fn(); }`).
-- **`@typescript-eslint/no-unnecessary-condition`**: Removed redundant checks where types guaranteed existence (e.g., removing `if (theme.charts)` where `charts` is mandatory).
-- **`svelte/no-useless-mustaches`**: Removed unnecessary mustache interpolation for string literals (e.g., `class={"foo"}` -> `class="foo"`).
-- **`@typescript-eslint/no-base-to-string`**: Explicitly cast arrays to `string[]` before calling `.join(" ")` in class name construction.
-- **`@typescript-eslint/no-unsafe-*`**: Improved type safety by removing `any` usage and adding proper interfaces (e.g., `DragData` interface in `SurfaceManager`).
+We evaluated the current builder against our **Axioms** and **Personas**.
 
-#### Specific Component Fixes
+- **Critical Finding**: The UI hides the most important concept: **Context**. Users cannot see the hierarchy or how context flows from parent to child.
+- **Critical Finding**: The UI lacks **Direct Manipulation**. Users tweak abstract numbers instead of interacting with the "Physics of Light" (curves, gamuts).
 
-- **`HueShiftVisualizer.svelte`**: Fixed `Number()` conversions, unnecessary conditionals, and void expressions.
-- **`AnchorGraph.svelte`**: Fixed void expressions in event handlers and unnecessary optional chaining.
-- **`SurfaceManager.svelte`**: Added `DragData` interface to fix `any` usage in drag-and-drop logic.
-- **`SurfaceRow.svelte`**: Fixed floating promises (`void navigator.clipboard.writeText(...)`) and `any` usage.
-- **`ThemeBuilder.svelte`**: Fixed `any` usage in `JSON.parse` by casting to `SolverConfig`.
-- **`InspectorPanel.svelte`**: Removed unnecessary null checks for props that are guaranteed to be defined.
-- **`InspectorSurface.svelte`**: Fixed `no-base-to-string` by ensuring class names are strings.
-- **`Diagram.svelte`**: Fixed `no-base-to-string` and improved prop typing.
-- **`DynamicRange.svelte`**: Disabled `no-confusing-void-expression` for `{@render ...}` snippets as it appears to be a false positive or limitation with Svelte 5 snippets.
+### 2. Concept Model (`concept-model.md`)
 
-### Scripts
+We proposed a new "Studio" metaphor with three zones:
 
-- **`scripts/check-links.ts`**: Added `void` return type to `checkLinks` and handled the floating promise at the top level.
+- **Zone A: The Context Tree**: A hierarchical view of the system (Page -> Card -> Button).
+- **Zone B: The Stage**: A live preview canvas.
+- **Zone C: The Inspector**: Context-sensitive controls and deep data visualization.
 
-### Library
+We also introduced the **"Vibe" Controller** for our "Overwhelmed Pragmatist" persona (Sarah), allowing high-level control over Contrast, Vibrancy, and Warmth.
 
-- **`src/lib/exporters/dtcg.ts`**: Removed unnecessary checks for `theme.charts` and `theme.primitives` as they are mandatory in the `Theme` interface.
-- **`src/lib/exporters/tailwind.ts`**: Removed unnecessary checks for `theme.charts` and `theme.primitives`.
+### 3. Architecture Review (`architecture-review.md`)
 
-### CI/CD & Documentation
+We confirmed that the current **Svelte 5 + Runes** architecture is robust enough for V2.
 
-- **CI Fixes**:
-  - Updated `.github/workflows/ci.yml` to run `pnpm --filter site astro sync` before linting to ensure Astro types are generated.
-  - Removed redundant `--run` flag from `pnpm test` command in CI workflow.
-- **Documentation**:
-  - Added `CONTRIBUTING.md` to document the PR workflow, CI checks, and development guidelines.
+- **New State**: We need a `BuilderState` class to manage selection and view modes.
+- **Performance**: We will use **SVG + D3 Modules** for visualizations (Gamut Slice, Lightness Graph) to ensure performance without heavy dependencies.
 
-## Verification
+## Next Steps
 
-- Ran `pnpm lint` and confirmed 0 errors.
-- Ran `pnpm build` and confirmed successful build.
-- **Deployment**: Successfully deployed to Vercel (Production) after merging PR #9.
+We are ready to move to **Phase 2: Prototyping**. In the next phase, we will:
+
+1.  Set up the `BuilderState` class.
+2.  Build the "Context Tree" component (Zone A).
+3.  Build the basic "Stage" (Zone B).
