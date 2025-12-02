@@ -8,4 +8,4 @@
 - [x] Verify Site Build <!-- id: 5 -->
 - [x] Run `pnpm publish --dry-run` <!-- id: 6 -->
 - [x] Update `CHANGELOG.md` <!-- id: 7 -->
-- [ ] Publish to NPM <!-- id: 8 -->
+- [x] Publish to NPM <!-- id: 8 -->

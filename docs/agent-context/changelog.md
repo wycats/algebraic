@@ -662,3 +662,25 @@
 - **Infrastructure**:
   - Updated `package.json` metadata.
   - Verified build pipeline.
+
+## Epoch 19: Rebranding to Axiomatic Color (2025-12-02)
+
+**Goal**: Establish a distinct identity for the project by renaming it from "Algebraic Color System" to "Axiomatic Color" and automating the release process.
+
+**Completed Work**:
+
+- **Package Renaming**:
+  - Renamed NPM package to `@axiomatic-design/color`.
+  - Renamed CLI binary to `axiomatic`.
+- **Release Automation**:
+  - Implemented `release-plan` for automated versioning and changelog management.
+  - Configured GitHub Actions (`publish.yml`) for secure, automated publishing.
+- **Publishing**:
+  - **Manual Bootstrap**: Manually published `v0.1.0` to overcome initial "chicken-and-egg" authentication issues.
+  - **OIDC Trusted Publishing**: Configured OpenID Connect (OIDC) for future releases, removing the need for long-lived `NPM_TOKEN` secrets.
+- **Documentation Overhaul**:
+  - Updated all documentation content to reflect the new name and CLI commands.
+  - Replaced "Algebraic Color System" with "Axiomatic Color" throughout the site.
+- **Infrastructure**:
+  - Updated `package.json` metadata (description, keywords).
+  - Fixed Vite alias configuration in `astro.config.mjs` to support the new package name during development.

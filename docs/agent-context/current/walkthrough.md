@@ -35,3 +35,16 @@ We have transitioned to an automated release process using `release-plan`.
 - Reset git tags to `v0.0.0` to ensure `release-plan` correctly detects the new release.
 - **Status**: The "Prepare Release" PR (#7) is created and correctly proposes `v0.1.0`.
 - **Next Step**: Merge PR #7 to publish the package.
+
+## Publishing
+
+- **Manual Bootstrap**: Due to initial authentication issues with npm (OTP requirements), we manually published `v0.1.0` from the local environment.
+- **OIDC Configuration**: We successfully configured OIDC Trusted Publishing for future releases.
+  - Updated `publish.yml` to use `NPM_CONFIG_PROVENANCE: true`.
+  - Removed the classic `NPM_TOKEN` secret.
+  - Configured the Trusted Publisher on npmjs.com for the `design-axioms/color` repository.
+- **Cleanup**: Removed the `.release-plan.json` file to reset the release state for the next cycle.
+
+## Conclusion
+
+The project is now fully rebranded as `@axiomatic-design/color`, the first version `0.1.0` is live on npm, and the automated release pipeline is secure and ready for future use.
