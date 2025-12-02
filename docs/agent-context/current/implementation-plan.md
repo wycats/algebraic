@@ -1,38 +1,46 @@
-# Implementation Plan - Epoch 21: Theme Builder Aspirations
+# Implementation Plan - Epoch 21: Theme Builder Aspirations (Phase 2: Prototyping)
 
-**Goal**: Reimagine the Theme Builder as a learning environment and design tool, moving beyond a simple configuration utility. This epoch focuses on the design and conceptualization phase before jumping into implementation.
+**Goal**: Build the foundational state management and layout primitives for the new "Studio" interface of the Theme Builder V2.
 
-## Phase 1: Design & Concept
+## Phase 2: Prototyping
 
-This phase is about research, design, and planning. We will not be writing production code yet, but rather exploring the "ideal state" for the Theme Builder.
+This phase focuses on code structure and basic UI scaffolding. We are not aiming for a polished design yet, but rather a functional skeleton that proves the architecture.
 
-### 1. Design Audit
+### 1. State Management (`BuilderState`)
 
-- **Objective**: Evaluate the current Theme Builder against our core [Axioms](../../design/axioms.md) and [Personas](../../design/personas.md).
+- **Objective**: Create a dedicated state manager for the editor UI.
 - **Tasks**:
-  - Review `docs/design/axioms.md` and identify where the current builder falls short (e.g., "Physics of Light", "Context is King").
-  - Review `docs/design/personas.md` (specifically Alex the Visual Tinkerer and Sarah the Overwhelmed Pragmatist) and identify friction points.
-  - Document findings in `docs/agent-context/current/design-audit.md`.
+  - Create `site/src/lib/state/BuilderState.svelte.ts`.
+  - Implement selection state (`selectedSurfaceId`).
+  - Implement view mode state (`viewMode`).
+  - Implement "hover" state for "What-If" previews.
+  - Integrate with `ConfigState` (ensure it can read/write to the config).
 
-### 2. Concept Exploration
+### 2. Studio Layout Scaffolding
 
-- **Objective**: Sketch out the "Ideal Interaction Model" for a tool that _teaches_ while you use it.
+- **Objective**: Create the three-pane layout structure.
 - **Tasks**:
-  - Brainstorm visualizations for "Context Flow" (how polarity/mode propagate).
-  - Brainstorm representations for "Data Density" (showing LCH values, contrast ratios).
-  - Explore "Direct Manipulation" controls (graphs, gradients) vs. abstract sliders.
-  - Create a "Lo-Fi" concept document (text/mermaid/ascii) describing the new UI layout and flow.
+  - Create `site/src/components/builder-v2/StudioLayout.svelte`.
+  - Implement resizable panes (optional for now, fixed width is fine for prototype).
+  - Create placeholder components for:
+    - `ContextTreePanel.svelte` (Zone A)
+    - `StagePanel.svelte` (Zone B)
+    - `InspectorPanel.svelte` (Zone C)
+  - Create a new route `site/src/pages/studio.astro` to host the V2 builder (temporarily).
 
-### 3. Architecture Review
+### 3. Context Tree Component
 
-- **Objective**: Determine if the current Svelte 5 + State architecture can support the new vision.
+- **Objective**: Visualize the surface hierarchy.
 - **Tasks**:
-  - Analyze the current `ThemeState` and `ConfigState` implementation.
-  - Identify any technical blockers for advanced visualizations (e.g., performance of real-time graph rendering).
-  - Evaluate libraries for graphs/nodes (e.g., Svelte Flow, D3) vs. custom SVG.
+  - Create `site/src/components/builder-v2/ContextTree.svelte`.
+  - Implement a recursive tree node component.
+  - Connect it to `BuilderState` for selection.
+  - **Challenge**: The `SolverConfig` stores surfaces in a flat list (grouped by category). We need a way to represent the _logical_ nesting.
+  - **Solution**: For the prototype, we will hardcode a "Demo Hierarchy" (Page -> Card -> Button) that represents a typical UI, and map the config surfaces to these slots.
 
 ## Deliverables
 
-- `docs/agent-context/current/design-audit.md`: A critique of the current system.
-- `docs/agent-context/current/concept-model.md`: A proposal for the new UI/UX.
-- `docs/agent-context/current/architecture-review.md`: Technical feasibility assessment.
+- `BuilderState.svelte.ts`
+- `StudioLayout.svelte`
+- `ContextTree.svelte`
+- A working `/studio` page showing the layout and interactive tree.
