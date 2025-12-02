@@ -14,19 +14,13 @@ export class BuilderState {
   sidebarWidth = $state<number>(300);
   inspectorWidth = $state<number>(350);
 
-  constructor() {
-    // Auto-switch inspector mode based on selection
-    $effect(() => {
-      if (this.selectedSurfaceId) {
-        this.inspectorMode = "surface";
-      } else {
-        this.inspectorMode = "global";
-      }
-    });
-  }
-
   selectSurface(id: string | null): void {
     this.selectedSurfaceId = id;
+    if (id) {
+      this.inspectorMode = "surface";
+    } else {
+      this.inspectorMode = "global";
+    }
   }
 
   hoverSurface(id: string | null): void {
