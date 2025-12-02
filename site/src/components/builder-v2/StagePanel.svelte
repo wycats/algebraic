@@ -1,6 +1,9 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { BuilderState } from "../../lib/state/BuilderState.svelte";
+  import ComponentView from "./stage/ComponentView.svelte";
+  import AbstractView from "./stage/AbstractView.svelte";
+  import AuditView from "./stage/AuditView.svelte";
 
   const builder = getContext<BuilderState>("builder");
 </script>
@@ -9,24 +12,32 @@
   <h2>Stage ({builder.viewMode})</h2>
   <div class="controls">
     <button
+      class:active={builder.viewMode === "component"}
       onclick={() => {
         builder.setViewMode("component");
       }}>Component</button
     >
     <button
+      class:active={builder.viewMode === "abstract"}
       onclick={() => {
         builder.setViewMode("abstract");
       }}>Abstract</button
     >
     <button
+      class:active={builder.viewMode === "audit"}
       onclick={() => {
         builder.setViewMode("audit");
       }}>Audit</button
     >
   </div>
   <div class="canvas">
-    <!-- Canvas content will go here -->
-    <p>Live Preview Area</p>
+    {#if builder.viewMode === "component"}
+      <ComponentView />
+    {:else if builder.viewMode === "abstract"}
+      <AbstractView />
+    {:else if builder.viewMode === "audit"}
+      <AuditView />
+    {/if}
   </div>
 </div>
 
@@ -45,9 +56,28 @@
     gap: 0.5rem;
   }
 
+  button {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  button:hover {
+    background: var(--sl-color-gray-5);
+  }
+
+  button.active {
+    background: var(--sl-color-accent-low);
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-text-accent);
+  }
+
   .canvas {
     flex: 1;
-    display: grid;
-    place-items: center;
+    overflow: auto;
+    position: relative;
   }
 </style>
