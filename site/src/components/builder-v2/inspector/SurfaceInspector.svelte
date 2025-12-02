@@ -129,11 +129,11 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    background: var(--color-green-100);
-    color: var(--color-green-800);
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-text-accent);
     padding: 0.5rem;
     border-radius: 4px;
-    border: 1px solid var(--color-green-300);
+    border: 1px solid var(--sl-color-accent);
   }
 
   .score {

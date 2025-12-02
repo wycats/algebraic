@@ -34,3 +34,11 @@ The current Theme Builder UI is functional but sparse. It lacks data density and
 ## Ecosystem
 
 - **`@algebraic-systems/layout`**: A companion layout system to complement the color system. This should likely follow similar principles (semantic, constraint-based, runtime-aware).
+
+## Tooling
+
+- **VS Code Extension**: A VS Code extension to visualize our tokens inline (similar to UnoCSS or Tailwind IntelliSense).
+  - **Features**:
+    - Color swatches for token references (e.g., `--surface-card`).
+    - Hover tooltips showing the resolved values (L\*, C, H).
+    - Linting for invalid token usage or hardcoded colors.
