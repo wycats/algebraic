@@ -2,7 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.0] - 2025-11-24
+## [0.1.0] - 2025-12-02
+
+### Rebrand
+
+- **Identity**: Renamed package from `color-system` to `@axiomatic-design/color`.
+- **CLI**: Renamed CLI binary from `color-system` to `axiomatic`.
+
+### Added
+
+- **CLI**: New `audit` command to verify theme accessibility and polarity.
+- **CLI**: New `export` command supporting DTCG, Tailwind, and TypeScript formats.
+- **Configuration**: Added `prefix` and `selector` options for custom scoping.
+- **Overrides**: Added support for manual hex overrides in `SurfaceConfig`.
+- **Charts**: Added data visualization palette generation (`--chart-*`).
+- **Primitives**: Added shadow and focus ring primitives.
+
+### Changed
+
+- **Architecture**: Shifted to `oklch` for all color calculations.
+- **P3 Gamut**: Full support for P3 wide gamut colors.
+- **Documentation**: Complete overhaul of the documentation site using Astro Starlight.
+
+## [0.0.1] - 2025-11-24
 
 ### Added
 
