@@ -1,46 +1,54 @@
-# Implementation Plan - Epoch 20: Linting & Quality Assurance (Phase 1)
+# Implementation Plan - Epoch 20: Linting & Quality Assurance (Phase 2)
 
-**Goal**: Review and tighten ESLint and Prettier configurations to ensure code quality and consistency across the entire monorepo (including the new `site/` directory).
+**Goal**: Systematically resolve the ~130 linting errors identified in Phase 1 to achieve a clean, zero-error codebase.
 
-## 1. Audit Current State
+## 1. Svelte Component Fixes
 
-- [ ] Run `pnpm lint` to see the current status of the codebase.
-- [ ] Check if `site/` (Astro/Svelte) is currently being linted.
-- [ ] Check `prettier` configuration and usage.
+- [ ] **Missing Keys**: Fix `svelte/require-each-key` errors in `#each` blocks.
+  - [ ] `DataVizDemo.svelte`
+  - [ ] `DynamicRange.svelte`
+  - [ ] `KeyColorsEditor.svelte`
+  - [ ] `VisualizerGraph.svelte`
+  - [ ] `TokenLevelVisualizer.svelte`
+  - [ ] `InspectorPanel.svelte`
+- [ ] **Return Types**: Add explicit return types to functions in components.
+  - [ ] `DebugVisualizer.svelte`
+  - [ ] `Diagram.svelte`
+  - [ ] `DynamicRange.svelte`
+  - [ ] `HueShiftVisualizer.svelte`
+  - [ ] `AnchorGraph.svelte`
+  - [ ] `SurfaceManager.svelte`
+  - [ ] `SurfaceRow.svelte`
+  - [ ] `VisualizerGraph.svelte`
+  - [ ] `InspectorSurface.svelte`
+  - [ ] `TokenInspector.svelte`
+- [ ] **Type Safety**: Resolve `no-unsafe-*` and `no-explicit-any` errors.
+  - [ ] `Diagram.svelte`
+  - [ ] `SurfaceManager.svelte` (heavy usage of `any`)
+  - [ ] `SurfaceRow.svelte` (heavy usage of `any`)
+  - [ ] `ThemeBuilder.svelte`
+- [ ] **Void Expressions**: Fix `no-confusing-void-expression` in arrow functions.
+  - [ ] `HueShiftVisualizer.svelte`
+  - [ ] `ThemeToggle.svelte`
+  - [ ] `AnchorGraph.svelte`
+  - [ ] `KeyColorsEditor.svelte`
+  - [ ] `SurfaceManager.svelte`
+  - [ ] `SurfaceRow.svelte`
+  - [ ] `ThemeBuilder.svelte`
+  - [ ] `TokenInspector.svelte`
+- [ ] **Mustache Interpolation**: Fix `svelte/no-useless-mustaches`.
+  - [ ] `HueShiftVisualizer.svelte`
+  - [ ] `ThemeBuilder.svelte`
 
-## 2. Configuration Updates
+## 2. Script Fixes
 
-- [ ] **ESLint**:
-  - [ ] Update `eslint.config.js` to include `site/` (remove `demo/` from ignores if it's gone).
-  - [ ] Add support for **Astro** files (`eslint-plugin-astro`).
-  - [ ] Add support for **Svelte** files (`eslint-plugin-svelte`).
-  - [ ] Ensure `typescript-eslint` is correctly configured for the new project structure.
-- [ ] **Prettier**:
-  - [ ] Ensure `.prettierrc` exists and is configured.
-  - [ ] Ensure `eslint-config-prettier` is used to prevent conflicts.
+- [ ] **Check Links**: Fix `scripts/check-links.ts` (return types, floating promises).
 
-## 3. Coverage Infrastructure
+## 3. Library Fixes
 
-- [ ] **Expand Coverage**:
-  - [ ] Update `vitest.config.ts` to include `src/cli/**/*.ts`.
-- [ ] **Thresholds**:
-  - [ ] Configure coverage thresholds in `vitest.config.ts` (start with a baseline, e.g., 80% or current levels).
-- [ ] **Reporting**:
-  - [ ] Ensure `test:coverage` generates a report that can be viewed easily.
+- [ ] **Exporters**: Fix `no-unnecessary-condition` in `dtcg.ts` and `tailwind.ts`.
 
 ## 4. Verification
 
-- [ ] Run the linter on the entire codebase.
-- [ ] Document the number of errors/warnings (to be fixed in Phase 2).
-- [ ] Ensure the lint command is wired up in `package.json` and `lefthook.yml`.
-
-## 4. Verification
-
-- [ ] Run the linter on the entire codebase.
-- [ ] Document the number of errors/warnings (to be fixed in Phase 2).
-- [ ] Ensure the lint command is wired up in `package.json` and `lefthook.yml`.
-- [ ] Verify coverage reports are generated and thresholds are enforced.
-
-## 5. User Feedback
-
-- [ ] Confirm if there are specific rules or plugins the user wants to enforce.
+- [ ] Run `pnpm lint` to confirm 0 errors.
+- [ ] Run `pnpm test:coverage` to ensure no regressions.
