@@ -29,14 +29,25 @@ These tokens are scoped to the surface class (e.g., `.surface-card`). They chang
 
 ## Utility Classes
 
-These utility classes provide a semantic layer over the raw tokens. By using them, you decouple your components from specific variable names and ensure that design patterns—like how a surface border behaves or how a focus ring appears—are applied consistently across your application.
+These utility classes provide a semantic layer over the raw tokens.
+
+### Context Accessors
+
+These utilities allow elements to "read" the current surface context and apply it to specific properties. Use these when you need an element to match the _current_ surface (e.g., for masking or blending) without creating a new surface context.
+
+| Class             | Description                                   |
+| :---------------- | :-------------------------------------------- |
+| `.bg-surface`     | Sets `background-color` to the surface token. |
+| `.border-surface` | Sets `border-color` to the surface token.     |
+| `.stroke-surface` | Sets SVG `stroke` to the surface token.       |
+| `.fill-subtlest`  | Sets SVG `fill` to the subtlest text token.   |
+
+### Interaction States
+
+These utilities apply system-wide interaction styles, ensuring consistency for focus and selection states.
 
 | Class                 | Description                                      |
 | :-------------------- | :----------------------------------------------- |
-| `.bg-surface`         | Sets `background-color` to the surface token.    |
-| `.border-surface`     | Sets `border-color` to the surface token.        |
-| `.stroke-surface`     | Sets SVG `stroke` to the surface token.          |
-| `.fill-subtlest`      | Sets SVG `fill` to the subtlest text token.      |
 | `.ring-focus-static`  | Applies a static focus ring.                     |
 | `.focus-visible-ring` | Applies a focus ring only on `:focus-visible`.   |
 | `.border-highlight`   | Sets `border-color` to the highlight ring color. |
