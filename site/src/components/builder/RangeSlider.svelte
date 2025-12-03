@@ -259,9 +259,11 @@
   .handle.shape-pill {
     width: auto;
     min-width: 60px;
-    height: 32px;
-    border-radius: 16px;
-    padding: 0 12px;
+    height: 28px; /* Slightly smaller height to reduce bulk */
+    border-radius: 14px;
+    padding: 0 10px;
+    font-size: 0.7rem; /* Smaller text to prevent overflow */
+    white-space: nowrap;
   }
 
   .handle:hover {

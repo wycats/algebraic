@@ -146,37 +146,6 @@
           </span>
         </div>
       </div>
-      <!-- Dark Mode Zone (Below) -->
-      <div class="slider-layer dark-layer">
-        <div class="zone-label bottom">Dark Mode</div>
-
-        <!-- Projection Lines -->
-        <div class="projection-line" style="left: {darkSurface * 100}%"></div>
-        <div class="projection-line" style="left: {darkInk * 100}%"></div>
-
-        <RangeSlider
-          start={darkSurface}
-          end={darkInk}
-          label="Dark Mode"
-          fillClass="surface-action"
-          handleClass="surface-action"
-          startHandleShape="pill"
-          endHandleShape="pill"
-          startHandleLabel="Surface"
-          endHandleLabel="Ink"
-          onChange={handleDarkChange}
-        />
-        <!-- Contrast Badge (Pill on Bridge) -->
-        <div
-          class="contrast-badge dark font-mono"
-          style="left: {((darkSurface + darkInk) / 2) * 100}%"
-        >
-          <span class={getContrastColorClass(darkContrast)}>
-            {getContrastIcon(darkContrast)}
-            {darkContrast.toFixed(1)}:1
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -322,24 +291,36 @@
   }
 
   /* Position Handles and Tethers */
-  /* Light Mode: Handles in top lane */
+  /* Light Mode: Handles centered in top lane */
   .light-layer :global(.range-fill),
   .light-layer :global(.handle) {
-    top: 20% !important;
+    top: 50% !important;
   }
 
-  /* Dark Mode: Handles in bottom lane */
+  /* Dark Mode: Handles centered in bottom lane */
   .dark-layer :global(.range-fill),
   .dark-layer :global(.handle) {
-    top: 80% !important;
+    top: 50% !important;
   }
 
-  /* Bridge Styling (Thicker tether, neutral) */
-  .slider-layer :global(.bridge) {
-    height: 6px !important; /* Thicker structural beam */
-    border-radius: 3px;
-    border: 1px solid var(--border-subtle);
-    z-index: 1;
+  /* Projection Lines */
+  .projection-line {
+    position: absolute;
+    width: 1px;
+    background-color: transparent;
+    border-left: 1px dashed var(--text-subtle);
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  .light-layer .projection-line {
+    top: 50%; /* Start from handle center */
+    bottom: 0; /* Go to equator */
+  }
+
+  .dark-layer .projection-line {
+    top: 0; /* Start from equator */
+    bottom: 50%; /* Go to handle center */
   }
 
   .contrast-badge {
@@ -360,12 +341,12 @@
   }
 
   .contrast-badge.light {
-    top: 20%; /* Positioned on the bridge */
+    top: 50%; /* Positioned on the bridge */
     margin-top: -14px; /* Center vertically on bridge */
   }
 
   .contrast-badge.dark {
-    top: 80%; /* Positioned on the bridge */
+    top: 50%; /* Positioned on the bridge */
     margin-top: -14px; /* Center vertically on bridge */
   }
 
