@@ -61,6 +61,7 @@ The current Theme Builder UI is functional but sparse. It lacks data density and
     - List of available tokens and their semantic meaning.
     - Examples of correct usage (surfaces, modifiers).
     - Architecture overview (Solver -> CSS Engine).
+  - **Strategy**: Generate this file from the documentation build process to ensure it stays up-to-date.
 
 ## Architecture
 

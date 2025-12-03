@@ -44,6 +44,7 @@ const config: KnipConfig = {
         "dist/**",
         ".astro/**",
         "src/components/builder/ColorPicker.svelte",
+        "src/components/builder/SurfaceManager.svelte",
       ],
       ignoreDependencies: [
         "astro",

@@ -1,55 +1,46 @@
-# Walkthrough: Reactive Pipeline Architecture
+# Walkthrough - Epoch 24: Fresh Eyes Simulation
 
-## Overview
+## Phase 1: The "Zero to One" Simulation
 
-In this phase, we refactored the CSS engine to support "Late-Binding" color resolution. This allows utilities like `.text-subtle` and `.hue-brand` to be composed dynamically.
+We successfully simulated a new user onboarding experience by creating a fresh Astro project in `examples/smoke-test` and installing the library from a local tarball.
 
-## Key Changes
+### Key Findings
 
-### 1. Indirection Variables
+- The core flow (Install -> Init -> Build) is robust.
+- The generated CSS and TypeScript files are correct.
+- The documentation has minor inconsistencies regarding package manager syntax (`pnpm` vs `npx`).
 
-We introduced a layer of indirection in `css/engine.css`. Instead of calculating colors directly from tokens, the engine now calculates them from "Source Variables":
+### Artifacts
 
-- `--text-lightness-source` (Defaults to `--axm-text-high-token`)
-- `--text-chroma-source` (Defaults to `--base-chroma`)
-- `--text-hue-source` (Defaults to `--base-hue`)
+- `examples/smoke-test/`: A working Astro project with the library installed.
+- `docs/agent-context/current/friction-log.md`: Detailed log of the simulation.
 
-### 2. Utility Logic
+## Phase 2: The "Integration" Simulation
 
-Utilities now modify these _inputs_ rather than setting `color` directly.
+We extended the smoke test to verify the "Reactive Pipeline" features:
 
-- **`.text-subtle`**: Sets `--text-lightness-source: var(--axm-text-subtle-token)`.
-- **`.hue-brand`**: Sets `--text-hue-source` and `--text-chroma-source`.
+1.  **Custom Surfaces**: Added a `sidebar` surface to `color-config.json`.
+2.  **Presets**: Configured a typography scale.
+3.  **Verification**: Verified that `axiomatic build` generates the correct CSS variables and utility classes.
 
-### 3. The Calculation
+### Key Findings
 
-The engine re-calculates the final color whenever these inputs change:
+- **Stale Build Issue**: We discovered that `pnpm pack` does not automatically rebuild the project. This led to a confusing debugging session where changes to `src/` were not reflected in the installed package.
+- **Type Error**: We found and fixed a TypeScript error in `src/lib/utilities.ts` that was preventing the build from succeeding.
+- **Success**: After fixing the build pipeline, the integration worked as expected. Custom surfaces and typography presets were correctly generated and usable in the application.
 
-```css
---computed-fg-color: oklch(
-  from var(--text-lightness-source) l var(--computed-fg-C) var(--computed-fg-H)
-);
-```
+## Phase 3: Remediation
 
-This ensures that `.text-subtle` inside a `.hue-brand` context correctly picks up the brand hue while maintaining the subtle lightness.
+We addressed the issues identified in the Friction Log:
 
-### 4. Presets & Typography
+1.  **Documentation**: Updated `quick-start.mdx` to use `<Tabs>` for build commands and added a note about importing CSS in bundlers.
+2.  **Process**: Added a `prepack` script to `package.json` to ensure the distribution is always up-to-date before packing.
+3.  **Code**: Fixed the TypeScript error in `src/lib/utilities.ts`.
 
-We implemented a mathematical typography scale using Cubic Bezier interpolation.
+## Phase 4: LLM Context Strategy
 
-- **Configuration**: Added `TypeScaleConfig` to `SolverConfig`.
-- **Logic**: `generateTypeScale` calculates font sizes based on a curve, allowing for fluid scaling from `minSize` to `maxSize`.
-- **Output**: Generates `--axm-preset-text-*` variables and corresponding utility classes (`.text-sm`, `.text-xl`, etc.).
+We designed a strategy for generating `llms.txt` to help AI agents understand the system. The plan is documented in `docs/design/llm-context-strategy.md`.
 
-### 5. Border Refactor
+## Conclusion
 
-We separated border definitions into structural and cosmetic components.
-
-- **Structure**: `--axm-preset-border-width` and `--axm-preset-border-style`.
-- **Utilities**:
-  - `.preset-bordered`: Applies the structural variables.
-  - `.bordered`: Applies the cosmetic color (legacy/simple usage).
-
-## Verification
-
-We verified the changes by regenerating `css/theme.css` and inspecting the output. The generated CSS now contains the correct variable assignments.
+Epoch 24 successfully validated the "Zero to One" user experience. We identified and fixed a critical build process issue (`prepack`) and improved the documentation. The system is now more robust for new users.

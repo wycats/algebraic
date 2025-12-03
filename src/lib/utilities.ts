@@ -65,7 +65,7 @@ export function generatePresetUtilities(
   const fonts = { ...DEFAULT_FONTS, ...typography.fonts };
   const weights = { ...DEFAULT_WEIGHTS, ...typography.weights };
 
-  let sizes = { ...DEFAULT_SIZES, ...typography.sizes };
+  let sizes: Record<string, string> = { ...DEFAULT_SIZES, ...typography.sizes };
   if (typography.scale) {
     sizes = generateTypeScale(typography.scale);
   }

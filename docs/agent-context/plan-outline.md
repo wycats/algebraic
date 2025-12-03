@@ -79,7 +79,20 @@
   - **Phase 1: Reactive Pipeline & Presets (Completed)**
     - **Goal**: Refactor `engine.css` to use late-binding variables and implement Bezier-based typography scaling.
 
-## Epoch 24: Developer Tooling (Planned)
+## Epoch 24: Fresh Eyes Simulation (Planned)
+
+- **Goal**: Validate the end-to-end user experience by simulating a new user adopting the system in a fresh environment, identifying friction points in the documentation and CLI.
+- **Phases**:
+  - **Phase 1: The "Zero to One" Simulation**
+    - **Goal**: Create a fresh, isolated project and attempt to install/configure the library using _only_ the public instructions.
+  - **Phase 2: The "Integration" Simulation**
+    - **Goal**: Attempt to build a simple UI using the "Reactive Pipeline" features in this fresh project.
+  - **Phase 3: Remediation**
+    - **Goal**: Fix the issues discovered in the Friction Log.
+  - **Phase 4: LLM Context Strategy (Research)**
+    - **Goal**: Design the strategy for generating `llms.txt` from the now-verified documentation.
+
+## Epoch 25: Developer Tooling (Planned)
 
 - **Goal**: Create a world-class developer experience for users of the Axiomatic Color system.
 - **Phases**:

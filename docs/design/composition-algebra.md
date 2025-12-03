@@ -36,16 +36,20 @@ Classes in the system are **Operators** that transform the state vector $\Sigma 
 
 ### 3.1. Surface Operator ($S$)
 
-A Surface establishes a new context. It is a "Reset" operator for Intent, but a "Inherit/Modify" operator for Context.
+A Surface establishes a new context. It acts as a **Filter** for Context ($H, C$) but a **Barrier** for Intent ($L_{src}$).
 
-$$ S*{type}(\langle H, C, L*{src}, \alpha \rangle) = \langle H', C', L\_{default}, \alpha' \rangle $$
+$$ S*{type}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C*{ambient}, L*{default}, \alpha' \rangle $$
 
-- **Input**: Inherits $H$ and $C$ (unless overridden by specific surface types like `surface-tinted`).
-- **Output**:
-  - Resets $L_{src}$ to $L_{high}$ (The default text intent).
-  - **Polarity Flip**: Surfaces like `surface-spotlight` explicitly redefine the mapping of $L_{src}$ tokens. For example, in Light Mode, a spotlight surface forces $L_{high}$ to be white (inverted), effectively flipping $\alpha$ locally without changing the global `color-scheme`.
+- **Context Permeability**: $H$ is passed through. $C$ is passed through but often dampened to an "ambient" level ($C_{ambient} \approx 0.1 \times C$).
+- **Intent Opacity**: $L_{src}$ is reset to $L_{high}$.
+- **Polarity**: $\alpha$ may be flipped (e.g. `surface-spotlight`).
 
-> **In Plain English**: A Surface is a "clean slate". When you enter a card or a sidebar, it might keep the color theme ($H, C$), but it forgets any text styles from the outside ($L_{src}$ resets to default). It also decides if we are flipping to dark mode.
+> **Rationalization: Ambient vs. Semantic State**
+>
+> We can rationalize this behavior by distinguishing between two types of state:
+>
+> 1.  **Environmental State ($H, C$)**: This behaves like **Ambient Light**. If a room is lit with red light, objects inside (Surfaces) should reflect that red tint. The atmosphere permeates boundaries.
+> 2.  **Semantic State ($L_{src}$)**: This behaves like **Grammar**. A "Card" is a new sentence. Just because the previous sentence ended quietly (Subtle) doesn't mean the new sentence (Card Title) should start quietly. The grammar resets at the boundary of the object.
 
 ### 3.2. Intent Operator ($I$)
 
@@ -73,6 +77,12 @@ $$ M*{brand}(\langle H, C, L*{src}, \alpha \rangle) = \langle H*{brand}, C*{bran
 
 ### 4.1. Orthogonality (Commutativity of $I$ and $M$)
 
+Because Intent ($I$) and Modifiers ($M$) operate on disjoint components of the state vector, they are commutative.
+
+$$ I(M(\Sigma)) \equiv M(I(\Sigma)) $$
+
+**Implication**: The order of classes in HTML (`class="text-subtle hue-brand"` vs `class="hue-brand text-subtle"`) does not matter for the resulting color.
+
 > **In Plain English**: Because `.text-subtle` only touches Lightness, and `.hue-brand` only touches Color, they don't step on each other's toes. You can combine them in any order, and the result is always "Subtle Brand Color".
 
 ### 4.2. Surface Dominance
@@ -86,13 +96,7 @@ $$ \text{Inside Surface: } \Phi(S(I(\Sigma))) \neq \Phi(I(S(\Sigma))) $$
 
 **Implication**: You must apply text utilities _inside_ or _on_ the element that needs them.
 
-> **In Plain English**: Surfaces are barriers. If you make a container "subtle", and then put a Card inside it, the text inside the Card goes back to normal. The Card protects its contents from the outside world's text styles
-> $$ \text{Inside Surface: } \Phi(S(I(\Sigma))) \neq \Phi(I(S(\Sigma))) $$
-
-- $S(I(\Sigma))$: The surface resets the intent. The outer intent is lost.
-- $I(S(\Sigma))$: The intent is applied _to_ the surface's context.
-
-**Implication**: You must apply text utilities _inside_ or _on_ the element that needs them.
+> **In Plain English**: Surfaces are barriers. If you make a container "subtle", and then put a Card inside it, the text inside the Card goes back to normal. The Card protects its contents from the outside world's text styles.
 
 ## 5. Invariants
 

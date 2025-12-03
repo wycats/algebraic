@@ -26,10 +26,20 @@ This creates a `color-config.json` file with default settings.
 
 Now, generate the CSS and TypeScript definitions.
 
-```bash
-npx axiomatic build --out ./src/theme.css
-npx axiomatic export --format typescript --out ./src/theme.ts
-```
+<Tabs>
+  <TabItem label="npm">
+    ```bash
+    npx axiomatic build --out ./src/theme.css
+    npx axiomatic export --format typescript --out ./src/theme.ts
+    ```
+  </TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm exec axiomatic build --out ./src/theme.css
+    pnpm exec axiomatic export --format typescript --out ./src/theme.ts
+    ```
+  </TabItem>
+</Tabs>
 
 ## 3. Build a Card
 
@@ -91,6 +101,9 @@ Then, create a Card component:
   <TabItem label="HTML">
   
   Link the CSS in your `<head>`:
+  
+  > **Note**: If you are using a bundler (like Vite, Webpack, or Astro), you should import the CSS file in your JavaScript/TypeScript entry point instead (e.g. `import './theme.css'`).
+
   ```html
   <link rel="stylesheet" href="/theme.css">
   ```
