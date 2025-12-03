@@ -1,56 +1,61 @@
 <script lang="ts">
-  import { getContext } from "svelte";
+  import { APCAcontrast, sRGBtoY } from "apca-w3";
   import { converter } from "culori";
+  import { getContext } from "svelte";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import RangeSlider from "./RangeSlider.svelte";
 
   const configState = getContext<ConfigState>("config");
-  let config = configState.config;
 
-  // Dark Mode: Surface (Start) -> Ink (End)
-  let darkSurface = $derived(config.anchors.page.dark.start.background);
-  let darkInk = $derived(config.anchors.page.dark.end.background);
+  // Dark Mode: Page (Start) -> Limit (End)
+  let darkPage = $derived(
+    configState.config.anchors.page.dark.start.background,
+  );
+  let darkLimit = $derived(configState.config.anchors.page.dark.end.background);
 
-  // Light Mode: Ink (End) -> Surface (Start)
-  let lightInk = $derived(config.anchors.page.light.end.background);
-  let lightSurface = $derived(config.anchors.page.light.start.background);
+  // Light Mode: Limit (End) -> Page (Start)
+  let lightLimit = $derived(
+    configState.config.anchors.page.light.end.background,
+  );
+  let lightPage = $derived(
+    configState.config.anchors.page.light.start.background,
+  );
 
-  // WCAG Contrast Calculation
+  // Count surfaces using 'page' polarity
+  let pageSurfaceCount = $derived(
+    configState.config.groups.reduce((count, group) => {
+      return count + group.surfaces.filter((s) => s.polarity === "page").length;
+    }, 0),
+  );
+
+  // APCA Contrast Calculation
   const toRgb = converter("rgb");
 
-  function getWCAGContrast(l1: number, l2: number): number {
-    function getLuminance(l: number): number {
+  function getAPCA(l1: number, l2: number): number {
+    function getY(l: number): number {
       const rgb = toRgb({ mode: "oklch", l: l, c: 0, h: 0 });
-      const { r, g, b } = rgb;
-      const sRGB = [r, g, b].map((c) => {
-        if (c <= 0.03928) {
-          return c / 12.92;
-        } else {
-          return Math.pow((c + 0.055) / 1.055, 2.4);
-        }
-      });
-      return 0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2];
+      // Convert 0-1 RGB to 0-255 integer array for sRGBtoY
+      const r = Math.round(Math.max(0, Math.min(1, rgb.r)) * 255);
+      const g = Math.round(Math.max(0, Math.min(1, rgb.g)) * 255);
+      const b = Math.round(Math.max(0, Math.min(1, rgb.b)) * 255);
+      return sRGBtoY([r, g, b]);
     }
 
-    const lum1 = getLuminance(l1);
-    const lum2 = getLuminance(l2);
-    const lighter = Math.max(lum1, lum2);
-    const darker = Math.min(lum1, lum2);
-    return (lighter + 0.05) / (darker + 0.05);
+    const y1 = getY(l1);
+    const y2 = getY(l2);
+    const contrast = APCAcontrast(y1, y2);
+    return Math.abs(typeof contrast === "number" ? contrast : 0);
   }
 
-  let darkContrast = $derived(getWCAGContrast(darkSurface, darkInk));
-  let lightContrast = $derived(getWCAGContrast(lightSurface, lightInk));
+  let darkContrast = getAPCA(darkLimit, darkPage);
+  let lightContrast = getAPCA(lightLimit, lightPage);
 
-  function getContrastColorClass(ratio: number): string {
-    if (ratio >= 7) return "text-success";
-    if (ratio >= 4.5) return "text-warning";
-    return "text-error";
-  }
-
-  function getContrastIcon(ratio: number): string {
-    if (ratio >= 4.5) return "✅";
-    return "⚠️";
+  function getHandleStyle(l: number): string {
+    const rgb = toRgb({ mode: "oklch", l, c: 0, h: 0 });
+    const bg = `rgb(${Math.round(rgb.r * 255)}, ${Math.round(rgb.g * 255)}, ${Math.round(rgb.b * 255)})`;
+    const color = l > 0.5 ? "black" : "white";
+    const borderColor = l > 0.5 ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.3)";
+    return `background-color: ${bg} !important; color: ${color} !important; border: 1px solid ${borderColor} !important;`;
   }
 
   function handleDarkChange(start: number, end: number): void {
@@ -70,11 +75,7 @@
   </div>
 
   <div class="spectrum-track-wrapper">
-    <!-- Axis Labels -->
-    <div class="axis-labels text-subtle font-mono">
-      <span>0% (Black)</span>
-      <span>100% (White)</span>
-    </div>
+    <div class="zone-label top-left">Light Mode</div>
 
     <!-- The Track Container -->
     <div class="spectrum-track surface-workspace">
@@ -83,70 +84,82 @@
 
       <!-- Light Mode Zone (Above) -->
       <div class="slider-layer light-layer">
-        <div class="zone-label top-left">Light Mode</div>
-
         <!-- Projection Lines -->
-        <div class="projection-line" style="left: {lightInk * 100}%"></div>
-        <div class="projection-line" style="left: {lightSurface * 100}%"></div>
+        <div class="projection-line" style="left: {lightLimit * 100}%"></div>
+        <div class="projection-line" style="left: {lightPage * 100}%"></div>
 
         <RangeSlider
-          start={lightInk}
-          end={lightSurface}
+          start={lightLimit}
+          end={lightPage}
           label="Light Mode"
           trackClass="invisible-track"
           fillClass="surface-action bridge"
           handleClass="surface-action"
           startHandleShape="pill"
           endHandleShape="pill"
-          startHandleLabel="Ink"
-          endHandleLabel="Surface"
+          startHandleLabel="Limit"
+          endHandleLabel="Page"
+          startHandleStyle={getHandleStyle(lightLimit)}
+          endHandleStyle={getHandleStyle(lightPage)}
+          minRange={0.05}
           onChange={handleLightChange}
         />
-        <!-- Contrast Badge (Pill on Bridge) -->
+        <!-- Contrast Badge -->
         <div
-          class="contrast-badge surface-card light font-mono"
-          style="left: {((lightInk + lightSurface) / 2) * 100}%"
+          class="contrast-badge font-mono"
+          style="left: {((lightLimit + lightPage) / 2) * 100}%"
         >
-          <span class={getContrastColorClass(lightContrast)}>
-            {getContrastIcon(lightContrast)}
-            {lightContrast.toFixed(1)}:1
-          </span>
+          <div class="badge-content">
+            <span class="badge-text"
+              >Lc {Math.round(lightContrast)} spread over {pageSurfaceCount} surface{pageSurfaceCount !==
+              1
+                ? "s"
+                : ""}</span
+            >
+          </div>
         </div>
       </div>
 
       <!-- Dark Mode Zone (Below) -->
       <div class="slider-layer dark-layer">
-        <div class="zone-label bottom-left">Dark Mode</div>
-
         <!-- Projection Lines -->
-        <div class="projection-line" style="left: {darkSurface * 100}%"></div>
-        <div class="projection-line" style="left: {darkInk * 100}%"></div>
+        <div class="projection-line" style="left: {darkPage * 100}%"></div>
+        <div class="projection-line" style="left: {darkLimit * 100}%"></div>
 
         <RangeSlider
-          start={darkSurface}
-          end={darkInk}
+          start={darkPage}
+          end={darkLimit}
           label="Dark Mode"
           trackClass="invisible-track"
           fillClass="surface-action bridge"
           handleClass="surface-action"
           startHandleShape="pill"
           endHandleShape="pill"
-          startHandleLabel="Surface"
-          endHandleLabel="Ink"
+          startHandleLabel="Page"
+          endHandleLabel="Limit"
+          startHandleStyle={getHandleStyle(darkPage)}
+          endHandleStyle={getHandleStyle(darkLimit)}
+          minRange={0.05}
           onChange={handleDarkChange}
         />
-        <!-- Contrast Badge (Pill on Bridge) -->
+        <!-- Contrast Badge -->
         <div
-          class="contrast-badge surface-card dark font-mono"
-          style="left: {((darkSurface + darkInk) / 2) * 100}%"
+          class="contrast-badge font-mono"
+          style="left: {((darkPage + darkLimit) / 2) * 100}%"
         >
-          <span class={getContrastColorClass(darkContrast)}>
-            {getContrastIcon(darkContrast)}
-            {darkContrast.toFixed(1)}:1
-          </span>
+          <div class="badge-content">
+            <span class="badge-text"
+              >Lc {Math.round(darkContrast)} spread over {pageSurfaceCount} surface{pageSurfaceCount !==
+              1
+                ? "s"
+                : ""}</span
+            >
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="zone-label bottom-left">Dark Mode</div>
   </div>
 </div>
 
@@ -183,8 +196,7 @@
 
   .spectrum-track {
     position: relative;
-    height: 200px; /* Increased height for Lanes layout */
-    /* background: var(--surface-2); Removed in favor of surface-workspace class */
+    height: 200px;
     border-radius: 6px;
   }
 
@@ -193,7 +205,7 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 20px; /* Thicker Ruler */
+    height: 20px;
     transform: translateY(-50%);
     background: linear-gradient(to right, black, white);
     border-radius: 2px;
@@ -201,7 +213,7 @@
     z-index: 0;
   }
 
-  /* Ticks on Ruler */
+  /* Ticks on Ruler: 0, 50, 100 */
   .gradient-bg::before {
     content: "";
     position: absolute;
@@ -209,13 +221,22 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: repeating-linear-gradient(
+    background: linear-gradient(
       to right,
-      rgba(128, 128, 128, 0.5) 0,
-      rgba(128, 128, 128, 0.5) 1px,
-      transparent 1px,
-      transparent 10%
+      rgba(128, 128, 128, 0.8) 1px,
+      transparent 1px
     );
+    background-size: 50% 100%;
+    pointer-events: none;
+  }
+  .gradient-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    background: rgba(128, 128, 128, 0.8);
     pointer-events: none;
   }
 
@@ -223,7 +244,7 @@
     position: absolute;
     left: 0;
     width: 100%;
-    height: 50%; /* Each zone takes half height */
+    height: 50%;
     pointer-events: none;
   }
 
@@ -238,51 +259,48 @@
   }
 
   .zone-label {
-    position: absolute;
-    left: 0; /* Align with edge */
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--text-subtle);
+    color: var(--text-strong);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    z-index: 5;
-    background: var(
-      --surface-workspace
-    ); /* Match track background to mask line if needed */
-    padding: 2px 6px 2px 0;
+    padding: 4px 8px;
+    background: var(--surface-workspace);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    align-self: flex-start;
   }
 
   .zone-label.top-left {
-    top: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   .zone-label.bottom-left {
-    bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 
-  /* Projection Lines */
+  /* Projection Lines - More visible */
   .projection-line {
     position: absolute;
     width: 1px;
     background-color: transparent;
-    border-left: 1px dashed var(--text-subtle);
-    opacity: 0.4;
+    border-left: 1px dashed rgba(0, 0, 0, 0.5); /* Darker, more visible */
     z-index: 0;
   }
 
   .light-layer .projection-line {
-    top: 20%; /* Start from handle center */
-    bottom: 0; /* Go to equator */
+    top: 50%;
+    bottom: 0;
   }
 
   .dark-layer .projection-line {
-    top: 0; /* Start from equator */
-    bottom: 20%; /* Go to handle center */
+    top: 0;
+    bottom: 50%;
   }
 
   /* Make RangeSlider children interactive */
   .slider-layer :global(.range-slider) {
-    pointer-events: none;
+    pointer-events: auto;
   }
   .slider-layer :global(.range-fill),
   .slider-layer :global(.handle) {
@@ -295,76 +313,83 @@
   }
 
   /* Position Handles and Tethers */
-  /* Light Mode: Handles centered in top lane */
   .light-layer :global(.range-fill),
   .light-layer :global(.handle) {
     top: 50% !important;
   }
 
-  /* Dark Mode: Handles centered in bottom lane */
   .dark-layer :global(.range-fill),
   .dark-layer :global(.handle) {
     top: 50% !important;
   }
 
-  /* Projection Lines */
-  .projection-line {
-    position: absolute;
-    width: 1px;
-    background-color: transparent;
-    border-left: 1px dashed var(--text-subtle);
-    opacity: 0.4;
-    z-index: 0;
-  }
-
-  .light-layer .projection-line {
-    top: 50%; /* Start from handle center */
-    bottom: 0; /* Go to equator */
-  }
-
-  .dark-layer .projection-line {
-    top: 0; /* Start from equator */
-    bottom: 50%; /* Go to handle center */
+  /* General Handle Styling */
+  .slider-layer :global(.handle) {
+    box-shadow: var(--shadow-sm);
+    /* Background and color are now handled by inline styles */
   }
 
   .contrast-badge {
     position: absolute;
     transform: translateX(-50%);
     font-size: 0.8rem;
-    /* background: var(--surface-1); Handled by surface-card */
-    padding: 4px 12px;
-    border-radius: 16px; /* Pill shape */
-    border: 1px solid var(--border-subtle);
-    white-space: nowrap;
     pointer-events: none;
-    z-index: 10;
-    box-shadow: var(--shadow-sm);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Prevent wrapping */
+  }
+
+  /* Stem for the badge */
+  .contrast-badge::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 1px;
+    background: var(--border-decorative);
+    z-index: -1;
+  }
+
+  .contrast-badge.light,
+  .light-layer .contrast-badge {
+    top: auto;
+    bottom: 50%;
+    margin-bottom: 32px; /* Lift well above handles */
+    margin-top: 0;
+  }
+
+  .light-layer .contrast-badge::before {
+    top: 100%;
+    height: 32px;
+  }
+
+  .contrast-badge.dark,
+  .dark-layer .contrast-badge {
+    top: 50%;
+    bottom: auto;
+    margin-top: 32px; /* Push well below handles */
+    margin-bottom: 0;
+  }
+
+  .dark-layer .contrast-badge::before {
+    bottom: 100%;
+    height: 32px;
+  }
+
+  .badge-content {
     display: flex;
     align-items: center;
     gap: 4px;
+    background: var(--surface-workspace);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-subtle);
   }
 
-  .contrast-badge.light {
-    top: 50%; /* Positioned on the bridge */
-    margin-top: -14px; /* Center vertically on bridge */
-  }
-
-  .contrast-badge.dark {
-    top: 50%; /* Positioned on the bridge */
-    margin-top: -14px; /* Center vertically on bridge */
-  }
-
-  /* Text colors for badges */
-  .text-success {
-    color: var(--color-success, #10b981);
-    font-weight: bold;
-  }
-  .text-warning {
-    color: var(--color-warning, #f59e0b);
-    font-weight: bold;
-  }
-  .text-error {
-    color: var(--color-error, #ef4444);
-    font-weight: bold;
+  .badge-text {
+    color: var(--text-subtle);
+    font-weight: 600;
+    font-size: 0.75rem;
   }
 </style>

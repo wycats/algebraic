@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { converter } from "culori";
   import { setContrast, setVibrancy } from "../../../lib/engine/VibeEngine";
   import { configState } from "../../../lib/state/ConfigState.svelte";
+
+  const toOklch = converter("oklch");
 
   let contrast = $state(50);
   let vibrancy = $state(50);
@@ -12,6 +15,23 @@
   function updateVibrancy(): void {
     setVibrancy(configState.config, vibrancy);
   }
+
+  let hue = $derived.by(() => {
+    const keys = Object.keys(configState.config.anchors.keyColors);
+    if (keys.length > 0) {
+      const color = configState.config.anchors.keyColors[keys[0]];
+      const oklch = toOklch(color);
+      return oklch?.h ?? 0;
+    }
+    return 0;
+  });
+
+  let vibrancyGradient = $derived(
+    `linear-gradient(to right, oklch(0.6 0 ${hue}), oklch(0.6 0.3 ${hue}))`,
+  );
+
+  // Contrast: Visualized as a gradient from low contrast (grayish) to high contrast (black/white)
+  let contrastGradient = "linear-gradient(to right, #999, #000)";
 </script>
 
 <div class="vibe-controls bg-surface">
@@ -24,6 +44,7 @@
         max="100"
         bind:value={contrast}
         oninput={updateContrast}
+        style="background: {contrastGradient}"
       />
     </label>
   </div>
@@ -36,6 +57,7 @@
         max="100"
         bind:value={vibrancy}
         oninput={updateVibrancy}
+        style="background: {vibrancyGradient}"
       />
     </label>
   </div>
@@ -63,5 +85,32 @@
 
   input[type="range"] {
     width: 100%;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    margin-top: 0.25rem;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--computed-border-dec-color, #ccc);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--computed-border-dec-color, #ccc);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 </style>

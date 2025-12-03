@@ -804,6 +804,43 @@
   - Updated snapshots in `generator.test.ts` and `scoping.test.ts` to reflect the new class names.
   - Verified that the documentation site builds and renders correctly with the consolidated CSS.
 
+## Epoch 23: Phase 1 - Reactive Pipeline Architecture (2025-12-03)
+
+**Goal**: Implement a "Late-Binding" architecture for CSS utilities, allowing them to be context-aware and composable without combinatorial class explosion.
+
+**Completed Work**:
+
+- **Architecture**:
+  - Designed the "Reactive Pipeline" model ($Color = f(Context, Intent, Modifier)$).
+  - Documented the architecture in `docs/design/reactive-pipeline.md`.
+  - Added "Axiom XII: The Law of Late Binding" to `docs/design/axioms.md`.
+- **Engine Refactor**:
+  - Updated `css/engine.css` to use **Indirection Variables** (`--text-lightness-source`, `--text-hue-source`, etc.) instead of direct token references.
+  - Updated the calculation logic to derive final colors from these sources.
+  - Added text utility selectors to the main calculation block to ensure they trigger color resolution.
+- **Generator Update**:
+  - Updated `src/lib/generator.ts` to generate utilities that set these indirection variables.
+  - `.text-subtle` now sets `--text-lightness-source`.
+  - `.hue-brand` now sets `--text-hue-source` and `--text-chroma-source`.
+- **Verification**:
+  - Regenerated `css/theme.css` and verified the output matches the new architecture.
+
+## Epoch 23: Phase 2 - Presets & Utilities (2025-12-03)
+
+**Goal**: Implement a robust system for presets (Typography, Borders) and refactor the CSS engine to support reactive composition.
+
+**Completed Work**:
+
+- **Typography Scale**:
+  - Implemented `TypeScaleConfig` and Cubic Bezier interpolation for fluid font scaling.
+  - Generated `--axm-preset-text-*` variables and utilities.
+- **Border Refactor**:
+  - Split border definitions into structural (`--axm-preset-border-*`) and cosmetic components.
+  - Created `.preset-bordered` (structure) and `.bordered` (color) utilities.
+- **Verification**:
+  - Updated `surface-lightness.config.json` with the new preset configuration.
+  - Verified the generated CSS contains the correct values.
+
 ## Epoch 22: Phase 2 - Luminance Spectrum UI (2025-12-02)
 
 **Goal**: Replace the disconnected "Page Anchors" sliders with a unified **Luminance Spectrum** visualization to improve the mental model of lightness and contrast.

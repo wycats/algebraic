@@ -14,6 +14,9 @@
     endHandleShape?: "circle" | "square" | "pill";
     startHandleLabel?: string;
     endHandleLabel?: string;
+    startHandleStyle?: string;
+    endHandleStyle?: string;
+    minRange?: number;
     onChange?: (start: number, end: number) => void;
   }
 
@@ -32,6 +35,9 @@
     endHandleShape = "circle",
     startHandleLabel = "",
     endHandleLabel = "",
+    startHandleStyle = "",
+    endHandleStyle = "",
+    minRange: _minRange = 0,
     onChange,
   }: Props = $props();
 
@@ -118,11 +124,15 @@
         // But for a generic RangeSlider, usually min <= max.
         // However, the design doc says "Dark Surface < Dark Ink" (Start < End).
         // So we should enforce start <= end.
-        const newStart = Math.min(newValue, end);
-        onChange?.(newStart, end);
+        // const limit = end - minRange;
+        // const newStart = Math.min(newValue, limit);
+        // console.log("Dragging Start", { newValue, limit, newStart, end });
+        onChange?.(newValue, end);
       } else {
-        const newEnd = Math.max(newValue, start);
-        onChange?.(start, newEnd);
+        // const limit = start + minRange;
+        // const newEnd = Math.max(newValue, limit);
+        // console.log("Dragging End", { newValue, limit, newEnd, start });
+        onChange?.(start, newValue);
       }
     }
   }
@@ -159,7 +169,7 @@
   <button
     class="handle start {handleClass} shape-{startHandleShape}"
     type="button"
-    style="left: {startPercent}%"
+    style="left: {startPercent}%; {startHandleStyle}"
     onpointerdown={(e) => {
       handlePointerDown(e, "start");
     }}
@@ -175,7 +185,7 @@
   <button
     class="handle end {handleClass} shape-{endHandleShape}"
     type="button"
-    style="left: {endPercent}%"
+    style="left: {endPercent}%; {endHandleStyle}"
     onpointerdown={(e) => {
       handlePointerDown(e, "end");
     }}

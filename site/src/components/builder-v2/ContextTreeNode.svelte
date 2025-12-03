@@ -61,8 +61,11 @@
         if (e.key === "Enter") selectNode();
       }}
     >
-      <span class="icon {node.type} {node.type === 'action' ? 'text-link' : ''}"
-      ></span>
+      {#if node.type !== "surface"}
+        <span
+          class="icon {node.type} {node.type === 'action' ? 'text-link' : ''}"
+        ></span>
+      {/if}
       <span class="label">{node.label}</span>
       {#if node.type === "surface"}
         <ContrastBadge slug={node.id} {mode} {solved} />

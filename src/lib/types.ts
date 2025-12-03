@@ -50,6 +50,10 @@ export type ModeSpec = {
   "fg-baseline": number;
   "fg-subtle": number;
   "fg-subtlest": number;
+  debug?: {
+    targetContrast: number;
+    clamped: boolean;
+  };
 };
 
 export type ContrastOffsets = Partial<Record<Mode, number>>;
@@ -157,6 +161,52 @@ export interface ConfigOptions {
   selector?: string;
 }
 
+export interface TypeScaleConfig {
+  /**
+   * Number of sizes to generate (e.g. 5 for xs, sm, base, lg, xl).
+   */
+  steps: number;
+  /**
+   * Base size in rem (e.g. 0.75).
+   */
+  minSize: number;
+  /**
+   * Max size in rem (e.g. 3.0).
+   */
+  maxSize: number;
+  /**
+   * Control points for the scaling curve.
+   */
+  curve: BezierCurve;
+}
+
+export interface TypographyConfig {
+  /**
+   * Font families.
+   * e.g. { mono: "ui-monospace, ...", sans: "system-ui, ..." }
+   */
+  fonts?: Record<string, string>;
+  /**
+   * Font weights.
+   * e.g. { medium: 500, bold: 700 }
+   */
+  weights?: Record<string, number>;
+  /**
+   * Font sizes.
+   * e.g. { sm: "0.875rem", lg: "1.125rem" }
+   */
+  sizes?: Record<string, string>;
+  /**
+   * Configuration for generating a type scale.
+   * If provided, this will override the `sizes` map.
+   */
+  scale?: TypeScaleConfig;
+}
+
+export interface PresetsConfig {
+  typography?: TypographyConfig;
+}
+
 export interface ColorSpec {
   l: number;
   c: number;
@@ -169,6 +219,7 @@ export type SolverConfig = {
   hueShift?: HueShiftConfig;
   borderTargets?: BorderTargets;
   palette?: PaletteConfig;
+  presets?: PresetsConfig;
   options?: ConfigOptions;
 };
 

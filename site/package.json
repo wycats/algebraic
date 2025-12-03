@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "lint:colors": "if grep -rE \"#[0-9a-fA-F]{3,6}|rgb\\(|hsl\\(\" src/components src/content/docs | grep -v \"theme.css\"; then echo \"Error: Hardcoded colors found\"; exit 1; else echo \"No hardcoded colors found\"; exit 0; fi"
+    "lint:colors": "if grep -rE \"#[0-9a-fA-F]{3,6}|rgb\\(|hsl\\(|oklch\\(\" src/components src/content/docs | grep -v \"theme.css\" | grep -v \"HueShiftVisualizer.svelte\" | grep -v \"oklch(from\" | grep -v \"#each\"; then echo \"Error: Hardcoded colors found\"; exit 1; else echo \"No hardcoded colors found\"; exit 0; fi"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",

@@ -64,13 +64,14 @@ export function toDTCG(theme: Theme): Record<string, DTCGGroup> {
         // "fg-high", "fg-strong", etc.
         for (const [key, lightness] of Object.entries(fgSpec)) {
           if (key === "background") continue; // Skip background as it's redundant
+          if (key === "debug") continue; // Skip debug info
 
           // Clean up key name: "fg-high" -> "high"
           const cleanKey = key.replace("fg-", "");
 
           fgTokens[cleanKey] = {
             $type: "color",
-            $value: formatFg(lightness),
+            $value: formatFg(lightness as number),
           };
         }
 

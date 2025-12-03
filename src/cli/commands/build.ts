@@ -57,6 +57,7 @@ export function buildCommand(args: string[], cwd: string): void {
       config.borderTargets,
       { ...config.options, prefix: "axm" },
       config.anchors.keyColors,
+      config.presets,
     );
 
     // --- High Contrast Generation ---
@@ -69,6 +70,7 @@ export function buildCommand(args: string[], cwd: string): void {
       hcConfig.borderTargets,
       { ...config.options, prefix: "axm" },
       config.anchors.keyColors,
+      config.presets,
     );
 
     // Wrap in media query and add overrides

@@ -1,35 +1,55 @@
-# Walkthrough - Epoch 22: Phase 2 - Luminance Spectrum UI
+# Walkthrough: Reactive Pipeline Architecture
 
 ## Overview
 
-We have replaced the disconnected "Page Anchors" sliders with a unified **Luminance Spectrum** visualization. This new component treats Light and Dark modes as two windows onto a single continuous axis of lightness (L\*), providing immediate feedback on contrast ratios and accessibility.
+In this phase, we refactored the CSS engine to support "Late-Binding" color resolution. This allows utilities like `.text-subtle` and `.hue-brand` to be composed dynamically.
 
 ## Key Changes
 
-### 1. New Components
+### 1. Indirection Variables
 
-- **`RangeSlider.svelte`**: A reusable, dual-handle slider component that supports min/max values and drag interactions. It serves as the primitive for the spectrum ranges.
-- **`LuminanceSpectrum.svelte`**: The main container component that visualizes the 0-100% lightness spectrum. It composes two `RangeSlider` instances (one for Dark Mode, one for Light Mode) and calculates real-time contrast ratios.
+We introduced a layer of indirection in `css/engine.css`. Instead of calculating colors directly from tokens, the engine now calculates them from "Source Variables":
 
-### 2. Integration
+- `--text-lightness-source` (Defaults to `--axm-text-high-token`)
+- `--text-chroma-source` (Defaults to `--base-chroma`)
+- `--text-hue-source` (Defaults to `--base-hue`)
 
-- **`AnchorsEditor.svelte`**: Replaced the "Page Context" section of the legacy `ContextGraph` with the new `LuminanceSpectrum` component.
-- **`ContextGraph.svelte`**: Updated to accept `showPage` and `showInverted` props, allowing us to selectively render the "Inverted Context" section while delegating "Page Context" to the new component.
+### 2. Utility Logic
 
-### 3. Features
+Utilities now modify these _inputs_ rather than setting `color` directly.
 
-- **Unified Axis**: Both Light and Dark modes are visualized on a single track, making it easier to understand their relationship.
-- **Contrast Feedback**: Live "Lc" (Lightness Contrast) badges display the contrast ratio between the Surface and Ink handles.
-- **Color-Coded Compliance**: The badges change color (Green/Yellow/Red) based on APCA compliance levels (75+/60+/Fail).
-- **Constraints**: The UI naturally enforces `Surface < Ink` (Dark) and `Ink < Surface` (Light) constraints via the range slider logic.
+- **`.text-subtle`**: Sets `--text-lightness-source: var(--axm-text-subtle-token)`.
+- **`.hue-brand`**: Sets `--text-hue-source` and `--text-chroma-source`.
 
-## Technical Details
+### 3. The Calculation
 
-- **State Management**: Leverages Svelte 5 Runes (`$derived`, `$state`) for reactive updates from `ConfigState`.
-- **Math**: Uses `contrastForPair` from `@axiomatic-design/color` to calculate accurate APCA contrast ratios.
-- **CSS**: Uses absolute positioning and z-indexing to layer the Dark and Light mode sliders on top of the gradient track.
+The engine re-calculates the final color whenever these inputs change:
 
-## Next Steps
+```css
+--computed-fg-color: oklch(
+  from var(--text-lightness-source) l var(--computed-fg-C) var(--computed-fg-H)
+);
+```
 
-- Gather user feedback on the new interaction model.
-- Consider migrating the "Inverted Context" to a similar spectrum visualization if this pattern proves successful.
+This ensures that `.text-subtle` inside a `.hue-brand` context correctly picks up the brand hue while maintaining the subtle lightness.
+
+### 4. Presets & Typography
+
+We implemented a mathematical typography scale using Cubic Bezier interpolation.
+
+- **Configuration**: Added `TypeScaleConfig` to `SolverConfig`.
+- **Logic**: `generateTypeScale` calculates font sizes based on a curve, allowing for fluid scaling from `minSize` to `maxSize`.
+- **Output**: Generates `--axm-preset-text-*` variables and corresponding utility classes (`.text-sm`, `.text-xl`, etc.).
+
+### 5. Border Refactor
+
+We separated border definitions into structural and cosmetic components.
+
+- **Structure**: `--axm-preset-border-width` and `--axm-preset-border-style`.
+- **Utilities**:
+  - `.preset-bordered`: Applies the structural variables.
+  - `.bordered`: Applies the cosmetic color (legacy/simple usage).
+
+## Verification
+
+We verified the changes by regenerating `css/theme.css` and inspecting the output. The generated CSS now contains the correct variable assignments.

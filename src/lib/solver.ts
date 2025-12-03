@@ -226,8 +226,14 @@ function solveBackgroundSequence(
   context: Context,
   anchors: ModeAnchors,
   groups: SurfaceGroup[],
-): Map<string, number> {
-  const backgrounds = new Map<string, number>();
+): Map<
+  string,
+  { lightness: number; debug: { targetContrast: number; clamped: boolean } }
+> {
+  const backgrounds = new Map<
+    string,
+    { lightness: number; debug: { targetContrast: number; clamped: boolean } }
+  >();
   const { mode } = context;
 
   if (groups.length === 0) return backgrounds;
@@ -258,6 +264,7 @@ function solveBackgroundSequence(
       const targetContrast = groupBaseContrast + stagger + offset;
 
       const clampedContrast = clampTo(targetContrast, minContrast, maxContrast);
+      const clamped = Math.abs(targetContrast - clampedContrast) > 0.01;
 
       const solvedL = solveBackgroundForContrast(
         context,
@@ -266,11 +273,16 @@ function solveBackgroundSequence(
         maxBg,
       );
 
-      backgrounds.set(surface.slug, solvedL);
+      backgrounds.set(surface.slug, {
+        lightness: solvedL,
+        debug: { targetContrast, clamped },
+      });
 
       if (surface.states) {
         surface.states.forEach((state) => {
           const stateTarget = clampedContrast + state.offset;
+          const stateClamped = clampTo(stateTarget, minContrast, maxContrast);
+          const isStateClamped = Math.abs(stateTarget - stateClamped) > 0.01;
 
           const stateL = solveBackgroundForContrast(
             context,
@@ -279,7 +291,10 @@ function solveBackgroundSequence(
             maxBg,
           );
 
-          backgrounds.set(`${surface.slug}-${state.name}`, stateL);
+          backgrounds.set(`${surface.slug}-${state.name}`, {
+            lightness: stateL,
+            debug: { targetContrast: stateTarget, clamped: isStateClamped },
+          });
         });
       }
     });
@@ -384,6 +399,10 @@ export function solve(config: SolverConfig): Theme {
   const defaultChroma = 0; // Default to neutral if no specific target
 
   const backgrounds = new Map<string, { light: ColorSpec; dark: ColorSpec }>();
+  const debugInfo = new Map<
+    string,
+    Record<Mode, { targetContrast: number; clamped: boolean }>
+  >();
 
   for (const polarity of ["page", "inverted"] as const) {
     for (const mode of ["light", "dark"] as const) {
@@ -404,11 +423,22 @@ export function solve(config: SolverConfig): Theme {
         filteredGroups,
       );
 
-      for (const [slug, lightness] of sequence.entries()) {
+      for (const [slug, result] of sequence.entries()) {
+        const lightness = result.lightness;
+        const debug = result.debug;
+
         const entry = backgrounds.get(slug) ?? {
           light: { l: 0, c: 0, h: 0 },
           dark: { l: 0, c: 0, h: 0 },
         };
+
+        // Store debug info
+        const debugEntry = debugInfo.get(slug) ?? {
+          light: { targetContrast: 0, clamped: false },
+          dark: { targetContrast: 0, clamped: false },
+        };
+        debugEntry[mode] = debug;
+        debugInfo.set(slug, debugEntry);
 
         // Determine Chroma and Hue
         // 1. Find the surface config
@@ -465,14 +495,18 @@ export function solve(config: SolverConfig): Theme {
 
   const solvedSurfaces = allSurfaces.map((surface) => {
     const background = backgrounds.get(surface.slug);
+    const debug = debugInfo.get(surface.slug);
 
     if (!background) {
       throw new Error(`Missing solved backgrounds for ${surface.slug}.`);
     }
 
     const computed: Record<Mode, ModeSpec> = {
-      light: solveForegroundSpec(background.light.l),
-      dark: solveForegroundSpec(background.dark.l),
+      light: {
+        ...solveForegroundSpec(background.light.l),
+        debug: debug?.light,
+      },
+      dark: { ...solveForegroundSpec(background.dark.l), debug: debug?.dark },
     };
 
     return { ...surface, computed };

@@ -167,8 +167,15 @@
    THE SURFACE ENGINE
    Matches any element with a class starting with "surface-" or containing " surface-"
    Also matches body to apply the page surface globally.
+   Also matches text utilities to ensure they trigger the color calculation.
 */
-:where([class^="surface-"], [class*=" surface-"], body) {
+:where(
+  [class^="surface-"],
+  [class*=" surface-"],
+  [class^="text-"],
+  [class*=" text-"],
+  body
+) {
   /* --- 1. SURFACE CALCULATION --- */
 
   /* Calculate Chroma */
@@ -192,16 +199,42 @@
 
   /* --- 2. TEXT CALCULATION --- */
 
+  /* 
+     Indirection: Lightness Source 
+     Defaults to the High Contrast Text Token.
+     Utilities like .text-subtle will override this variable.
+  */
+  --text-lightness-source: var(--axm-text-high-token);
+
+  /* 
+     Indirection: Chroma Source
+     Defaults to Base Chroma.
+     Utilities like .hue-brand will override this.
+  */
+  --text-chroma-source: var(--base-chroma, 0);
+
+  /* 
+     Indirection: Hue Source
+     Defaults to Base Hue.
+     Utilities like .hue-brand will override this.
+  */
+  --text-hue-source: var(--base-hue, 0);
+
   /* Calculate Text Chroma */
-  --computed-fg-C: var(--override-fg-chroma, calc(var(--base-chroma, 0) * 0.5));
+  /* We use the source chroma, potentially scaled for text legibility if needed */
+  --computed-fg-C: var(
+    --override-fg-chroma,
+    calc(var(--text-chroma-source) * 0.5)
+  );
 
   /* Calculate Text Hue */
-  --computed-fg-H: var(--default-fg-hue, var(--base-hue, 0));
+  --computed-fg-H: var(--default-fg-hue, var(--text-hue-source));
 
   /* Reify Text Color */
-  /* Extract L from text token, apply computed C and H */
+  /* Extract L from the LIGHTNESS SOURCE, apply computed C and H */
   --computed-fg-color: oklch(
-    from var(--axm-text-high-token) l var(--computed-fg-C) var(--computed-fg-H)
+    from var(--text-lightness-source) l var(--computed-fg-C)
+      var(--computed-fg-H)
   );
 
   /* Apply Text Color */

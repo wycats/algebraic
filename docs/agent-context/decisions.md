@@ -505,3 +505,29 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Consistency**: Aligns with the standard "property-modifier" naming convention used elsewhere in the system.
   - **Predictability**: Makes it easier for developers to guess the class name.
+
+### [2025-12-03] Reactive Pipeline Architecture
+
+- **Context**: We needed utilities like `.text-subtle` to work correctly inside context modifiers like `.hue-brand`. Previously, utilities set `color` directly, which overwrote the hue modification.
+- **Decision**: Implement a "Late-Binding" architecture where utilities set "Source Variables" (`--text-lightness-source`, `--text-hue-source`) and the engine calculates the final color.
+- **Rationale**:
+  - **Composability**: Allows orthogonal concerns (Lightness vs Hue) to be composed without combinatorial CSS classes.
+  - **Simplicity**: Reduces the number of generated CSS rules.
+  - **Power**: Enables complex context interactions that were previously impossible with static CSS.
+
+### [2025-12-03] Bezier Typography Scale
+
+- **Context**: We needed a typography scale. We considered a static map (t-shirt sizes) vs a mathematical scale.
+- **Decision**: Use **Cubic Bezier Interpolation** to generate font sizes from a `min` to `max` range over `n` steps.
+- **Rationale**:
+  - **Fluidity**: Allows for non-linear scaling (e.g., larger steps at the top end) that feels more natural than a linear scale.
+  - **Control**: A single curve controls the entire system, making it easy to adjust the "drama" of the typography globally.
+  - **Axiomatic**: Aligns with our philosophy of using math to derive values rather than hardcoding magic numbers.
+
+### [2025-12-03] Structural Border Utilities
+
+- **Context**: The `.bordered` utility was doing too much (setting width, style, and color). This made it hard to have "just a border structure" without forcing a specific color.
+- **Decision**: Split border utilities into **Structural** (`.preset-bordered` setting width/style) and **Cosmetic** (`.bordered` setting color).
+- **Rationale**:
+  - **Separation of Concerns**: Allows layout (width/style) to be defined separately from theme (color).
+  - **Flexibility**: Enables "invisible" borders that take up space (for alignment) or borders that change color on hover without redefining width.

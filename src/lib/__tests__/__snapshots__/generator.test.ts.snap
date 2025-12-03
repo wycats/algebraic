@@ -16,9 +16,17 @@ exports[`generateTokensCss > generates correct CSS for a standard surface group 
 }
 
 .surface-page, body {
+  --local-light-h: 0;
+  --local-light-c: 0;
+  --local-dark-h: 0;
+  --local-dark-c: 0;
+  --surface-light-h: var(--base-hue, var(--local-light-h));
+  --surface-light-c: var(--base-chroma, var(--local-light-c));
+  --surface-dark-h: var(--base-hue, var(--local-dark-h));
+  --surface-dark-c: var(--base-chroma, var(--local-dark-c));
   --surface-token: light-dark(
-    oklch(0.98 0 0),
-    oklch(0.1 0 0)
+    oklch(0.98 var(--surface-light-c) var(--surface-light-h)),
+    oklch(0.1 var(--surface-dark-c) var(--surface-dark-h))
   );
   --text-high-token: light-dark(
     oklch(0 0 0),
@@ -42,16 +50,28 @@ exports[`generateTokensCss > generates correct CSS for a standard surface group 
   );
 }
 .surface-page:hover {
+  --local-light-h: 0;
+  --local-light-c: 0;
+  --local-dark-h: 0;
+  --local-dark-c: 0;
   --surface-token: light-dark(
-    oklch(0.95 0 0),
-    oklch(0.15 0 0)
+    oklch(0.95 var(--base-chroma, var(--local-light-c)) var(--base-hue, var(--local-light-h))),
+    oklch(0.15 var(--base-chroma, var(--local-dark-c)) var(--base-hue, var(--local-dark-h)))
   );
 }
 
 .surface-card {
+  --local-light-h: 0;
+  --local-light-c: 0;
+  --local-dark-h: 0;
+  --local-dark-c: 0;
+  --surface-light-h: var(--base-hue, var(--local-light-h));
+  --surface-light-c: var(--base-chroma, var(--local-light-c));
+  --surface-dark-h: var(--base-hue, var(--local-dark-h));
+  --surface-dark-c: var(--base-chroma, var(--local-dark-c));
   --surface-token: light-dark(
-    oklch(1 0 0),
-    oklch(0.2 0 0)
+    oklch(1 var(--surface-light-c) var(--surface-light-h)),
+    oklch(0.2 var(--surface-dark-c) var(--surface-dark-h))
   );
   --text-high-token: light-dark(
     oklch(0 0 0),
@@ -74,7 +94,40 @@ exports[`generateTokensCss > generates correct CSS for a standard surface group 
     oklch(0.9926 0 0 / 0.214)
   );
 }
-"
+
+/* Core Utilities (Reactive Pipeline) */
+.text-subtle { --text-lightness-source: var(--text-subtle-token); }
+.text-subtlest { --text-lightness-source: var(--text-subtlest-token); }
+.text-strong { --text-lightness-source: var(--text-high-token); font-weight: 600; }
+
+:root {
+  --preset-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --preset-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --preset-weight-medium: 500;
+  --preset-weight-bold: 600;
+  --preset-text-xs: 0.75rem;
+  --preset-text-sm: 0.875rem;
+  --preset-text-base: 1rem;
+  --preset-text-lg: 1.125rem;
+  --preset-text-xl: 1.25rem;
+  --preset-text-2xl: 1.5rem;
+  --preset-border-width: 1px;
+  --preset-border-style: solid;
+}
+
+/* Preset Utilities (Typography & Layout) */
+.font-mono { font-family: var(--preset-font-mono); }
+.font-sans { font-family: var(--preset-font-sans); }
+.font-medium { font-weight: var(--preset-weight-medium); }
+.font-bold { font-weight: var(--preset-weight-bold); }
+.text-xs { font-size: var(--preset-text-xs); }
+.text-sm { font-size: var(--preset-text-sm); }
+.text-base { font-size: var(--preset-text-base); }
+.text-lg { font-size: var(--preset-text-lg); }
+.text-xl { font-size: var(--preset-text-xl); }
+.text-2xl { font-size: var(--preset-text-2xl); }
+.preset-bordered { border: var(--preset-border-width) var(--preset-border-style) var(--border-dec-token); }
+.bordered { border: 1px solid var(--border-dec-token); }"
 `;
 
 exports[`generateTokensCss > generates palette tokens when configured 1`] = `
@@ -104,7 +157,40 @@ exports[`generateTokensCss > generates palette tokens when configured 1`] = `
     oklch(0.6 0.15 240)
   );
 }
-"
+
+/* Core Utilities (Reactive Pipeline) */
+.text-subtle { --text-lightness-source: var(--text-subtle-token); }
+.text-subtlest { --text-lightness-source: var(--text-subtlest-token); }
+.text-strong { --text-lightness-source: var(--text-high-token); font-weight: 600; }
+
+:root {
+  --preset-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --preset-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --preset-weight-medium: 500;
+  --preset-weight-bold: 600;
+  --preset-text-xs: 0.75rem;
+  --preset-text-sm: 0.875rem;
+  --preset-text-base: 1rem;
+  --preset-text-lg: 1.125rem;
+  --preset-text-xl: 1.25rem;
+  --preset-text-2xl: 1.5rem;
+  --preset-border-width: 1px;
+  --preset-border-style: solid;
+}
+
+/* Preset Utilities (Typography & Layout) */
+.font-mono { font-family: var(--preset-font-mono); }
+.font-sans { font-family: var(--preset-font-sans); }
+.font-medium { font-weight: var(--preset-weight-medium); }
+.font-bold { font-weight: var(--preset-weight-bold); }
+.text-xs { font-size: var(--preset-text-xs); }
+.text-sm { font-size: var(--preset-text-sm); }
+.text-base { font-size: var(--preset-text-base); }
+.text-lg { font-size: var(--preset-text-lg); }
+.text-xl { font-size: var(--preset-text-xl); }
+.text-2xl { font-size: var(--preset-text-2xl); }
+.preset-bordered { border: var(--preset-border-width) var(--preset-border-style) var(--border-dec-token); }
+.bordered { border: 1px solid var(--border-dec-token); }"
 `;
 
 exports[`generateTokensCss > handles missing background values gracefully 1`] = `
@@ -123,9 +209,17 @@ exports[`generateTokensCss > handles missing background values gracefully 1`] = 
 }
 
 .surface-unknown {
+  --local-light-h: 0;
+  --local-light-c: 0;
+  --local-dark-h: 0;
+  --local-dark-c: 0;
+  --surface-light-h: var(--base-hue, var(--local-light-h));
+  --surface-light-c: var(--context-chroma, var(--local-light-c));
+  --surface-dark-h: var(--base-hue, var(--local-dark-h));
+  --surface-dark-c: var(--base-chroma, var(--local-dark-c));
   --surface-token: light-dark(
-    oklch(0 0 0),
-    oklch(0 0 0)
+    oklch(0 var(--surface-light-c) var(--surface-light-h)),
+    oklch(0 var(--surface-dark-c) var(--surface-dark-h))
   );
   --text-high-token: light-dark(
     oklch(1 0 0),
@@ -140,5 +234,38 @@ exports[`generateTokensCss > handles missing background values gracefully 1`] = 
     oklch(0.8406 0 0)
   );
 }
-"
+
+/* Core Utilities (Reactive Pipeline) */
+.text-subtle { --text-lightness-source: var(--text-subtle-token); }
+.text-subtlest { --text-lightness-source: var(--text-subtlest-token); }
+.text-strong { --text-lightness-source: var(--text-high-token); font-weight: 600; }
+
+:root {
+  --preset-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --preset-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --preset-weight-medium: 500;
+  --preset-weight-bold: 600;
+  --preset-text-xs: 0.75rem;
+  --preset-text-sm: 0.875rem;
+  --preset-text-base: 1rem;
+  --preset-text-lg: 1.125rem;
+  --preset-text-xl: 1.25rem;
+  --preset-text-2xl: 1.5rem;
+  --preset-border-width: 1px;
+  --preset-border-style: solid;
+}
+
+/* Preset Utilities (Typography & Layout) */
+.font-mono { font-family: var(--preset-font-mono); }
+.font-sans { font-family: var(--preset-font-sans); }
+.font-medium { font-weight: var(--preset-weight-medium); }
+.font-bold { font-weight: var(--preset-weight-bold); }
+.text-xs { font-size: var(--preset-text-xs); }
+.text-sm { font-size: var(--preset-text-sm); }
+.text-base { font-size: var(--preset-text-base); }
+.text-lg { font-size: var(--preset-text-lg); }
+.text-xl { font-size: var(--preset-text-xl); }
+.text-2xl { font-size: var(--preset-text-2xl); }
+.preset-bordered { border: var(--preset-border-width) var(--preset-border-style) var(--border-dec-token); }
+.bordered { border: 1px solid var(--border-dec-token); }"
 `;

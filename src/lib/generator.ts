@@ -3,10 +3,12 @@ import { solveBorderAlpha, solveForegroundSpec } from "./math.ts";
 import type {
   BorderTargets,
   ConfigOptions,
+  PresetsConfig,
   SolverConfig,
   SurfaceGroup,
   Theme,
 } from "./types.ts";
+import { generatePresetUtilities } from "./utilities.ts";
 
 const toOklch = converter("oklch");
 
@@ -52,6 +54,7 @@ export function generateTokensCss(
   borderTargets?: BorderTargets,
   options?: ConfigOptions,
   keyColors?: Record<string, string>,
+  presets?: PresetsConfig,
 ): string {
   const rootLines: string[] = [];
   const propertyLines: string[] = [];
@@ -179,10 +182,42 @@ export function generateTokensCss(
       rootLines.push(`${selectorPrefix}${classSelector} {`);
 
       // 1. Surface Token
+      // Define local variables for the solved values to allow overrides
+      rootLines.push(`  --local-light-h: ${toNumber(bgLight.h)};`);
+      rootLines.push(`  --local-light-c: ${toNumber(bgLight.c)};`);
+      rootLines.push(`  --local-dark-h: ${toNumber(bgDark.h)};`);
+      rootLines.push(`  --local-dark-c: ${toNumber(bgDark.c)};`);
+
+      // Determine final hue/chroma, preferring --base-hue/--base-chroma if set (by utility classes)
+      // Heuristic: Use full chroma (context-chroma) for high-contrast surfaces (Filled),
+      // and tinted chroma (base-chroma) for low-contrast surfaces (Tinted).
+      const isLightModeFilled = bgLight.l < 0.6;
+      const isDarkModeFilled = bgDark.l >= 0.6;
+
+      const lightChromaVar = isLightModeFilled
+        ? "--context-chroma"
+        : "--base-chroma";
+      const darkChromaVar = isDarkModeFilled
+        ? "--context-chroma"
+        : "--base-chroma";
+
+      rootLines.push(
+        `  --surface-light-h: var(--base-hue, var(--local-light-h));`,
+      );
+      rootLines.push(
+        `  --surface-light-c: var(${lightChromaVar}, var(--local-light-c));`,
+      );
+      rootLines.push(
+        `  --surface-dark-h: var(--base-hue, var(--local-dark-h));`,
+      );
+      rootLines.push(
+        `  --surface-dark-c: var(${darkChromaVar}, var(--local-dark-c));`,
+      );
+
       rootLines.push(
         `  ${v("surface-token")}: light-dark(
-    oklch(${toNumber(bgLight.l)} ${toNumber(bgLight.c)} ${toNumber(bgLight.h)}),
-    oklch(${toNumber(bgDark.l)} ${toNumber(bgDark.c)} ${toNumber(bgDark.h)})
+    oklch(${toNumber(bgLight.l)} var(--surface-light-c) var(--surface-light-h)),
+    oklch(${toNumber(bgDark.l)} var(--surface-dark-c) var(--surface-dark-h))
   );`,
       );
 
@@ -281,14 +316,27 @@ export function generateTokensCss(
                 : `.surface-${surface.slug}-${state.name}`; // e.g. .surface-card-selected
 
             rootLines.push(`${selectorPrefix}${stateSelector} {`);
+
+            // Define local variables for the state
+            rootLines.push(`  --local-light-h: ${toNumber(bgState.light.h)};`);
+            rootLines.push(`  --local-light-c: ${toNumber(bgState.light.c)};`);
+            rootLines.push(`  --local-dark-h: ${toNumber(bgState.dark.h)};`);
+            rootLines.push(`  --local-dark-c: ${toNumber(bgState.dark.c)};`);
+
+            const isLightModeFilled = bgState.light.l < 0.6;
+            const isDarkModeFilled = bgState.dark.l >= 0.6;
+
+            const lightChromaVar = isLightModeFilled
+              ? "--context-chroma"
+              : "--base-chroma";
+            const darkChromaVar = isDarkModeFilled
+              ? "--context-chroma"
+              : "--base-chroma";
+
             rootLines.push(
               `  ${v("surface-token")}: light-dark(
-    oklch(${toNumber(bgState.light.l)} ${toNumber(bgState.light.c)} ${toNumber(
-      bgState.light.h,
-    )}),
-    oklch(${toNumber(bgState.dark.l)} ${toNumber(bgState.dark.c)} ${toNumber(
-      bgState.dark.h,
-    )})
+    oklch(${toNumber(bgState.light.l)} var(${lightChromaVar}, var(--local-light-c)) var(--base-hue, var(--local-light-h))),
+    oklch(${toNumber(bgState.dark.l)} var(${darkChromaVar}, var(--local-dark-c)) var(--base-hue, var(--local-dark-h)))
   );`,
             );
             rootLines.push(`}`);
@@ -303,19 +351,36 @@ export function generateTokensCss(
   if (keyColors) {
     for (const name of Object.keys(keyColors)) {
       rootLines.push(`.hue-${name} {`);
-      rootLines.push(`  --base-hue: var(${v(`hue-${name}`)});`);
-      rootLines.push(`  --hue-adjust: 0;`);
-      rootLines.push(`  /* Apply a subtle tint to the surface background */`);
-      rootLines.push(
-        `  --base-chroma: calc(var(${v(`chroma-${name}`)}) * 0.1);`,
-      );
+      rootLines.push(`  --context-hue: var(${v(`hue-${name}`)});`);
+      rootLines.push(`  --context-chroma: var(${v(`chroma-${name}`)});`);
       rootLines.push(``);
-      rootLines.push(`  --default-fg-hue: var(${v(`hue-${name}`)});`);
-      rootLines.push(`  --override-fg-chroma: var(${v(`chroma-${name}`)});`);
+      rootLines.push(`  /* 1. Surface Tinting */`);
+      rootLines.push(`  --base-hue: var(--context-hue);`);
+      rootLines.push(`  --hue-adjust: 0;`);
+      rootLines.push(`  --base-chroma: calc(var(--context-chroma) * 0.1);`);
+      rootLines.push(``);
+      rootLines.push(`  /* 2. Text Tinting (Indirection) */`);
+      rootLines.push(`  --text-hue-source: var(--context-hue);`);
+      rootLines.push(`  --text-chroma-source: var(--context-chroma);`);
       rootLines.push(`}`);
       rootLines.push("");
     }
   }
+
+  // Standard Utilities
+  rootLines.push(`/* Core Utilities (Reactive Pipeline) */`);
+  rootLines.push(
+    `.text-subtle { --text-lightness-source: var(${v("text-subtle-token")}); }`,
+  );
+  rootLines.push(
+    `.text-subtlest { --text-lightness-source: var(${v("text-subtlest-token")}); }`,
+  );
+  rootLines.push(
+    `.text-strong { --text-lightness-source: var(${v("text-high-token")}); font-weight: 600; }`,
+  );
+
+  rootLines.push("");
+  rootLines.push(generatePresetUtilities(presets, options));
 
   return [...propertyLines, "", ...rootLines].join("\n");
 }

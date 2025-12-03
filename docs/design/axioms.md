@@ -115,3 +115,11 @@ We do not just maintain quality; we actively increase it with every change.
 - **No Regression**: Coverage thresholds are a floor, not a ceiling. We never lower them.
 - **New Code, New Tests**: Every new feature or bug fix must include accompanying tests.
 - **Coverage Growth**: We aim to increase test coverage over time, treating low coverage as technical debt to be paid down.
+
+### 12. The Law of Late Binding
+
+Color is a Function, Not a Value.
+
+- **Dynamic Resolution**: Final pixel values are resolved at the last possible moment by the engine.
+- **Indirection**: Utilities never set properties directly; they modify the _inputs_ to the engine's calculation.
+- **Composition**: Primitive tokens are exposed as class-based utilities that modify orthogonal inputs (e.g., Lightness vs. Hue), allowing them to be composed naturally without conflict.

@@ -77,14 +77,12 @@ Then, create a Card component:
 
 ```svelte
 <script>
-  import { tokens } from '$lib/theme';
+  import { tokens } from "$lib/theme";
 </script>
 
 <div class={tokens.surface.card} style="padding: 2rem; border-radius: 8px;">
   <h2 style="color: {tokens.context.text.high}">Hello World</h2>
-  <p style="color: {tokens.context.text.subtle}">
-    I am a themed card.
-  </p>
+  <p style="color: {tokens.context.text.subtle}">I am a themed card.</p>
 </div>
 ```
 
@@ -115,4 +113,4 @@ You now have a working theme system!
 
 - **[React Integration](./frameworks/react)**: Deep dive into React patterns.
 - **[Svelte Integration](./frameworks/svelte)**: Deep dive into Svelte patterns.
-- **[The Theme Builder](./theme-builder)**: Customize your colors visually.
+- **[The Theme Studio](./theme-builder)**: Customize your colors visually.

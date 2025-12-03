@@ -54,6 +54,20 @@
     "targetContrast": 60,
     "hues": [25, 190, 45, 250, 85, 280, 125, 320, 150, 360]
   },
+  "presets": {
+    "typography": {
+      "fonts": {
+        "sans": "Inter, system-ui, sans-serif",
+        "mono": "Fira Code, monospace"
+      },
+      "scale": {
+        "steps": 6,
+        "minSize": 0.75,
+        "maxSize": 2.0,
+        "curve": { "p1": [0.5, 0], "p2": [0.5, 1] }
+      }
+    }
+  },
   "groups": [
     {
       "name": "Base",

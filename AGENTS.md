@@ -93,6 +93,7 @@ To prepare for the next phase after a transition, use the `.github/prompts/prepa
 - **Context**: The combination of `Polarity` (page/inverted) and `Mode` (light/dark). Most math functions now operate on a `Context` object.
 - **Surfaces**: The fundamental building blocks. Surfaces create context for the content inside them.
 - **Anchors**: Fixed points (lightness values) that define the start and end of the contrast range for a given mode/polarity.
+- **Reactive Pipeline**: The CSS engine uses "Late-Binding" variables (e.g., `--text-lightness-source`) to allow utilities to compose dynamically with context.
 
 ## 📖 Documentation
 

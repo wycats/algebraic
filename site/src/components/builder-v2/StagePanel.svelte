@@ -1,8 +1,6 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { BuilderState } from "../../lib/state/BuilderState.svelte";
-  import AbstractView from "./stage/AbstractView.svelte";
-  import AuditView from "./stage/AuditView.svelte";
   import ComponentView from "./stage/ComponentView.svelte";
   import ContextTrace from "./stage/ContextTrace.svelte";
 
@@ -46,24 +44,7 @@
     </div>
 
     <div class="group center">
-      <button
-        class:active={builder.viewMode === "component"}
-        onclick={() => {
-          builder.setViewMode("component");
-        }}>Component</button
-      >
-      <button
-        class:active={builder.viewMode === "abstract"}
-        onclick={() => {
-          builder.setViewMode("abstract");
-        }}>Abstract</button
-      >
-      <button
-        class:active={builder.viewMode === "audit"}
-        onclick={() => {
-          builder.setViewMode("audit");
-        }}>Audit</button
-      >
+      <span class="text-subtle font-medium text-sm">Preview</span>
     </div>
 
     <div class="group right">
@@ -104,16 +85,21 @@
   </div>
 
   <div class="canvas">
-    {#if builder.viewMode === "component"}
-      <ComponentView />
-    {:else if builder.viewMode === "abstract"}
-      <AbstractView />
-    {:else if builder.viewMode === "audit"}
-      <AuditView />
-    {/if}
+    <ComponentView />
     <ContextTrace />
   </div>
 </div>
+
+{#if builder.selectedSurfaceId}
+  <style>
+    :global(.surface-{builder.selectedSurfaceId}) {
+      outline: 2px solid var(--highlight-ring-color, #d946ef) !important;
+      outline-offset: 2px;
+      position: relative;
+      z-index: 5;
+    }
+  </style>
+{/if}
 
 <style>
   .panel {
@@ -124,12 +110,12 @@
   }
 
   .toolbar {
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--computed-border-dec-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .group {

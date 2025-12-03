@@ -57,6 +57,7 @@
     "./types": "./dist/lib/types.js",
     "./constants": "./dist/lib/constants.js",
     "./browser": "./dist/lib/browser.js",
+    "./utilities": "./dist/lib/utilities.js",
     "./engine.css": "./css/engine.css",
     "./utilities.css": "./css/utilities.css",
     "./theme.css": "./css/theme.css"

@@ -9,30 +9,42 @@
 /* --- SEMANTIC HUES --- */
 
 .hue-success {
-  --base-hue: 140; /* Green */
-  --hue-adjust: 0;
-  --base-chroma: 0.015; /* Subtle tint */
+  --context-hue: var(--axm-hue-success);
+  --context-chroma: var(--axm-chroma-success);
 
-  --default-fg-hue: 140;
-  --override-fg-chroma: 0.15; /* Vibrant text */
+  --base-hue: var(--context-hue);
+  --hue-adjust: 0;
+  /* Apply a subtle tint to the surface background */
+  --base-chroma: calc(var(--context-chroma) * 0.1);
+
+  --default-fg-hue: var(--axm-hue-success);
+  --override-fg-chroma: var(--axm-chroma-success);
 }
 
 .hue-warning {
-  --base-hue: 85; /* Amber */
-  --hue-adjust: 0;
-  --base-chroma: 0.015;
+  --context-hue: var(--axm-hue-warning);
+  --context-chroma: var(--axm-chroma-warning);
 
-  --default-fg-hue: 85;
-  --override-fg-chroma: 0.15;
+  --base-hue: var(--context-hue);
+  --hue-adjust: 0;
+  /* Apply a subtle tint to the surface background */
+  --base-chroma: calc(var(--context-chroma) * 0.1);
+
+  --default-fg-hue: var(--axm-hue-warning);
+  --override-fg-chroma: var(--axm-chroma-warning);
 }
 
 .hue-error {
-  --base-hue: 25; /* Red */
-  --hue-adjust: 0;
-  --base-chroma: 0.015;
+  --context-hue: var(--axm-hue-error);
+  --context-chroma: var(--axm-chroma-error);
 
-  --default-fg-hue: 25;
-  --override-fg-chroma: 0.15;
+  --base-hue: var(--context-hue);
+  --hue-adjust: 0;
+  /* Apply a subtle tint to the surface background */
+  --base-chroma: calc(var(--context-chroma) * 0.1);
+
+  --default-fg-hue: var(--axm-hue-error);
+  --override-fg-chroma: var(--axm-chroma-error);
 }
 
 /* --- BORDERS --- */
@@ -175,22 +187,20 @@
   --base-chroma: var(--axm-chroma-brand);
   /* Ensure text is white/light on dark brand background */
   --override-fg-chroma: 0;
-  /* Force the surface to match the brand color's lightness */
-  --override-surface-lightness: var(--lightness-brand);
 }
 
 .surface-action.hue-success {
-  --base-chroma: 0.15;
+  --base-chroma: var(--axm-chroma-success);
   --override-fg-chroma: 0;
 }
 
 .surface-action.hue-warning {
-  --base-chroma: 0.15;
+  --base-chroma: var(--axm-chroma-warning);
   --override-fg-chroma: 0;
 }
 
 .surface-action.hue-error {
-  --base-chroma: 0.15;
+  --base-chroma: var(--axm-chroma-error);
   --override-fg-chroma: 0;
 }
 
@@ -202,4 +212,40 @@
 .surface-action.hue-highlight {
   --base-chroma: var(--axm-chroma-highlight);
   --override-fg-chroma: 0;
+}
+
+/* --- KEY COLOR UTILITIES --- */
+
+.text-error {
+  color: var(--axm-key-error-color);
+}
+.text-warning {
+  color: var(--axm-key-warning-color);
+}
+.text-success {
+  color: var(--axm-key-success-color);
+}
+
+.bg-error {
+  background-color: var(--axm-key-error-color);
+}
+.bg-warning {
+  background-color: var(--axm-key-warning-color);
+}
+.bg-success {
+  background-color: var(--axm-key-success-color);
+}
+
+.stroke-error {
+  stroke: var(--axm-key-error-color);
+}
+.stroke-warning {
+  stroke: var(--axm-key-warning-color);
+}
+.stroke-success {
+  stroke: var(--axm-key-success-color);
+}
+
+.hover-text-error:hover {
+  color: var(--axm-key-error-color);
 }

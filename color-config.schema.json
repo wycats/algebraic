@@ -126,6 +126,19 @@
         "background": {
           "type": "number"
         },
+        "debug": {
+          "additionalProperties": false,
+          "properties": {
+            "clamped": {
+              "type": "boolean"
+            },
+            "targetContrast": {
+              "type": "number"
+            }
+          },
+          "required": ["targetContrast", "clamped"],
+          "type": "object"
+        },
         "fg-baseline": {
           "type": "number"
         },
@@ -197,6 +210,15 @@
       "required": ["page", "inverted", "keyColors"],
       "type": "object"
     },
+    "PresetsConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "typography": {
+          "$ref": "#/definitions/TypographyConfig"
+        }
+      },
+      "type": "object"
+    },
     "SolverConfig": {
       "additionalProperties": false,
       "properties": {
@@ -220,6 +242,9 @@
         },
         "palette": {
           "$ref": "#/definitions/PaletteConfig"
+        },
+        "presets": {
+          "$ref": "#/definitions/PresetsConfig"
         }
       },
       "required": ["anchors", "groups"],
@@ -321,6 +346,60 @@
         }
       },
       "required": ["name", "surfaces"],
+      "type": "object"
+    },
+    "TypeScaleConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "curve": {
+          "$ref": "#/definitions/BezierCurve",
+          "description": "Control points for the scaling curve."
+        },
+        "maxSize": {
+          "description": "Max size in rem (e.g. 3.0).",
+          "type": "number"
+        },
+        "minSize": {
+          "description": "Base size in rem (e.g. 0.75).",
+          "type": "number"
+        },
+        "steps": {
+          "description": "Number of sizes to generate (e.g. 5 for xs, sm, base, lg, xl).",
+          "type": "number"
+        }
+      },
+      "required": ["steps", "minSize", "maxSize", "curve"],
+      "type": "object"
+    },
+    "TypographyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "fonts": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Font families. e.g. { mono: \"ui-monospace, ...\", sans: \"system-ui, ...\" }",
+          "type": "object"
+        },
+        "scale": {
+          "$ref": "#/definitions/TypeScaleConfig",
+          "description": "Configuration for generating a type scale. If provided, this will override the `sizes` map."
+        },
+        "sizes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Font sizes. e.g. { sm: \"0.875rem\", lg: \"1.125rem\" }",
+          "type": "object"
+        },
+        "weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Font weights. e.g. { medium: 500, bold: 700 }",
+          "type": "object"
+        }
+      },
       "type": "object"
     }
   }
