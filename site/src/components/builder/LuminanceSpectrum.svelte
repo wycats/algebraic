@@ -5,26 +5,26 @@
   import RangeSlider from "./RangeSlider.svelte";
 
   const configState = getContext<ConfigState>("config");
-  let config = $derived(configState.config);
+  let config = configState.config;
 
   // Dark Mode: Surface (Start) -> Ink (End)
-  let darkSurface = $derived(config.anchors.page.dark.start.background);
-  let darkInk = $derived(config.anchors.page.dark.end.background);
+  let darkSurface = config.anchors.page.dark.start.background;
+  let darkInk = config.anchors.page.dark.end.background;
 
   // Light Mode: Ink (End) -> Surface (Start)
   // Note: In Light Mode, Ink is darker (lower L*) than Surface.
   // So Ink corresponds to the "start" of the range slider (min value),
   // and Surface corresponds to the "end" of the range slider (max value).
-  let lightInk = $derived(config.anchors.page.light.end.background);
-  let lightSurface = $derived(config.anchors.page.light.start.background);
+  let lightInk = config.anchors.page.light.end.background;
+  let lightSurface = config.anchors.page.light.start.background;
 
-  let darkContrast = $derived(contrastForPair(darkSurface, darkInk));
-  let lightContrast = $derived(contrastForPair(lightSurface, lightInk));
+  let darkContrast = contrastForPair(darkSurface, darkInk);
+  let lightContrast = contrastForPair(lightSurface, lightInk);
 
   function getContrastColor(ratio: number): string {
-    if (ratio >= 75) return "var(--hue-success)"; // AAA / APCA 75+
-    if (ratio >= 60) return "var(--hue-warning)"; // AA / APCA 60+
-    return "var(--hue-error)"; // Fail
+    if (ratio >= 75) return "var(--axm-key-success-color)"; // AAA / APCA 75+
+    if (ratio >= 60) return "var(--axm-key-warning-color)"; // AA / APCA 60+
+    return "var(--axm-key-error-color)"; // Fail
   }
 
   function handleDarkChange(start: number, end: number): void {
