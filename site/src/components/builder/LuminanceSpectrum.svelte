@@ -104,7 +104,7 @@
         />
         <!-- Contrast Badge (Pill on Bridge) -->
         <div
-          class="contrast-badge light font-mono"
+          class="contrast-badge surface-card light font-mono"
           style="left: {((lightInk + lightSurface) / 2) * 100}%"
         >
           <span class={getContrastColorClass(lightContrast)}>
@@ -137,7 +137,7 @@
         />
         <!-- Contrast Badge (Pill on Bridge) -->
         <div
-          class="contrast-badge dark font-mono"
+          class="contrast-badge surface-card dark font-mono"
           style="left: {((darkSurface + darkInk) / 2) * 100}%"
         >
           <span class={getContrastColorClass(darkContrast)}>
@@ -239,13 +239,17 @@
 
   .zone-label {
     position: absolute;
-    left: 1rem;
-    font-size: 0.75rem;
-    font-weight: 800; /* Bold */
+    left: 0; /* Align with edge */
+    font-size: 0.7rem;
+    font-weight: 700;
     color: var(--text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     z-index: 5;
+    background: var(
+      --surface-workspace
+    ); /* Match track background to mask line if needed */
+    padding: 2px 6px 2px 0;
   }
 
   .zone-label.top-left {
@@ -327,7 +331,7 @@
     position: absolute;
     transform: translateX(-50%);
     font-size: 0.8rem;
-    background: var(--surface-1);
+    /* background: var(--surface-1); Handled by surface-card */
     padding: 4px 12px;
     border-radius: 16px; /* Pill shape */
     border: 1px solid var(--border-subtle);

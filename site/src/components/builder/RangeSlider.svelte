@@ -245,7 +245,7 @@
     justify-content: center;
     font-size: 10px;
     font-weight: bold;
-    color: var(--text-subtle);
+    color: var(--computed-fg-color);
   }
 
   .handle.shape-circle {
