@@ -220,6 +220,7 @@
     transform: translate(-50%, -50%);
     border-radius: 50%;
     cursor: col-resize;
+    background-color: #888; /* Fallback */
     border: 2px solid white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     padding: 0;
