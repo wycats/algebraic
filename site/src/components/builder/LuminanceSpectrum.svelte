@@ -42,16 +42,15 @@
   let darkContrast = $derived(getWCAGContrast(darkSurface, darkInk));
   let lightContrast = $derived(getWCAGContrast(lightSurface, lightInk));
 
-  function getFillClass(ratio: number): string {
-    if (ratio >= 7) return "surface-action hue-success"; // AAA
-    if (ratio >= 4.5) return "surface-action hue-warning"; // AA
-    return "surface-action hue-error"; // Fail
-  }
-
   function getContrastColorClass(ratio: number): string {
     if (ratio >= 7) return "text-success";
     if (ratio >= 4.5) return "text-warning";
     return "text-error";
+  }
+
+  function getContrastIcon(ratio: number): string {
+    if (ratio >= 4.5) return "✅";
+    return "⚠️";
   }
 
   function handleDarkChange(start: number, end: number): void {
@@ -79,22 +78,27 @@
 
     <!-- The Track Container -->
     <div class="spectrum-track">
-      <!-- Gradient Background (The Equator) -->
+      <!-- Gradient Background (The Ruler) -->
       <div class="gradient-bg"></div>
 
       <!-- Light Mode Zone (Above) -->
       <div class="slider-layer light-layer">
         <div class="zone-label">Light Mode</div>
+
+        <!-- Projection Lines -->
+        <div class="projection-line" style="left: {lightInk * 100}%"></div>
+        <div class="projection-line" style="left: {lightSurface * 100}%"></div>
+
         <RangeSlider
           start={lightInk}
           end={lightSurface}
           label="Light Mode"
-          fillClass={getFillClass(lightContrast)}
-          handleClass="surface-action hue-info"
-          startHandleShape="circle"
-          endHandleShape="square"
-          startHandleLabel="T"
-          endHandleLabel="Bg"
+          fillClass="surface-1"
+          handleClass="surface-1"
+          startHandleShape="pill"
+          endHandleShape="pill"
+          startHandleLabel="Ink"
+          endHandleLabel="Surface"
           onChange={handleLightChange}
         />
         <!-- Contrast Badge (Pill on Bridge) -->
@@ -102,24 +106,31 @@
           class="contrast-badge light font-mono"
           style="left: {((lightInk + lightSurface) / 2) * 100}%"
         >
-          <span class={getContrastColorClass(lightContrast)}
-            >{lightContrast.toFixed(1)}:1</span
-          >
+          <span class={getContrastColorClass(lightContrast)}>
+            {getContrastIcon(lightContrast)}
+            {lightContrast.toFixed(1)}:1
+          </span>
         </div>
       </div>
 
       <!-- Dark Mode Zone (Below) -->
       <div class="slider-layer dark-layer">
+        <div class="zone-label bottom">Dark Mode</div>
+
+        <!-- Projection Lines -->
+        <div class="projection-line" style="left: {darkSurface * 100}%"></div>
+        <div class="projection-line" style="left: {darkInk * 100}%"></div>
+
         <RangeSlider
           start={darkSurface}
           end={darkInk}
           label="Dark Mode"
-          fillClass={getFillClass(darkContrast)}
-          handleClass="surface-action hue-brand"
-          startHandleShape="square"
-          endHandleShape="circle"
-          startHandleLabel="Bg"
-          endHandleLabel="T"
+          fillClass="surface-1"
+          handleClass="surface-1"
+          startHandleShape="pill"
+          endHandleShape="pill"
+          startHandleLabel="Surface"
+          endHandleLabel="Ink"
           onChange={handleDarkChange}
         />
         <!-- Contrast Badge (Pill on Bridge) -->
@@ -127,11 +138,11 @@
           class="contrast-badge dark font-mono"
           style="left: {((darkSurface + darkInk) / 2) * 100}%"
         >
-          <span class={getContrastColorClass(darkContrast)}
-            >{darkContrast.toFixed(1)}:1</span
-          >
+          <span class={getContrastColorClass(darkContrast)}>
+            {getContrastIcon(darkContrast)}
+            {darkContrast.toFixed(1)}:1
+          </span>
         </div>
-        <div class="zone-label bottom">Dark Mode</div>
       </div>
     </div>
   </div>
@@ -170,7 +181,7 @@
 
   .spectrum-track {
     position: relative;
-    height: 160px; /* Increased height for breathing room */
+    height: 200px; /* Increased height for Lanes layout */
     background: var(--surface-2);
     border-radius: 6px;
   }
@@ -180,12 +191,30 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 20px; /* Thicker Ruler */
     transform: translateY(-50%);
     background: linear-gradient(to right, black, white);
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     z-index: 0;
+  }
+
+  /* Ticks on Ruler */
+  .gradient-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba(128, 128, 128, 0.5) 0,
+      rgba(128, 128, 128, 0.5) 1px,
+      transparent 1px,
+      transparent 10%
+    );
+    pointer-events: none;
   }
 
   .slider-layer {
@@ -224,6 +253,26 @@
     bottom: 0.5rem;
   }
 
+  /* Projection Lines */
+  .projection-line {
+    position: absolute;
+    width: 1px;
+    background-color: var(--border-subtle);
+    border-left: 1px dashed var(--text-subtle);
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .light-layer .projection-line {
+    top: 20%; /* Start from handle area */
+    bottom: 0; /* Go to equator */
+  }
+
+  .dark-layer .projection-line {
+    top: 0; /* Start from equator */
+    bottom: 20%; /* Go to handle area */
+  }
+
   /* Make RangeSlider children interactive */
   .slider-layer :global(.range-slider) {
     pointer-events: none;
@@ -234,44 +283,51 @@
   }
 
   /* Position Handles and Tethers */
-  /* Light Mode: Handles closer to bottom of its zone (near equator) */
+  /* Light Mode: Handles in top lane */
   .light-layer :global(.range-fill),
   .light-layer :global(.handle) {
-    top: 70% !important; /* Just above the equator */
+    top: 20% !important;
   }
 
-  /* Dark Mode: Handles closer to top of its zone (near equator) */
+  /* Dark Mode: Handles in bottom lane */
   .dark-layer :global(.range-fill),
   .dark-layer :global(.handle) {
-    top: 30% !important; /* Just below the equator */
+    top: 80% !important;
   }
 
-  /* Bridge Styling (Thicker tether) */
+  /* Bridge Styling (Thicker tether, neutral) */
   .slider-layer :global(.range-fill) {
     height: 4px !important;
     border-radius: 2px;
+    background-color: var(--surface-1) !important; /* Neutral chrome */
+    border: 1px solid var(--border-subtle);
   }
 
   .contrast-badge {
     position: absolute;
     transform: translateX(-50%);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     background: var(--surface-1);
-    padding: 2px 8px;
-    border-radius: 12px; /* Pill shape */
+    padding: 4px 12px;
+    border-radius: 16px; /* Pill shape */
     border: 1px solid var(--border-subtle);
     white-space: nowrap;
     pointer-events: none;
     z-index: 10;
     box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   .contrast-badge.light {
-    top: 45%; /* Positioned on the bridge */
+    top: 20%; /* Positioned on the bridge */
+    margin-top: -14px; /* Center vertically on bridge */
   }
 
   .contrast-badge.dark {
-    top: 5%; /* Positioned on the bridge */
+    top: 80%; /* Positioned on the bridge */
+    margin-top: -14px; /* Center vertically on bridge */
   }
 
   /* Text colors for badges */

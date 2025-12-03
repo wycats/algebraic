@@ -10,8 +10,8 @@
     trackClass?: string;
     fillClass?: string;
     handleClass?: string;
-    startHandleShape?: "circle" | "square";
-    endHandleShape?: "circle" | "square";
+    startHandleShape?: "circle" | "square" | "pill";
+    endHandleShape?: "circle" | "square" | "pill";
     startHandleLabel?: string;
     endHandleLabel?: string;
     onChange?: (start: number, end: number) => void;
@@ -254,6 +254,14 @@
 
   .handle.shape-square {
     border-radius: 4px;
+  }
+
+  .handle.shape-pill {
+    width: auto;
+    min-width: 60px;
+    height: 32px;
+    border-radius: 16px;
+    padding: 0 12px;
   }
 
   .handle:hover {
