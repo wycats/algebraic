@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from "svelte";
-  import { contrastForPair } from "@axiomatic-design/color";
+  import { converter } from "culori";
   import type { ConfigState } from "../../lib/state/ConfigState.svelte";
   import RangeSlider from "./RangeSlider.svelte";
 
@@ -8,38 +8,58 @@
   let config = configState.config;
 
   // Dark Mode: Surface (Start) -> Ink (End)
-  let darkSurface = config.anchors.page.dark.start.background;
-  let darkInk = config.anchors.page.dark.end.background;
+  let darkSurface = $derived(config.anchors.page.dark.start.background);
+  let darkInk = $derived(config.anchors.page.dark.end.background);
 
   // Light Mode: Ink (End) -> Surface (Start)
-  // Note: In Light Mode, Ink is darker (lower L*) than Surface.
-  // So Ink corresponds to the "start" of the range slider (min value),
-  // and Surface corresponds to the "end" of the range slider (max value).
-  let lightInk = config.anchors.page.light.end.background;
-  let lightSurface = config.anchors.page.light.start.background;
+  let lightInk = $derived(config.anchors.page.light.end.background);
+  let lightSurface = $derived(config.anchors.page.light.start.background);
 
-  let darkContrast = contrastForPair(darkSurface, darkInk);
-  let lightContrast = contrastForPair(lightSurface, lightInk);
+  // WCAG Contrast Calculation
+  const toRgb = converter("rgb");
+
+  function getWCAGContrast(l1: number, l2: number): number {
+    function getLuminance(l: number): number {
+      const rgb = toRgb({ mode: "oklch", l: l, c: 0, h: 0 });
+      const { r, g, b } = rgb;
+      const sRGB = [r, g, b].map((c) => {
+        if (c <= 0.03928) {
+          return c / 12.92;
+        } else {
+          return Math.pow((c + 0.055) / 1.055, 2.4);
+        }
+      });
+      return 0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2];
+    }
+
+    const lum1 = getLuminance(l1);
+    const lum2 = getLuminance(l2);
+    const lighter = Math.max(lum1, lum2);
+    const darker = Math.min(lum1, lum2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  let darkContrast = $derived(getWCAGContrast(darkSurface, darkInk));
+  let lightContrast = $derived(getWCAGContrast(lightSurface, lightInk));
+
+  function getFillClass(ratio: number): string {
+    if (ratio >= 7) return "surface-action hue-success"; // AAA
+    if (ratio >= 4.5) return "surface-action hue-warning"; // AA
+    return "surface-action hue-error"; // Fail
+  }
 
   function getContrastColor(ratio: number): string {
-    if (ratio >= 75) return config.anchors.keyColors.success; // AAA / APCA 75+
-    if (ratio >= 60) return config.anchors.keyColors.warning; // AA / APCA 60+
-    return config.anchors.keyColors.error; // Fail
+    if (ratio >= 7) return config.anchors.keyColors.success;
+    if (ratio >= 4.5) return config.anchors.keyColors.warning;
+    return config.anchors.keyColors.error;
   }
 
   function handleDarkChange(start: number, end: number): void {
-    // Dark Mode: Start is Surface, End is Ink
-    // Constraint: Surface < Ink (handled by RangeSlider min<=max)
-    // Constraint: Dark Ink < Light Ink (Soft constraint, but good to check)
-
     configState.updateAnchor("page", "dark", "start", start);
     configState.updateAnchor("page", "dark", "end", end);
   }
 
   function handleLightChange(start: number, end: number): void {
-    // Light Mode: Start is Ink, End is Surface
-    // Constraint: Ink < Surface (handled by RangeSlider min<=max)
-
     configState.updateAnchor("page", "light", "end", start);
     configState.updateAnchor("page", "light", "start", end);
   }
@@ -48,17 +68,6 @@
 <div class="luminance-spectrum-container">
   <div class="header">
     <h3 class="text-strong">Luminance Spectrum (L*)</h3>
-    <div class="controls">
-      <label class="sync-toggle">
-        <input type="checkbox" bind:checked={configState.syncDark} />
-        <span class="text-subtle">Sync Dark Mode</span>
-        {#if configState.syncDark}
-          <span title="Dark Mode is derived from Light Mode contrast">🔒</span>
-        {:else}
-          <span title="Dark Mode is independent">🔓</span>
-        {/if}
-      </label>
-    </div>
   </div>
 
   <div class="spectrum-track-wrapper">
@@ -79,10 +88,11 @@
           start={darkSurface}
           end={darkInk}
           label="Dark Mode"
-          fillClass="surface-action hue-brand"
+          fillClass={getFillClass(darkContrast)}
           handleClass="surface-action hue-brand"
+          startHandleShape="square"
+          endHandleShape="circle"
           onChange={handleDarkChange}
-          disabled={configState.syncDark}
         />
         <!-- Contrast Badge (Below) -->
         <div
@@ -90,7 +100,7 @@
           style="left: {((darkSurface + darkInk) / 2) * 100}%"
         >
           <span style="color: {getContrastColor(darkContrast)}"
-            >Lc {darkContrast.toFixed(1)}</span
+            >{darkContrast.toFixed(1)}:1</span
           >
         </div>
       </div>
@@ -101,8 +111,10 @@
           start={lightInk}
           end={lightSurface}
           label="Light Mode"
-          fillClass="surface-action hue-info"
+          fillClass={getFillClass(lightContrast)}
           handleClass="surface-action hue-info"
+          startHandleShape="circle"
+          endHandleShape="square"
           onChange={handleLightChange}
         />
         <!-- Contrast Badge (Above) -->
@@ -111,7 +123,7 @@
           style="left: {((lightInk + lightSurface) / 2) * 100}%"
         >
           <span style="color: {getContrastColor(lightContrast)}"
-            >Lc {lightContrast.toFixed(1)}</span
+            >{lightContrast.toFixed(1)}:1</span
           >
         </div>
       </div>
@@ -136,14 +148,6 @@
   .header h3 {
     margin: 0;
     font-size: 1rem;
-  }
-
-  .sync-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    cursor: pointer;
   }
 
   .spectrum-track-wrapper {

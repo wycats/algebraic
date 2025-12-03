@@ -10,6 +10,8 @@
     trackClass?: string;
     fillClass?: string;
     handleClass?: string;
+    startHandleShape?: "circle" | "square";
+    endHandleShape?: "circle" | "square";
     onChange?: (start: number, end: number) => void;
   }
 
@@ -24,6 +26,8 @@
     trackClass = "",
     fillClass = "surface-action",
     handleClass = "surface-action",
+    startHandleShape = "circle",
+    endHandleShape = "circle",
     onChange,
   }: Props = $props();
 
@@ -149,7 +153,7 @@
 
   <!-- Start Handle -->
   <button
-    class="handle start {handleClass}"
+    class="handle start {handleClass} shape-{startHandleShape}"
     type="button"
     style="left: {startPercent}%"
     onpointerdown={(e) => {
@@ -161,7 +165,7 @@
 
   <!-- End Handle -->
   <button
-    class="handle end {handleClass}"
+    class="handle end {handleClass} shape-{endHandleShape}"
     type="button"
     style="left: {endPercent}%"
     onpointerdown={(e) => {
@@ -199,13 +203,13 @@
   .range-fill {
     position: absolute;
     top: 50%;
-    height: 6px;
+    height: 2px; /* Thinner tether as requested */
     transform: translateY(-50%);
     cursor: grab;
     border: none;
     padding: 0;
-    border-radius: 3px;
-    opacity: 0.8;
+    border-radius: 1px;
+    opacity: 1; /* Make it solid */
   }
 
   .range-fill:active {
@@ -218,13 +222,20 @@
     width: 16px;
     height: 16px;
     transform: translate(-50%, -50%);
-    border-radius: 50%;
     cursor: col-resize;
     background-color: #888; /* Fallback */
     border: 2px solid white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     padding: 0;
     z-index: 2;
+  }
+
+  .handle.shape-circle {
+    border-radius: 50%;
+  }
+
+  .handle.shape-square {
+    border-radius: 2px;
   }
 
   .handle:hover {
