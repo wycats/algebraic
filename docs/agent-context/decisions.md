@@ -572,3 +572,11 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Performance**: Drastically reduces the work done during DOM updates.
   - **Correctness**: We only need to apply the "Hard Flip" fix to _new_ elements entering the DOM; existing elements are already handled.
+
+### [2025-12-04] Prioritize Fresh Eyes Review
+
+- **Context**: We planned to start Developer Tooling (VS Code extension, etc.) in Epoch 29.
+- **Decision**: Insert a "Fresh Eyes & Zero-to-One Review" epoch before Developer Tooling.
+- **Rationale**:
+  - **Validation First**: We need to ensure the core system is usable before building tools on top of it.
+  - **Foundation**: Tooling should be built on a stable, user-tested foundation.

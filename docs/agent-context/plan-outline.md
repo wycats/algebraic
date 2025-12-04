@@ -134,7 +134,18 @@
   - **Phase 2: Execution & Remediation (Completed)**
     - **Goal**: Execute the review checklist, identify violations, and implement fixes for critical issues (e.g., hardcoded tokens, performance risks).
 
-## Epoch 29: Developer Tooling (Planned)
+## Epoch 29: Fresh Eyes & Zero-to-One Review (Planned)
+
+- **Goal**: Validate the system's usability and "first hour" experience by simulating a new user's journey and conducting a holistic design review.
+- **Phases**:
+  - **Phase 1: Zero-to-One Review**
+    - **Goal**: Simulate a new user installing and configuring the library from scratch to identify friction in the "getting started" flow.
+  - **Phase 2: Fresh Eyes Review**
+    - **Goal**: Conduct a comprehensive audit of the documentation, CLI, and Theme Builder with a focus on clarity, consistency, and "Axiomatic" alignment.
+  - **Phase 3: Remediation**
+    - **Goal**: Address critical friction points and documentation gaps identified in the reviews.
+
+## Epoch 30: Developer Tooling (Planned)
 
 - **Goal**: Create a world-class developer experience for users of the Axiomatic Color system.
 - **Phases**:

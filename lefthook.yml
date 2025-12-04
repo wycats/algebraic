@@ -1,8 +1,8 @@
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     sync-lockfile:
-      run: pnpm install && git add pnpm-lock.yaml
+      run: echo "Ensuring lockfile is up to date..." && pnpm install && git add pnpm-lock.yaml
     format:
       glob: "*.{ts,js,json,md,yml,css,svelte,astro}"
       exclude: "dist/**/*"
