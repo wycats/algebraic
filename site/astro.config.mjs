@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 import path from "path";
-import rehypeMathjax from "rehype-mathjax";
+import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { fileURLToPath } from "url";
 
@@ -15,7 +15,10 @@ export default defineConfig({
   site: "https://axioms.design",
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeMathjax],
+    rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
+  },
+  experimental: {
+    fonts: [],
   },
   vite: {
     resolve: {
@@ -30,12 +33,15 @@ export default defineConfig({
     preact(),
     starlight({
       title: "Axiomatic Color",
+      components: {
+        Head: "./src/components/StarlightHead.astro",
+      },
       customCss: [
         path.resolve(__dirname, "../css/engine.css"),
         "./src/styles/theme.css",
         path.resolve(__dirname, "../css/utilities.css"),
         "./src/styles/docs.css",
-        "./src/styles/starlight-overrides.css",
+        "./src/styles/starlight-custom.css",
       ],
       social: [
         {

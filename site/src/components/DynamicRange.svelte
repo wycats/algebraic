@@ -49,7 +49,7 @@
   {@const isLight = mode === "light"}
   {@const surfaces = getSurfaces(mode)}
   <div
-    class="docs-card surface-sunken bordered"
+    class="docs-card surface-page bordered"
     style:color-scheme={mode}
     style:border-radius="8px"
     style:overflow="hidden"

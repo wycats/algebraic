@@ -247,7 +247,7 @@
   <div class="visualizer-grid">
     <!-- Graph Section -->
     <div class="graph-section">
-      <div class="graph-container surface-sunken bordered">
+      <div class="graph-container surface-workspace bordered">
         <svg
           bind:this={svgElement}
           viewBox="0 0 100 100"
@@ -488,13 +488,13 @@
       <div class="control-group">
         <h4 class="control-title text-subtle">Curve Values</h4>
         <div class="values-grid">
-          <div class="value-item surface-sunken bordered">
+          <div class="value-item surface-workspace bordered">
             <span class="label text-subtle">P1</span>
             <span class="value text-strong"
               >({curve.p1[0].toFixed(2)}, {curve.p1[1].toFixed(2)})</span
             >
           </div>
-          <div class="value-item surface-sunken bordered">
+          <div class="value-item surface-workspace bordered">
             <span class="label text-subtle">P2</span>
             <span class="value text-strong"
               >({curve.p2[0].toFixed(2)}, {curve.p2[1].toFixed(2)})</span

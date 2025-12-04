@@ -13,14 +13,14 @@
 
       <div class="grid grid-cols-2 gap-4">
         <!-- Card 1 -->
-        <div class="surface-sunken bordered p-4 rounded">
+        <div class="surface-workspace bordered p-4 rounded">
           <h4 class="text-sm font-bold mb-2">Revenue</h4>
           <p class="text-2xl font-mono">$12,450</p>
           <p class="text-xs text-positive">+12% from last month</p>
         </div>
 
         <!-- Card 2 -->
-        <div class="surface-sunken bordered p-4 rounded">
+        <div class="surface-workspace bordered p-4 rounded">
           <h4 class="text-sm font-bold mb-2">Active Users</h4>
           <p class="text-2xl font-mono">1,234</p>
           <p class="text-xs text-subtle">Stable</p>
@@ -56,7 +56,7 @@
       <h3>Brand Context</h3>
       <p class="mb-4">This card has a brand hue applied.</p>
 
-      <div class="surface-sunken bordered p-4 rounded">
+      <div class="surface-workspace bordered p-4 rounded">
         <p>Nested sunken surface inherits the hue.</p>
         <button
           class="surface-action hue-brand bordered px-3 py-1 rounded mt-2 text-sm"

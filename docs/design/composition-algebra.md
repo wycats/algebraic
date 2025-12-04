@@ -7,6 +7,8 @@ This document formalizes the composition structure of the Axiomatic Color system
 
 ## 1. The State Space ($\Sigma$)
 
+<p>Σ</p>
+
 The system state at any point in the DOM tree is defined by a vector $\Sigma$.
 
 $$ \Sigma = \langle H, C, L\_{src}, \alpha \rangle $$
@@ -16,7 +18,7 @@ Where:
 - $H \in [0, 360)$: **Context Hue**. The base hue for the current environment.
 - $C \in [0, 1]$: **Context Chroma**. The base vibrancy for the current environment.
 - $L_{src} \in \text{Token}$: **Intent Lightness**. A reference to a lightness token (e.g., `text-high`, `text-subtle`).
-- $\alpha \in \{ \text{Page}, \text{Inverted} \}$: **Polarity**. The current background polarity (Light/Dark mode context).
+- $\alpha \in \{ \text{Light}, \text{Dark} \}$: **Polarity**. The local resolved mode.
 
 > **In Plain English**: Think of $\Sigma$ as the "DNA" of the current element. It carries four genes: what color family we are in ($H$), how vibrant it is ($C$), how bright the text should be ($L_{src}$), and whether we are in light or dark mode ($\alpha$). Every element inherits this DNA from its parent.
 
@@ -24,11 +26,18 @@ Where:
 
 The CSS Engine acts as a projection function $\Phi$ that maps the state vector $\Sigma$ to a concrete CSS color value.
 
-$$ \Phi(\Sigma) = \text{oklch}(\text{from } L\_{src} \text{ l } C \ H) $$
+## 2. The Resolution Function ($\Phi$)
 
-_Note: The actual implementation involves CSS variable indirection, but this is the logical model._
+The CSS Engine acts as a projection function $\Phi$ that maps the state vector $\Sigma$ to a concrete CSS color value.
 
-> **In Plain English**: $\Phi$ is the browser's rendering engine. It takes the DNA ($\Sigma$) and turns it into actual pixels on the screen. It mixes the lightness from the token with the hue and chroma from the context.
+$$ \Phi(\Sigma) \mapsto \text{ColorSpace}(\text{oklch}) $$
+
+$$ \Phi(\langle H, C, L*{src}, \alpha \rangle) = \text{oklch}(\text{eval}(L*{src}, \alpha), C, H) $$
+
+Where $\text{eval}(L_{src}, \alpha)$ represents the **Late Binding** of the token. It is a lookup function into the token definition set:
+$$ \forall t \in \text{Tokens}, \exists (l*{light}, l*{dark}) \text{ s.t. } \text{eval}(t, \alpha) = (\alpha = \text{Dark}) ? l*{dark} : l*{light} $$
+
+> **In Plain English**: $\Phi$ is the browser's rendering engine. It takes the DNA ($\Sigma$) and turns it into actual pixels. Crucially, it decides the actual lightness _at the last moment_ based on whether we are in light or dark mode.
 
 ## 3. The Operators
 
@@ -36,13 +45,15 @@ Classes in the system are **Operators** that transform the state vector $\Sigma 
 
 ### 3.1. Surface Operator ($S$)
 
-A Surface establishes a new context. It acts as a **Filter** for Context ($H, C$) but a **Barrier** for Intent ($L_{src}$).
+A Surface establishes a new context. It acts as an **Identity** for Context ($H, C$) but a **Lossy Barrier** for Intent ($L_{src}$).
 
-$$ S*{type}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C*{ambient}, L*{default}, \alpha' \rangle $$
+$$ S*{type}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C, L\_{high}, \alpha' \rangle $$
 
-- **Context Permeability**: $H$ is passed through. $C$ is passed through but often dampened to an "ambient" level ($C_{ambient} \approx 0.1 \times C$).
-- **Intent Opacity**: $L_{src}$ is reset to $L_{high}$.
-- **Polarity**: $\alpha$ may be flipped (e.g. `surface-spotlight`).
+- **Context Stability**: $H$ and $C$ are preserved (Identity). The surface inherits the ambient atmosphere of its parent.
+- **Intent Erasure**: $L_{src}$ is forcibly reset to $L_{high}$. This operation is **Non-Invertible** (you cannot "undo" a surface to recover the parent's text style).
+- **Polarity**: $\alpha$ is transformed. For standard surfaces, $\alpha' = \alpha$. For inverted surfaces, $\alpha' = \neg \alpha$ (Hard Flip).
+
+> **In Plain English**: A Surface is like a glass box. It lets the "mood lighting" (Hue/Chroma) shine through from the outside, but it resets the "conversation" (Text). Inside the box, you start a new sentence with standard text color, even if the text outside was faint or bold.
 
 > **Rationalization: Ambient vs. Semantic State**
 >
@@ -66,12 +77,12 @@ $$ I*{token}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C, L\_{token}, 
 
 Modifier classes (e.g., `.hue-brand`) modify the Context variables.
 
-$$ M*{brand}(\langle H, C, L*{src}, \alpha \rangle) = \langle H*{brand}, C*{brand}, L\_{src}, \alpha \rangle $$
+$$ M*{brand}(\langle H, C, L*{src}, \alpha \rangle) = \langle H*{brand}, C*{ambient}, L\_{src}, \alpha \rangle $$
 
 - **Identity on Intent**: $L_{src}$ is preserved.
-- **Action**: Updates $H$ and $C$.
+- **Context Definition**: Updates $H$ to the brand hue. Updates $C$ to the **Ambient Chroma** ($C_{ambient} \approx 0.1 \times C_{brand}$).
 
-> **In Plain English**: Modifier classes like `.hue-brand` change the atmosphere. They say "everything inside here should be purple," but they don't touch the text hierarchy. A title is still a title, just purple now.
+> **In Plain English**: Modifier classes like `.hue-brand` change the atmosphere. They say "everything inside here should be purple," but they don't touch the text hierarchy. A title is still a title, just purple now. This is also where the "Dampening" happens: the modifier takes a vibrant brand color and creates a soft ambient version for backgrounds.
 
 ## 4. Laws of Composition
 
@@ -108,6 +119,8 @@ $$ \text{Contrast}(\Phi(\Sigma), \text{Background}) \approx \text{Contrast}(\Phi
 
 Since $M$ only changes $H$ and $C$, and OKLCH is perceptually uniform, the perceived lightness (and thus contrast against the background) remains constant.
 
+> **In Plain English**: Changing the hue (e.g., adding `.hue-brand`) never breaks accessibility. If the text was readable before, it stays readable, because the system only changes the color, not the brightness.
+
 ### 5.2. Intent Stability
 
 Intent ($I$) is **Chromatically Transparent**.
@@ -115,6 +128,8 @@ Intent ($I$) is **Chromatically Transparent**.
 $$ \text{Hue}(\Phi(I(\Sigma))) = \text{Hue}(\Phi(\Sigma)) $$
 
 Changing the text importance (High -> Subtle) never shifts the hue.
+
+> **In Plain English**: Changing the text style (e.g., making it `.text-subtle`) never changes its color family. If you are in a "Brand" section, the subtle text will still be tinted with the brand color, just dimmer. The text style doesn't "reset" the color to gray.
 
 ## 6. Practical Application
 
@@ -142,3 +157,11 @@ This distinguishes **Layout Containers** (divs, spans) from **Surfaces** (cards,
 ### 7.3. Universal Theming
 
 Since $M$ operators control the environment ($H, C$) for all child elements, changing the top-level modifier effectively re-themes the entire subtree without requiring changes to the leaf nodes (text, borders).
+
+### 7.4. The Portal Effect (Subspace Involution)
+
+Because Inverted Surfaces perform a Hard Flip ($\alpha' = \neg \alpha$), nesting them creates an alternating polarity stack. However, because $S$ is lossy on Intent ($L$), this is not a true inverse of the state.
+
+$$ S*{inv}(S*{inv}(\Sigma)) \neq \Sigma $$
+
+While the polarity returns to the original ($\neg(\neg \alpha) = \alpha$), the Intent $L_{src}$ is reset to $L_{high}$ at each step. You recover the _mode_, but you lose the _semantic context_.

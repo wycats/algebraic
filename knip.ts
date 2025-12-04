@@ -45,6 +45,8 @@ const config: KnipConfig = {
         ".astro/**",
         "src/components/builder/ColorPicker.svelte",
         "src/components/builder/SurfaceManager.svelte",
+        "src/components/algebra/OrthogonalityDemo.svelte",
+        "src/components/algebra/StateVectorDemo.svelte",
       ],
       ignoreDependencies: [
         "astro",
@@ -56,6 +58,7 @@ const config: KnipConfig = {
         "@fontsource-variable/space-grotesk",
         "apca-w3", // Used in components
         "lucide-preact", // Used in components
+        "katex",
       ],
     },
     // demo: {

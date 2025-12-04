@@ -91,6 +91,7 @@ ${hcCss}
 
     console.log("Writing CSS to:", absOutPath);
     writeFileSync(absOutPath, css);
+
     console.log("Done!");
   };
 

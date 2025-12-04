@@ -1,53 +1,43 @@
-# Implementation Plan - Epoch 24: Fresh Eyes Simulation
+# Implementation Plan - Epoch 25: The Grand Simulation
 
-**Goal**: Validate the end-to-end user experience by simulating a new user adopting the system in a fresh environment, identifying friction points in the documentation and CLI.
+**Goal**: Validate the system's advanced capabilities by simulating the specific workflows of key personas (Alex, Jordan, Dr. Chen, Marcus) in a real environment.
 
-## Phase 1: The "Zero to One" Simulation
+## Phase 1: The Tinkerer (Alex)
 
-**Goal**: Create a fresh, isolated project (e.g., `examples/smoke-test`) and attempt to install/configure the library using _only_ the public instructions.
+**Goal**: Simulate creating a "Cyberpunk" theme (High Chroma, Dark Mode) by manipulating the configuration to extremes.
 
-### Step 1: Preparation
+- [ ] **Setup**: Create `examples/grand-simulation` and initialize a new project.
+- [ ] **Configuration**: Manually edit `color-config.json` to:
+  - Set a high-chroma primary brand color (Neon Pink/Cyan).
+  - Adjust anchors to create a high-contrast "Cyberpunk" look (deep blacks, bright highlights).
+  - Enable P3 gamut support (if configurable, or verify it's on by default).
+- [ ] **Build**: Run `axiomatic build` and verify it succeeds without errors despite the extreme values.
 
-- [ ] Pack the current library version locally (`pnpm pack`) to simulate a real npm install.
-- [ ] Create a temporary directory outside the workspace (or in `examples/`) for the simulation.
+## Phase 2: The Audit (Jordan)
 
-### Step 2: Simulation (The "User Journey")
+**Goal**: Verify accessibility compliance of the extreme theme using the `audit` command and high-contrast generation.
 
-- [ ] **Initialize Project**: Create a new Vite/Astro project.
-- [ ] **Follow Documentation**: Open `guides/quick-start.mdx` and follow it step-by-step.
-  - Install the package.
-  - Run `axiomatic init`.
-  - Configure the integration.
-- [ ] **Persona Emulation**:
-  - Record every command run.
-  - Record every error message.
-  - Record every moment of confusion ("Why do I need to do this?", "Where is that file?").
+- [ ] **Audit**: Run `axiomatic audit` on the "Cyberpunk" config.
+  - **Expectation**: It might fail some APCA checks due to high chroma/contrast.
+  - **Action**: Adjust the config based on the audit feedback until it passes (or understand why it fails).
+- [ ] **High Contrast**: Inspect the generated CSS to ensure `prefers-contrast: more` media queries are present and correct.
+- [ ] **Forced Colors**: Verify that semantic system colors (Canvas, Highlight) are used in the output.
 
-### Step 3: Friction Log Analysis
+## Phase 3: The Scientist (Dr. Chen)
 
-- [ ] Compile the "Friction Log" into a markdown document.
-- [ ] Categorize issues:
-  - **Blocker**: Cannot proceed without external knowledge.
-  - **Friction**: Confusing or undocumented step.
-  - **Nit**: Typo or minor inconsistency.
+**Goal**: Inspect the generated CSS for P3 gamut support (`oklch`) and verify interpolation logic.
 
-### Step 4: Immediate Remediation (Timeboxing: 1 hour)
+- [ ] **Gamut Inspection**: Read `theme.css` and grep for `oklch(`.
+  - Verify that values are not clamped to sRGB (chroma > 0.4 for neon colors).
+- [ ] **Interpolation Check**: Verify that the hue rotation logic (if used) is producing expected intermediate values.
 
-- [ ] Fix any "Blocker" level issues immediately in the CLI or Docs.
-- [ ] Create tasks for "Friction" and "Nit" issues for Phase 3.
+## Phase 4: The Architect (Marcus)
 
-## Future Phases
+**Goal**: Validate interoperability by exporting the theme to DTCG and Tailwind formats and inspecting the output.
 
-### Phase 2: The "Integration" Simulation
-
-- Attempt to build a simple UI using the "Reactive Pipeline" features.
-- Verify CSS variable resolution in a real browser.
-
-### Phase 3: Remediation
-
-- Fix issues discovered in the Friction Log.
-- Update `README.md` and `quick-start.mdx`.
-
-### Phase 4: LLM Context Strategy
-
-- Design `llms.txt` strategy.
+- [ ] **DTCG Export**: Run `axiomatic export --format dtcg`.
+  - Validate the JSON structure against the DTCG spec (roughly).
+  - Check that semantic tokens are preserved.
+- [ ] **Tailwind Export**: Run `axiomatic export --format tailwind`.
+  - Verify the output is a valid Tailwind config partial.
+  - Check that it references the CSS variables correctly.

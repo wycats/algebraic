@@ -35,36 +35,15 @@ The current Theme Builder UI is functional but sparse. It lacks data density and
 
 - **`@algebraic-systems/layout`**: A companion layout system to complement the color system. This should likely follow similar principles (semantic, constraint-based, runtime-aware).
 
-## Tooling
-
-- **VS Code Extension**: A VS Code extension to visualize our tokens inline (similar to UnoCSS or Tailwind IntelliSense).
-  - **Features**:
-    - Color swatches for token references (e.g., `--surface-card`).
-    - Hover tooltips showing the resolved values (L\*, C, H).
-    - Linting for invalid token usage or hardcoded colors.
-- **Custom Lints**: A set of ESLint or Stylelint rules for users of the library.
-  - **Goal**: Enforce system constraints and best practices.
-  - **Rules**:
-    - `no-hardcoded-colors`: Warns when using hex/rgb/hsl values directly instead of tokens.
-    - `prefer-semantic-tokens`: Encourages using `--surface-card` over `--surface-token` where appropriate.
-    - `validate-token-usage`: Checks if a token is valid for the current context (e.g., using a text token on a background).
-- **Configurable Prefix & Public Linter**:
-  - **Goal**: Allow users to customize the CSS variable prefix (currently `axm-`) and enforce usage rules.
-  - **Features**:
-    - Configuration option in `color-config.json` for `prefix`.
-    - A public CLI command (e.g., `axiomatic lint`) that wraps our internal `check-tokens.sh` logic but respects the user's configured prefix.
-    - This ensures users can enforce "no raw tokens" or "no hardcoded colors" policies in their own CI pipelines.
-- **AI Context (`llms.txt`)**: A standardized file to help LLMs understand the project.
-  - **Goal**: Enable AI agents to effectively generate code using the Axiomatic Color system.
-  - **Content**:
-    - Core axioms and mental model.
-    - List of available tokens and their semantic meaning.
-    - Examples of correct usage (surfaces, modifiers).
-    - Architecture overview (Solver -> CSS Engine).
-  - **Strategy**: Generate this file from the documentation build process to ensure it stays up-to-date.
-
 ## Architecture
 
 - **Simplify Token Surface**: We currently have special tokens like `highlight-surface-color` and `highlight-ring-color` that might be better modeled as standard surfaces with a specific hue (e.g., `.surface-highlight` or `.surface-selected` with `.hue-highlight`).
   - **Goal**: Reduce the number of "special" global tokens and rely more on the core surface + hue composition model.
   - **Benefit**: More consistent API, fewer special cases in the generator.
+
+## Developer Tooling
+
+- **Debug Overlay**: A "debug" overlay that can be toggled anywhere in the documentation (or any app using the system) to visualize the current surface context.
+  - **Features**: Show current Surface Color, Intent, Context (Hue/Chroma), and Polarity.
+  - **Goal**: Help users build a mental model of how concepts compose in real-time.
+  - **Portability**: Design it as a standalone tool/component that can be dropped into any app.

@@ -18,7 +18,7 @@
   });
 </script>
 
-<div class="token-inspector-container not-content surface-sunken bordered">
+<div class="token-inspector-container not-content surface-workspace bordered">
   <div class="inspector-content">
     {@render children?.()}
   </div>

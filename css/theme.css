@@ -8,6 +8,7 @@
  */
 
 :root {
+  --axm-inverted-surfaces: ".surface-soft-spotlight, .surface-spotlight";
   /* Key Colors */
   --axm-key-brand-color: oklch(0.5417 0.179 288.0332);
   --axm-hue-brand: 288.0332;
@@ -526,6 +527,7 @@ body {
   }
 
   :root {
+    --axm-inverted-surfaces: ".surface-soft-spotlight, .surface-spotlight";
     /* Key Colors */
     --axm-key-brand-color: oklch(0.5417 0.179 288.0332);
     --axm-hue-brand: 288.0332;

@@ -79,26 +79,59 @@
   - **Phase 1: Reactive Pipeline & Presets (Completed)**
     - **Goal**: Refactor `engine.css` to use late-binding variables and implement Bezier-based typography scaling.
 
-## Epoch 24: Fresh Eyes Simulation (Planned)
+## Epoch 24: Fresh Eyes Simulation (Completed)
 
 - **Goal**: Validate the end-to-end user experience by simulating a new user adopting the system in a fresh environment, identifying friction points in the documentation and CLI.
 - **Phases**:
-  - **Phase 1: The "Zero to One" Simulation**
+  - **Phase 1: The "Zero to One" Simulation (Completed)**
     - **Goal**: Create a fresh, isolated project and attempt to install/configure the library using _only_ the public instructions.
-  - **Phase 2: The "Integration" Simulation**
+  - **Phase 2: The "Integration" Simulation (Completed)**
     - **Goal**: Attempt to build a simple UI using the "Reactive Pipeline" features in this fresh project.
-  - **Phase 3: Remediation**
+  - **Phase 3: Remediation (Completed)**
     - **Goal**: Fix the issues discovered in the Friction Log.
-  - **Phase 4: LLM Context Strategy (Research)**
+  - **Phase 4: LLM Context Strategy (Research) (Completed)**
     - **Goal**: Design the strategy for generating `llms.txt` from the now-verified documentation.
 
-## Epoch 25: Developer Tooling (Planned)
+## Epoch 25: The Grand Simulation (Completed)
+
+- **Goal**: Validate the system's advanced capabilities by simulating the specific workflows of key personas (Alex, Jordan, Dr. Chen, Marcus) in a real environment.
+- **Phases**:
+  - **Phase 1: The Tinkerer (Alex) (Completed)**
+    - **Goal**: Simulate creating a "Cyberpunk" theme (High Chroma, Dark Mode) by manipulating the configuration to extremes.
+  - **Phase 2: The Audit (Jordan) (Completed)**
+    - **Goal**: Verify accessibility compliance of the extreme theme using the `audit` command and high-contrast generation.
+  - **Phase 3: The Scientist (Dr. Chen) (Completed)**
+    - **Goal**: Inspect the generated CSS for P3 gamut support (`oklch`) and verify interpolation logic.
+  - **Phase 4: The Architect (Marcus) (Completed)**
+    - **Goal**: Validate interoperability by exporting the theme to DTCG and Tailwind formats and inspecting the output.
+
+## Epoch 26: The Hard Flip (Completed)
+
+- **Goal**: Address the "Soft Flip" limitation where native UI elements inside inverted surfaces did not respect the inverted theme.
+- **Phases**:
+  - **Phase 1: CSS Variable Beacon (Completed)**
+    - **Goal**: Emit `--axm-inverted-surfaces` in CSS to allow runtime discovery of inverted surfaces.
+  - **Phase 2: Runtime Observer (Completed)**
+    - **Goal**: Implement a `MutationObserver` in `ThemeManager` to force `color-scheme` on inverted surfaces.
+
+## Epoch 27: Documentation Polish & MathML (Completed)
+
+- **Goal**: Refine the documentation's visual presentation, specifically targeting mathematical formulas and infrastructure stability.
+- **Phases**:
+  - **Phase 1: Native MathML (Completed)**
+    - **Goal**: Enable native MathML rendering with custom CSS overrides for consistent display.
+  - **Phase 2: Content Restructuring (Completed)**
+    - **Goal**: Improve clarity in `composition-algebra.mdx` by removing clutter and adding "In Plain English" callouts.
+  - **Phase 3: Infrastructure Hardening (Completed)**
+    - **Goal**: Fix verification scripts, resolve lint errors, and improve test coverage to ensure a stable codebase.
+
+## Epoch 28: Developer Tooling (Planned)
 
 - **Goal**: Create a world-class developer experience for users of the Axiomatic Color system.
 - **Phases**:
-  - **Phase 1: VS Code Extension**
-    - **Goal**: Visualize tokens inline, provide hover information, and autocomplete.
-  - **Phase 2: Custom Lints**
-    - **Goal**: Create ESLint or Stylelint rules to enforce system constraints (e.g., "No hardcoded colors", "Use semantic tokens").
-  - **Phase 3: AI Context (llms.txt)**
-    - **Goal**: Provide a standardized context file for LLMs to understand the system's architecture and tokens.
+  - **Phase 1: AI Context (llms.txt)**
+    - **Goal**: Implement the strategy designed in Epoch 24 to generate a standardized `llms.txt` file.
+  - **Phase 2: VS Code Extension (Prototype)**
+    - **Goal**: Scaffold a VS Code extension to visualize Axiomatic tokens inline.
+  - **Phase 3: Custom Lints (CLI)**
+    - **Goal**: Expose the internal `check-tokens.sh` logic as a public CLI command.

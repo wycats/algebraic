@@ -118,6 +118,12 @@
 
 :root {
   color-scheme: light dark;
+
+  /* Public Shadow Aliases */
+  --shadow-sm: var(--axm-shadow-sm);
+  --shadow-md: var(--axm-shadow-md);
+  --shadow-lg: var(--axm-shadow-lg);
+  --shadow-xl: var(--axm-shadow-xl);
 }
 
 /* Proxy tokens that cascade from utilities */
@@ -176,28 +182,7 @@
   [class*=" text-"],
   body
 ) {
-  /* --- 1. SURFACE CALCULATION --- */
-
-  /* Calculate Chroma */
-  --computed-surface-C: calc(
-    var(--base-chroma, 0) + var(--surface-chroma-adjust, 0)
-  );
-
-  /* Reify Surface Color */
-  /* Extract L and H (Shift) from token, combine with computed C and base hue */
-  --computed-surface: oklch(
-    from var(--axm-surface-token) var(--override-surface-lightness, l)
-      var(--computed-surface-C)
-      calc(var(--base-hue, 0) + var(--hue-adjust, 0) + h)
-  );
-
-  /* Apply Background */
-  background-color: var(--computed-surface);
-
-  /* Apply Scrollbar */
-  scrollbar-color: var(--axm-text-subtle-token) var(--axm-surface-token);
-
-  /* --- 2. TEXT CALCULATION --- */
+  /* --- 1. TEXT CALCULATION --- */
 
   /* 
      Indirection: Lightness Source 
@@ -240,7 +225,7 @@
   /* Apply Text Color */
   color: var(--computed-fg-color);
 
-  /* --- 3. BORDER CALCULATION --- */
+  /* --- 2. BORDER CALCULATION --- */
 
   /* 
      Border Tokens are already valid oklch colors with Alpha.
@@ -266,6 +251,39 @@
 
   /* Default to Decorative */
   border-color: var(--computed-border-dec-color);
+}
+
+/* 
+   SURFACE ENGINE & APPLICATION
+   Matches ONLY Surfaces and Body.
+   Calculates Surface Color and applies Background.
+   This prevents text utilities from:
+   1. Painting a background.
+   2. Corrupting the surface context (Ghost Surfaces).
+*/
+:where([class^="surface-"], [class*=" surface-"], body) {
+  /* --- SURFACE CALCULATION --- */
+
+  /* Calculate Chroma */
+  --computed-surface-C: calc(
+    var(--base-chroma, 0) + var(--surface-chroma-adjust, 0)
+  );
+
+  /* Reify Surface Color */
+  /* Extract L and H (Shift) from token, combine with computed C and base hue */
+  --computed-surface: oklch(
+    from var(--axm-surface-token) var(--override-surface-lightness, l)
+      var(--computed-surface-C)
+      calc(var(--base-hue, 0) + var(--hue-adjust, 0) + h)
+  );
+
+  /* --- APPLICATION --- */
+
+  /* Apply Background */
+  background-color: var(--computed-surface);
+
+  /* Apply Scrollbar */
+  scrollbar-color: var(--axm-text-subtle-token) var(--axm-surface-token);
 }
 
 /* 

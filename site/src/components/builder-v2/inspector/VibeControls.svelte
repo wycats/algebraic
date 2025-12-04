@@ -31,7 +31,8 @@
   );
 
   // Contrast: Visualized as a gradient from low contrast (grayish) to high contrast (black/white)
-  let contrastGradient = "linear-gradient(to right, #999, #000)";
+  let contrastGradient =
+    "linear-gradient(to right, oklch(0.6 0 0), oklch(0 0 0))";
 </script>
 
 <div class="vibe-controls bg-surface">
@@ -98,19 +99,19 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: white;
-    border: 1px solid var(--computed-border-dec-color, #ccc);
+    background: var(--computed-surface);
+    border: 1px solid var(--computed-border-dec-color);
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-sm);
   }
 
   input[type="range"]::-moz-range-thumb {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: white;
-    border: 1px solid var(--computed-border-dec-color, #ccc);
+    background: var(--computed-surface);
+    border: 1px solid var(--computed-border-dec-color);
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-sm);
   }
 </style>

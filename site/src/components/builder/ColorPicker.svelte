@@ -154,9 +154,9 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    background: var(--computed-surface);
+    border: 1px solid var(--computed-border-dec-color);
+    box-shadow: var(--shadow-sm);
   }
 
   .value {

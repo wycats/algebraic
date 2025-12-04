@@ -857,3 +857,53 @@
   - **Unified Axis**: Visualizes Light and Dark modes on the same physical track.
   - **Contrast Feedback**: Displays real-time APCA contrast badges (Lc) with color-coded compliance indicators (Green/Yellow/Red).
   - **Constraints**: Enforces logical constraints (Surface < Ink) via the UI interaction model.
+
+## Epoch 25: The Grand Simulation (2025-12-03)
+
+**Goal**: Validate the system's robustness by simulating the workflows of four key personas (Alex, Jordan, Dr. Chen, Marcus) in a realistic, isolated environment.
+
+**Completed Work**:
+
+- **Simulation Environment**:
+  - Created `examples/grand-simulation` as a standalone project.
+  - Initialized with a local build of `@axiomatic-design/color` (v0.1.0).
+- **CLI Fixes**:
+  - **Critical Bug Fix**: Patched `src/cli/index.ts` to correctly detect CLI arguments when running via `npx` or direct execution, resolving a silent failure in `axiomatic init`.
+- **Persona Validation**:
+  - **Alex (Tinkerer)**: Successfully configured an extreme "Cyberpunk" theme (Neon Pink/Green, High Chroma) to verify system flexibility.
+  - **Jordan (Audit)**: Verified `axiomatic audit` passes and confirmed `prefers-contrast: more` media queries generate maximized contrast (0/1 lightness).
+  - **Dr. Chen (Scientist)**: Confirmed P3 Gamut support by verifying `oklch` chroma values (> 0.3) are preserved in the generated CSS.
+  - **Marcus (Architect)**: Verified `axiomatic export` generates valid Tailwind presets and DTCG tokens.
+
+## Epoch 26: The Hard Flip (2025-12-03)
+
+**Goal**: Implement a "Hard Flip" mechanism to ensure native UI elements (scrollbars, checkboxes) invert correctly inside inverted surfaces.
+
+**Completed Work**:
+
+- **CSS Beacon**:
+  - Updated `src/lib/generator.ts` to emit `--axm-inverted-surfaces` in the `:root` block.
+  - This variable contains a comma-separated list of all inverted surface selectors.
+- **Runtime Observer**:
+  - Updated `ThemeManager` in `src/lib/browser.ts` to read the beacon and set up a `MutationObserver`.
+  - Implemented logic to force `style="color-scheme: dark/light"` on inverted surfaces based on the global mode.
+- **Cleanup**:
+  - Removed obsolete `constants.ts` generation logic from the CLI.
+
+## Epoch 27: Documentation Polish & MathML (2025-12-03)
+
+**Goal**: Refine the documentation's visual presentation and harden the project infrastructure.
+
+**Completed Work**:
+
+- **Native MathML**:
+  - Enabled native MathML rendering in Starlight.
+  - Implemented custom CSS overrides in `site/src/styles/starlight-custom.css` for consistent font stack and spacing.
+- **Content Restructuring**:
+  - Refined `composition-algebra.mdx` by removing redundant grids and adding "In Plain English" callouts.
+  - Moved the "Font Comparison Lab" to a dedicated test page.
+- **Infrastructure Hardening**:
+  - **Verification Script**: Fixed `scripts/agent/verify-phase.sh` to correctly locate the workspace root.
+  - **Linting**: Resolved 50+ ESLint errors across Svelte components and test files, enforcing strict type safety.
+  - **Testing**: Updated `src/lib/__tests__/browser.test.ts` to mock `getComputedStyle` correctly.
+  - **Configuration**: Updated `tsconfig.json` and `eslint.config.js` to properly handle test files and ignores.

@@ -41,10 +41,13 @@ We do not set properties directly. We set **Input Variables**.
 
 #### 1. The Engine
 
-The engine lives in the `:where(...)` block and defines the calculation:
+The engine lives in the `:where(...)` block and defines the calculation. We split the engine into two phases: **Calculation** and **Application**.
+
+**Phase 1: Calculation (Variables)**
+Matches Surfaces AND Text Utilities. This ensures that text classes (like `.text-strong`) can trigger the math to resolve their color, even if they aren't on a surface element.
 
 ```css
-:where([class^="surface-"], body) {
+:where([class^="surface-"], [class^="text-"], body) {
   /* Default Inputs */
   --text-lightness-source: var(--axm-text-high-token);
   --computed-fg-H: var(--base-hue);
@@ -56,8 +59,17 @@ The engine lives in the `:where(...)` block and defines the calculation:
       var(--computed-fg-H)
   );
 
-  /* The Output */
+  /* The Output (Foreground Only) */
   color: var(--computed-fg-color);
+}
+```
+
+**Phase 2: Application (Backgrounds)**
+Matches ONLY Surfaces (and body). This prevents text utilities from accidentally painting a background color.
+
+```css
+:where([class^="surface-"], body) {
+  background-color: var(--computed-surface);
 }
 ```
 

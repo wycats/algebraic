@@ -524,10 +524,35 @@ This file tracks key architectural and design decisions made throughout the proj
   - **Control**: A single curve controls the entire system, making it easy to adjust the "drama" of the typography globally.
   - **Axiomatic**: Aligns with our philosophy of using math to derive values rather than hardcoding magic numbers.
 
-### [2025-12-03] Structural Border Utilities
+### [2025-12-03] Grand Simulation for Validation
 
-- **Context**: The `.bordered` utility was doing too much (setting width, style, and color). This made it hard to have "just a border structure" without forcing a specific color.
-- **Decision**: Split border utilities into **Structural** (`.preset-bordered` setting width/style) and **Cosmetic** (`.bordered` setting color).
+- **Context**: We needed to verify the system's robustness across different personas and workflows. Unit tests were insufficient for testing the end-to-end "feel" and integration.
+- **Decision**: Create a "Grand Simulation" project (`examples/grand-simulation`) that mimics a real user's environment.
 - **Rationale**:
-  - **Separation of Concerns**: Allows layout (width/style) to be defined separately from theme (color).
-  - **Flexibility**: Enables "invisible" borders that take up space (for alignment) or borders that change color on hover without redefining width.
+  - **Realism**: Forces us to use the published package (via `pnpm pack`) and public documentation, exposing friction points that internal tests miss.
+  - **Isolation**: Ensures that the system works without the dev-time tooling and symlinks of the monorepo.
+
+### [2025-12-03] CSS Variable Beacon for Runtime Config
+
+- **Context**: The runtime (`ThemeManager`) needed to know which surfaces were "inverted" to apply the Hard Flip logic. We considered generating a `constants.ts` file.
+- **Decision**: Emit a CSS variable (`--axm-inverted-surfaces`) containing the selector list.
+- **Rationale**:
+  - **Coupling**: Keeps the configuration coupled to the CSS artifact, which is the source of truth for styling.
+  - **Simplicity**: Removes the need for a separate build step or artifact for the JS runtime. The CSS _is_ the config.
+
+### [2025-12-03] MutationObserver for Hard Flip
+
+- **Context**: Native UI elements (checkboxes, scrollbars) inside inverted surfaces didn't respect the theme because `color-scheme` wasn't set on the element.
+- **Decision**: Use a `MutationObserver` to watch for inverted surfaces and force the `color-scheme` style property.
+- **Rationale**:
+  - **Dynamism**: Handles dynamic content (SPAs, modals) where surfaces appear after page load.
+  - **Correctness**: It's the only way to force the browser to render native controls correctly in a nested context that differs from the document root.
+
+### [2025-12-03] Native MathML with CSS Overrides
+
+- **Context**: We needed to render complex algebraic formulas in the documentation.
+- **Decision**: Use native MathML with custom CSS overrides (`site/src/styles/starlight-custom.css`).
+- **Rationale**:
+  - **Performance**: Zero JS overhead compared to MathJax or KaTeX.
+  - **Accessibility**: Native support in modern browsers is excellent and accessible to screen readers.
+  - **Control**: CSS overrides allow us to match the font stack and spacing exactly to our design system.

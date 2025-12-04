@@ -62,7 +62,7 @@
   <div class="badge-group font-mono">
     <!-- Hierarchy Badge (Delta from Page) -->
     <span
-      class="hierarchy-badge surface-sunken bordered"
+      class="hierarchy-badge surface-workspace bordered"
       title="Hierarchy: {deltaLc} Lc units from Page background
 Text Contrast: {score} Lc ({status})"
     >

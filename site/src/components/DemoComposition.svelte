@@ -22,7 +22,7 @@
     padding: 1.5rem;
     border: 1px solid var(--computed-border-dec-color);
     border-radius: 0.5rem;
-    background-color: var(--surface-sunken);
+    background-color: var(--surface-workspace);
   }
 
   h3 {

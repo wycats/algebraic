@@ -108,7 +108,7 @@
   </div>
 
   {#if error}
-    <div class="error-banner bg-error">
+    <div class="error-banner bg-error text-strong">
       {error}
     </div>
   {/if}
@@ -124,7 +124,7 @@
     <ul class="groups-list">
       {#each config.groups as group, groupIndex (group.name)}
         <li
-          class="tree-group surface-sunken bordered"
+          class="tree-group surface-workspace bordered"
           draggable="true"
           ondragstart={(e) => {
             handleGroupDragStart(e, groupIndex);
@@ -226,7 +226,6 @@
   .error-banner {
     padding: 0.75rem;
     border-radius: 6px;
-    color: white;
     font-size: 0.9rem;
   }
 
@@ -338,8 +337,6 @@
   .add-group-button {
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    /* background: var(--surface-action); handled by class */
-    /* color: white; handled by class */
     border: none;
     cursor: pointer;
     font-weight: 500;

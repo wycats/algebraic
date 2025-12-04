@@ -33,7 +33,6 @@
 }
 
 .docs-card {
-  background-color: var(--sl-color-gray-6);
   border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.5rem;
   padding: 1rem;
@@ -41,6 +40,10 @@
   flex-direction: column;
   height: 100%;
   gap: 0.5rem; /* Use gap for internal spacing */
+}
+
+.docs-card:not([class*="surface-"]) {
+  background-color: var(--sl-color-gray-6);
 }
 
 .docs-card-header {
@@ -226,24 +229,24 @@
 }
 
 .docs-step-95 {
-  background: oklch(95% 0 0);
-  color: black;
+  background: oklch(0.95 0 0);
+  color: oklch(0 0 0);
 }
 .docs-step-85 {
-  background: oklch(85% 0 0);
-  color: black;
+  background: oklch(0.85 0 0);
+  color: oklch(0 0 0);
 }
 .docs-step-75 {
-  background: oklch(75% 0 0);
-  color: black;
+  background: oklch(0.75 0 0);
+  color: oklch(0 0 0);
 }
 .docs-step-65 {
-  background: oklch(65% 0 0);
-  color: white;
+  background: oklch(0.65 0 0);
+  color: oklch(1 0 0);
 }
 .docs-step-55 {
-  background: oklch(55% 0 0);
-  color: white;
+  background: oklch(0.55 0 0);
+  color: oklch(1 0 0);
 }
 
 .docs-code-block {
@@ -323,8 +326,8 @@
 }
 
 .docs-cta-button {
-  background: var(--sl-color-accent-high);
-  color: var(--sl-color-black);
+  background: var(--axm-key-brand-color);
+  color: oklch(1 0 0); /* Always white text on brand color */
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   text-decoration: none;

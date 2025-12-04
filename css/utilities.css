@@ -225,6 +225,9 @@
 .text-success {
   color: var(--axm-key-success-color);
 }
+.text-brand {
+  color: var(--axm-key-brand-color);
+}
 
 .bg-error {
   background-color: var(--axm-key-error-color);
@@ -235,6 +238,9 @@
 .bg-success {
   background-color: var(--axm-key-success-color);
 }
+.bg-brand {
+  background-color: var(--axm-key-brand-color);
+}
 
 .stroke-error {
   stroke: var(--axm-key-error-color);
@@ -244,6 +250,25 @@
 }
 .stroke-success {
   stroke: var(--axm-key-success-color);
+}
+.stroke-brand {
+  stroke: var(--axm-key-brand-color);
+}
+
+.accent-action {
+  accent-color: var(--axm-surface-action-token);
+}
+
+.bg-strong {
+  background-color: var(--axm-text-high-token);
+}
+
+.bg-subtle {
+  background-color: var(--axm-text-subtle-token);
+}
+
+.text-inverse {
+  color: var(--axm-surface-token);
 }
 
 .hover-text-error:hover {

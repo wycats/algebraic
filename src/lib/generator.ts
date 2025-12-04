@@ -74,6 +74,17 @@ export function generateTokensCss(
   // --- Primitives (Shadows & Focus) ---
   rootLines.push(`${rootSelector} {`);
 
+  // Inverted Surfaces List (for JS Runtime)
+  const invertedSurfaces = groups
+    .flatMap((g) => g.surfaces)
+    .filter((s) => s.polarity === "inverted")
+    .map((s) => `.surface-${s.slug}`)
+    .join(", ");
+
+  if (invertedSurfaces) {
+    rootLines.push(`  ${v("inverted-surfaces")}: "${invertedSurfaces}";`);
+  }
+
   // Key Colors
   if (keyColors) {
     rootLines.push(`  /* Key Colors */`);

@@ -40,7 +40,7 @@
 <div class="token-visualizer">
   {#each tokens as token (token.name)}
     <div class="token-card surface-card bordered">
-      <div class="card-header surface-sunken">
+      <div class="card-header surface-workspace">
         <div class="token-info">
           <div class="token-name">
             <code class="font-mono text-strong">{token.name}</code>

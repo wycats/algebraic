@@ -99,7 +99,7 @@
   .node-row:hover {
     /* background: var(--surface-card); */
     background: var(
-      --surface-sunken
+      --surface-workspace
     ); /* Temporary fix using current surface context? */
   }
 
