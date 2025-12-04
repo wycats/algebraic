@@ -172,10 +172,6 @@ export class ThemeManager {
     });
   }
 
-  private matchesInverted(element: HTMLElement): boolean {
-    return this.invertedSelectors.some((selector) => element.matches(selector));
-  }
-
   private updateInvertedSurfaces(): void {
     if (this.invertedSelectors.length === 0) return;
 

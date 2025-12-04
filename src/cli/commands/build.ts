@@ -55,7 +55,7 @@ export function buildCommand(args: string[], cwd: string): void {
       config.groups,
       theme,
       config.borderTargets,
-      { ...config.options, prefix: "axm" },
+      config.options,
       config.anchors.keyColors,
       config.presets,
     );
@@ -68,7 +68,7 @@ export function buildCommand(args: string[], cwd: string): void {
       hcConfig.groups,
       hcTheme,
       hcConfig.borderTargets,
-      { ...config.options, prefix: "axm" },
+      config.options,
       config.anchors.keyColors,
       config.presets,
     );

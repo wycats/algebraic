@@ -318,6 +318,7 @@ export default tseslint.config(
       "**/*.d.ts",
       "check-repro.cjs",
       "examples/grand-simulation/tailwind.preset.js",
+      "examples/zero-to-one-simulation/**",
     ],
   },
   eslintConfigPrettier,
