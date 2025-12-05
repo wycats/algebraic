@@ -20,11 +20,23 @@ We will implement a "heuristic importer" that attempts to map generic design tok
 - [ ] Create `DTCGImporter` class.
 - [ ] Implement `parse(json: string): ColorConfig`.
 - [ ] Implement **Key Color Heuristics**:
-  - Scan for common names (`brand`, `primary`, `accent`, `success`, `warning`, `danger`, `error`, `info`).
-  - Extract hex values and populate `anchors.keyColors`.
+  - **Flatten**: Flatten the token dictionary into dot-notation keys (e.g., `color.brand.primary`).
+  - **Scan**: Look for keywords in the path: `brand`, `primary`, `accent`, `success`, `warning`, `danger`, `error`, `info`.
+  - **Extract**:
+    - If the match is a single color value, use it directly.
+    - If the match is a scale (e.g., `brand.100`...`brand.900`), pick the "middle" value (e.g., `500` or the one with highest chroma).
+  - **Populate**: Add to `anchors.keyColors`.
 - [ ] Implement **Anchor Heuristics**:
-  - Look for neutral/gray scales.
-  - Determine min/max lightness to set `anchors.page.light/dark`.
+  - **Scan**: Look for neutral scales: `gray`, `neutral`, `slate`, `zinc`, `mono`.
+  - **Analyze**: Convert values to OKLCH to determine lightness.
+  - **Infer**:
+    - `anchors.page.light.start`: Lightest value in the scale (e.g., `gray.50` -> L=98).
+    - `anchors.page.light.end`: Darkest value in the scale (e.g., `gray.900` -> L=10).
+    - `anchors.page.dark.start`: Darkest value (L=10).
+    - `anchors.page.dark.end`: Lightest value (L=98).
+- [ ] Implement **Surface Heuristics**:
+  - **Direct Map**: If tokens match `surface.*` (e.g., `surface.card`), map to `groups`.
+  - **Fallback**: If no surfaces found, create a default "Imported" group with a generic `card` surface using the `page` polarity.
 
 ### 2. CLI Command (`src/cli/commands/import.ts`)
 

@@ -26,7 +26,7 @@ export default [
     rules: {
       // Warn on hardcoded colors (hex, rgb, etc.)
       "@axiomatic-design/no-hardcoded-colors": "warn",
-      
+
       // Error on invalid or internal token usage
       "@axiomatic-design/no-raw-tokens": "error",
     },
@@ -61,6 +61,7 @@ The rule provides auto-fix suggestions to replace hardcoded colors with the clos
 This rule flags usage of internal tokens, non-existent tokens, or tokens that should be applied via utility classes.
 
 **Why?**
+
 - **Internal Tokens**: Tokens like `--scale-gray-500` are implementation details and may change. Use semantic tokens like `--surface-sunken` instead.
 - **Utility Classes**: Some tokens (like shadows or surfaces) carry extra properties or side effects. Using the utility class ensures consistent behavior.
 
@@ -75,7 +76,7 @@ const bg = "var(--surface-card)";
 
 // ✅ Valid
 const color = "var(--axm-text-high-token)";
-<div className="surface-card" />
+<div className="surface-card" />;
 ```
 
 ## Config Awareness

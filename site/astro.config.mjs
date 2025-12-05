@@ -92,6 +92,10 @@ export default defineConfig({
         {
           label: "Advanced Topics",
           items: [
+            {
+              label: "The Reactive Pipeline",
+              slug: "advanced/reactive-pipeline",
+            },
             { label: "Hue Shifting", slug: "advanced/hue-shifting" },
             { label: "Custom Surfaces", slug: "advanced/custom-surfaces" },
             { label: "Solver Internals", slug: "advanced/solver-internals" },

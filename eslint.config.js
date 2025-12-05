@@ -341,6 +341,8 @@ export default tseslint.config(
       "packages/vscode-extension/scripts/**",
       "packages/vscode-extension/dist/**",
       "tests/golden-masters/**",
+      "vendor/**",
+      "examples/**",
     ],
   },
   eslintConfigPrettier,

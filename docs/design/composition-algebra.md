@@ -1,13 +1,16 @@
-# The Algebra of Composition
+# The Algebra of Color Design
 
-> **Status**: Draft
-> **Context**: Formal definition of the Reactive Pipeline's composition logic.
+> **Context**: The physics and grammar of the Axiomatic Color system. ([View Changelog](./composition-algebra-changelog.md))
 
-This document formalizes the composition structure of the Axiomatic Color system using algebraic notation. It defines the state space, the operators that transform that state, and the invariants that guarantee the system's correctness.
+This document defines the "Physics" of the Axiomatic Color system. While the system is built on rigorous math, you can think of it using a simple grammatical analogy:
+
+- **Context ($H, C$) is the Setting**: It's the lighting in the room. If the room is red, everything inside is tinted red. This "atmosphere" permeates everything.
+- **Intent ($L$) is the Voice**: It's how loud you are speaking. You can whisper (Subtle) or shout (High).
+- **Surfaces are Scene Changes**: When you walk into a new room (a Card, a Sidebar), the conversation resets. You stop shouting, but the lighting might stay the same.
+
+Below, we formalize these intuitions into a set of rules that guarantee your UI always looks consistent.
 
 ## 1. The State Space ($\Sigma$)
-
-<p>Σ</p>
 
 The system state at any point in the DOM tree is defined by a vector $\Sigma$.
 
@@ -26,16 +29,17 @@ Where:
 
 The CSS Engine acts as a projection function $\Phi$ that maps the state vector $\Sigma$ to a concrete CSS color value.
 
-## 2. The Resolution Function ($\Phi$)
-
-The CSS Engine acts as a projection function $\Phi$ that maps the state vector $\Sigma$ to a concrete CSS color value.
-
 $$ \Phi(\Sigma) \mapsto \text{ColorSpace}(\text{oklch}) $$
 
-$$ \Phi(\langle H, C, L*{src}, \alpha \rangle) = \text{oklch}(\text{eval}(L*{src}, \alpha), C, H) $$
+$$
+\Phi(\langle H, C, L_{src}, \alpha \rangle) = \text{oklch}(\text{eval}(L_{src}, \alpha), C, H)
+$$
 
 Where $\text{eval}(L_{src}, \alpha)$ represents the **Late Binding** of the token. It is a lookup function into the token definition set:
-$$ \forall t \in \text{Tokens}, \exists (l*{light}, l*{dark}) \text{ s.t. } \text{eval}(t, \alpha) = (\alpha = \text{Dark}) ? l*{dark} : l*{light} $$
+
+$$
+\forall t \in \text{Tokens}, \exists (l_{light}, l_{dark}) \text{ s.t. } \text{eval}(t, \alpha) = (\alpha = \text{Dark}) ? l_{dark} : l_{light}
+$$
 
 > **In Plain English**: $\Phi$ is the browser's rendering engine. It takes the DNA ($\Sigma$) and turns it into actual pixels. Crucially, it decides the actual lightness _at the last moment_ based on whether we are in light or dark mode.
 
@@ -43,46 +47,84 @@ $$ \forall t \in \text{Tokens}, \exists (l*{light}, l*{dark}) \text{ s.t. } \tex
 
 Classes in the system are **Operators** that transform the state vector $\Sigma \rightarrow \Sigma'$.
 
-### 3.1. Surface Operator ($S$)
+### 3.1. The Container Operator ($K$)
 
-A Surface establishes a new context. It acts as an **Identity** for Context ($H, C$) but a **Lossy Barrier** for Intent ($L_{src}$).
+Layout primitives (like `div`, `span`, `section` without a surface class) act as the Identity Operator.
 
-$$ S*{type}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C, L\_{high}, \alpha' \rangle $$
+$$
+K(\Sigma) = \Sigma
+$$
 
-- **Context Stability**: $H$ and $C$ are preserved (Identity). The surface inherits the ambient atmosphere of its parent.
-- **Intent Erasure**: $L_{src}$ is forcibly reset to $L_{high}$. This operation is **Non-Invertible** (you cannot "undo" a surface to recover the parent's text style).
-- **Polarity**: $\alpha$ is transformed. For standard surfaces, $\alpha' = \alpha$. For inverted surfaces, $\alpha' = \neg \alpha$ (Hard Flip).
+- **Conservation**: Preserves $H, C, L_{src}, \text{and } \alpha$ exactly.
+- **Translucency**: A container is mathematically invisible to the state. It allows the parent's "Voice" (Intent) and "Atmosphere" (Context) to pass through unchanged.
 
-> **In Plain English**: A Surface is like a glass box. It lets the "mood lighting" (Hue/Chroma) shine through from the outside, but it resets the "conversation" (Text). Inside the box, you start a new sentence with standard text color, even if the text outside was faint or bold.
+> **In Plain English**: A Container is just a grouping mechanism. If you put text inside a `div`, it doesn't stop being "Subtle" or "Brand colored." This formalizes the difference between a **Card** (Surface) and a **Wrapper** (Container).
 
-> **Rationalization: Ambient vs. Semantic State**
->
-> We can rationalize this behavior by distinguishing between two types of state:
->
-> 1.  **Environmental State ($H, C$)**: This behaves like **Ambient Light**. If a room is lit with red light, objects inside (Surfaces) should reflect that red tint. The atmosphere permeates boundaries.
-> 2.  **Semantic State ($L_{src}$)**: This behaves like **Grammar**. A "Card" is a new sentence. Just because the previous sentence ended quietly (Subtle) doesn't mean the new sentence (Card Title) should start quietly. The grammar resets at the boundary of the object.
+### 3.2. Surface Operators ($S$)
 
-### 3.2. Intent Operator ($I$)
+A Surface establishes a new spatial context. All surfaces act as a **Lossy Barrier** for Intent ($L_{src}$), forcibly resetting the "Voice" to the default. However, they differ in how they handle the "Atmosphere" ($H, C$).
+
+We distinguish between two topological types of surfaces:
+
+#### 3.2.1. Glass Surface ($S_{glass}$)
+
+A Glass Surface (e.g., `surface-card`, `surface-floating`) preserves the ambient environment.
+
+$$
+S_{glass}(\langle H, C, L_{src}, \alpha \rangle) = \langle H, C, L_{high}, \alpha' \rangle
+$$
+
+- **Context Identity**: $H$ and $C$ are preserved. The surface is tinted by the parent's light.
+- **Intent Erasure**: $L_{src}$ is reset to $L_{high}$.
+- **Polarity**: $\alpha'$ is resolved (usually $\alpha' = \alpha$, unless inverted).
+
+> **In Plain English**: A standard Card is like a pane of frosted glass. It resets the text conversation (so you can start a new sentence), but it lets the room's colored lighting shine through. If the room is red, the card is tinted red.
+
+#### 3.2.2. Solid Surface ($S_{solid}$)
+
+A Solid Surface (e.g., `surface-neutral`, `surface-paper`) blocks the ambient environment, grounding the local state.
+
+$$
+S_{solid}(\langle H, C, L_{src}, \alpha \rangle) = \langle H, 0, L_{high}, \alpha' \rangle
+$$
+
+- **Context Reset**: $C$ is forced to $0$ (or a neutral floor $\epsilon$). $H$ becomes irrelevant (undefined) when $C=0$.
+- **Intent Erasure**: $L_{src}$ is reset to $L_{high}$.
+
+> **In Plain English**: A Solid Surface is opaque white (or black) paper. It ignores the room's red lighting and creates a purely neutral canvas. This is essential for "breaking out" of a strong brand section to display data or neutral content.
+
+### 3.3. Intent Operator ($I$)
 
 Intent classes (e.g., `.text-subtle`) modify the Lightness Source.
 
-$$ I*{token}(\langle H, C, L*{src}, \alpha \rangle) = \langle H, C, L\_{token}, \alpha \rangle $$
+$$
+I_{token}(\langle H, C, L_{src}, \alpha \rangle) = \langle H, C, L_{token}, \alpha \rangle
+$$
 
 - **Identity on Context**: $H$ and $C$ are preserved.
 - **Action**: Updates $L_{src}$.
 
-> **In Plain English**: Intent classes like `.text-subtle` only change _one_ thing: the lightness reference. They don't touch the color. They say "make this text dimmer," regardless of whether it's blue, red, or purple.
+> **In Plain English**: Intent classes are adjectives. They modify the _current_ noun. They do not change the color of the noun, only its weight or emphasis.
 
-### 3.3. Modifier Operator ($M$)
+### 3.4. Modifier Operator ($M$)
 
 Modifier classes (e.g., `.hue-brand`) modify the Context variables.
 
-$$ M*{brand}(\langle H, C, L*{src}, \alpha \rangle) = \langle H*{brand}, C*{ambient}, L\_{src}, \alpha \rangle $$
+$$
+M_{brand}(\langle H, C, L_{src}, \alpha \rangle) = \langle H_{brand}, C_{ambient}, L_{src}, \alpha \rangle
+$$
 
 - **Identity on Intent**: $L_{src}$ is preserved.
-- **Context Definition**: Updates $H$ to the brand hue. Updates $C$ to the **Ambient Chroma** ($C_{ambient} \approx 0.1 \times C_{brand}$).
+- **Context Definition**: Updates $H$ to the brand hue and $C$ to the ambient chroma level.
 
-> **In Plain English**: Modifier classes like `.hue-brand` change the atmosphere. They say "everything inside here should be purple," but they don't touch the text hierarchy. A title is still a title, just purple now. This is also where the "Dampening" happens: the modifier takes a vibrant brand color and creates a soft ambient version for backgrounds.
+> **In Plain English**: Modifier classes change the lighting of the room. They don't touch the text hierarchy. A title is still a title, but now it's illuminated by purple light.
+
+### A Note on Implementation
+
+This distinction effectively patches the logic hole in your "Reactive Pipeline" draft.
+
+- **Before:** You relied on $M$ (Modifiers) to change color, but had no mechanism to _remove_ color aside from potentially non-semantic overrides.
+- **Now:** The $S_{solid}$ operator gives you a semantic way to "ground" a signal.
 
 ## 4. Laws of Composition
 
@@ -145,7 +187,11 @@ The resolution happens at render time via the $\Phi$ function (the CSS Engine).
 ### 7.1. Idempotency of Modifiers
 
 Applying the same modifier twice is equivalent to applying it once.
-$$ M*{brand}(M*{brand}(\Sigma)) \equiv M\_{brand}(\Sigma) $$
+
+$$
+M_{brand}(M_{brand}(\Sigma)) \equiv M_{brand}(\Sigma)
+$$
+
 This means nesting a `.hue-brand` section inside another `.hue-brand` section is safe and redundant.
 
 ### 7.2. The "Leakage" Corollary
@@ -162,6 +208,8 @@ Since $M$ operators control the environment ($H, C$) for all child elements, cha
 
 Because Inverted Surfaces perform a Hard Flip ($\alpha' = \neg \alpha$), nesting them creates an alternating polarity stack. However, because $S$ is lossy on Intent ($L$), this is not a true inverse of the state.
 
-$$ S*{inv}(S*{inv}(\Sigma)) \neq \Sigma $$
+$$
+S_{inv}(S_{inv}(\Sigma)) \neq \Sigma
+$$
 
 While the polarity returns to the original ($\neg(\neg \alpha) = \alpha$), the Intent $L_{src}$ is reset to $L_{high}$ at each step. You recover the _mode_, but you lose the _semantic context_.

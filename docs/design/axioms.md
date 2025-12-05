@@ -17,7 +17,12 @@ We are not building a "Paint Set" (a collection of static colors). We are buildi
 
 ## The Axioms
 
-The axioms are organized into five domains:
+The axioms are organized into domains:
+
+### [0. The Fundamental Theorem](axioms/00-fundamental-theorem.md)
+
+**Color = f(Context, Intent)**
+Color is not a static value; it is a function. The system is a reactive dependency graph that resolves pixel values based on semantic intent and environmental context.
 
 ### [I. The Prime Directive](axioms/01-accessibility.md)
 
@@ -43,6 +48,11 @@ We ensure consistency and interoperability by deriving everything from configura
 
 **State is a Domain Model. Testing is a Ratchet. Late Binding.**
 We build maintainable, testable software that leverages the power of the browser's CSS engine for dynamic resolution.
+
+### [VI. The Law of Static Projection](axioms/06-projection.md)
+
+**Static exports are snapshots.**
+Since the system is dynamic, any static export (JSON, PDF) is a lossy projection of the system's state at a specific moment. We must enumerate states explicitly in these formats.
 
 ## Missing / Implicit Axioms (To Be Formalized)
 

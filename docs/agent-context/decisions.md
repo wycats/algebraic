@@ -631,3 +631,21 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Reliability**: Prevents runtime errors in the linter, which can crash the user's IDE or build.
   - **Maintainability**: Makes the complex AST traversal logic easier to understand and refactor.
+
+### [2025-12-05] Heuristic DTCG Import
+
+- **Context**: We wanted to allow users to import existing design tokens (DTCG format) into Axiomatic. However, most existing token sets are "flat" palettes (e.g., `blue.500`) rather than semantic systems.
+- **Decision**: Implement a "Heuristic Importer" that infers semantic intent from common naming conventions (e.g., `brand`, `neutral`, `surface`) and color properties (Chroma, Lightness).
+- **Rationale**:
+  - **Low Friction**: Allows users to get started with their existing brand colors without manually mapping every single token.
+  - **Intelligence**: By analyzing the color values (e.g., finding the neutral scale range), we can configure the physics engine to match the original system's contrast feel automatically.
+  - **Fallback**: If heuristics fail, we map to safe defaults, ensuring a valid configuration is always produced.
+
+### [2025-12-05] CLI Import Command
+
+- **Context**: We needed a way to expose the importer functionality.
+- **Decision**: Add a dedicated `import` command to the CLI: `axiomatic import <file>`.
+- **Rationale**:
+  - **Discoverability**: A top-level command makes the feature easy to find.
+  - **Workflow**: Fits naturally into the "init -> import -> build" lifecycle.
+  - **Safety**: Supports `--dry-run` to let users preview the changes before overwriting their config.

@@ -44,11 +44,14 @@
     "format": "prettier --write",
     "lint:security": "node scripts/check-security.ts",
     "lint:tokens": "./scripts/check-tokens.sh",
+    "lint:math": "node scripts/check-math.ts",
+    "lint:all": "pnpm lint && pnpm lint:security && pnpm lint:tokens && pnpm lint:math",
     "docs:dev": "pnpm --filter site dev",
     "docs:build": "pnpm --filter site build",
     "dev:site": "pnpm docs:dev & pnpm --filter demo dev",
     "build:site": "node scripts/build-site.ts",
-    "check:exports": "publint"
+    "check:exports": "publint",
+    "vendor:update": "node scripts/update-vendor.ts"
   },
   "exports": {
     ".": "./dist/lib/index.js",

@@ -1,3 +1,4 @@
+````mdc
 # The Reactive Pipeline
 
 > **Status**: Draft
@@ -102,17 +103,17 @@ When you combine these classes, the engine resolves the intersection automatical
 
 ```html
 <div class="surface-card hue-brand">
-  <!-- 
+  <!--
     Context: Brand Hue
     Intent: High Contrast (Default)
-    Result: Dark Brand Purple 
+    Result: Dark Brand Purple
   -->
   <h1 class="text-strong">Hello</h1>
 
-  <!-- 
+  <!--
     Context: Brand Hue
     Intent: Subtle (Utility)
-    Result: Muted Brand Purple 
+    Result: Muted Brand Purple
   -->
   <p class="text-subtle">World</p>
 </div>
@@ -120,7 +121,7 @@ When you combine these classes, the engine resolves the intersection automatical
 
 This allows for **Combinatorial Explosion** of possibilities without combinatorial CSS size. We don't generate `.text-subtle-on-brand-dark`, we just generate the logic that makes `.text-subtle` and `.hue-brand` work together.
 
-## The Algebra of Composition
+## The Algebra of Color Design
 
 To rigorously define how classes interact, we model the system as a state transformation machine. This ensures that composition is predictable and invariant-preserving.
 
@@ -142,7 +143,7 @@ Classes are operators that transform $\Sigma$ into $\Sigma'$.
 
 A surface establishes a new local context. It defines the background physics and resets the foreground intent.
 
-$$ S(\Sigma*{parent}) \rightarrow \langle H*{S}, C*{S}, L*{default} \rangle $$
+$$ S(\Sigma_{parent}) \rightarrow \langle H_{S}, C_{S}, L_{default} \rangle $$
 
 - **Invariant**: Surfaces are "Context Roots". They may inherit $H/C$ from parents, but they always reset $L_{src}$ to the default (High Contrast) to ensure readability.
 
@@ -150,7 +151,7 @@ $$ S(\Sigma*{parent}) \rightarrow \langle H*{S}, C*{S}, L*{default} \rangle $$
 
 Text utilities (e.g., `.text-subtle`) modify _only_ the lightness source.
 
-$$ I*{subtle}(\langle H, C, L \rangle) \rightarrow \langle H, C, L*{subtle} \rangle $$
+$$ I_{subtle}(\langle H, C, L \rangle) \rightarrow \langle H, C, L_{subtle} \rangle $$
 
 - **Invariant**: Intent is **Chromatically Transparent**. It preserves the $H$ and $C$ of the context.
 
@@ -158,7 +159,7 @@ $$ I*{subtle}(\langle H, C, L \rangle) \rightarrow \langle H, C, L*{subtle} \ran
 
 Context modifiers (e.g., `.hue-brand`) modify the environment variables.
 
-$$ M*{brand}(\langle H, C, L \rangle) \rightarrow \langle H*{brand}, C\_{brand}, L \rangle $$
+$$ M_{brand}(\langle H, C, L \rangle) \rightarrow \langle H_{brand}, C_{brand}, L \rangle $$
 
 - **Invariant**: Modifiers are **Contrast Preserving**. They change the "flavor" ($H, C$) but do not touch the "structure" ($L$).
 
@@ -175,3 +176,5 @@ Because $I$ and $M$ operate on disjoint components of the vector $\Sigma$, they 
 $$ \Phi(I(M(\Sigma))) \equiv \Phi(M(I(\Sigma))) $$
 
 This algebraic property allows us to mix and match `text-*` and `hue-*` classes without creating $N \times M$ specific overrides.
+
+````

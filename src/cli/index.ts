@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { auditCommand } from "./commands/audit.ts";
 import { buildCommand } from "./commands/build.ts";
 import { exportCommand } from "./commands/export.ts";
+import { importCommand } from "./commands/import.ts";
 import { DEFAULT_CONFIG } from "./default-config.ts";
 
 const args = process.argv.slice(2);
@@ -18,6 +19,7 @@ Axiomatic Color CLI
 Usage:
   axiomatic init              Create a new color-config.json
   axiomatic build [flags]     Generate CSS from config
+  axiomatic import <file>     Import config from DTCG tokens
   axiomatic export [flags]    Export tokens to other formats
   axiomatic audit             Audit the generated theme
 
@@ -49,6 +51,20 @@ if (command === "init") {
   }
 
   console.log("Run `axiomatic build` to generate your theme.");
+  process.exit(0);
+} else if (command === "import") {
+  const file = args[1];
+  if (!file || file.startsWith("-")) {
+    console.error("Error: Please provide an input file.");
+    console.error("Usage: axiomatic import <file> [--out <file>] [--dry-run]");
+    process.exit(1);
+  }
+
+  const dryRun = args.includes("--dry-run");
+  const outIndex = args.indexOf("--out");
+  const out = outIndex !== -1 ? args[outIndex + 1] : undefined;
+
+  importCommand(file, { out, dryRun });
   process.exit(0);
 } else if (command === "export") {
   exportCommand(args.slice(1), CWD);

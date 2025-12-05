@@ -983,3 +983,19 @@
   - Verified rules against React (JSX), Svelte, Vue, and Ember (GTS) test cases.
   - Added smoke tests to ensure integration works in real-world scenarios.
   - Achieved 100% pass rate on strict linting of the plugin codebase itself.
+
+## Epoch 32: Phase 1 - Round-Trip DTCG (2025-12-05)
+
+**Goal**: Enable importing existing Design Tokens (DTCG format) into the Axiomatic system to lower the barrier to entry.
+
+**Completed Work**:
+
+- **Heuristic Importer**:
+  - Implemented `DTCGImporter` in `src/lib/importers/dtcg.ts`.
+  - Designed heuristics to infer Key Colors (by keyword/chroma), Anchors (by neutral scale analysis), and Surfaces (by naming convention).
+- **CLI Command**:
+  - Added `axiomatic import <file>` command.
+  - Supports `--dry-run` for previewing the generated configuration.
+- **Verification**:
+  - Verified against a sample token file (`examples/tokens.json`) containing a typical Tailwind-like palette.
+  - Confirmed that the importer correctly identifies brand colors, neutral ranges, and surface tokens.
