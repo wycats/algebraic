@@ -4,7 +4,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    exclude: [...configDefaults.exclude, "dist/**", "site/**", "tests/**"],
+    exclude: [
+      ...configDefaults.exclude,
+      "dist/**",
+      "site/**",
+      "tests/verify-colors.spec.ts",
+    ],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

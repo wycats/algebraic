@@ -61,6 +61,16 @@ const config: KnipConfig = {
         "katex",
       ],
     },
+    "packages/vscode-extension": {
+      entry: ["src/extension.ts", "scripts/*.js"],
+      project: ["src/**/*.ts", "scripts/*.js"],
+      ignoreDependencies: [
+        "@types/vscode",
+        "@types/node",
+        "tsup",
+        "tree-sitter-wasms",
+      ],
+    },
     // demo: {
     //   entry: ["src/main.tsx", "index.html"],
     //   project: ["src/**/*.{ts,tsx}"],

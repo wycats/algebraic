@@ -59,6 +59,14 @@ To prepare for the next phase after a transition, use the `.github/prompts/prepa
 - The user may decide to defer work that was originally planned for the current phase. Document these in `docs/agent-context/future/deferred_work.md` for future consideration.
 <!-- core end -->
 
+## 📜 The Constitution (Axioms)
+
+The project is governed by a set of core principles defined in `docs/design/axioms/`. These are not suggestions; they are the laws of the system.
+
+- **Consult Early**: Before designing a feature, check the relevant axioms (e.g., `physics.md`, `architecture.md`).
+- **Verify Often**: During implementation, ask yourself: "Does this violate the Law of Late Binding? Is this deterministic?"
+- **Update**: If a new pattern emerges that contradicts an axiom, we must either refine the axiom or refactor the code. We do not ignore the contradiction.
+
 ## Tooling & Conventions
 
 ### Package Management (`pnpm`)

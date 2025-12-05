@@ -580,3 +580,29 @@ This file tracks key architectural and design decisions made throughout the proj
 - **Rationale**:
   - **Validation First**: We need to ensure the core system is usable before building tools on top of it.
   - **Foundation**: Tooling should be built on a stable, user-tested foundation.
+
+### [2025-12-04] Tree-sitter for Class Extraction
+
+- **Context**: We needed to extract class names from HTML, TSX, and Svelte files to provide autocompletion and hover information in the VS Code extension.
+- **Decision**: Use `web-tree-sitter` with WASM grammars instead of Regular Expressions.
+- **Rationale**:
+  - **Robustness**: Regex is fragile for parsing nested structures and complex template syntax (like Svelte blocks or JSX expressions). Tree-sitter provides a true AST.
+  - **Accuracy**: Allows us to distinguish between a class string and other string literals, reducing false positives.
+  - **Performance**: WASM-based parsing is extremely fast and runs efficiently within the VS Code extension host.
+
+### [2025-12-04] LSP Architecture for Extension
+
+- **Context**: We needed to implement language features like completion and hover. We considered a simple extension vs. a full Language Server Protocol (LSP) implementation.
+- **Decision**: Implement a lightweight LSP architecture (Client/Server split).
+- **Rationale**:
+  - **Scalability**: Keeps the heavy lifting (parsing, analysis) separate from the UI thread.
+  - **Portability**: The server logic can theoretically be reused in other editors (Neovim, Zed) in the future.
+  - **Standardization**: Follows VS Code best practices for language extensions.
+
+### [2025-12-04] Dynamic Schema Loading
+
+- **Context**: The extension needs to validate `color-config.json` files. Hardcoding the schema would require releasing a new extension version every time the config format evolves.
+- **Decision**: Load the schema dynamically from the workspace or a bundled fallback.
+- **Rationale**:
+  - **Agility**: Users can update their CLI (and thus the schema) without waiting for an extension update.
+  - **Correctness**: Ensures validation matches the version of the CLI installed in the project.

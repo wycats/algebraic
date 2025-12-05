@@ -922,3 +922,24 @@
 - **Verification**:
   - Verified the build (`pnpm --filter site build`) passes with the new configuration.
   - Confirmed that the documentation site renders correctly with the refactored styles.
+
+## Epoch 30: Developer Tooling (2025-12-04)
+
+**Goal**: Create a world-class developer experience for users of the Axiomatic Color system.
+
+**Completed Work**:
+
+- **Phase 1: AI Context (llms.txt)**:
+  - Implemented `scripts/generate-llms-txt.ts` to generate a standardized `llms.txt` file from the documentation.
+  - Integrated the generation into the build pipeline (`scripts/build-site.ts`).
+  - Verified the output via `tests/llm-context.spec.ts`.
+- **Phase 2: CI Gatekeeper (Audit Hardening)**:
+  - Hardened the `axiomatic audit` command (`src/cli/commands/audit.ts`) with robust JSON Schema validation.
+  - Integrated `ajv` for runtime validation of `color-config.json`.
+  - Implemented logic to patch the schema to allow `$schema` property, ensuring compatibility with editor tooling.
+  - Verified the audit command correctly identifies schema violations and logic errors.
+- **Phase 3: The Editor Companion (VS Code Extension)**:
+  - **Scaffold**: Initialized `@axiomatic-design/vscode-extension` in `packages/vscode-extension`.
+  - **Grammar**: Defined Tree-sitter queries for detecting class names in HTML, JSX, Svelte, and Vue.
+  - **Infrastructure**: Set up `web-tree-sitter` and WASM grammar loading.
+  - **Features**: Implemented Autocomplete (`CompletionItemProvider`) and Color Decorators (`AxiomaticDecorator`) for system tokens.

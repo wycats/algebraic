@@ -134,24 +134,49 @@
   - **Phase 2: Execution & Remediation (Completed)**
     - **Goal**: Execute the review checklist, identify violations, and implement fixes for critical issues (e.g., hardcoded tokens, performance risks).
 
-## Epoch 29: Fresh Eyes & Zero-to-One Review (Planned)
+## Epoch 29: Fresh Eyes & Zero-to-One Review (Completed)
 
 - **Goal**: Validate the system's usability and "first hour" experience by simulating a new user's journey and conducting a holistic design review.
 - **Phases**:
-  - **Phase 1: Zero-to-One Review**
+  - **Phase 1: Zero-to-One Review (Completed)**
     - **Goal**: Simulate a new user installing and configuring the library from scratch to identify friction in the "getting started" flow.
-  - **Phase 2: Fresh Eyes Review**
+  - **Phase 2: Fresh Eyes Review (Completed)**
     - **Goal**: Conduct a comprehensive audit of the documentation, CLI, and Theme Builder with a focus on clarity, consistency, and "Axiomatic" alignment.
-  - **Phase 3: Remediation**
+  - **Phase 3: Remediation (Completed)**
     - **Goal**: Address critical friction points and documentation gaps identified in the reviews.
 
-## Epoch 30: Developer Tooling (Planned)
+## Epoch 30: Developer Tooling (Active)
 
 - **Goal**: Create a world-class developer experience for users of the Axiomatic Color system.
 - **Phases**:
-  - **Phase 1: AI Context (llms.txt)**
+  - **Phase 1: AI Context (llms.txt) (Completed)**
     - **Goal**: Implement the strategy designed in Epoch 24 to generate a standardized `llms.txt` file.
-  - **Phase 2: VS Code Extension (Prototype)**
-    - **Goal**: Scaffold a VS Code extension to visualize Axiomatic tokens inline.
-  - **Phase 3: Custom Lints (CLI)**
-    - **Goal**: Expose the internal `check-tokens.sh` logic as a public CLI command.
+  - **Phase 2: CI Gatekeeper (Audit Hardening) (Completed)**
+    - **Goal**: Harden the `axiomatic audit` command with JSON Schema validation for CI safety.
+  - **Phase 3: The Editor Companion (VS Code Extension) (Completed)**
+    - **Goal**: Build a VS Code extension for autocompletion and visual feedback using `web-tree-sitter`.
+  - **Phase 4: The Runtime Debugger (Active)**
+    - **Goal**: Provide a "X-Ray" view of the Axiomatic system in the browser, visualizing the invisible context (Polarity, Mode, Surface) that drives the reactive pipeline.
+    - **Design Doc**: [Runtime Debugging](../design/runtime-debugging.md)
+
+## Epoch 31: System Hardening (Determinism & Enforcement) (Planned)
+
+- **Goal**: Ensure the system is robust, deterministic, and enforces its own rules in user code.
+- **Phases**:
+  - **Phase 1: Golden Master Tests**
+    - **Goal**: Implement full-system snapshot testing to guarantee bit-for-bit determinism across releases.
+    - **Design Doc**: [Determinism & Golden Masters](../design/determinism.md)
+  - **Phase 2: Usage Linter**
+    - **Goal**: Create `eslint-plugin-axiomatic` to flag "Magic Numbers" and enforce semantic token usage.
+    - **Design Doc**: [Usage Enforcement](../design/usage-enforcement.md)
+
+## Epoch 32: Ecosystem Expansion (Planned)
+
+- **Goal**: Expand the system's reach beyond the web and into the broader design ecosystem.
+- **Phases**:
+  - **Phase 1: Round-Trip DTCG**
+    - **Goal**: Enable importing configuration from standard DTCG token files, allowing interoperability with Figma and other tools.
+    - **Design Doc**: [Interoperability Strategy](../design/interoperability-strategy.md)
+  - **Phase 2: High-Level Presets ("Vibes")**
+    - **Goal**: Reduce configuration complexity by providing curated "Vibe" presets that configure the physics engine for specific aesthetics.
+    - **Design Doc**: [High-Level Presets](../design/high-level-presets.md)

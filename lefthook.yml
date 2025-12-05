@@ -26,7 +26,7 @@ pre-push:
   parallel: false
   commands:
     typecheck:
-      run: tsc --noEmit
+      run: tsc --noEmit && pnpm --filter @axiomatic-design/vscode-extension typecheck
     site-check:
       run: pnpm --filter site astro check && pnpm --filter site exec svelte-check
     build:

@@ -54,6 +54,9 @@
     "targetContrast": 60,
     "hues": [25, 190, 45, 250, 85, 280, 125, 320, 150, 360]
   },
+  "options": {
+    "prefix": "axm"
+  },
   "presets": {
     "typography": {
       "fonts": {

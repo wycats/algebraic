@@ -67,6 +67,7 @@
     "axiomatic": "./dist/cli/index.js"
   },
   "dependencies": {
+    "ajv": "^8.17.1",
     "apca-w3": "^0.1.9",
     "culori": "^4.0.2",
     "typescript": "^5.9.3"

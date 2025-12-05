@@ -46,7 +46,7 @@ export const DEFAULT_CONFIG: SolverConfig = {
     hues: [25, 190, 45, 250, 85, 280, 125, 320, 150, 360],
   },
   options: {
-    prefix: "color-sys",
+    prefix: "axm",
     selector: ":root",
   },
   groups: [

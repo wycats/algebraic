@@ -1,115 +1,32 @@
-# Implementation Plan - Epoch 23: Presets & Utilities
+# Implementation Plan - Epoch 30: Developer Tooling
 
-## Goal
+**Goal**: Empower developers with tools to understand, debug, and leverage the Axiomatic Color system effectively, focusing on "Editor DX" and "CI Safety" rather than new toolchains.
 
-Refactor the utility generation system to support configurable presets for typography and borders, and ensure all color utilities are derived directly from standard tokens. This moves the system from hardcoded utility classes to a flexible, config-driven approach.
+## Phase 1: AI Context (`llms.txt`) (Completed)
 
-## Scope
+**Goal**: Create a standardized context file for AI coding assistants (Cursor, Copilot) to improve their ability to generate Axiomatic code.
 
-- **Configuration**: Extend `SolverConfig` to include a `presets` section.
-- **Typography**: Implement configurable font families and a Bezier-curve based type scale generator.
-- **Borders**: Split border utilities into structural (`preset-bordered`) and cosmetic (`bordered`) classes.
-- **Colors**: Auto-generate text color utilities (`.text-*`) from the generated tokens.
-- **Generator**: Update `generateTokensCss` to consume the new configuration and output the refined CSS.
+- [x] **Content Aggregation**: Write a script to aggregate MDX content from `site/src/content/docs`.
+- [x] **Summarization**: Create a condensed `public/llms.txt` focusing on high-level concepts and key APIs.
+- [x] **Full Context**: Create `public/llms-full.txt` with the complete documentation text.
+- [x] **Verification**: Test by feeding the file to an LLM and asking it to "Build a Card component".
 
-## Design
+## Phase 2: The CI Gatekeeper (`axiomatic audit`)
 
-### 1. Configuration Schema (`src/lib/types.ts`)
+**Goal**: Harden the existing `audit` command to serve as a comprehensive "System Integrity" check for CI/CD pipelines.
 
-We will add a `presets` object to `SolverConfig`:
+- [x] **Schema Validation**: Integrate `ajv` (or similar) to validate `color-config.json` against the generated schema at runtime.
+- [ ] **Dead Token Detection**: Analyze the config to identify defined surfaces or keys that are not generating CSS output. (Deferred: User focus shifted to Editor DX)
+- [x] **Exit Codes**: Ensure the command returns proper exit codes (0 for pass, 1 for fail) for CI integration.
+- [x] **Reporting**: Improve the output format to be human-readable (and potentially machine-readable via `--json`).
 
-```typescript
-export interface TypographyPreset {
-  family: string; // e.g. "ui-monospace, SFMono-Regular, ..."
-  weights?: Record<string, number>; // e.g. { regular: 400, bold: 700 }
-}
+## Phase 3: The Editor Companion (VS Code Extension)
 
-export interface TypeScaleConfig {
-  steps: number; // Number of sizes to generate (e.g. 5 for xs, sm, base, lg, xl)
-  minSize: number; // Base size in rem (e.g. 0.75)
-  maxSize: number; // Max size in rem (e.g. 3.0)
-  curve: BezierCurve; // Control points for the scaling curve
-}
+**Goal**: Provide immediate feedback and autocomplete within the editor using a robust, AST-based approach.
 
-export interface PresetsConfig {
-  typography: {
-    fonts: {
-      sans?: TypographyPreset;
-      serif?: TypographyPreset;
-      mono?: TypographyPreset;
-    };
-    scale: TypeScaleConfig;
-  };
-  borders: {
-    width: string; // e.g. "1px"
-    style: string; // e.g. "solid"
-  };
-}
-
-// Update SolverConfig
-export type SolverConfig = {
-  // ... existing fields
-  presets?: PresetsConfig;
-};
-```
-
-### 2. Utility Generation Logic
-
-#### Text Colors
-
-We will update the engine to support an indirection variable for text lightness, allowing utilities to switch the source token without breaking the chroma/hue injection pipeline.
-
-**Engine Update (Conceptual):**
-
-```css
-:where([class^="surface-"], [class*=" surface-"], body) {
-  /* Default to high contrast text */
-  --text-lightness-source: var(--axm-text-high-token);
-
-  /* Calculate final color using the source lightness + computed chroma/hue */
-  --computed-fg-color: oklch(
-    from var(--text-lightness-source) l var(--computed-fg-C)
-      var(--computed-fg-H)
-  );
-
-  color: var(--computed-fg-color);
-}
-```
-
-**Utility Generation:**
-
-- `.text-high` -> `--text-lightness-source: var(--axm-text-high-token);`
-- `.text-subtle` -> `--text-lightness-source: var(--axm-text-subtle-token);`
-- `.text-subtlest` -> `--text-lightness-source: var(--axm-text-subtlest-token);`
-
-**Key Colors:**
-For key colors (e.g. `.text-brand`), we want to override the hue and chroma entirely, while likely preserving the lightness of the text token (or using the key color's lightness if intended).
-
-- `.text-[key]` ->
-  - `--default-fg-hue: var(--axm-hue-[key]);`
-  - `--override-fg-chroma: var(--axm-chroma-[key]);`
-  - (Optional) `--text-lightness-source: var(--axm-key-[key]-color);` if we want the key color's lightness too.
-
-#### Borders
-
-- `.bordered`: Sets `border-color: var(--axm-border-dec-token)`.
-- `.preset-bordered`: Sets `border: [width] [style] var(--axm-border-dec-token)`.
-
-#### Typography
-
-- **Families**: Generate `.font-sans`, `.font-serif`, `.font-mono` based on config.
-- **Scale**:
-  - Map linear domain `t = [0, 1]` to `[minSize, maxSize]` using cubic bezier.
-  - Output: `.text-xs`, `.text-sm`, etc.
-
-## Execution Steps
-
-1.  **Update Types**: Modify `src/lib/types.ts` to include `PresetsConfig`.
-2.  **Update Defaults**: Add default values in `src/lib/defaults.ts`.
-3.  **Update Engine CSS**: Modify `css/engine.css` to use `--text-lightness-source`.
-4.  **Refactor Generator**:
-    - Implement `generateUtilityCss`.
-    - Update `generateTokensCss` to include utilities.
-5.  **Verify**:
-    - Run `pnpm build`.
-    - Check output CSS.
+- [x] **Grammar Spec**: Define the formal Tree-sitter queries for detecting class names in HTML, JSX, Svelte, and Vue.
+- [x] **Scaffold**: Initialize a new VS Code extension project in `packages/vscode-extension`.
+- [x] **Infrastructure**: Set up `web-tree-sitter` and download necessary WASM grammars.
+- [x] **Language Server**: Implement the `CompletionItemProvider` using the defined queries.
+- [x] **Autocomplete**: Provide completion items for all generated tokens.
+- [x] **Decorators**: Render color swatches (squares) next to known token classes or variables.
