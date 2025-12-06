@@ -1,0 +1,9 @@
+# Unlabeled Changes
+
+* `@axiomatic-design/color`, `@axiomatic-design/eslint-plugin`, `@axiomatic-design/vscode-extension`
+  * [#10](https://github.com/design-axioms/color/pull/10) fix: resolve svelte check syntax and type errors ([@wycats](https://github.com/wycats))
+* `@axiomatic-design/color`
+  * [#9](https://github.com/design-axioms/color/pull/9) fix: resolve all linting errors (Epoch 20 Phase 2) ([@wycats](https://github.com/wycats))
+
+
+*Cannot plan release until the above changes are labeled*.
