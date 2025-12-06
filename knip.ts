@@ -47,6 +47,7 @@ const config: KnipConfig = {
       ],
       ignoreDependencies: [
         "@astrojs/check",
+        "svelte-check",
         "typescript",
         "sharp", // Used by Astro image optimization
         "@fontsource-variable/inter",

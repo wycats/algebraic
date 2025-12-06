@@ -69,7 +69,6 @@
     "./inspector": "./dist/lib/inspector/index.js",
     "./style.css": "./dist/style.css",
     "./engine.css": "./css/engine.css",
-    "./utilities.css": "./css/utilities.css",
     "./theme.css": "./css/theme.css"
   },
   "bin": {

@@ -44,7 +44,6 @@ export default defineConfig({
       customCss: [
         "../css/engine.css",
         "./src/styles/theme.css",
-        "../css/utilities.css",
         "./src/styles/docs.css",
         "./src/styles/starlight-custom.css",
       ],

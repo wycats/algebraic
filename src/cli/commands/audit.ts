@@ -81,10 +81,10 @@ export function auditCommand(args: string[], cwd: string): void {
         schema.properties.$schema = { type: "string" };
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const ajv = new Ajv({ allErrors: true, strict: false });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      const validate = (ajv as any).compile(schema);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+      const ajv = new (Ajv as any)({ allErrors: true, strict: false });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      const validate = ajv.compile(schema);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
       const valid = validate(rawConfig);
 
