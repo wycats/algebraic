@@ -1,19 +1,10 @@
-# Task List - Epoch 34: Phase 3 (Export & Validation)
+# Phase 2: Deployment
 
-## Theme Builder: Export Preview
-
-- [x] **UI Scaffold**: Create an "Export" tab/panel in the Theme Builder UI.
-- [x] **Integration**: Connect the `ConfigState` to the existing exporters (`toDTCG`, `toTailwind`, `generateTokensCss`).
-- [x] **Display**: Render the generated output (JSON, JS, CSS) in syntax-highlighted code blocks.
-- [x] **Interaction**: Add "Copy to Clipboard" and "Download" functionality.
-
-## Theme Builder: Validation
-
-- [ ] **Schema Integration**: Integrate `ajv` and the JSON schema into `ConfigState`.
-- [ ] **Real-time Validation**: Implement debounced validation of the current configuration.
-- [ ] **Error Reporting**: Display validation errors in the UI (e.g., status bar or error list).
-
-## Ecosystem: ESLint
-
-- [ ] **Svelte Support**: Update `eslint-plugin-axiomatic` to correctly parse and lint Svelte `style` attributes.
-- [ ] **Verification**: Pass the `svelte-smoke.test.ts` test case.
+- [ ] **Commit Changes**
+  - [ ] Commit all changes made during Phase 1 (fixes, linting, snapshots).
+- [ ] **Push to Main**
+  - [ ] Push the changes to the `main` branch to trigger the deployment workflow.
+- [ ] **Monitor Deployment**
+  - [ ] Monitor the GitHub Actions workflow to ensure the build and deployment succeed.
+- [ ] **Verify Live Site**
+  - [ ] Visit the live site and verify that the changes (e.g., Theme Builder export preview) are working correctly.

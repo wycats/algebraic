@@ -6,7 +6,7 @@
     type SolverConfig,
     type Theme,
   } from "@axiomatic-design/color";
-  import { configState } from "../../lib/state/ConfigState.svelte.ts";
+  import { configState } from "../../../lib/state/ConfigState.svelte.ts";
 
   let format = $state<"css" | "dtcg" | "tailwind" | "typescript">("css");
   let output = $state("");

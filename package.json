@@ -29,7 +29,7 @@
     "color-config.schema.json"
   ],
   "scripts": {
-    "solve": "node src/cli/index.ts scripts/surface-lightness.config.json css/theme.css",
+    "solve": "node src/cli/index.ts color-config.json css/theme.css",
     "audit:theme": "node src/cli/index.ts audit",
     "sketch": "node scripts/lightness-lut-sketch.ts",
     "build": "tsup && pnpm schema && pnpm build:css",

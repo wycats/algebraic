@@ -11,6 +11,8 @@ const WHITELIST = [
 
 const IGNORE_PATTERNS = [
   "node_modules/**",
+  "**/node_modules/**",
+  "vendor/**",
   "dist/**",
   "coverage/**",
   ".git/**",

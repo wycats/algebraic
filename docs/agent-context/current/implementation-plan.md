@@ -1,38 +1,28 @@
-# Implementation Plan - Epoch 34: Phase 2 (Token Simplification)
+# Implementation Plan - Epoch 35: Deployment & Release
 
-## Goal
+## Phase 1: Pre-Flight Verification
 
-Reduce the cognitive load on users by hiding internal "plumbing" tokens (e.g., `--text-lightness-source`) and exposing only clear, semantic intents (e.g., `--surface-card`, `--text-high`).
+**Goal**: Ensure the codebase is in a deployable state.
 
-## Strategy
+1.  **Build Verification**:
+    - Execute the full build pipeline locally to catch any environment-specific issues.
+    - Specifically check the `site` build as it's the deployment target.
 
-### 1. Audit & Classification
+2.  **Quality Assurance**:
+    - Run the full suite of linters (including the new math linter) and tests.
 
-- **Audit**: Run a comprehensive audit of all generated CSS variables.
-- **Classify**: Categorize tokens into:
-  - **Public API**: Semantic tokens intended for direct use (Surfaces, Text, Borders).
-  - **Internal Plumbing**: Intermediate variables used for calculation (Sources, Raw L/C/H values).
+3.  **Documentation**:
+    - Review the changelog to ensure it captures the recent major changes (Lightning CSS, Token Simplification).
 
-### 2. Generator Refactoring
+## Phase 2: Deployment
 
-- **Scoping**: Where possible, move internal variables to local scope (inside the rule) rather than `:root`.
-- **Naming**: If global scope is required (for inheritance), prefix internals with `--_axm` or similar private convention.
-- **Metadata**: Update the `Theme` object to explicitly mark tokens as `public` or `private`.
+**Goal**: Push to production.
 
-### 3. Exporter Updates
+1.  **Trigger Deployment**:
+    - Pushing to `main` should trigger Vercel.
+    - Monitor the Vercel dashboard (if accessible) or check the deployment URL.
 
-- **DTCG**: Filter out private tokens from `tokens.json`.
-- **Tailwind**: Ensure only public tokens are generated in the preset.
-- **TypeScript**: Ensure `theme.ts` only types public tokens.
-
-### 4. Documentation
-
-- **Catalog**: Update the "Tokens" reference page to show only the simplified public API.
-- **Visualizer**: Update the Token Inspector to optionally show/hide internals (default: hide).
-
-## Success Criteria
-
-- `tokens.json` contains NO internal plumbing variables.
-- `tailwind.preset.js` contains NO internal plumbing variables.
-- The documentation site still renders correctly (proving internals are still functional).
-- The "Token Inspector" shows a cleaner list by default.
+2.  **Live Verification**:
+    - Visit the live site.
+    - Check the Theme Builder.
+    - Check the Documentation pages.

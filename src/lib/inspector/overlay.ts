@@ -2,6 +2,8 @@ import { resolveTokens } from "./resolver.ts";
 import type { DebugContext, ResolvedToken } from "./types.ts";
 import { findContextRoot } from "./walker.ts";
 
+/* eslint-disable @axiomatic-design/no-raw-tokens */
+
 interface PopoverElement extends HTMLElement {
   showPopover(): void;
   hidePopover(): void;

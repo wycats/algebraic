@@ -13,7 +13,7 @@
   - **Phase 3: Remediation Plan (Completed)**
     - **Goal**: Create a prioritized plan to address any conceptual gaps or inconsistencies found during the audit.
 
-## Epoch 34: Refinement & Education (Active)
+## Epoch 34: Refinement & Education (Completed)
 
 - **Goal**: Execute the remediation plan from Epoch 33, focusing on infrastructure robustness, token simplification, and interactive education.
 - **Phases**:
@@ -25,3 +25,12 @@
     - **Goal**: Ensure the system is "Beta-Ready" by enabling live export previews in the Theme Builder and enforcing configuration validity.
   - **Phase 4: Interactive Tutorials (Deferred)**
     - **Goal**: Create "Learn by Doing" tutorials to guide users through the system's concepts.
+
+## Epoch 35: Deployment & Release (Active)
+
+- **Goal**: Deploy the updated system to production and verify the live site.
+- **Phases**:
+  - **Phase 1: Pre-Flight Verification (Completed)**
+    - **Goal**: Verify that the build works locally and all checks pass before deployment.
+  - **Phase 2: Deployment (Active)**
+    - **Goal**: Trigger the deployment and verify the live site.
