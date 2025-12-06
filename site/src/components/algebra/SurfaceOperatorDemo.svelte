@@ -40,6 +40,9 @@
     const rawPos = (clientX - rect.left) / rect.width;
     position = Math.max(0, Math.min(100, rawPos * 100));
   }
+
+  const titleColor =
+    "oklch(from var(--text-lightness-source) l var(--base-chroma) var(--base-hue))";
 </script>
 
 <div class="demo-container surface-card bordered">
@@ -109,13 +112,7 @@
       >
         <div class="avatar surface-workspace">👤</div>
         <div class="text-content">
-          <div
-            class="element-title"
-            style:color="oklch(from var(--text-lightness-source) l
-            var(--base-chroma) var(--base-hue))"
-          >
-            Hello World
-          </div>
+          <div class="element-title" style:color={titleColor}>Hello World</div>
           <div class="element-subtitle text-subtlest">
             {currentIntent}
           </div>

@@ -26,8 +26,8 @@
       const h = (i / steps) * 360;
 
       // OKLCH
-      const bgOklch = { mode: "oklch", l: L_BG, c: C_BG, h: h };
-      const textOklch = { mode: "oklch", l: TEXT_L, c: 0, h: 0 };
+      const bgOklch = { mode: "oklch" as const, l: L_BG, c: C_BG, h: h };
+      const textOklch = { mode: "oklch" as const, l: TEXT_L, c: 0, h: 0 };
       const scoreOklch = getContrast(bgOklch, textOklch);
       oklchPoints.push([i, scoreOklch]);
 
@@ -35,8 +35,8 @@
       // We use HSL with L=60% to match the 0.6 roughly, though they are different scales.
       // To be fair, we should convert the OKLCH L=0.6 to HSL L and see the variance.
       // But usually people pick "L=60%" in HSL and expect it to be uniform.
-      const bgHsl = { mode: "hsl", h: h, s: 0.5, l: L_BG };
-      const textHsl = { mode: "hsl", h: 0, s: 0, l: TEXT_L };
+      const bgHsl = { mode: "hsl" as const, h: h, s: 0.5, l: L_BG };
+      const textHsl = { mode: "hsl" as const, h: 0, s: 0, l: TEXT_L };
       const scoreHsl = getContrast(bgHsl, textHsl);
       hslPoints.push([i, scoreHsl]);
     }
@@ -71,13 +71,13 @@
 
   function updateScores(): void {
     // Current OKLCH
-    const bgOklch = { mode: "oklch", l: L_BG, c: C_BG, h: hue };
-    const textOklch = { mode: "oklch", l: TEXT_L, c: 0, h: 0 };
+    const bgOklch = { mode: "oklch" as const, l: L_BG, c: C_BG, h: hue };
+    const textOklch = { mode: "oklch" as const, l: TEXT_L, c: 0, h: 0 };
     contrastScore = Math.round(getContrast(bgOklch, textOklch));
 
     // Current HSL
-    const bgHsl = { mode: "hsl", h: hue, s: 0.5, l: L_BG };
-    const textHsl = { mode: "hsl", h: 0, s: 0, l: TEXT_L };
+    const bgHsl = { mode: "hsl" as const, h: hue, s: 0.5, l: L_BG };
+    const textHsl = { mode: "hsl" as const, h: 0, s: 0, l: TEXT_L };
     hslContrastScore = Math.round(getContrast(bgHsl, textHsl));
   }
 

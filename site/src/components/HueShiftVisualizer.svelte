@@ -227,6 +227,9 @@
   function handleMouseUp(): void {
     dragging = null;
   }
+
+  const sliderGradient =
+    "linear-gradient(to right, oklch(0.6 0.2 0), oklch(0.6 0.2 90), oklch(0.6 0.2 180), oklch(0.6 0.2 270), oklch(0.6 0.2 360))";
 </script>
 
 <svelte:window
@@ -465,12 +468,7 @@
             <span class="control-value text-subtle">{baseHue}°</span>
           </div>
           <div class="slider-container">
-            <div
-              class="slider-track"
-              style:background="linear-gradient(to right, oklch(0.6 0.2 0),
-              oklch(0.6 0.2 90), oklch(0.6 0.2 180), oklch(0.6 0.2 270),
-              oklch(0.6 0.2 360))"
-            ></div>
+            <div class="slider-track" style:background={sliderGradient}></div>
             <input
               type="range"
               id="baseHue-{uid}"
