@@ -48,6 +48,7 @@ const config: KnipConfig = {
         "src/components/builder/SurfaceManager.svelte",
         "src/components/algebra/OrthogonalityDemo.svelte",
         "src/components/algebra/StateVectorDemo.svelte",
+        "src/components/builder-v2/stage/ExportView.svelte",
       ],
       ignoreDependencies: [
         "astro",

@@ -1,35 +1,26 @@
-# Walkthrough - Epoch 34 Phase 1: Infrastructure
+# Walkthrough: Epoch 34 - Phase 3 (Export & Validation)
 
-## Summary
+## Overview
 
-We have successfully migrated the CSS build process from a fragile shell script to a robust Node.js script using `lightningcss`. This ensures better performance, minification, and future-proofing for CSS features.
+This phase focuses on making the system "Beta-Ready" by ensuring that users can trust the tools and the output. We are implementing a live export preview in the Theme Builder to bridge the gap between configuration and consumption, adding real-time validation to prevent invalid states, and ensuring our ecosystem tools (ESLint) support Svelte.
 
-## Changes
+## Key Changes
 
-### 1. Infrastructure
+### 1. Theme Builder Export Preview
 
-- **Installed `lightningcss`**: Added as a dev dependency.
-- **Created `scripts/build-css.ts`**: A new build script that:
-  - Bundles `css/index.css` (which imports `engine.css`, `utilities.css`, and `theme.css`).
-  - Minifies the output.
-  - Writes to `dist/style.css`.
-- **Created `css/index.css`**: The entry point for the CSS bundle.
+We have implemented a live "Export Preview" feature in the Theme Builder. This allows users to see the generated theme tokens in various formats (CSS, DTCG JSON, Tailwind, TypeScript) and copy or download them.
 
-### 2. Codebase Improvements
+**Implementation Details:**
 
-- **Fixed CSS Syntax**: Updated `css/engine.css` to include `initial-value` in `@property` definitions, which is required by the spec and enforced by `lightningcss`.
-- **Fixed TypeScript Errors**: Removed unused `@ts-expect-error` directives in `src/lib/resolve.ts` that were flagged during the build.
+- **State Management**: Updated `BuilderState` to include a new `viewMode` option: `"export"`. This allows switching the main stage area between the component preview and the export view.
+- **Export View Component**: Created `site/src/components/builder-v2/stage/ExportView.svelte`. This component subscribes to `configState` and uses the core exporters (`toDTCG`, `toTailwind`, `toTypeScript`) to generate the output. It provides tabs to switch between formats and includes "Copy" and "Download" buttons.
+- **Layout Integration**: Updated `site/src/components/builder-v2/StagePanel.svelte` to include a toggle in the toolbar. The toggle switches between "Preview" and "Export" modes.
+- **Core Library Updates**: Exported the exporter functions (`toDTCG`, `toTailwind`, `toTypeScript`) and key types (`Theme`, `SolverConfig`) from the main package entry point (`src/lib/index.ts`) so they can be used by the site. Fixed an unused variable issue in `src/lib/inspector/overlay.ts` that was blocking the build.
 
-### 3. Package Configuration
+### 2. Configuration Validation
 
-- **Updated `package.json`**:
-  - Added `build:css` script.
-  - Updated `build` script to include CSS building.
-  - Added `./style.css` to `exports`.
-  - Verified exports with `publint`.
+_(Pending)_
 
-## Verification
+### 3. ESLint Svelte Support
 
-- Ran `pnpm build` successfully.
-- Verified `dist/style.css` generation.
-- Verified `publint` passes.
+_(Pending)_

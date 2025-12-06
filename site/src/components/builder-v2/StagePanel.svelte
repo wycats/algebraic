@@ -3,6 +3,7 @@
   import type { BuilderState } from "../../lib/state/BuilderState.svelte";
   import ComponentView from "./stage/ComponentView.svelte";
   import ContextTrace from "./stage/ContextTrace.svelte";
+  import ExportView from "./stage/ExportView.svelte";
 
   const builder = getContext<BuilderState>("builder");
 </script>
@@ -44,7 +45,24 @@
     </div>
 
     <div class="group center">
-      <span class="text-subtle font-medium text-sm">Preview</span>
+      <div class="view-toggle">
+        <button
+          class:active={builder.viewMode === "component"}
+          onclick={() => {
+            builder.setViewMode("component");
+          }}
+        >
+          Preview
+        </button>
+        <button
+          class:active={builder.viewMode === "export"}
+          onclick={() => {
+            builder.setViewMode("export");
+          }}
+        >
+          Export
+        </button>
+      </div>
     </div>
 
     <div class="group right">
@@ -85,8 +103,12 @@
   </div>
 
   <div class="canvas">
-    <ComponentView />
-    <ContextTrace />
+    {#if builder.viewMode === "component"}
+      <ComponentView />
+      <ContextTrace />
+    {:else if builder.viewMode === "export"}
+      <ExportView />
+    {/if}
   </div>
 </div>
 
@@ -121,6 +143,37 @@
   .group {
     display: flex;
     gap: 0.25rem;
+  }
+
+  .view-toggle {
+    display: flex;
+    background: var(--surface-card);
+    padding: 2px;
+    border-radius: 6px;
+    border: 1px solid var(--computed-border-dec-color);
+  }
+
+  .view-toggle button {
+    padding: 0.25rem 0.75rem;
+    height: 28px;
+    min-width: auto;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--computed-fg-subtle);
+  }
+
+  .view-toggle button:hover {
+    color: var(--computed-fg-color);
+    background: transparent;
+  }
+
+  .view-toggle button.active {
+    background: var(--surface-action);
+    color: var(--computed-fg-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   button {

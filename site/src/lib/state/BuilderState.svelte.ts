@@ -1,4 +1,4 @@
-type ViewMode = "component" | "abstract" | "audit";
+type ViewMode = "component" | "abstract" | "audit" | "export";
 type InspectorMode = "global" | "surface";
 
 const STORAGE_KEY = "axiomatic-builder-state";

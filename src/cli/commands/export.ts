@@ -96,7 +96,7 @@ export function exportCommand(args: string[], cwd: string): void {
   } else {
     let outputContent = "";
     if (format === "tailwind") {
-      const preset = toTailwind(theme);
+      const preset = toTailwind(theme, config.options);
       // Output as CommonJS module
       outputContent = `module.exports = ${JSON.stringify(preset, null, 2)};`;
     } else {
